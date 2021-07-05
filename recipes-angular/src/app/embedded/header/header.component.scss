@@ -1,11 +1,10 @@
-@use '../../recipe-palette' as rpal;
-@use '../../constants';
+@use '../../../recipe-palette' as rpal;
+@use '../../../constants';
 
 .navbar {
   height: 38px;
-  margin-left: 120px;
   margin-top: 40px;
-  text-align: center;
+  padding: 0;
 
   background: rpal.$primary-color;
 
@@ -16,6 +15,7 @@
     @include constants.text;
     font-weight: bold;
     font-size: 24px;
+    line-height: 29px;
 
     color: rpal.$accent-color;
   }
@@ -27,6 +27,8 @@
     .nav-btn {
       @include constants.text;
       font-size: 18px;
+      font-weight: 600;
+      line-height: 22px;
       color: #3A3C41;
     }
   }
