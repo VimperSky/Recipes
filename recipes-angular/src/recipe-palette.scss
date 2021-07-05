@@ -1,4 +1,6 @@
-$contrast-value: rgba(black, 0.87);
+$contrast-black: rgba(black, 0.87);
+$contrast-white: white;
+
 $primary-color: #e5e5e5;
 $accent-color: #fdb100;
 
@@ -14,16 +16,16 @@ $recipes-primary-palette: (
   800: #474747,
   900: #262626,
   contrast: (
-    50: $contrast-value,
-    100: $contrast-value,
-    200: $contrast-value,
-    300: $contrast-value,
-    400: $contrast-value,
-    500: $contrast-value,
-    600: $contrast-value,
-    700: $contrast-value,
-    800: $contrast-value,
-    900: $contrast-value,
+    50: $contrast-black,
+    100: $contrast-black,
+    200: $contrast-black,
+    300: $contrast-black,
+    400: $contrast-black,
+    500: $contrast-black,
+    600: $contrast-black,
+    700: $contrast-white,
+    800: $contrast-white,
+    900: $contrast-white,
   )
 );
 
@@ -39,16 +41,16 @@ $recipes-accent-palette: (
   800: #fd8d00,
   900: #fd6d01,
   contrast: (
-    50: $contrast-value,
-    100: $contrast-value,
-    200: $contrast-value,
-    300: $contrast-value,
-    400: $contrast-value,
-    500: $contrast-value,
-    600: $contrast-value,
-    700: $contrast-value,
-    800: $contrast-value,
-    900: $contrast-value,
+    50: $contrast-black,
+    100: $contrast-black,
+    200: $contrast-black,
+    300: $contrast-black,
+    400: $contrast-black,
+    500: $contrast-white,
+    600: $contrast-white,
+    700: $contrast-white,
+    800: $contrast-white,
+    900: $contrast-white,
   )
 );
 

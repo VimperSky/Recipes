@@ -9,6 +9,8 @@ import { MatButtonModule} from "@angular/material/button";
 import { HeaderComponent } from './embedded/header/header.component';
 import { RecipeSearchComponent } from './embedded/recipe-search/recipe-search.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { RecipesComponent } from './pages/recipes/recipes.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
