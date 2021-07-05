@@ -1,0 +1,54 @@
+$contrast-value: rgba(black, 0.87);
+$primary-color: #e5e5e5;
+$accent-color: #fdb100;
+
+$recipes-primary-palette: (
+  50: #fbfbfb,
+  100: #f6f6f6,
+  200: #f1f1f1,
+  300: $primary-color,
+  400: #c3c3c3,
+  500: #a4a4a4,
+  600: #7b7b7b,
+  700: #666666,
+  800: #474747,
+  900: #262626,
+  contrast: (
+    50: $contrast-value,
+    100: $contrast-value,
+    200: $contrast-value,
+    300: $contrast-value,
+    400: $contrast-value,
+    500: $contrast-value,
+    600: $contrast-value,
+    700: $contrast-value,
+    800: $contrast-value,
+    900: $contrast-value,
+  )
+);
+
+$recipes-accent-palette: (
+  50: #fff8e1,
+  100: #feebb3,
+  200: #fedf81,
+  300: #fed34e,
+  400: #fdc828,
+  500: #fdbf07,
+  600: $accent-color,
+  700: #fd9e00,
+  800: #fd8d00,
+  900: #fd6d01,
+  contrast: (
+    50: $contrast-value,
+    100: $contrast-value,
+    200: $contrast-value,
+    300: $contrast-value,
+    400: $contrast-value,
+    500: $contrast-value,
+    600: $contrast-value,
+    700: $contrast-value,
+    800: $contrast-value,
+    900: $contrast-value,
+  )
+);
+

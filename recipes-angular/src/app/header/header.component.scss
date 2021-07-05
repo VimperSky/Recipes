@@ -1,0 +1,35 @@
+@use '../../recipe-palette' as rpal;
+@use '../../constants';
+
+.navbar {
+  height: 38px;
+  margin-left: 120px;
+  margin-top: 40px;
+  text-align: center;
+
+  background: rpal.$primary-color;
+
+  .logo {
+    height: 100%;
+    width: 99px;
+
+    @include constants.text;
+    font-weight: bold;
+    font-size: 24px;
+
+    color: rpal.$accent-color;
+  }
+
+  .menu-list {
+    height: 100%;
+    margin-left: 80px;
+
+    .nav-btn {
+      @include constants.text;
+      font-size: 18px;
+      color: #3A3C41;
+    }
+  }
+
+}
+

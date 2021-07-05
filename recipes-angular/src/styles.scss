@@ -1,0 +1,22 @@
+@use '~@angular/material' as mat;
+@use 'recipe-palette' as rpal;
+
+@include mat.core();
+
+$recipes-angular-primary: mat.define-palette(rpal.$recipes-primary-palette);
+$recipes-angular-accent: mat.define-palette(rpal.$recipes-accent-palette);
+$recipes-angular-warn: mat.define-palette(mat.$red-palette);
+
+$recipes-angular-theme: mat.define-light-theme((
+  color: (
+    primary: $recipes-angular-primary,
+    accent: $recipes-angular-accent,
+    warn: $recipes-angular-warn,
+  )
+));
+
+@include mat.all-component-themes($recipes-angular-theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Montserrat, "Montserrat", sans-serif;
+  background-color: rpal.$primary-color}
