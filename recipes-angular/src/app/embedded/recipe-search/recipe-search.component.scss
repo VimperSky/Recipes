@@ -1,6 +1,6 @@
 @use '../../../constants';
 
-.search-form {
+#search-form {
   height: 70px;
   display: flex;
   justify-content: flex-start;
@@ -19,7 +19,7 @@
     align-items: center;
   }
 
-  .search-input {
+  #search-input {
     @include constants.default-text;
     line-height: 22px;
     font-weight: 500;
@@ -31,7 +31,7 @@
     border-color: transparent;
   }
 
-  .search-button {
+  #search-button {
     @include constants.default-text;
     height: 100%;
     margin-left: 15px;

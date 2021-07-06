@@ -14,6 +14,8 @@ import {MatInputModule} from "@angular/material/input";
 import { RecipeListComponent } from './embedded/recipe-list/recipe-list.component';
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {RecipesManagerService} from "./core/services/recipes-manager.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { FooterComponent } from './embedded/footer/footer.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
