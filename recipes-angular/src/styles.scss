@@ -19,11 +19,6 @@ $recipes-angular-theme: mat.define-light-theme((
 
 html, body {
   height: 100%;
-}
-
-body {
   font-family: Montserrat, "Montserrat", sans-serif;
   background-color: constants.$primary-color;
-  margin-left: max(25%, 10px);
-  margin-right: max(25%, 10px);
 }

@@ -13,6 +13,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { RecipeListComponent } from './embedded/recipe-list/recipe-list.component';
 import {MatIconModule} from "@angular/material/icon";
+import { FooterComponent } from './embedded/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MatIconModule} from "@angular/material/icon";
     HeaderComponent,
     RecipeSearchComponent,
     RecipesComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
