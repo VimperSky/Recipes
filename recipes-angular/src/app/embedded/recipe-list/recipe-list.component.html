@@ -1,0 +1,27 @@
+<div *ngFor="let recipe of recipes" id="recipe-block">
+  <img src="{{recipe.imagePath}}" width="430" height="430" alt="{{recipe.imagePath}}" id="recipe-image">
+  <div id="recipe-info">
+    <div id="text-block">
+      <h3 id="recipe-header">{{recipe.header}}</h3>
+      <p id="recipe-description">{{recipe.description}}</p>
+    </div>
+
+    <div id="extra-info-block">
+      <div class="extra-block" id="cooking-block">
+        <mat-icon aria-hidden="false" aria-label="timer" class="extra-icon">timer</mat-icon>
+        <div class="extra-time-block">
+          <span class="extra-header">Время приготовления</span>
+          <span class="extra-value">{{recipe.cookingTime}} минут</span>
+        </div>
+      </div>
+
+      <div class="extra-block" id="portions-block">
+        <mat-icon aria-hidden="false" aria-label="timer" class="extra-icon">people</mat-icon>
+        <div class="extra-time-block">
+          <span class="extra-header">Рецепт на</span>
+          <span class="extra-value">{{recipe.portions}} персон</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

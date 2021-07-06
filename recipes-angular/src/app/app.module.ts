@@ -11,13 +11,16 @@ import { RecipeSearchComponent } from './embedded/recipe-search/recipe-search.co
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import { RecipeListComponent } from './embedded/recipe-list/recipe-list.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RecipeSearchComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeListComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import {MatInputModule} from "@angular/material/input";
     MatToolbarModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

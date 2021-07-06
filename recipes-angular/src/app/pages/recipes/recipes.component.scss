@@ -1,6 +1,6 @@
 @use '../../../constants';
 
-.recipes-header {
+#recipes-header {
   margin-top: 80px;
 
   h1 {
@@ -11,3 +11,12 @@
   }
 }
 
+#recipe-search {
+  display: block;
+  margin-top: 60px;
+}
+
+#ecipe-list {
+  display: block;
+  margin-top: 80px;
+}

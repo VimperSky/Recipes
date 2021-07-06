@@ -1,0 +1,89 @@
+@use '../../../constants';
+
+#recipe-block {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  background: white;
+  border-radius: 75px 15px 15px 0;
+
+  #recipe-image {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  #recipe-info {
+    margin-left: 50px;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+
+    #text-block {
+      margin-top: 100px;
+      margin-right: min(150px, 20%);
+
+      #recipe-header {
+        @include constants.default-text;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      #recipe-description {
+        @include constants.default-text;
+        line-height: 30px;
+      }
+    }
+
+    #extra-info-block {
+      margin-top: 40px;
+      width: 450px;
+      height: 64px;
+      display: flex;
+
+
+      #cooking-block {
+
+      }
+
+      #portions-block {
+        margin-left: 70px;
+      }
+
+
+      .extra-block {
+        display: inline-flex;
+        flex-direction: row;
+
+        .extra-icon {
+          width: 56px;
+          height: 56px;
+          font-size: 56px;
+          color: constants.$accent-color;
+        }
+
+        .extra-time-block {
+          display: inline-flex;
+          flex-direction: column;
+
+          margin-left: 20px;
+
+          .extra-header {
+            @include constants.default-text;
+            font-size: 14px;
+            line-height: 28px;
+            opacity: 50%;
+          }
+
+          .extra-value {
+            @include constants.default-text;
+            font-size: 18px;
+            line-height: 28px;
+          }
+        }
+      }
+
+    }
+
+  }
+}
