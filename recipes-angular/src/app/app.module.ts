@@ -16,6 +16,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RecipesManagerService} from "./core/services/recipes-manager.service";
+import {TestRecipesManagerService} from "./core/services/test-recipes-manager.service";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,10 @@ import {RecipesManagerService} from "./core/services/recipes-manager.service";
     MatIconModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: RecipesManagerService,
+    useClass: TestRecipesManagerService
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
