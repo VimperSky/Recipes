@@ -27,15 +27,17 @@
     padding: 0 0 0 15px;
     margin: 0 0 0 5px;
     flex: 1 1 200px;
-    border-radius: 10px;
+    border-radius: 16px;
     border-color: transparent;
+    background: white;
+    box-shadow: 0 8px 42px rgba(34, 39, 47, 0.04);
   }
 
   #search-button {
     @include constants.default-text;
     height: 100%;
-    margin-left: 15px;
+    margin-left: 16px;
     flex: 0 0 150px;
-    border-radius: 10px;
+    border-radius: 16px;
   }
 }
