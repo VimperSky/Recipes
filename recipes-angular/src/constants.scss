@@ -1,0 +1,27 @@
+@mixin default-text {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+$contrast-black: rgba(black, 0.87);
+$contrast-white: white;
+
+$primary-color: #FEFEFB;
+$accent-color: #fdb100;
+
+$recipes-primary-palette: (
+  300: $primary-color,
+  contrast: (
+    300: $contrast-black,
+  )
+);
+
+$recipes-accent-palette: (
+  500: $accent-color,
+  contrast: (
+    500: $contrast-white,
+  )
+);

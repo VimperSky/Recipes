@@ -1,0 +1,5 @@
+<div id="search-form">
+  <h2>Поиск рецепта</h2>
+  <input matInput placeholder="Название блюда .." id="search-input" [formControl]="searchString" (keyup.enter)="search()">
+  <button mat-flat-button color="accent" id="search-button" (click)="search()" type='button'>Поиск</button>
+</div>

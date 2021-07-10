@@ -1,0 +1,36 @@
+@use '../../../constants';
+
+.navbar {
+  height: 38px;
+  margin-top: 40px;
+  padding: 0;
+
+  background: constants.$primary-color;
+
+  .logo {
+    height: 100%;
+    width: 99px;
+
+    @include constants.default-text;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: constants.$accent-color;
+  }
+
+  .menu-list {
+    height: 100%;
+    margin-left: 80px;
+
+    .nav-btn {
+      @include constants.default-text;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 22px;
+      color: #3A3C41;
+    }
+  }
+
+}
+
