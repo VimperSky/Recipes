@@ -15,8 +15,9 @@ import { RecipeListComponent } from './embedded/recipe-list/recipe-list.componen
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {RecipesManagerService} from "./core/services/recipes-manager.service";
-import {TestRecipesManagerService} from "./core/services/test-recipes-manager.service";
+import {RecipesService} from "./core/services/recipes.service";
+import {TestRecipesService} from "./core/services/test/test-recipes.service";
+import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {TestRecipesManagerService} from "./core/services/test-recipes-manager.se
     RecipeSearchComponent,
     RecipesComponent,
     RecipeListComponent,
-    FooterComponent
+    FooterComponent,
+    RecipePreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +40,12 @@ import {TestRecipesManagerService} from "./core/services/test-recipes-manager.se
     MatIconModule,
     ReactiveFormsModule
   ],
-  providers: [{
-    provide: RecipesManagerService,
-    useClass: TestRecipesManagerService
-  }],
+  providers: [
+    {
+    provide: RecipesService,
+    useClass: TestRecipesService
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

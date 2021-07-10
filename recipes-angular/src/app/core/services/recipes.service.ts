@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import {Recipe} from "../models/recipe";
+import {RecipePreview} from "../models/recipe-preview";
 
 @Injectable()
-export abstract class RecipesManagerService {
-  public recipes: Recipe[] = [];
+export abstract class RecipesService {
 
   abstract search(searchString: string): void;
 
   abstract loadMore(): void;
+
+  abstract get recipes(): RecipePreview[];
 
   abstract get hasMore(): boolean;
 }

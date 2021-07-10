@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RecipesManagerService} from "../../core/services/recipes-manager.service";
+import {RecipesService} from "../../core/services/recipes.service";
 
 
 @Component({

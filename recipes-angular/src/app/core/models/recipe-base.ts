@@ -1,6 +1,6 @@
-export interface Recipe {
+export interface RecipeBase {
   imagePath: string;
-  header: string;
+  name: string;
   description: string;
   cookingTime: number;
   portions: number;

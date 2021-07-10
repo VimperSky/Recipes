@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {RecipesManagerService} from "../../core/services/recipes-manager.service";
+import {RecipesService} from "../../core/services/recipes.service";
 
 @Component({
   selector: 'app-recipe-search',
@@ -11,7 +11,7 @@ export class RecipeSearchComponent implements OnInit {
 
   searchString = new FormControl('', []);
 
-  constructor(public recipesProvider: RecipesManagerService) { }
+  constructor(public recipesProvider: RecipesService) { }
 
   ngOnInit(): void {
   }
