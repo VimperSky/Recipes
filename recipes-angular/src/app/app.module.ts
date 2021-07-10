@@ -17,6 +17,9 @@ import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RecipesService} from "./core/services/recipes.service";
 import {TestRecipesService} from "./core/services/test/test-recipes.service";
+import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
+import {RecipeService} from "./core/services/recipe.service";
+import {TestRecipeService} from "./core/services/test/test-recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 
 @NgModule({
@@ -27,6 +30,7 @@ import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview
     RecipesComponent,
     RecipeListComponent,
     FooterComponent,
+    RecipeDetailComponent,
     RecipePreviewComponent
   ],
   imports: [
@@ -44,6 +48,10 @@ import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview
     {
     provide: RecipesService,
     useClass: TestRecipesService
+    },
+    {
+      provide: RecipeService,
+      useClass: TestRecipeService
     },
   ],
   bootstrap: [AppComponent]
