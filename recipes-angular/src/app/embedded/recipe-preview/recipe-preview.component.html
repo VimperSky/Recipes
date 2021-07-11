@@ -3,7 +3,7 @@
     <img src="{{recipe.imagePath}}" width="430" height="430" alt="{{recipe.imagePath}}" id="recipe-image">
     <div id="recipe-info">
       <div id="text-block">
-        <h3 id="recipe-header">{{recipe.name}}</h3>
+        <h3 *ngIf="isClickable" id="recipe-header">{{recipe.name}}</h3>
         <p id="recipe-description">{{recipe.description}}</p>
       </div>
 

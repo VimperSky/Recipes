@@ -7,9 +7,52 @@ app-back-nav {
 
 #recipes-header {
   h1 {
+    @include constants.default-header;
+  }
+}
+
+#bottom-blocks {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
     @include constants.default-text;
     font-weight: bold;
-    font-size: 42px;
-    line-height: 62px;
+    font-size: 28px;
+    line-height: 30px;
+    color: constants.$accent-color;
   }
+
+  .bottom-block {
+    h3 {
+      @include constants.default-text;
+      font-weight: 600;
+      line-height: 30px;
+    }
+
+    #ingredient-value {
+      @include constants.default-text;
+      line-height: 30px;
+    }
+
+    #step {
+      background: white;
+      box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+      border-radius: 24px;
+      width: 660px;
+      height: 120px;
+      margin-bottom: 20px;
+      padding: 50px 70px 50px 70px;
+
+      #step-value {
+        @include constants.default-text;
+        line-height: 30px;
+        margin-top: -10px;
+      }
+    }
+
+
+  }
+
 }

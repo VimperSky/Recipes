@@ -4,6 +4,15 @@
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
+  color: #4A525A;
+}
+
+@mixin default-header {
+  @include default-text;
+  font-weight: bold;
+  font-size: 42px;
+  line-height: 62px;
+  color: #25292D;
 }
 
 $contrast-black: rgba(black, 0.87);

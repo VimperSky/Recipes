@@ -19,4 +19,8 @@ export class RecipeDetailComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params['id'];
     this.recipeDetail = this.recipeService.detail(id);
   }
+
+  fixText(input: string): string {
+    return input.replace(/\r\n|\r|\n/g, '<br>')
+  }
 }
