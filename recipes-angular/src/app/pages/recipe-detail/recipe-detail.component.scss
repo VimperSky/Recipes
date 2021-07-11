@@ -8,6 +8,7 @@ app-back-nav {
 #recipes-header {
   h1 {
     @include constants.default-header;
+    color: constants.$dark-black-color;
   }
 }
 
@@ -25,15 +26,18 @@ app-back-nav {
   }
 
   .bottom-block {
+
     h3 {
       @include constants.default-text;
       font-weight: 600;
       line-height: 30px;
+      color: constants.$light-black-color;
     }
 
     #ingredient-value {
       @include constants.default-text;
       line-height: 30px;
+      color: constants.$light-black-color;
     }
 
     #step {
@@ -49,6 +53,7 @@ app-back-nav {
         @include constants.default-text;
         line-height: 30px;
         margin-top: -10px;
+        color: constants.$light-black-color;
       }
     }
 
