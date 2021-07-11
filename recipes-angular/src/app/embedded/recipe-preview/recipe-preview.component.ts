@@ -11,6 +11,9 @@ export class RecipePreviewComponent implements OnInit {
   @Input()
   recipe!: RecipePreview;
 
+  @Input()
+  isClickable: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {

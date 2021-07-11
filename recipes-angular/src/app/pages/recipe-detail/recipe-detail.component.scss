@@ -1,8 +1,11 @@
 @use '../../../constants';
 
-#recipes-header {
-  margin-top: 80px;
+app-back-nav {
+  display: block;
+  margin-top: 80px - 22px;
+}
 
+#recipes-header {
   h1 {
     @include constants.default-text;
     font-weight: bold;

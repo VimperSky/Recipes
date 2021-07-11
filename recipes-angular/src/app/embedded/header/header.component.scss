@@ -1,13 +1,13 @@
 @use '../../../constants';
 
-.navbar {
+#navbar {
   height: 38px;
   margin-top: 40px;
   padding: 0;
 
   background: constants.$primary-color;
 
-  .logo {
+  #logo {
     height: 100%;
     width: 99px;
 
@@ -19,11 +19,11 @@
     color: constants.$accent-color;
   }
 
-  .menu-list {
+  #menu-list {
     height: 100%;
     margin-left: 80px;
 
-    .nav-btn {
+    #nav-btn {
       @include constants.default-text;
       font-size: 18px;
       font-weight: 600;

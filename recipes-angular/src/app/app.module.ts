@@ -21,6 +21,8 @@ import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.compo
 import {RecipeService} from "./core/services/recipe.service";
 import {TestRecipeService} from "./core/services/test/test-recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
+import { BackNavComponent } from './embedded/back-nav/back-nav.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview
     RecipeListComponent,
     FooterComponent,
     RecipeDetailComponent,
-    RecipePreviewComponent
+    RecipePreviewComponent,
+    BackNavComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 <div id="content" *ngIf="recipeDetail">
+  <app-back-nav></app-back-nav>
   <div id="recipes-header">
     <h1>{{recipeDetail.name}}</h1>
-
   </div>
-
+  <app-recipe-preview [recipe]="recipeDetail" [isClickable]="false"></app-recipe-preview>
 </div>
