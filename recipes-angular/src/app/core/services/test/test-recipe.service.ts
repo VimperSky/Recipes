@@ -56,8 +56,6 @@ export class TestRecipeService implements RecipeService {
   constructor() { }
 
   detail(id: number): RecipeDetail {
-    let myRecipeDetail = recipeDetail;
-    myRecipeDetail.imagePath = testImagesPath + `r${id}.png`;
-    return myRecipeDetail;
+    return recipeDetail;
   }
 }
