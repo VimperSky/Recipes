@@ -10,7 +10,7 @@ using Recipes.Infrastructure;
 namespace Recipes.WebApi.Migrations
 {
     [DbContext(typeof(RecipesContext))]
-    [Migration("20210714155522_1")]
+    [Migration("20210714182059_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

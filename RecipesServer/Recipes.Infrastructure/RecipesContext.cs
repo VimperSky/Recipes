@@ -9,7 +9,6 @@ namespace Recipes.Infrastructure
 
         public RecipesContext(DbContextOptions<RecipesContext> options) : base(options)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
