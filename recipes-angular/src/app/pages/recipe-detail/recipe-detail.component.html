@@ -1,0 +1,23 @@
+<div id="content" *ngIf="recipeDetail">
+  <app-back-nav></app-back-nav>
+  <div id="recipes-header">
+    <h1>{{recipeDetail.name}}</h1>
+  </div>
+  <app-recipe-preview [recipe]="recipeDetail" [isClickable]="false"></app-recipe-preview>
+
+  <div id="bottom-blocks">
+    <div class="bottom-block">
+      <h2>Ингредиенты</h2>
+      <div *ngFor="let ingredient of recipeDetail.ingredients">
+        <h3>{{ingredient.header}}</h3>
+        <pre id="ingredient-value">{{ingredient.value}}</pre>
+      </div>
+    </div>
+    <div class="bottom-block">
+      <div *ngFor="let val of recipeDetail.steps; let idx = index" id="step">
+        <h3>Шаг {{idx + 1}}</h3>
+        <p id="step-value">{{val}}</p>
+      </div>
+    </div>
+  </div>
+</div>
