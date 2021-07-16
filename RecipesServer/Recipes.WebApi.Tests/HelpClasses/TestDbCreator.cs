@@ -1,44 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using System.Collections.Generic;
 using Recipes.Domain.Models;
+using Recipes.Infrastructure;
 
-namespace Recipes.Infrastructure
+namespace Recipes.WebApi.Tests.HelpClasses
 {
-    public class DbInitializer
+    public static class TestDbCreator
     {
-        public static void CreateDbIfNotExists(IHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<RecipesContext>();
-                    FillWithStartData(context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<DbInitializer>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
-            }
-        }
-        
-        private static void FillWithStartData(RecipesContext context)
-        {
-            if (context.Recipes.Any())
-            {
-                return;   // DB has been seeded
-            }
-
-            var recipes = new Recipe[]
-            {
+        public static readonly Recipe[] FirstPageRecipes =  {
                 new()
                 {
                     Name = "Клубичная Панна-Котта", 
@@ -180,9 +148,11 @@ namespace Recipes.Infrastructure
                         "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                     }
                 },
-            };
-            
-            foreach (var recipe in recipes)
+            }; 
+        
+        public static void FillWithStartData(RecipesContext context)
+        {
+            foreach (var recipe in FirstPageRecipes)
                 context.Recipes.Add(recipe);
             
             context.SaveChanges();

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
@@ -26,13 +27,19 @@ namespace Recipes.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         /// <response code="200">OK</response>
+        /// <response code="400">Invalid page id</response>
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
-        [ProducesResponseType(typeof(RecipePreview[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipePreview[]> GetRecipes([FromQuery]string searchString, int page)
+        public ActionResult<RecipePreview[]> GetRecipes([FromQuery]string searchString, uint page)
         {
-            var recipes = _recipesRepository.Get(searchString, page);
+            if (page == default)
+                page = 1;
+            
+
+            var recipes = _recipesRepository.Get(searchString, (int)page);
             if (recipes == null)
                 return NotFound();
             

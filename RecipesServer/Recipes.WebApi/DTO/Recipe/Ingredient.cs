@@ -1,4 +1,5 @@
-﻿using Recipes.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Recipes.Domain.Models;
 
 namespace Recipes.WebApi.DTO.Recipe
 {

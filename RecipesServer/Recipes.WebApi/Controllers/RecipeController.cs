@@ -27,13 +27,15 @@ namespace Recipes.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
+        /// <response code="400">Invalid recipe id</response>
         /// <response code="404">Recipe not found</response>
         [HttpGet("detail")]
-        [ProducesResponseType(typeof(RecipeDetail), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipeDetail> Detail([FromQuery]int id)
+        public ActionResult<RecipeDetail> Detail([FromQuery]uint id)
         {
-            var detail = _recipesRepository.GetById(id);
+            var detail = _recipesRepository.GetById((int)id);
             if (detail == null)
                 return NotFound();
             return RecipeDetail.FromModel(detail);

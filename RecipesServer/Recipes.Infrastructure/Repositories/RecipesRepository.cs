@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Domain;
@@ -11,10 +10,12 @@ namespace Recipes.Infrastructure.Repositories
     public class RecipesRepository: IRecipesRepository
     {
         private readonly RecipesContext _recipesContext;
+        private readonly IDomainConfig _domainConfig;
 
-        public RecipesRepository(RecipesContext recipesContext)
+        public RecipesRepository(RecipesContext recipesContext, IDomainConfig domainConfig)
         {
             _recipesContext = recipesContext;
+            _domainConfig = domainConfig;
         }
         
         public IEnumerable<Recipe> Get(string searchString, int page)
@@ -26,7 +27,7 @@ namespace Recipes.Infrastructure.Repositories
                 result = result.Where(x => x.Name.Contains(searchString));
             
             // Скипаем элементы до текущей страницы
-            var skipElements = (page - 1) * Constants.PageSize;
+            var skipElements = ((int)page - 1) * _domainConfig.PageSize;
             if (skipElements >= result.Count())
             {
                 return null;
@@ -34,9 +35,9 @@ namespace Recipes.Infrastructure.Repositories
             result = result.Skip(skipElements);
             
             // Берем либо кол-во элементов на странице, либо сколько осталось
-            if (result.Count() > Constants.PageSize)
+            if (result.Count() > _domainConfig.PageSize)
             {
-                result = result.Take(Constants.PageSize);
+                result = result.Take(_domainConfig.PageSize);
             }
 
             result = result.Include(x => x.IngredientBlocks);

@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
 using Recipes.Infrastructure.Repositories;
@@ -12,6 +15,7 @@ namespace Recipes.Infrastructure
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IDomainConfig, DomainConfig>();
         }
 
         public static void ConfigureDatabase(this IServiceCollection services, string connectionString)
