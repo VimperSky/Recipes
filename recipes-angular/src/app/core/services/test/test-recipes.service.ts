@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {RecipesService} from "../recipes.service";
 import {RecipePreview} from "../../models/recipe-preview";
+import {RecipePage} from "../../models/recipe-page";
+import {CommandJsonPathException} from "@angular/cli/utilities/json-schema";
+import {Observable, of, throwError} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
 
@@ -51,34 +54,40 @@ export const recipes: RecipePreview[] = [
   }
 ]
 
+const pageSize: number = 4;
 
 @Injectable()
 export class TestRecipesService extends RecipesService{
-  public recipes: RecipePreview[] = [];
-
-  private allLoaded: boolean = false;
-
 
   constructor() {
     super();
-    this.recipes = recipes.slice(0, 4);
   }
 
-  search(searchString: string) {
-    this.recipes = recipes.filter(x => x.name.toLowerCase().includes(searchString.toLowerCase()));
-    if (!this.allLoaded)
-      this.recipes = this.recipes.slice(0, 4);
+  getRecipeList(page: number | null, searchString: string | null): Observable<RecipePage> {
+    if (page == null)
+      page = 1;
+
+    let result = recipes;
+    if (searchString != null) {
+      result = result.filter(x => x.name.toLowerCase().includes(searchString.toLowerCase()));
+    }
+
+    let skipElements = (page - 1) * pageSize;
+    if (skipElements > result.length) {
+      throwError("This page doesn't exist");
+    }
+    result = result.slice(skipElements);
+
+    let hasMore = false;
+    if (result.length > pageSize) {
+      result = result.slice(0, pageSize);
+      hasMore = true;
+    }
+
+
+    let recipePage: RecipePage = {recipes: result, hasMore: hasMore};
+
+    return of(recipePage);
   }
 
-  loadMore() {
-    if (this.allLoaded)
-      return;
-
-    this.recipes = recipes;
-    this.allLoaded = true;
-  }
-
-  public get hasMore(): boolean {
-    return !this.allLoaded;
-  }
 }

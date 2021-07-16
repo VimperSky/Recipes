@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipesService} from "../../core/services/recipes.service";
+import {RecipesManagerService} from "../../core/services/recipes-manager.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -8,16 +8,13 @@ import {RecipesService} from "../../core/services/recipes.service";
 })
 export class RecipeListComponent implements OnInit {
 
-  constructor(public recipesProvider: RecipesService) { }
+  constructor(public recipesManager: RecipesManagerService) { }
 
   ngOnInit(): void {
+    this.recipesManager.loadInitial();
   }
 
   loadMore() {
-    this.recipesProvider.loadMore();
-  }
-
-  public get hasMore(): boolean {
-    return this.recipesProvider.hasMore;
+    this.recipesManager.loadMore()
   }
 }
