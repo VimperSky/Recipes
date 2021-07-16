@@ -35,7 +35,7 @@ namespace Recipes.WebApi.Controllers
             if (page == default)
                 page = 1;
             
-            var (values, hasMore) = _unitOfWork.RecipesRepository.GetPage((int)page, searchString);
+            var (values, hasMore) = _unitOfWork.RecipesRepository.GetList((int)page, searchString);
             if (values == null)
                 return NotFound();
 

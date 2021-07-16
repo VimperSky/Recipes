@@ -18,7 +18,7 @@ namespace Recipes.Infrastructure.Repositories
             _domainConfig = domainConfig;
         }
         
-        public (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, string searchString)
+        public (IEnumerable<Recipe> Values, bool HasMore) GetList(int page, string searchString)
         {
             IQueryable<Recipe> result = _recipesContext.Recipes;
 
