@@ -32,13 +32,13 @@ namespace Recipes.Infrastructure.Repositories
             {
                 return (null, false);
             }
-            result = result.Skip(skipElements);
+            result = result.OrderBy(x => x.Id).Skip(skipElements);
             
             var hasMore = false;
             // Берем либо кол-во элементов на странице, либо сколько осталось
             if (result.Count() > _domainConfig.PageSize)
             {
-                result = result.Take(_domainConfig.PageSize);
+                result = result.OrderBy(x => x.Id).Take(_domainConfig.PageSize);
                 hasMore = true;
             }
 
