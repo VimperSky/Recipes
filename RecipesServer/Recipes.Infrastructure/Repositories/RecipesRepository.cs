@@ -25,7 +25,6 @@ namespace Recipes.Infrastructure.Repositories
             // Сортируем по поисковой строке
             if (searchString != null)
                 result = result.Where(x => x.Name.Contains(searchString));
-
             
             // Скипаем элементы до текущей страницы
             var skipElements = (page - 1) * _domainConfig.PageSize;

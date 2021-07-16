@@ -31,7 +31,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipeDetail> Detail([FromQuery][Required]uint id)
+        public ActionResult<RecipeDetail> GetRecipeDetail([FromQuery][Required]uint id)
         {
             var detail = _unitOfWork.RecipesRepository.GetById((int)id);
             if (detail == null)

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {RecipeService} from "../recipe.service";
 import {RecipeDetail} from "../../models/recipe-detail";
+import {Observable, of} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
 const recipeDetail: RecipeDetail = {
@@ -55,7 +56,7 @@ const recipeDetail: RecipeDetail = {
 export class TestRecipeService implements RecipeService {
   constructor() { }
 
-  detail(id: number): RecipeDetail {
-    return recipeDetail;
+  detail(id: number): Observable<RecipeDetail> {
+    return of(recipeDetail);
   }
 }

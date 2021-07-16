@@ -27,11 +27,13 @@ namespace Recipes.WebApi
             services.ConfigureScoped();
             services.ConfigureDatabase(Configuration.GetConnectionString("DefaultConnection"));
 
+            services.AddCors();
+
             services.AddControllers().ConfigureApiBehaviorOptions(options =>
             {
                 options.SuppressMapClientErrors = true;
             });
-
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Recipes.WebApi", Version = "v1"});
@@ -64,12 +66,15 @@ namespace Recipes.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Recipes.WebApi v1"));
             }
             
-            app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseAuthorization();
-
+            
+            app.UseCors(builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200"));
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

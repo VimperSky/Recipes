@@ -30,7 +30,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]string searchString)
+        public ActionResult<RecipesPage> GetRecipeList([FromQuery]uint page, [FromQuery]string searchString)
         {
             if (page == default)
                 page = 1;

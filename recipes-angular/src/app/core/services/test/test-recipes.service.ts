@@ -54,7 +54,7 @@ export const recipes: RecipePreview[] = [
   }
 ]
 
-const pageSize: number = 4;
+const pageSize: number = 2;
 
 @Injectable()
 export class TestRecipesService extends RecipesService{
