@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
-using Recipes.Domain.Repositories;
 using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.Controllers
@@ -14,12 +12,10 @@ namespace Recipes.WebApi.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRecipesRepository _recipesRepository;
 
-        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository)
+        public RecipesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _recipesRepository = recipesRepository;
         }
         
         /// <summary>
@@ -38,8 +34,7 @@ namespace Recipes.WebApi.Controllers
             if (page == default)
                 page = 1;
             
-
-            var recipes = _recipesRepository.Get(searchString, (int)page);
+            var recipes = _unitOfWork.RecipesRepository.Get(searchString, (int)page);
             if (recipes == null)
                 return NotFound();
             

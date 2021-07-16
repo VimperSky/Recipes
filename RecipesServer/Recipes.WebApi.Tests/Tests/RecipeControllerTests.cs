@@ -8,7 +8,8 @@ using Xunit;
 
 namespace Recipes.WebApi.Tests.Tests
 {
- public class RecipeControllerTest: IClassFixture<TestWebFactory<Startup>>
+    [Collection("Tests")]
+    public class RecipeControllerTest: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;
 
@@ -42,14 +43,27 @@ namespace Recipes.WebApi.Tests.Tests
         [Fact]
         private async Task Get_Detail_ExistingRecipeId_ReturnsValue()
         {
+            // Arrange
+            const int recipeId = 1;
+
             // Act
-            var response = await _client.GetAsync("/recipe/detail?id=2");
+            var response = await _client.GetAsync($"/recipe/detail?id={recipeId}");
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<RecipeDetail>(content);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(RecipeDetail.FromModel(TestDbCreator.FirstPageRecipes[1]), result);
+            CustomAssert.Equal(TestDbCreator.FirstPageRecipes[recipeId - 1], result);
+        }
+        
+        [Fact]
+        private async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
+        {
+            // Act
+            var response = await _client.GetAsync("/recipe/detail");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }

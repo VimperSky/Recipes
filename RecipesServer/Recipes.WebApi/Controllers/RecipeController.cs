@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
-using Recipes.Domain.Repositories;
 using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.Controllers
@@ -12,12 +12,10 @@ namespace Recipes.WebApi.Controllers
     public class RecipeController: ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRecipesRepository _recipesRepository;
 
-        public RecipeController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository)
+        public RecipeController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _recipesRepository = recipesRepository;
         }
 
         
@@ -33,9 +31,9 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipeDetail> Detail([FromQuery]uint id)
+        public ActionResult<RecipeDetail> Detail([FromQuery][Required]uint id)
         {
-            var detail = _recipesRepository.GetById((int)id);
+            var detail = _unitOfWork.RecipesRepository.GetById((int)id);
             if (detail == null)
                 return NotFound();
             return RecipeDetail.FromModel(detail);
