@@ -20,7 +20,7 @@ namespace Recipes.WebApi.Controllers
 
         
         /// <summary>
-        /// Retrieves detail about recipe
+        /// Get detail information about recipe
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

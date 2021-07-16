@@ -20,7 +20,7 @@ namespace Recipes.WebApi.Controllers
         }
         
         /// <summary>
-        /// Retrieve list of recipes
+        /// Retrieve a list of recipes
         /// </summary>
         /// <returns></returns>
         /// <response code="200">OK</response>
@@ -35,7 +35,7 @@ namespace Recipes.WebApi.Controllers
             if (page == default)
                 page = 1;
             
-            var (values, hasMore) = _unitOfWork.RecipesRepository.GetList((int)page, searchString);
+            var (values, hasMore) = _unitOfWork.RecipesRepository.GetPage((int)page, searchString);
             if (values == null)
                 return NotFound();
 
