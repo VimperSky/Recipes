@@ -19,10 +19,13 @@ export class RecipesManagerService {
   }
 
   public update (recipePage: RecipePage, clear: boolean = false) {
-    if (clear)
+    if (clear) {
       this.recipeList = recipePage.recipes;
-    else
+      this.loadPage = 2;
+    }
+    else {
       this.recipeList = this.recipeList.concat(recipePage.recipes);
+    }
 
     this.hasMore = recipePage.hasMore;
   }
