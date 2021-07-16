@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
+using Recipes.WebApi.DTO;
 using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.Controllers
@@ -29,16 +30,22 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipePreview[]> GetRecipes([FromQuery]string searchString, uint page)
+        public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]string searchString)
         {
             if (page == default)
                 page = 1;
             
-            var recipes = _unitOfWork.RecipesRepository.Get(searchString, (int)page);
-            if (recipes == null)
+            var (values, hasMore) = _unitOfWork.RecipesRepository.GetPage((int)page, searchString);
+            if (values == null)
                 return NotFound();
+
+            var recipesPage = new RecipesPage
+            {
+                Recipes = values.Select(RecipePreview.FromModel).ToArray(),
+                HasMore = hasMore
+            };
             
-            return recipes.Select(RecipePreview.FromModel).ToArray();
+            return recipesPage;
         }
     }
 }

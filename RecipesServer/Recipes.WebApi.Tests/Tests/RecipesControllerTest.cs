@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Recipes.WebApi.DTO;
 using Recipes.WebApi.DTO.Recipe;
 using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
@@ -46,11 +47,11 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Act
             var response = await _client.GetAsync("/recipes/list?page=1");
-            var result = JsonConvert.DeserializeObject<RecipePreview[]>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(TestDbCreator.FirstPageRecipes.Length, result.Length);
+            Assert.Equal(TestDbCreator.FirstPageRecipes.Length, result.Recipes.Length);
         }
 
         
@@ -59,11 +60,11 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Act
             var response = await _client.GetAsync("/recipes/list");
-            var result = JsonConvert.DeserializeObject<RecipePreview[]>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(TestDbCreator.FirstPageRecipes.Length, result.Length);
+            Assert.Equal(TestDbCreator.FirstPageRecipes.Length, result.Recipes.Length);
         }
     }
 }

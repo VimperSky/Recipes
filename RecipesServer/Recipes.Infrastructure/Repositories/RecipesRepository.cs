@@ -18,31 +18,34 @@ namespace Recipes.Infrastructure.Repositories
             _domainConfig = domainConfig;
         }
         
-        public IEnumerable<Recipe> Get(string searchString, int page)
+        public (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, string searchString)
         {
             IQueryable<Recipe> result = _recipesContext.Recipes;
-            
+
             // Сортируем по поисковой строке
             if (searchString != null)
                 result = result.Where(x => x.Name.Contains(searchString));
+
             
             // Скипаем элементы до текущей страницы
-            var skipElements = ((int)page - 1) * _domainConfig.PageSize;
+            var skipElements = (page - 1) * _domainConfig.PageSize;
             if (skipElements >= result.Count())
             {
-                return null;
+                return (null, false);
             }
             result = result.Skip(skipElements);
             
+            var hasMore = false;
             // Берем либо кол-во элементов на странице, либо сколько осталось
             if (result.Count() > _domainConfig.PageSize)
             {
                 result = result.Take(_domainConfig.PageSize);
+                hasMore = true;
             }
 
             result = result.Include(x => x.IngredientBlocks);
 
-            return result;
+            return (result, hasMore);
         }
 
         public Recipe GetById(int id)
