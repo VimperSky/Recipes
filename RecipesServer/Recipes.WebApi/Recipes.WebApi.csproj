@@ -22,8 +22,4 @@
       <ProjectReference Include="..\Recipes.Infrastructure\Recipes.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Remove="Images\r1.png" />
-    </ItemGroup>
-
 </Project>
