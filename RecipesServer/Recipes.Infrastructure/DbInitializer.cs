@@ -155,7 +155,7 @@ namespace Recipes.Infrastructure
                     Description = "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
                                   "что будет особенно актуально для сладкоежек, соблюдающих диету.",
                     Portions = 2,
-                    ImagePath = "r3.png",
+                    ImagePath = "r4.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {

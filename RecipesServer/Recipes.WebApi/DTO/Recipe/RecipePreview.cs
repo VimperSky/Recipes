@@ -9,7 +9,7 @@
             return new()
             {
                 Id = recipe.Id, Description = recipe.Description, Name = recipe.Name, Portions = recipe.Portions,
-                CookingTime = recipe.CookingTimeMin, ImagePath = recipe.ImagePath
+                CookingTime = recipe.CookingTimeMin, ImagePath = Utils.GetRecipeImagePath(recipe.ImagePath)
             };
         }
     }
