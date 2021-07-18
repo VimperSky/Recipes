@@ -1,20 +1,15 @@
 ﻿using Recipes.Domain;
-using Recipes.Domain.Repositories;
 
 namespace Recipes.Infrastructure
 {
     public class UnitOfWork: IUnitOfWork
     {
         private readonly RecipesContext _context;
-        private readonly IRecipesRepository _recipesRepository;
 
-        public UnitOfWork(RecipesContext context, IRecipesRepository recipesRepository)
+        public UnitOfWork(RecipesContext context)
         {
             _context = context;
-            _recipesRepository = recipesRepository;
         }
-
-        public IRecipesRepository RecipesRepository => _recipesRepository;
         
         public void Commit()
         {

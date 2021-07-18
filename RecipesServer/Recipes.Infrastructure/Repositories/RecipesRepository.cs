@@ -18,27 +18,28 @@ namespace Recipes.Infrastructure.Repositories
             _domainConfig = domainConfig;
         }
         
-        public (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, string searchString)
+        public (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, int pageSize, string searchString)
         {
+            if (page <= 0)
+                page = 1;
+            
+            if (pageSize <= 0)
+                pageSize = _domainConfig.DefaultPageSize;
+            
             IQueryable<Recipe> result = _recipesContext.Recipes;
-
+            
             // Сортируем по поисковой строке
             if (searchString != null)
-                result = result.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+                result = result.Where(x => x.Name.Contains(searchString));
             
             // Скипаем элементы до текущей страницы
-            var skipElements = (page - 1) * _domainConfig.PageSize;
-            if (skipElements > result.Count())
-            {
-                return (null, false);
-            }
-            result = result.OrderBy(x => x.Id).Skip(skipElements);
+            result = result.OrderBy(x => x.Id).Skip((page - 1) * pageSize);
             
             var hasMore = false;
             // Берем либо кол-во элементов на странице, либо сколько осталось
-            if (result.Count() > _domainConfig.PageSize)
+            if (result.Count() > pageSize)
             {
-                result = result.OrderBy(x => x.Id).Take(_domainConfig.PageSize);
+                result = result.Take(pageSize);
                 hasMore = true;
             }
 
