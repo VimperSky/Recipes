@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RecipesService} from "../recipes.service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {RecipePreview} from "../../models/recipe-preview";
 import {environment} from "../../../../environments/environment";
 import {RecipePage} from "../../models/recipe-page";
 import {Observable} from "rxjs";

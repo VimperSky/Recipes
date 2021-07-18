@@ -15,6 +15,7 @@
   background: white;
 
   #recipe-block {
+    height: 430px;
     display: flex;
 
     #recipe-image {
@@ -30,7 +31,7 @@
 
       #text-block {
         margin-top: 100px;
-        margin-right: min(150px, 20%);
+        width: 600px;
 
         #recipe-header {
           @include constants.default-header;
@@ -42,6 +43,8 @@
           @include constants.default-text;
           color: constants.$light-black-color;
           line-height: 30px;
+          height: 90px;
+          overflow: hidden;
         }
       }
 

@@ -20,9 +20,6 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.detail(id).subscribe(result => {
       this.recipeDetail = result;
     });
-  }
 
-  fixText(input: string): string {
-    return input.replace(/\r\n|\r|\n/g, '<br>')
   }
 }

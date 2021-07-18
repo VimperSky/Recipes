@@ -58,7 +58,7 @@ import {HttpClientModule} from "@angular/common/http";
     },
     {
       provide: RecipeService,
-      useClass: TestRecipeService
+      useClass: ApiRecipeService
     },
   ],
   bootstrap: [AppComponent]
