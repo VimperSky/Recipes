@@ -2,6 +2,6 @@
 {
     public interface IDomainConfig
     {
-        int PageSize { get; }
+        int DefaultPageSize { get; }
     }
 }

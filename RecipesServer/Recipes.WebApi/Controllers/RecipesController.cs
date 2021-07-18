@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
+using Recipes.Domain.Repositories;
 using Recipes.WebApi.DTO;
 using Recipes.WebApi.DTO.Recipe;
 
@@ -13,10 +14,12 @@ namespace Recipes.WebApi.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRecipesRepository _recipesRepository;
 
-        public RecipesController(IUnitOfWork unitOfWork)
+        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository)
         {
             _unitOfWork = unitOfWork;
+            _recipesRepository = recipesRepository;
         }
         
         /// <summary>
@@ -30,12 +33,9 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]string searchString)
+        public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]uint pageSize, [FromQuery]string searchString)
         {
-            if (page == default)
-                page = 1;
-            
-            var (values, hasMore) = _unitOfWork.RecipesRepository.GetPage((int)page, searchString);
+            var (values, hasMore) = _recipesRepository.GetPage((int)page, (int)pageSize, searchString);
             if (values == null)
                 return NotFound();
 

@@ -11,7 +11,7 @@ namespace Recipes.Infrastructure
 {
     public static class Config
     {
-        public static void ConfigureScoped(this IServiceCollection services)
+        public static void ConfigureInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

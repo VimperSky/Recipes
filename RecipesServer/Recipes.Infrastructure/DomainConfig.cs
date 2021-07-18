@@ -4,6 +4,6 @@ namespace Recipes.Infrastructure
 {
     public class DomainConfig: IDomainConfig
     {
-        public int PageSize => 5;
+        public int DefaultPageSize => 5;
     }
 }

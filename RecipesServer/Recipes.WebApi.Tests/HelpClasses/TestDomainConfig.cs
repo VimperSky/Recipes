@@ -4,6 +4,6 @@ namespace Recipes.WebApi.Tests.HelpClasses
 {
     public class TestDomainConfig: IDomainConfig
     {
-        public int PageSize => 5;
+        public int DefaultPageSize => 5;
     }
 }
