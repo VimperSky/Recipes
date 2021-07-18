@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Domain;
@@ -17,8 +18,27 @@ namespace Recipes.Infrastructure.Repositories
             _recipesContext = recipesContext;
             _domainConfig = domainConfig;
         }
+
+        private IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
+        {
+            return searchString == null ? recipes : 
+                recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+        }
         
-        public (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, int pageSize, string searchString)
+        public int GetPagesCount(int pageSize, string searchString)
+        {
+            if (pageSize <= 0)
+                pageSize = _domainConfig.DefaultPageSize;
+            
+            IQueryable<Recipe> result = _recipesContext.Recipes;
+
+            // Сортируем по поисковой строке
+            result = SortBySearchString(result, searchString);
+            
+            return (int)Math.Ceiling(result.Count() * 1d / pageSize);
+        }
+
+        IList<Recipe> IRecipesRepository.GetPage(int page, int pageSize, string searchString)
         {
             if (page <= 0)
                 page = 1;
@@ -26,26 +46,12 @@ namespace Recipes.Infrastructure.Repositories
             if (pageSize <= 0)
                 pageSize = _domainConfig.DefaultPageSize;
             
-            IQueryable<Recipe> result = _recipesContext.Recipes;
-            
-            // Сортируем по поисковой строке
-            if (searchString != null)
-                result = result.Where(x => x.Name.Contains(searchString));
-            
-            // Скипаем элементы до текущей страницы
-            result = result.OrderBy(x => x.Id).Skip((page - 1) * pageSize);
-            
-            var hasMore = false;
-            // Берем либо кол-во элементов на странице, либо сколько осталось
-            if (result.Count() > pageSize)
-            {
-                result = result.Take(pageSize);
-                hasMore = true;
-            }
-
-            result = result.Include(x => x.IngredientBlocks);
-
-            return (result, hasMore);
+            return SortBySearchString(_recipesContext.Recipes, searchString)
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(x => x.IngredientBlocks)
+                .ToList();
         }
 
         public Recipe GetById(int id)
