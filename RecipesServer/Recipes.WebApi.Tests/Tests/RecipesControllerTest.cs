@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Recipes.WebApi.DTO;
-using Recipes.WebApi.DTO.Recipe;
 using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
 
@@ -15,7 +14,7 @@ namespace Recipes.WebApi.Tests.Tests
     {
         private readonly HttpClient _client;
 
-        public RecipesControllerTest(TestWebFactory<Startup> factory)
+        internal RecipesControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
@@ -23,7 +22,7 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        private async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
+        internal async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
         {
             // Act
             var response = await _client.GetAsync($"/recipes/list?page={page}");
@@ -34,7 +33,7 @@ namespace Recipes.WebApi.Tests.Tests
 
 
         [Fact]
-        private async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
+        internal async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
         {
             // Act
             var response = await _client.GetAsync("/recipes/list?page=5");
@@ -44,7 +43,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_ExistingPage_ReturnValues()
+        internal async Task Get_RecipeList_ExistingPage_ReturnValues()
         {
             // Act
             var response = await _client.GetAsync("/recipes/list?page=1");
@@ -57,7 +56,7 @@ namespace Recipes.WebApi.Tests.Tests
 
         
         [Fact]
-        private async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
+        internal async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
         {
             // Act
             var response = await _client.GetAsync("/recipes/list");
@@ -69,7 +68,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
+        internal async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
         {
             // Act
             var response = await _client.GetAsync("/recipes/list?searchString=abcdef");
@@ -81,7 +80,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
+        internal async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
         {
             // Arrange
             const string searchString = "па";

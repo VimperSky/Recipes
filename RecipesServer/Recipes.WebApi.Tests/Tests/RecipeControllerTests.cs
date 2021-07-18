@@ -13,7 +13,7 @@ namespace Recipes.WebApi.Tests.Tests
     {
         private readonly HttpClient _client;
 
-        public RecipeControllerTest(TestWebFactory<Startup> factory)
+        internal RecipeControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
@@ -21,7 +21,7 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        private async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
+        internal async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
         {
             // Act
             var response = await _client.GetAsync($"/recipe/detail?id={id}");
@@ -31,7 +31,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
+        internal async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
         {
             // Act
             var response = await _client.GetAsync("/recipe/detail?id=555");
@@ -41,7 +41,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_ExistingRecipeId_ReturnsValue()
+        internal async Task Get_Detail_ExistingRecipeId_ReturnsValue()
         {
             // Arrange
             const int recipeId = 1;
@@ -57,7 +57,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
+        internal async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
         {
             // Act
             var response = await _client.GetAsync("/recipe/detail");
