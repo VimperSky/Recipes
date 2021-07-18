@@ -24,11 +24,11 @@ namespace Recipes.Infrastructure.Repositories
 
             // Сортируем по поисковой строке
             if (searchString != null)
-                result = result.Where(x => x.Name.Contains(searchString));
+                result = result.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
             
             // Скипаем элементы до текущей страницы
             var skipElements = (page - 1) * _domainConfig.PageSize;
-            if (skipElements >= result.Count())
+            if (skipElements > result.Count())
             {
                 return (null, false);
             }

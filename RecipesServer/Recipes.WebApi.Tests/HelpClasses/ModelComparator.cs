@@ -12,7 +12,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
             return a.Header == b.Header && a.Value == b.Value;
         }
         
-        private static bool CompareIngredientLists(IReadOnlyList<Ingredient> a, IReadOnlyList<Ingredient> b)
+        private static bool CompareIngredientLists(IReadOnlyCollection<Ingredient> a, IReadOnlyList<Ingredient> b)
         {
             if (a.Count != b.Count)
                 return false;
@@ -32,5 +32,14 @@ namespace Recipes.WebApi.Tests.HelpClasses
                        recipeDetail.Ingredients);
         }
         
+        
+        public static bool CompareRecipes(Recipe recipe, RecipePreview recipePreview)
+        {
+            return recipe.Id == recipePreview.Id
+                   && recipe.Name == recipePreview.Name
+                   && recipe.Description == recipePreview.Description
+                   && recipe.Portions == recipePreview.Portions
+                   && recipe.CookingTimeMin == recipePreview.CookingTime;
+        }
     }
 }

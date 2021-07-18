@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -64,7 +65,34 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(TestDbCreator.FirstPageRecipes.Length, result.Recipes.Length);
+            CustomAssert.Equal(TestDbCreator.FirstPageRecipes, result.Recipes);
+        }
+        
+        [Fact]
+        private async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
+        {
+            // Act
+            var response = await _client.GetAsync("/recipes/list?searchString=abcdef");
+            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Empty(result.Recipes);
+        }
+        
+        [Fact]
+        private async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
+        {
+            // Arrange
+            const string searchString = "па";
+            
+            // Act
+            var response = await _client.GetAsync($"/recipes/list?searchString={searchString}");
+            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            CustomAssert.Equal(TestDbCreator.FirstPageRecipes.Where(x => x.Name.ToLower().Contains(searchString)).ToList(), result.Recipes);
         }
     }
 }
