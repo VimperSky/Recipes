@@ -5,8 +5,10 @@ namespace Recipes.Domain.Repositories
 {
     public interface IRecipesRepository
     {
-        (IEnumerable<Recipe> Values, bool HasMore) GetPage(int page, int pageSize, string searchString);
+        IList<Recipe> GetPage(int page, int pageSize, string searchString);
 
+        int GetPagesCount(int pageSize, string searchString);
+        
         Recipe GetById(int id);
     }
 }

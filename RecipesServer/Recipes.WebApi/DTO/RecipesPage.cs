@@ -5,6 +5,6 @@ namespace Recipes.WebApi.DTO
     public class RecipesPage
     {
         public RecipePreview[] Recipes { get; init; }
-        public bool HasMore { get; init; }
+        public int PageCount { get; init; }
     }
 }

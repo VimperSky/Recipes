@@ -35,14 +35,16 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]uint pageSize, [FromQuery]string searchString)
         {
-            var (values, hasMore) = _recipesRepository.GetPage((int)page, (int)pageSize, searchString);
-            if (values == null)
+            var pageCount = _recipesRepository.GetPagesCount((int)pageSize, searchString);
+            if (page > pageCount)
                 return NotFound();
+
+            var recipes = _recipesRepository.GetPage((int)page, (int)pageSize, searchString);
 
             var recipesPage = new RecipesPage
             {
-                Recipes = values.Select(RecipePreview.FromModel).ToArray(),
-                HasMore = hasMore
+                Recipes = recipes.Select(RecipePreview.FromModel).ToArray(),
+                PageCount = pageCount
             };
             
             return recipesPage;
