@@ -26,16 +26,17 @@ app-back-nav {
   }
 
   .bottom-block {
-
-    h3 {
+    #ingredient-header {
       @include constants.default-text;
       font-weight: 600;
       line-height: 30px;
       color: constants.$light-black-color;
+      margin: 0;
     }
 
     #ingredient-value {
       @include constants.default-text;
+      margin: 10px 0 20px;
       line-height: 30px;
       color: constants.$light-black-color;
     }
@@ -47,6 +48,13 @@ app-back-nav {
       width: 660px;
       margin-bottom: 20px;
       padding: 50px 70px 50px 70px;
+
+      #step-header {
+        @include constants.default-text;
+        font-weight: 600;
+        line-height: 30px;
+        color: constants.$light-black-color;
+      }
 
       #step-value {
         @include constants.default-text;

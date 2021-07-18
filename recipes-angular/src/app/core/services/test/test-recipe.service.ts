@@ -3,7 +3,7 @@ import {RecipeService} from "../recipe.service";
 import {RecipeDetail} from "../../models/recipe-detail";
 import {Observable, of} from "rxjs";
 
-const testImagesPath =  "../../../assets/images/test/";
+const testImagesPath =  "../../../../assets/images/test/";
 const recipeDetail: RecipeDetail = {
   id: 1,
   imagePath: testImagesPath + "r1.png",

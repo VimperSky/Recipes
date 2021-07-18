@@ -1,5 +1,5 @@
 <app-recipe-preview *ngFor="let recipe of recipesManager.recipeList" [recipe]="recipe"></app-recipe-preview>
 
-<div id="scroll-block" *ngIf="recipesManager.hasMoreValue">
+<div id="scroll-block" *ngIf="recipesManager.hasMore">
   <button mat-stroked-button id="load-more-button" (click)="loadMore()">Загрузить еще</button>
 </div>

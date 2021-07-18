@@ -15,8 +15,14 @@ export class RecipePreviewComponent implements OnInit {
   @Input()
   isClickable: boolean = true;
 
+  private static isLocalImagePath(imagePath: string): boolean {
+    return imagePath.startsWith("..");
+  }
+
   getImagePath(recipe: RecipePreview): string {
-    return environment.apiUrl + "/" + recipe.imagePath;
+    return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
+      ? recipe.imagePath
+      : environment.apiUrl + "/" + recipe.imagePath;
   }
 
   constructor() { }
