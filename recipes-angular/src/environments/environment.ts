@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:5000",
-  pageSize: 1,
+  backendUrl: "http://localhost:5000/",
+  pageSize: 3,
 };
 
 /*

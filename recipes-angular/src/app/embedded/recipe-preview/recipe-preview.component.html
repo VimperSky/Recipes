@@ -1,6 +1,6 @@
 <ng-template #recipeBlock>
   <div id="recipe-block">
-    <img src="{{getImagePath(recipe)}}" width="430" height="430" alt="{{recipe.imagePath}}" id="recipe-image">
+    <img src="{{getImagePath(recipe)}}" width="430" height="430" alt="{{getImagePath(recipe)}}" id="recipe-image">
     <div id="recipe-info">
       <div id="text-block">
         <h3 *ngIf="isClickable" id="recipe-header">{{recipe.name}}</h3>

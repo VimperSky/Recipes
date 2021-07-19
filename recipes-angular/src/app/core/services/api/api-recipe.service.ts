@@ -20,7 +20,7 @@ export class ApiRecipeService extends RecipeService {
   }
 
   detail(id: number): Observable<RecipeDetail> {
-    return this.http.get<RecipeDetail>(environment.apiUrl + `/recipe/detail?id=${id}`, httpOptions);
+    return this.http.get<RecipeDetail>(environment.backendUrl + `api/recipe/detail?id=${id}`, httpOptions);
   }
 
 }

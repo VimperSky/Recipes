@@ -25,7 +25,8 @@ export class ApiRecipesService extends RecipesService {
     if (pageSize) params = params.append("pageSize", pageSize)
     if (searchString) params = params.append('searchString', searchString);
 
-    return this.http.get<RecipePage>(environment.apiUrl + "/recipes/list", {...httpOptions, params: params});
+
+    return this.http.get<RecipePage>(environment.backendUrl + "api/recipes/list", {...httpOptions, params: params});
   }
 
 }

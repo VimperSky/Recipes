@@ -22,7 +22,7 @@ export class RecipePreviewComponent implements OnInit {
   getImagePath(recipe: RecipePreview): string {
     return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
       ? recipe.imagePath
-      : environment.apiUrl + "/" + recipe.imagePath;
+      : environment.backendUrl + recipe.imagePath;
   }
 
   constructor() { }

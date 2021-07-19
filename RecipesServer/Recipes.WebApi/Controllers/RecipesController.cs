@@ -9,7 +9,7 @@ using Recipes.WebApi.DTO.Recipe;
 namespace Recipes.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Produces("application/json")]
     public class RecipesController : ControllerBase
     {
