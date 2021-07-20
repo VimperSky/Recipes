@@ -26,6 +26,8 @@ import {RouterModule} from "@angular/router";
 import {ApiRecipeService} from "./core/services/api/api-recipe.service";
 import {ApiRecipesService} from "./core/services/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
+import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import {HttpClientModule} from "@angular/common/http";
     FooterComponent,
     RecipeDetailComponent,
     RecipePreviewComponent,
-    BackNavComponent
+    BackNavComponent,
+    AuthHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDividerModule
   ],
   providers: [
     {
