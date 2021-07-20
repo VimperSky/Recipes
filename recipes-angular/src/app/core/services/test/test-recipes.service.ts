@@ -60,7 +60,10 @@ export class TestRecipesService extends RecipesService{
     super();
   }
 
-  getRecipeList(pageSize: number = 1, page: number | null, searchString: string | null): Observable<RecipePage> {
+  getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipePage> {
+    if (pageSize <= 0)
+      pageSize = 1;
+
     if (page == null || page <= 0)
       page = 1;
 
