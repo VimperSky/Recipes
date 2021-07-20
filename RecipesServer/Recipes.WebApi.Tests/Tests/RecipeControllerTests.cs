@@ -23,7 +23,7 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        private async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
+        public async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id={id}");
@@ -33,7 +33,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
+        public async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id=555");
@@ -43,7 +43,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_ExistingRecipeId_ReturnsValue()
+        public async Task Get_Detail_ExistingRecipeId_ReturnsValue()
         {
             // Arrange
             const int recipeId = 1;
@@ -59,7 +59,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
+        public async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail");

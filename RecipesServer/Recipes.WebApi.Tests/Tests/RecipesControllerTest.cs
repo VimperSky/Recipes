@@ -23,7 +23,7 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        private async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
+        public async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?page={page}");
@@ -34,7 +34,7 @@ namespace Recipes.WebApi.Tests.Tests
 
 
         [Fact]
-        private async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
+        public async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?page=5");
@@ -44,7 +44,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_ExistingPage_ReturnValues()
+        public async Task Get_RecipeList_ExistingPage_ReturnValues()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?page=1");
@@ -57,7 +57,7 @@ namespace Recipes.WebApi.Tests.Tests
 
         
         [Fact]
-        private async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
+        public async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list");
@@ -69,7 +69,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
+        public async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?searchString=abcdef");
@@ -81,7 +81,7 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        private async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
+        public async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
         {
             // Arrange
             const string searchString = "па";
