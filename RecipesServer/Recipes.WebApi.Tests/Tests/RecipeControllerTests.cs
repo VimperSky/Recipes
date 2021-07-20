@@ -13,7 +13,9 @@ namespace Recipes.WebApi.Tests.Tests
     {
         private readonly HttpClient _client;
 
-        internal RecipeControllerTest(TestWebFactory<Startup> factory)
+        private const string BaseAddress = "api/recipe";
+        
+        public RecipeControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
@@ -21,33 +23,33 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        internal async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
+        private async Task Get_Detail_InvalidRecipeId_ReturnsBadRequest(string id)
         {
             // Act
-            var response = await _client.GetAsync($"/recipe/detail?id={id}");
+            var response = await _client.GetAsync($"{BaseAddress}/detail?id={id}");
             
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
         
         [Fact]
-        internal async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
+        private async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
         {
             // Act
-            var response = await _client.GetAsync("/recipe/detail?id=555");
+            var response = await _client.GetAsync($"{BaseAddress}/detail?id=555");
             
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
         
         [Fact]
-        internal async Task Get_Detail_ExistingRecipeId_ReturnsValue()
+        private async Task Get_Detail_ExistingRecipeId_ReturnsValue()
         {
             // Arrange
             const int recipeId = 1;
 
             // Act
-            var response = await _client.GetAsync($"/recipe/detail?id={recipeId}");
+            var response = await _client.GetAsync($"{BaseAddress}/detail?id={recipeId}");
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<RecipeDetail>(content);
 
@@ -57,10 +59,10 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        internal async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
+        private async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
         {
             // Act
-            var response = await _client.GetAsync("/recipe/detail");
+            var response = await _client.GetAsync($"{BaseAddress}/detail");
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);

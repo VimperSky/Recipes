@@ -67,9 +67,9 @@ namespace Recipes.WebApi
                     {
                         var paths = document.Paths.ToDictionary(item => item.Key.ToLowerInvariant(), item => item.Value);
                         document.Paths.Clear();
-                        foreach (var pathItem in paths)
+                        foreach (var (key, value) in paths)
                         {
-                            document.Paths.Add(pathItem.Key, pathItem.Value);
+                            document.Paths.Add(key, value);
                         }
                     });
                 });

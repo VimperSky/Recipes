@@ -13,8 +13,9 @@ namespace Recipes.WebApi.Tests.Tests
     public class RecipesControllerTest: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;
+        private const string BaseAddress = "api/recipes";
 
-        internal RecipesControllerTest(TestWebFactory<Startup> factory)
+        public RecipesControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
@@ -22,10 +23,10 @@ namespace Recipes.WebApi.Tests.Tests
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
-        internal async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
+        private async Task Get_RecipeList_InvalidPage_ReturnsBadRequest(string page)
         {
             // Act
-            var response = await _client.GetAsync($"/recipes/list?page={page}");
+            var response = await _client.GetAsync($"{BaseAddress}/list?page={page}");
             
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -33,20 +34,20 @@ namespace Recipes.WebApi.Tests.Tests
 
 
         [Fact]
-        internal async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
+        private async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
         {
             // Act
-            var response = await _client.GetAsync("/recipes/list?page=5");
+            var response = await _client.GetAsync($"{BaseAddress}/list?page=5");
             
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
         
         [Fact]
-        internal async Task Get_RecipeList_ExistingPage_ReturnValues()
+        private async Task Get_RecipeList_ExistingPage_ReturnValues()
         {
             // Act
-            var response = await _client.GetAsync("/recipes/list?page=1");
+            var response = await _client.GetAsync($"{BaseAddress}/list?page=1");
             var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
@@ -56,10 +57,10 @@ namespace Recipes.WebApi.Tests.Tests
 
         
         [Fact]
-        internal async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
+        private async Task Get_RecipeList_NoPagePassed_ReturnValuesFromFirstPage()
         {
             // Act
-            var response = await _client.GetAsync("/recipes/list");
+            var response = await _client.GetAsync($"{BaseAddress}/list");
             var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
@@ -68,10 +69,10 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        internal async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
+        private async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
         {
             // Act
-            var response = await _client.GetAsync("/recipes/list?searchString=abcdef");
+            var response = await _client.GetAsync($"{BaseAddress}/list?searchString=abcdef");
             var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
@@ -80,13 +81,13 @@ namespace Recipes.WebApi.Tests.Tests
         }
         
         [Fact]
-        internal async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
+        private async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
         {
             // Arrange
             const string searchString = "па";
             
             // Act
-            var response = await _client.GetAsync($"/recipes/list?searchString={searchString}");
+            var response = await _client.GetAsync($"{BaseAddress}/list?searchString={searchString}");
             var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
 
             // Assert
