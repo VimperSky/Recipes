@@ -25,9 +25,6 @@ namespace Recipes.WebApi.Tests.HelpClasses
 
             builder.ConfigureServices(services =>
             {
-                services.Remove(services.SingleOrDefault(d => d.ServiceType == typeof(IDomainConfig)));
-                services.AddScoped<IDomainConfig, TestDomainConfig>();
-                
                 using var scope = services.BuildServiceProvider().CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<RecipesContext>();

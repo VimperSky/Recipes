@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
@@ -33,7 +34,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPage> GetRecipes([FromQuery]uint page, [FromQuery]uint pageSize, [FromQuery]string searchString)
+        public ActionResult<RecipesPage> GetRecipes([FromQuery][Required]uint pageSize, [FromQuery]uint page, [FromQuery]string searchString)
         {
             var pageCount = _recipesRepository.GetPagesCount((int)pageSize, searchString);
             if (page > pageCount)

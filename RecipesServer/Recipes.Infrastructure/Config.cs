@@ -15,7 +15,6 @@ namespace Recipes.Infrastructure
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IDomainConfig, DomainConfig>();
         }
 
         public static void ConfigureDatabase(this IServiceCollection services, string connectionString)

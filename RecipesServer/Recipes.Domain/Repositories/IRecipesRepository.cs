@@ -5,7 +5,7 @@ namespace Recipes.Domain.Repositories
 {
     public interface IRecipesRepository
     {
-        IList<Recipe> GetPage(int page, int pageSize, string searchString);
+        IEnumerable<Recipe> GetPage(int page, int pageSize, string searchString);
 
         int GetPagesCount(int pageSize, string searchString);
         
