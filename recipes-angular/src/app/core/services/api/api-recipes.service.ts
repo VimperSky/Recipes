@@ -19,12 +19,12 @@ export class ApiRecipesService extends RecipesService {
   }
 
 
-  public getRecipeList(page: number | null, pageSize: number | null, searchString: string | null): Observable<RecipePage> {
+  public getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipePage> {
     let params = new HttpParams();
-    if (page) params = params.append("page", page);
-    if (pageSize) params = params.append("pageSize", pageSize)
-    if (searchString) params = params.append('searchString', searchString);
 
+    params = params.append("pageSize", pageSize)
+    if (page) params = params.append("page", page);
+    if (searchString) params = params.append('searchString', searchString);
 
     return this.http.get<RecipePage>(environment.backendUrl + "api/recipes/list", {...httpOptions, params: params});
   }

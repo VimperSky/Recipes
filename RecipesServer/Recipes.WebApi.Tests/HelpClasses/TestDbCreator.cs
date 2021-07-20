@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
 
@@ -6,7 +7,9 @@ namespace Recipes.WebApi.Tests.HelpClasses
 {
     public static class TestDbCreator
     {
-        public static readonly Recipe[] FirstPageRecipes =  {
+        public static Recipe[] FirstPageRecipes => AllRecipes.Take(Constants.PageSize).ToArray();
+        
+        public static readonly Recipe[] AllRecipes =  {
                 new()
                 {
                     Name = "Клубичная Панна-Котта", 
@@ -152,7 +155,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
         
         public static void FillWithStartData(RecipesContext context)
         {
-            foreach (var recipe in FirstPageRecipes)
+            foreach (var recipe in AllRecipes)
                 context.Recipes.Add(recipe);
             
             context.SaveChanges();

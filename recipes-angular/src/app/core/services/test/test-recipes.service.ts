@@ -53,8 +53,6 @@ export const recipes: RecipePreview[] = [
   }
 ]
 
-const defaultPageSize: number = 2;
-
 @Injectable()
 export class TestRecipesService extends RecipesService{
 
@@ -62,12 +60,9 @@ export class TestRecipesService extends RecipesService{
     super();
   }
 
-  getRecipeList(page: number | null, pageSize: number | null, searchString: string | null): Observable<RecipePage> {
+  getRecipeList(pageSize: number = 1, page: number | null, searchString: string | null): Observable<RecipePage> {
     if (page == null || page <= 0)
       page = 1;
-
-    if (pageSize == null || pageSize <= 0)
-      pageSize = defaultPageSize;
 
     let result = recipes;
     if (searchString != null) {

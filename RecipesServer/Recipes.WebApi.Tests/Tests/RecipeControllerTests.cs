@@ -55,7 +55,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(TestDbCreator.FirstPageRecipes[recipeId - 1], result);
+            CustomAssert.Equal(TestDbCreator.AllRecipes[recipeId - 1], result);
         }
         
         [Fact]

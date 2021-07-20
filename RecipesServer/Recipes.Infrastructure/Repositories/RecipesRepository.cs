@@ -37,12 +37,12 @@ namespace Recipes.Infrastructure.Repositories
 
         IEnumerable<Recipe> IRecipesRepository.GetPage(int page, int pageSize, string searchString)
         {
-            if (page <= 0)
-                page = 1;
-            
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize));
             
+            if (page <= 0)
+                throw new ArgumentOutOfRangeException(nameof(page));
+
             return SortBySearchString(_recipesContext.Recipes, searchString)
                 .OrderBy(x => x.Id)
                 .Skip((page - 1) * pageSize)

@@ -32,20 +32,20 @@ export class RecipesManagerService {
   }
 
   public loadInitial() {
-    this.recipesService.getRecipeList(1, environment.pageSize, null).subscribe(result => {
+    this.recipesService.getRecipeList(environment.pageSize, 1, null).subscribe(result => {
       this.update(result, true);
     });
   }
 
   public loadMore() {
-    this.recipesService.getRecipeList(this.currentPage + 1, environment.pageSize, null).subscribe(result => {
+    this.recipesService.getRecipeList(environment.pageSize, this.currentPage + 1, null).subscribe(result => {
       this.update(result);
       this.currentPage += 1;
     });
   }
 
   public search(searchString: string) {
-    this.recipesService.getRecipeList(1, environment.pageSize, searchString).subscribe(result => {
+    this.recipesService.getRecipeList(environment.pageSize, 1, searchString).subscribe(result => {
       this.update(result, true);
     });
   }

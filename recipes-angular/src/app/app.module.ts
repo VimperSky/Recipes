@@ -54,11 +54,11 @@ import {HttpClientModule} from "@angular/common/http";
   providers: [
     {
       provide: RecipesService,
-      useClass: TestRecipesService
+      useClass: ApiRecipesService
     },
     {
       provide: RecipeService,
-      useClass: TestRecipeService
+      useClass: ApiRecipeService
     },
   ],
   bootstrap: [AppComponent]

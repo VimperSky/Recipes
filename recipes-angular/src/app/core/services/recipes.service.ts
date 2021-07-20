@@ -4,5 +4,5 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export abstract class RecipesService {
-  abstract getRecipeList(page: number | null, pageSize: number | null, searchString: string | null): Observable<RecipePage>;
+  abstract getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipePage>;
 }
