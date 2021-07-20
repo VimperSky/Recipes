@@ -17,10 +17,9 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
-    this.recipeDetail = this.recipeService.detail(id);
-  }
+    this.recipeService.detail(id).subscribe(result => {
+      this.recipeDetail = result;
+    });
 
-  fixText(input: string): string {
-    return input.replace(/\r\n|\r|\n/g, '<br>')
   }
 }

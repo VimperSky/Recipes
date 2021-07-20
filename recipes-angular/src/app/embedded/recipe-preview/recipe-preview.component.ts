@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RecipePreview} from "../../core/models/recipe-preview";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-recipe-preview',
@@ -13,6 +14,16 @@ export class RecipePreviewComponent implements OnInit {
 
   @Input()
   isClickable: boolean = true;
+
+  private static isLocalImagePath(imagePath: string): boolean {
+    return imagePath.startsWith("..");
+  }
+
+  getImagePath(recipe: RecipePreview): string {
+    return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
+      ? recipe.imagePath
+      : environment.backendUrl + recipe.imagePath;
+  }
 
   constructor() { }
 

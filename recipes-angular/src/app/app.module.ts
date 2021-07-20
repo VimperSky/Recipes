@@ -23,6 +23,9 @@ import {TestRecipeService} from "./core/services/test/test-recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 import { BackNavComponent } from './embedded/back-nav/back-nav.component';
 import {RouterModule} from "@angular/router";
+import {ApiRecipeService} from "./core/services/api/api-recipe.service";
+import {ApiRecipesService} from "./core/services/api/api-recipes.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -45,16 +48,17 @@ import {RouterModule} from "@angular/router";
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     {
-    provide: RecipesService,
-    useClass: TestRecipesService
+      provide: RecipesService,
+      useClass: ApiRecipesService
     },
     {
       provide: RecipeService,
-      useClass: TestRecipeService
+      useClass: ApiRecipeService
     },
   ],
   bootstrap: [AppComponent]
