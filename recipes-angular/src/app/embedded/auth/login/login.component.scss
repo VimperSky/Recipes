@@ -1,0 +1,81 @@
+@use '../../../../constants';
+
+.login-dialog-container {
+  h1 {
+    @include constants.default-header;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-transform: capitalize;
+  }
+
+  #content {
+    margin-top: 40px;
+    text-align: center;
+
+    .mat-dialog-content {
+      overflow-y: hidden !important;
+      mat-form-field {
+        width: 100%;
+        height: 50px;
+
+        @include constants.default-text;
+        font-size: 16px;
+        line-height: 28px;
+        color: #25292D;
+      }
+
+      #password-block {
+        margin-top: 20px;
+      }
+    }
+
+    .mat-dialog-actions {
+      display: block;
+      margin-top: 30px;
+
+      #main-buttons-block {
+        display: flex;
+        justify-content: space-between;
+
+        .action-button {
+          @include constants.default-text;
+          width: 280px;
+          height: 60px;
+          line-height: 28px;
+          font-weight: 600;
+          border: 1px solid constants.$accent-color;
+          border-radius: 16px;
+          text-align: center;
+        }
+
+        #login-button {
+          background: constants.$accent-color;
+          color: constants.$contrast-white;
+        }
+
+        #cancel-button {
+          background: transparent;
+          color: constants.$accent-color;
+        }
+
+      }
+
+      #register-button {
+        margin-top: 40px;
+
+        @include constants.default-text;
+        font-weight: 600;
+        width: 240px;
+        height: 28px;
+        line-height: 28px;
+        background: none;
+        border: none;
+        padding: 0;
+        color: constants.$accent-color;
+        border-bottom: 1px dashed;
+      }
+    }
+  }
+
+}

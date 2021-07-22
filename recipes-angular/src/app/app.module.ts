@@ -16,18 +16,18 @@ import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RecipesService} from "./core/services/recipes.service";
-import {TestRecipesService} from "./core/services/test/test-recipes.service";
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 import {RecipeService} from "./core/services/recipe.service";
-import {TestRecipeService} from "./core/services/test/test-recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 import { BackNavComponent } from './embedded/back-nav/back-nav.component';
-import {RouterModule} from "@angular/router";
 import {ApiRecipeService} from "./core/services/api/api-recipe.service";
 import {ApiRecipesService} from "./core/services/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
 import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
+import { AuthComponent } from './embedded/auth/auth.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { LoginComponent } from './embedded/auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,9 @@ import {MatDividerModule} from "@angular/material/divider";
     RecipeDetailComponent,
     RecipePreviewComponent,
     BackNavComponent,
-    AuthHeaderComponent
+    AuthHeaderComponent,
+    AuthComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import {MatDividerModule} from "@angular/material/divider";
     MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [
     {

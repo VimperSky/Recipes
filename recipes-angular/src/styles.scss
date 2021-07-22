@@ -22,3 +22,10 @@ html, body {
   font-family: Montserrat, "Montserrat", sans-serif;
   background-color: constants.$primary-color;
 }
+
+.login-dialog-container {
+  .mat-dialog-container {
+    padding: 60px;
+  }
+}
+

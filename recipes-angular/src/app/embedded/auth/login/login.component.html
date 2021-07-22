@@ -1,0 +1,40 @@
+<div class="login-dialog-container">
+  <h1 mat-dialog-title>Войти</h1>
+  <div id="content">
+    <div mat-dialog-content>
+      <form [formGroup]="loginForm">
+        <p>
+          <mat-form-field>
+            <mat-label>Логин</mat-label>
+            <input type="text" matInput [formControl]="login">
+
+<!--            <mat-error *ngIf="login.hasError('required')">-->
+<!--              Введите логин-->
+<!--            </mat-error>-->
+          </mat-form-field>
+        </p>
+
+
+        <p id="password-block">
+          <mat-form-field class="password-field">
+            <mat-label>Пароль</mat-label>
+            <input type="text" matInput [formControl]="password">
+
+<!--            <mat-error *ngIf="login.hasError('required')">-->
+<!--              Введите пароль-->
+<!--            </mat-error>-->
+          </mat-form-field>
+        </p>
+      </form>
+    </div>
+
+    <div mat-dialog-actions>
+      <div id="main-buttons-block">
+        <button mat-stroked-button id="login-button" class="action-button" (click)="logIn()">Войти</button>
+        <button mat-stroked-button id="cancel-button" class="action-button" (click)="exit()">Отмена</button>
+      </div>
+
+     <button id="register-button" (click)="exit()">У меня еще нет аккаунта</button>
+    </div>
+  </div>
+</div>

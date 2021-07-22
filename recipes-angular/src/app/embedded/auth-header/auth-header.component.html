@@ -2,10 +2,10 @@
 
 <ng-template #authorized>
   <div id="authorized-block">
-    <div class="hello-block">
+    <button mat-button class="hello-btn">
       <mat-icon class="account-icon">account_circle</mat-icon>
       <span class="hello-text">Привет, {{name}}</span>
-    </div>
+    </button>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
     <button mat-icon-button id="exit-btn" (click)="logOut()">
       <mat-icon id="logout-icon">logout</mat-icon>
@@ -16,10 +16,10 @@
 
 <ng-template #nonAuthorized>
   <div id="non-authorized-block">
-    <div class="hello-block">
+    <button mat-button class="hello-btn" (click)="logIn()">
       <mat-icon class="account-icon">account_circle</mat-icon>
       <span class="hello-text">Войти</span>
-    </div>
+    </button>
   </div>
 
 </ng-template>
