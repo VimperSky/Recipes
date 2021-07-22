@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {AuthComponent} from "../auth/auth.component";
 import {LoginComponent} from "../auth/login/login.component";
+import {RegisterComponent} from "../auth/register/register.component";
 
 @Component({
   selector: 'app-auth-header',
@@ -21,10 +21,11 @@ export class AuthHeaderComponent implements OnInit {
 
   logIn() {
     const dialogRef = this.dialog.open(LoginComponent, {
-      height: '480px',
-      width: '700px',
       panelClass: 'login-dialog-container'
     });
+    // const dialogRef = this.dialog.open(RegisterComponent, {
+    //   panelClass: 'register-dialog-container'
+    // });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

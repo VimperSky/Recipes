@@ -25,7 +25,17 @@ html, body {
 
 .login-dialog-container {
   .mat-dialog-container {
-    padding: 60px;
+    padding: 0;
+    height: 480px;
+    width: 700px;
+  }
+}
+
+.register-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+    height: 560px;
+    width: 700px;
   }
 }
 

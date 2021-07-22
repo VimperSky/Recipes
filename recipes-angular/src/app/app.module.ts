@@ -25,9 +25,10 @@ import {ApiRecipesService} from "./core/services/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
 import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
-import { AuthComponent } from './embedded/auth/auth.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { LoginComponent } from './embedded/auth/login/login.component';
+import { RegisterComponent } from './embedded/auth/register/register.component';
+import {AuthComponent} from "./embedded/auth/auth/auth.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoginComponent } from './embedded/auth/login/login.component';
     BackNavComponent,
     AuthHeaderComponent,
     AuthComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

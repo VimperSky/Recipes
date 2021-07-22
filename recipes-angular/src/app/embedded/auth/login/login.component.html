@@ -1,40 +1,35 @@
-<div class="login-dialog-container">
+<button mat-icon-button class="close-icon" mat-dialog-close>
+  <mat-icon>close</mat-icon>
+</button>
+
+<div class="content-container">
   <h1 mat-dialog-title>Войти</h1>
-  <div id="content">
+  <div class="content">
     <div mat-dialog-content>
       <form [formGroup]="loginForm">
-        <p>
+        <div>
           <mat-form-field>
             <mat-label>Логин</mat-label>
             <input type="text" matInput [formControl]="login">
-
-<!--            <mat-error *ngIf="login.hasError('required')">-->
-<!--              Введите логин-->
-<!--            </mat-error>-->
           </mat-form-field>
-        </p>
+        </div>
 
-
-        <p id="password-block">
+        <div class="block-with-margin">
           <mat-form-field class="password-field">
             <mat-label>Пароль</mat-label>
-            <input type="text" matInput [formControl]="password">
-
-<!--            <mat-error *ngIf="login.hasError('required')">-->
-<!--              Введите пароль-->
-<!--            </mat-error>-->
+            <input type="password" matInput [formControl]="password">
           </mat-form-field>
-        </p>
+        </div>
       </form>
     </div>
 
     <div mat-dialog-actions>
-      <div id="main-buttons-block">
-        <button mat-stroked-button id="login-button" class="action-button" (click)="logIn()">Войти</button>
-        <button mat-stroked-button id="cancel-button" class="action-button" (click)="exit()">Отмена</button>
+      <div class="main-buttons-block">
+        <button mat-stroked-button class="action-button submit-button" (click)="logIn()">Войти</button>
+        <button mat-stroked-button class="action-button cancel-button" mat-dialog-close>Отмена</button>
       </div>
 
-     <button id="register-button" (click)="exit()">У меня еще нет аккаунта</button>
+     <button class="extra-button" mat-button mat-dialog-close (close)="register()">У меня еще нет аккаунта</button>
     </div>
   </div>
 </div>

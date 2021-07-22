@@ -1,0 +1,17 @@
+@use '../../../../constants';
+
+#password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  #password-repeat {
+    margin-left: 25px;
+  }
+
+}
+
+.mat-dialog-content {
+  height: 230px;
+}
+

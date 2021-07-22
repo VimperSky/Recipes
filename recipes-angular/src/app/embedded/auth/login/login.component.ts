@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['../auth-styles.scss', './login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -26,10 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  exit() {
-
   }
 
 
