@@ -28,7 +28,6 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatDialogModule} from "@angular/material/dialog";
 import { LoginComponent } from './embedded/auth/login/login.component';
 import { RegisterComponent } from './embedded/auth/register/register.component';
-import {AuthComponent} from "./embedded/auth/auth/auth.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import {AuthComponent} from "./embedded/auth/auth/auth.component";
     RecipePreviewComponent,
     BackNavComponent,
     AuthHeaderComponent,
-    AuthComponent,
     LoginComponent,
     RegisterComponent
   ],
