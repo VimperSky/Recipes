@@ -15,9 +15,9 @@ import { RecipeListComponent } from './embedded/recipe-list/recipe-list.componen
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {RecipesService} from "./core/services/recipes.service";
+import {RecipesService} from "./core/services/abstract/recipes.service";
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
-import {RecipeService} from "./core/services/recipe.service";
+import {RecipeService} from "./core/services/abstract/recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 import { BackNavComponent } from './embedded/back-nav/back-nav.component';
 import {ApiRecipeService} from "./core/services/api/api-recipe.service";

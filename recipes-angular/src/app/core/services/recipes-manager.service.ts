@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {RecipePreview} from "../models/recipe-preview";
 import {RecipePage} from "../models/recipe-page";
-import {RecipesService} from "./recipes.service";
+import {RecipesService} from "./abstract/recipes.service";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
