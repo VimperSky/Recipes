@@ -9,7 +9,7 @@ import { MatButtonModule} from "@angular/material/button";
 import { HeaderComponent } from './embedded/header/header.component';
 import { RecipeSearchComponent } from './embedded/recipe-search/recipe-search.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { RecipeListComponent } from './embedded/recipe-list/recipe-list.component';
 import {MatIconModule} from "@angular/material/icon";
@@ -25,7 +25,7 @@ import {ApiRecipesService} from "./core/services/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
 import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import { LoginComponent } from './embedded/auth/login/login.component';
 import { RegisterComponent } from './embedded/auth/register/register.component';
 
@@ -67,6 +67,15 @@ import { RegisterComponent } from './embedded/auth/register/register.component';
       provide: RecipeService,
       useClass: ApiRecipeService
     },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {hasBackdrop: false}
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {appearance: 'outline'}
+    }
+
   ],
   bootstrap: [AppComponent]
 })

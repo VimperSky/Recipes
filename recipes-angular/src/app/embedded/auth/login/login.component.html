@@ -10,14 +10,14 @@
         <div>
           <mat-form-field>
             <mat-label>Логин</mat-label>
-            <input type="text" matInput [formControl]="login">
+            <input required type="text" matInput [formControl]="login">
           </mat-form-field>
         </div>
 
         <div class="block-with-margin">
           <mat-form-field class="password-field">
             <mat-label>Пароль</mat-label>
-            <input type="password" matInput [formControl]="password">
+            <input required type="password" matInput [formControl]="password">
           </mat-form-field>
         </div>
       </form>
@@ -25,11 +25,11 @@
 
     <div mat-dialog-actions>
       <div class="main-buttons-block">
-        <button mat-stroked-button class="action-button submit-button" (click)="logIn()">Войти</button>
+        <button type="submit" mat-stroked-button class="action-button submit-button" (click)="logIn()">Войти</button>
         <button mat-stroked-button class="action-button cancel-button" mat-dialog-close>Отмена</button>
       </div>
 
-     <button class="extra-button" mat-button mat-dialog-close (close)="register()">У меня еще нет аккаунта</button>
+     <button class="extra-button" mat-button mat-dialog-close (click)="register()">У меня еще нет аккаунта</button>
     </div>
   </div>
 </div>

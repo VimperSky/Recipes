@@ -23,9 +23,7 @@ export class AuthHeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
-    // const dialogRef = this.dialog.open(RegisterComponent, {
-    //   panelClass: 'register-dialog-container'
-    // });
+
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

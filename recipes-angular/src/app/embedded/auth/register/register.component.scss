@@ -5,13 +5,21 @@
   justify-content: space-between;
   align-items: center;
 
-  #password-repeat {
+  #password-second {
     margin-left: 25px;
   }
+}
 
+#password-extra {
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 25px;
 }
 
 .mat-dialog-content {
   height: 230px;
 }
 
+.mat-dialog-actions {
+  margin-top: 20px;
+}
