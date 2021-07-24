@@ -1,6 +1,6 @@
 import {RecipePreview} from "./recipe-preview";
 
-export interface RecipePage {
+export interface RecipesPage {
   recipes: RecipePreview[];
   pageCount: number;
 }

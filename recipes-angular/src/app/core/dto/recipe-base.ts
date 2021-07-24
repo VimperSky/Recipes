@@ -2,6 +2,6 @@ export interface RecipeBase {
   imagePath: string;
   name: string;
   description: string;
-  cookingTime: number;
+  cookingTimeMin: number;
   portions: number;
 }
