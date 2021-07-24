@@ -9,7 +9,7 @@ using Recipes.Infrastructure;
 
 namespace Recipes.WebApi.Migrations
 {
-    [DbContext(typeof(RecipesContext))]
+    [DbContext(typeof(RecipesDbContext))]
     [Migration("20210724102657_IngredientRenameTextToValue")]
     partial class IngredientRenameTextToValue
     {

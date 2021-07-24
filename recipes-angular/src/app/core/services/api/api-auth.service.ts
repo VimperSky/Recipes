@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import {AuthService} from "../abstract/auth.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {RecipeService} from "../abstract/recipe.service";
-import {RecipeDetail} from "../../dto/recipe/recipe-detail";
 import {environment} from "../../../../environments/environment";
 import {Observable} from "rxjs";
+import {Register} from "../../dto/auth/register";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,16 +12,21 @@ const httpOptions = {
   })
 };
 
-const basePath: string = "/api/recipe"
+const basePath: string = "/api/auth"
 
-@Injectable()
-export class ApiRecipeService extends RecipeService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiAuthService extends AuthService {
+
   constructor(private http: HttpClient) {
     super();
   }
 
-  detail(id: number): Observable<RecipeDetail> {
-    return this.http.get<RecipeDetail>(environment.backendUrl + basePath + `/detail?id=${id}`, httpOptions);
+  auth(): void {
   }
 
+  register(register: Register): Observable<boolean> {
+    return this.http.post<boolean>(environment.backendUrl + basePath + "/register", register, httpOptions);
+  }
 }

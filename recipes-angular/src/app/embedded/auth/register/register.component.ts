@@ -8,6 +8,8 @@ import {
 } from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoginComponent} from "../login/login.component";
+import {AuthService} from "../../../core/services/abstract/auth.service";
+import {Register} from "../../../core/dto/auth/register";
 
 
 @Component({
@@ -35,8 +37,10 @@ export class RegisterComponent implements OnInit {
   ]);
 
 
+  constructor(private dialog: MatDialog,
+              private dialogRef: MatDialogRef<RegisterComponent>, fb: FormBuilder,
+              private authService: AuthService) {
 
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<RegisterComponent>, fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
       secondPassword: this.confirmPassword
@@ -86,8 +90,13 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.password.errors)
-    console.log(this.passwordForm.errors)
     this.registerForm.markAllAsTouched();
+    alert (this.registerForm.valid)
+    if (this.registerForm.valid) {
+      let registerDto: Register = {login: this.login.value, passwordHash: this.password.value, name: this.name.value }
+      this.authService.register(registerDto).subscribe((val: boolean) => {
+        this.dialogRef.close()
+      })
+    }
   }
 }

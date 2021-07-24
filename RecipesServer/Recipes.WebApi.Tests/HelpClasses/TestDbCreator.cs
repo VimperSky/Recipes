@@ -153,12 +153,12 @@ namespace Recipes.WebApi.Tests.HelpClasses
                 },
             }; 
         
-        public static void FillWithStartData(RecipesContext context)
+        public static void FillWithStartData(RecipesDbContext dbContext)
         {
             foreach (var recipe in AllRecipes)
-                context.Recipes.Add(recipe);
+                dbContext.Recipes.Add(recipe);
             
-            context.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Recipes.Infrastructure
             var services = scope.ServiceProvider;
             try
             {
-                var context = services.GetRequiredService<RecipesContext>();
+                var context = services.GetRequiredService<RecipesDbContext>();
                 context.Database.Migrate();
                 FillWithStartData(context);
             }
@@ -29,9 +29,9 @@ namespace Recipes.Infrastructure
             }
         }
         
-        private static void FillWithStartData(RecipesContext context)
+        private static void FillWithStartData(RecipesDbContext dbContext)
         {
-            if (context.Recipes.Any())
+            if (dbContext.Recipes.Any())
             {
                 return;   // DB has been seeded
             }
@@ -220,9 +220,9 @@ namespace Recipes.Infrastructure
             };
             
             foreach (var recipe in recipes)
-                context.Recipes.Add(recipe);
+                dbContext.Recipes.Add(recipe);
             
-            context.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }

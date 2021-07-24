@@ -10,8 +10,8 @@ using Recipes.Infrastructure;
 namespace Recipes.WebApi.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    [Migration("20210714182059_1")]
-    partial class _1
+    [Migration("20210724125510_AddUserModel")]
+    partial class AddUserModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,40 @@ namespace Recipes.WebApi.Migrations
                     b.ToTable("recipe");
                 });
 
+            modelBuilder.Entity("Recipes.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("text")
+                        .HasColumnName("bio");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("text")
+                        .HasColumnName("login");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.HasIndex("Login")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_login");
+
+                    b.ToTable("user");
+                });
+
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
                     b.OwnsMany("Recipes.Domain.Models.RecipeIngredientBlock", "IngredientBlocks", b1 =>
@@ -81,9 +115,9 @@ namespace Recipes.WebApi.Migrations
                                 .HasColumnType("integer")
                                 .HasColumnName("position");
 
-                            b1.Property<string>("Text")
+                            b1.Property<string>("Value")
                                 .HasColumnType("text")
-                                .HasColumnName("text");
+                                .HasColumnName("value");
 
                             b1.HasKey("RecipeId", "Id")
                                 .HasName("pk_recipe_ingredient_block");

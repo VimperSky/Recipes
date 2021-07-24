@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Recipes.Domain;
+using Recipes.Domain.Repositories;
 using Recipes.WebApi.DTO.Auth;
 
 namespace Recipes.WebApi.Controllers
@@ -8,11 +12,36 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class AuthController: ControllerBase
     {
-        [HttpPost("Registration")] 
-        public IActionResult RegisterUser([FromBody] Register register)
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuthRepository _authRepository;
+
+        public AuthController(IMapper mapper, IUnitOfWork unitOfWork, IAuthRepository authRepository)
         {
-            
-            return Ok();
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _authRepository = authRepository;
+        }
+
+        /// <summary>
+        /// Register a new user account
+        /// </summary>
+        /// <param name="register"></param>
+        /// <response code="200">Account registered</response>
+        /// <response code="403">Login is taken</response>
+        /// <returns></returns>
+        [HttpPost("register")] 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public IActionResult RegisterUser([FromBody]Register register)
+        {
+            if (_authRepository.Register(register.Login, register.PasswordHash, register.Name))
+            {
+                _unitOfWork.Commit();
+                return Ok();
+            }
+
+            return Forbid();
         }
     }
 }

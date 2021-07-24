@@ -27,7 +27,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
             {
                 using var scope = services.BuildServiceProvider().CreateScope();
                 var scopedServices = scope.ServiceProvider;
-                var db = scopedServices.GetRequiredService<RecipesContext>();
+                var db = scopedServices.GetRequiredService<RecipesDbContext>();
 
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();

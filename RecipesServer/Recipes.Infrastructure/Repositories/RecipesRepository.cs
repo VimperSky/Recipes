@@ -9,11 +9,11 @@ namespace Recipes.Infrastructure.Repositories
 {
     public class RecipesRepository: IRecipesRepository
     {
-        private readonly RecipesContext _recipesContext;
+        private readonly RecipesDbContext _recipesDbContext;
 
-        public RecipesRepository(RecipesContext recipesContext)
+        public RecipesRepository(RecipesDbContext recipesDbContext)
         {
-            _recipesContext = recipesContext;
+            _recipesDbContext = recipesDbContext;
         }
 
         private IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
@@ -27,7 +27,7 @@ namespace Recipes.Infrastructure.Repositories
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize));
             
-            IQueryable<Recipe> result = _recipesContext.Recipes;
+            IQueryable<Recipe> result = _recipesDbContext.Recipes;
 
             // Сортируем по поисковой строке
             result = SortBySearchString(result, searchString);
@@ -43,7 +43,7 @@ namespace Recipes.Infrastructure.Repositories
             if (page <= 0)
                 throw new ArgumentOutOfRangeException(nameof(page));
 
-            return SortBySearchString(_recipesContext.Recipes, searchString)
+            return SortBySearchString(_recipesDbContext.Recipes, searchString)
                 .OrderBy(x => x.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -53,7 +53,7 @@ namespace Recipes.Infrastructure.Repositories
 
         public Recipe GetById(int id)
         {
-            return _recipesContext.Recipes.Find(id);
+            return _recipesDbContext.Recipes.Find(id);
         }
     }
 }

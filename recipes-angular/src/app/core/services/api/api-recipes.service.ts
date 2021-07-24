@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {RecipesService} from "../abstract/recipes.service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-import {RecipesPage} from "../../dto/recipes-page";
+import {RecipesPage} from "../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
 
 const httpOptions = {
@@ -12,12 +12,14 @@ const httpOptions = {
   })
 };
 
+const basePath: string = "/api/recipes"
+
 @Injectable()
 export class ApiRecipesService extends RecipesService {
+
   constructor(private http: HttpClient) {
     super();
   }
-
 
   public getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipesPage> {
     let params = new HttpParams();
@@ -26,7 +28,7 @@ export class ApiRecipesService extends RecipesService {
     if (page) params = params.append("page", page);
     if (searchString) params = params.append('searchString', searchString);
 
-    return this.http.get<RecipesPage>(environment.backendUrl + "api/recipes/list", {...httpOptions, params: params});
+    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {...httpOptions, params: params});
   }
 
 }

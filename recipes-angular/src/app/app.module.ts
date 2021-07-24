@@ -26,8 +26,10 @@ import {HttpClientModule} from "@angular/common/http";
 import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
-import { LoginComponent } from './embedded/auth/login/login.component';
-import { RegisterComponent } from './embedded/auth/register/register.component';
+import {LoginComponent } from './embedded/auth/login/login.component';
+import {RegisterComponent } from './embedded/auth/register/register.component';
+import {AuthService} from "./core/services/abstract/auth.service";
+import {ApiAuthService} from "./core/services/api/api-auth.service";
 
 @NgModule({
   declarations: [
@@ -66,6 +68,10 @@ import { RegisterComponent } from './embedded/auth/register/register.component';
     {
       provide: RecipeService,
       useClass: ApiRecipeService
+    },
+    {
+      provide: AuthService,
+      useClass: ApiAuthService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

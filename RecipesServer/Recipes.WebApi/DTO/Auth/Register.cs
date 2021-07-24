@@ -8,9 +8,9 @@ namespace Recipes.WebApi.DTO.Auth
         public string Name { get; init; }
         
         [Required]
-        public string NickName { get; init; }
+        public string Login { get; init; }
         
         [Required]
-        public string Password { get; init; }
+        public string PasswordHash { get; init; }
     }
 }

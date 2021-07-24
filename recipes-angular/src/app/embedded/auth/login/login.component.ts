@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ]);
 
 
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<LoginComponent>, fb: FormBuilder) {
+  constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<LoginComponent>, fb: FormBuilder) {
     this.loginForm = fb.group( {
       login: this.login,
       password: this.password

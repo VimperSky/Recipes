@@ -8,7 +8,7 @@ using Recipes.Infrastructure;
 
 namespace Recipes.WebApi.Migrations
 {
-    [DbContext(typeof(RecipesContext))]
+    [DbContext(typeof(RecipesDbContext))]
     partial class RecipesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -55,6 +55,40 @@ namespace Recipes.WebApi.Migrations
                         .HasName("pk_recipe");
 
                     b.ToTable("recipe");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("text")
+                        .HasColumnName("bio");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("text")
+                        .HasColumnName("login");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.HasIndex("Login")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_login");
+
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>

@@ -14,6 +14,7 @@ namespace Recipes.Infrastructure
         public static void ConfigureInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -21,7 +22,7 @@ namespace Recipes.Infrastructure
         {
             services.AddDatabaseDeveloperPageExceptionFilter();
             
-            services.AddDbContext<RecipesContext>(options => 
+            services.AddDbContext<RecipesDbContext>(options => 
                 options.UseNpgsql(connectionString, 
                         x => x.MigrationsAssembly("Recipes.WebApi"))
                     .UseSnakeCaseNamingConvention());
