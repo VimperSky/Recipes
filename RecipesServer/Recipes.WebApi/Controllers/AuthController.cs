@@ -27,12 +27,12 @@ namespace Recipes.WebApi.Controllers
         /// Register a new user account
         /// </summary>
         /// <param name="register"></param>
-        /// <response code="200">Account registered</response>
-        /// <response code="403">Login is taken</response>
+        /// <response code="200">Successfully registered</response>
+        /// <response code="409">Login is taken</response>
         /// <returns></returns>
         [HttpPost("register")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public IActionResult RegisterUser([FromBody]Register register)
         {
             if (_authRepository.Register(register.Login, register.PasswordHash, register.Name))
@@ -41,7 +41,7 @@ namespace Recipes.WebApi.Controllers
                 return Ok();
             }
 
-            return Forbid();
+            return Conflict();
         }
     }
 }
