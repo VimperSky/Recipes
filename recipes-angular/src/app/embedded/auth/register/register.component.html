@@ -1,0 +1,52 @@
+<button mat-icon-button class="close-icon" mat-dialog-close>
+  <mat-icon>close</mat-icon>
+</button>
+
+<div class="content-container">
+  <h1 mat-dialog-title>Регистрация</h1>
+  <div class="content">
+    <div mat-dialog-content>
+      <form [formGroup]="registerForm" >
+        <div>
+          <mat-form-field>
+            <mat-label>Имя</mat-label>
+            <input required type="text" matInput [formControl]="name">
+          </mat-form-field>
+        </div>
+
+        <div class="block-with-margin">
+          <mat-form-field>
+            <mat-label>Логин</mat-label>
+            <input required type="text" matInput [formControl]="login">
+          </mat-form-field>
+        </div>
+
+        <div class="block-with-margin" id="password-group">
+          <mat-form-field id="password-first">
+            <mat-label>Пароль</mat-label>
+            <input required type="password" matInput [formControl]="password" >
+          </mat-form-field>
+
+          <mat-form-field id="password-second">
+            <mat-label>Повторите пароль</mat-label>
+            <input required type="password" matInput [formControl]="confirmPassword">
+          </mat-form-field>
+        </div>
+
+        <div id="password-extra">
+          <mat-hint *ngIf="!passwordsHaveError">Минимум 8 символов</mat-hint>
+          <mat-error *ngIf="passwordsHaveError">{{getPasswordErrorText()}}</mat-error>
+        </div>
+      </form>
+    </div>
+
+    <div mat-dialog-actions>
+      <div class="main-buttons-block">
+        <button mat-stroked-button type="submit" class="action-button submit-button" (click)="register()">Зарегистрироваться</button>
+        <button mat-stroked-button class="action-button cancel-button" mat-dialog-close>Отмена</button>
+      </div>
+
+      <button class="extra-button" mat-button mat-dialog-close (click)="logIn()">У меня уже есть аккаунт</button>
+    </div>
+  </div>
+</div>

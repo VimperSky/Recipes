@@ -22,3 +22,21 @@ html, body {
   font-family: Montserrat, "Montserrat", sans-serif;
   background-color: constants.$primary-color;
 }
+
+.login-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+    height: 480px;
+    width: 700px;
+  }
+}
+
+.register-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+    height: 560px;
+    width: 700px;
+  }
+}
+
+

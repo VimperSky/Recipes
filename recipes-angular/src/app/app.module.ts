@@ -9,23 +9,25 @@ import { MatButtonModule} from "@angular/material/button";
 import { HeaderComponent } from './embedded/header/header.component';
 import { RecipeSearchComponent } from './embedded/recipe-search/recipe-search.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { RecipeListComponent } from './embedded/recipe-list/recipe-list.component';
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RecipesService} from "./core/services/recipes.service";
-import {TestRecipesService} from "./core/services/test/test-recipes.service";
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 import {RecipeService} from "./core/services/recipe.service";
-import {TestRecipeService} from "./core/services/test/test-recipe.service";
 import { RecipePreviewComponent } from './embedded/recipe-preview/recipe-preview.component';
 import { BackNavComponent } from './embedded/back-nav/back-nav.component';
-import {RouterModule} from "@angular/router";
 import {ApiRecipeService} from "./core/services/api/api-recipe.service";
 import {ApiRecipesService} from "./core/services/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
+import { AuthHeaderComponent } from './embedded/auth-header/auth-header.component';
+import {MatDividerModule} from "@angular/material/divider";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import { LoginComponent } from './embedded/auth/login/login.component';
+import { RegisterComponent } from './embedded/auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,10 @@ import {HttpClientModule} from "@angular/common/http";
     FooterComponent,
     RecipeDetailComponent,
     RecipePreviewComponent,
-    BackNavComponent
+    BackNavComponent,
+    AuthHeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,9 @@ import {HttpClientModule} from "@angular/common/http";
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -60,6 +67,15 @@ import {HttpClientModule} from "@angular/common/http";
       provide: RecipeService,
       useClass: ApiRecipeService
     },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {hasBackdrop: false}
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {appearance: 'outline'}
+    }
+
   ],
   bootstrap: [AppComponent]
 })
