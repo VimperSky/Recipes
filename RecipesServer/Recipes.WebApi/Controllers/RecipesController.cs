@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
@@ -16,11 +17,13 @@ namespace Recipes.WebApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRecipesRepository _recipesRepository;
+        private readonly IMapper _mapper;
 
-        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository)
+        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _recipesRepository = recipesRepository;
+            _mapper = mapper;
         }
         
         /// <summary>
@@ -51,7 +54,7 @@ namespace Recipes.WebApi.Controllers
 
             var recipesPage = new RecipesPage
             {
-                Recipes = recipes.Select(RecipePreview.FromModel).ToArray(),
+                Recipes = _mapper.Map<RecipePreview[]>(recipes),
                 PageCount = pageCount
             };
             

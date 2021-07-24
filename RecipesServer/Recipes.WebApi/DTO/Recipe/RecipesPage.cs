@@ -1,6 +1,4 @@
-﻿using Recipes.WebApi.DTO.Recipe;
-
-namespace Recipes.WebApi.DTO
+﻿namespace Recipes.WebApi.DTO.Recipe
 {
     public class RecipesPage
     {

@@ -8,27 +8,27 @@ namespace Recipes.WebApi.Tests.HelpClasses
 {
     public static class CustomAssert
     {
-        public static void Equal(Recipe recipe, RecipeDetail recipeDetail)
+        public static void Equal(RecipeDetail expected, RecipeDetail actual)
         {
-            var equal = ModelComparator.CompareRecipes(recipe, recipeDetail);
+            var equal = ModelComparator.CompareRecipes(expected, actual);
             if (!equal)
-                throw new EqualException(recipe, recipeDetail);
+                throw new EqualException(expected, actual);
         }
 
-        private static void Equal(Recipe recipe, RecipePreview recipePreview)
+        private static void Equal(RecipePreview expected, RecipePreview actual)
         {
-            var equal = ModelComparator.CompareRecipes(recipe, recipePreview);
+            var equal = ModelComparator.CompareRecipes(expected, actual);
             if (!equal)
-                throw new EqualException(recipe, recipePreview);
+                throw new EqualException(expected, actual);
         }
         
-        public static void Equal(IList<Recipe> recipes, IList<RecipePreview> recipePreviews)
+        public static void Equal(IList<RecipePreview> expected, IList<RecipePreview> actual)
         {
-            if (recipes.Count != recipePreviews.Count)
-                throw new EqualException(recipes, recipePreviews);
+            if (expected.Count != actual.Count)
+                throw new EqualException(expected, actual);
 
-            for (var i = 0; i < recipes.Count; i++)
-                Equal(recipes[i], recipePreviews[i]);
+            for (var i = 0; i < expected.Count; i++)
+                Equal(expected[i], actual[i]);
         }
     }
 }

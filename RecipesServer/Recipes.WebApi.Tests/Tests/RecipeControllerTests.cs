@@ -1,8 +1,12 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Newtonsoft.Json;
+using Recipes.Domain.Models;
 using Recipes.WebApi.DTO.Recipe;
+using Recipes.WebApi.Profiles;
 using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
 
@@ -11,6 +15,7 @@ namespace Recipes.WebApi.Tests.Tests
     [Collection("Tests")]
     public class RecipeControllerTest: IClassFixture<TestWebFactory<Startup>>
     {
+        private readonly IMapper _mapper;
         private readonly HttpClient _client;
 
         private const string BaseAddress = "api/recipe";
@@ -18,6 +23,10 @@ namespace Recipes.WebApi.Tests.Tests
         public RecipeControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.AddMaps(typeof(Startup)));
+            _mapper = configuration.CreateMapper();
         }
         
         [Theory]
@@ -55,7 +64,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(TestDbCreator.AllRecipes[recipeId - 1], result);
+            CustomAssert.Equal(_mapper.Map<RecipeDetail>(TestDbCreator.AllRecipes[recipeId - 1]), result);
         }
         
         [Fact]

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {RecipePreview} from "../models/recipe-preview";
-import {RecipePage} from "../models/recipe-page";
+import {RecipePreview} from "../dto/recipe-preview";
+import {RecipesPage} from "../dto/recipes-page";
 import {RecipesService} from "./abstract/recipes.service";
 import {environment} from "../../../environments/environment";
 
@@ -19,7 +19,7 @@ export class RecipesManagerService {
     return this.pageCount > this.currentPage;
   }
 
-  public update (recipePage: RecipePage, clear: boolean = false) {
+  public update (recipePage: RecipesPage, clear: boolean = false) {
     if (clear) {
       this.recipeList = recipePage.recipes;
       this.currentPage = 1;

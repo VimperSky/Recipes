@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RecipePreview} from "../../core/models/recipe-preview";
+import {RecipePreview} from "../../core/dto/recipe-preview";
 import {environment} from "../../../environments/environment";
 
 @Component({

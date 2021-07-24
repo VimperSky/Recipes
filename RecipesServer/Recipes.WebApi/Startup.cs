@@ -45,14 +45,10 @@ namespace Recipes.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-            
-            services.AddCors();
 
-            //
-            // services.AddSpaStaticFiles(configuration =>
-            // {
-            //     configuration.RootPath = "wwwroot";
-            // });
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,16 +109,6 @@ namespace Recipes.WebApi
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
-
-            // app.UseSpa(spa =>
-            // {
-            //     spa.Options.SourcePath = "../../recipes-angular";
-            //     
-            //     if (env.IsDevelopment())
-            //     {
-            //         spa.UseAngularCliServer(npmScript: "start");
-            //     }
-            // });
         }
     }
 }

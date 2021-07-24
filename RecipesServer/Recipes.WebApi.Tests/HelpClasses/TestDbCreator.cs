@@ -45,7 +45,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
                         new()
                         {
                             Header = "Для панна котты", 
-                            Text = "Сливки-20-30% - 500мл.\n" +
+                            Value = "Сливки-20-30% - 500мл.\n" +
                                    "Молоко - 100мл.\n" +
                                    "Желатин - 2ч.л.\n" +
                                    "Сахар - 3ст.л.\n" +
@@ -54,7 +54,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
                         new()
                         {
                             Header = "Для клубничного желе", 
-                            Text = "Сливки-20-30% - 500мл.\n" +
+                            Value = "Сливки-20-30% - 500мл.\n" +
                                    "Молоко - 100мл.\n" +
                                    "Желатин - 2ч.л.\n" +
                                    "Сахар - 3ст.л.\n" +

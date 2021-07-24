@@ -20,26 +20,25 @@ namespace Recipes.WebApi.Tests.HelpClasses
             return !a.Where((t, i) => !CompareIngredients(t, b[i])).Any();
         }
         
-        public static bool CompareRecipes(Recipe recipe, RecipeDetail recipeDetail)
+        public static bool CompareRecipes(RecipeDetail a, RecipeDetail b)
         {
-            return recipe.Id == recipeDetail.Id 
-                   && recipe.Name == recipeDetail.Name
-                   && recipe.Description == recipeDetail.Description 
-                   && recipe.Portions == recipeDetail.Portions
-                   && recipe.CookingTimeMin == recipeDetail.CookingTime
-                   && recipe.Steps.SequenceEqual(recipeDetail.Steps)
-                   && CompareIngredientLists(recipe.IngredientBlocks.Select(Ingredient.FromModel).ToArray(), 
-                       recipeDetail.Ingredients);
+            return a.Id == b.Id 
+                   && a.Name == b.Name
+                   && a.Description == b.Description 
+                   && a.Portions == b.Portions
+                   && a.CookingTimeMin == b.CookingTimeMin
+                   && a.Steps.SequenceEqual(b.Steps)
+                   && CompareIngredientLists(a.Ingredients, b.Ingredients);
         }
         
         
-        public static bool CompareRecipes(Recipe recipe, RecipePreview recipePreview)
+        public static bool CompareRecipes(RecipePreview a, RecipePreview b)
         {
-            return recipe.Id == recipePreview.Id
-                   && recipe.Name == recipePreview.Name
-                   && recipe.Description == recipePreview.Description
-                   && recipe.Portions == recipePreview.Portions
-                   && recipe.CookingTimeMin == recipePreview.CookingTime;
+            return a.Id == b.Id
+                   && a.Name == b.Name
+                   && a.Description == b.Description
+                   && a.Portions == b.Portions
+                   && a.CookingTimeMin == b.CookingTimeMin;
         }
     }
 }

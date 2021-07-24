@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {RecipeDetail} from "../../models/recipe-detail";
+import {RecipeDetail} from "../../dto/recipe-detail";
 import {Observable} from "rxjs";
 
 @Injectable()

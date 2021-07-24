@@ -4,8 +4,9 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
+using AutoMapper;
 using Newtonsoft.Json;
-using Recipes.WebApi.DTO;
+using Recipes.WebApi.DTO.Recipe;
 using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
 
@@ -16,10 +17,15 @@ namespace Recipes.WebApi.Tests.Tests
     {
         private readonly HttpClient _client;
         private const string BaseAddress = "api/recipes";
+        private readonly IMapper _mapper;
 
         public RecipesControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.AddMaps(typeof(Startup)));
+            _mapper = configuration.CreateMapper();
         }
         
         
@@ -81,7 +87,7 @@ namespace Recipes.WebApi.Tests.Tests
             
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(TestDbCreator.FirstPageRecipes, result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
         }
 
         
@@ -99,7 +105,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(TestDbCreator.FirstPageRecipes, result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
         }
         
         
@@ -136,7 +142,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(TestDbCreator.AllRecipes.Where(x => x.Name.ToLower().Contains(searchString)).ToList(), result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.AllRecipes.Where(x => x.Name.ToLower().Contains(searchString))), result.Recipes);
         }
     }
 }
