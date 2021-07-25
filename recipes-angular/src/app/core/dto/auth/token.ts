@@ -1,4 +1,4 @@
-export interface Login {
-  login: string;
-  password: string;
+export interface Token {
+  name: string;
+  exp: number;
 }

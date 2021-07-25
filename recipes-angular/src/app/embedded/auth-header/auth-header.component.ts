@@ -15,9 +15,12 @@ export class AuthHeaderComponent implements OnInit {
   public name: string | null = null;
 
   constructor(public dialog: MatDialog, private authManager: LocalAuthManagerService) {
+    this.name = authManager.name;
+    
     authManager.authChanged.subscribe(_ => {
-      this.name = authManager.getName;
+      this.name = authManager.name;
     })
+
   }
 
   ngOnInit(): void {

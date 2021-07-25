@@ -13,6 +13,7 @@ export class LocalAuthManagerService {
 
   constructor(private jwtHelper: JwtHelperService) {
     let token = localStorage.getItem(environment.jwtToken)
+    console.log(token)
     if (token == null || jwtHelper.isTokenExpired(token))
       return;
 
@@ -26,7 +27,7 @@ export class LocalAuthManagerService {
   // public methods
   public authChanged = this.authChangeSub.asObservable();
 
-  public get getName(): string | null {
+  public get name(): string | null {
     return this.token ? this.token.name : null;
   }
 
