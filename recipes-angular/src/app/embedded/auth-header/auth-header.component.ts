@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../auth/login/login.component";
-import {RegisterComponent} from "../auth/register/register.component";
 
 @Component({
   selector: 'app-auth-header',

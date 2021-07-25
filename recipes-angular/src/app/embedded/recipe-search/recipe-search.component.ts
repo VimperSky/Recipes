@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {RecipesService} from "../../core/services/abstract/recipes.service";
 import {RecipesManagerService} from "../../core/services/recipes-manager.service";
 
 @Component({

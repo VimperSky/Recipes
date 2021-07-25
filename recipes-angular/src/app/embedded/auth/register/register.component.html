@@ -7,21 +7,22 @@
   <div class="content">
     <div mat-dialog-content>
       <form [formGroup]="registerForm" >
-        <div>
+        <p>
           <mat-form-field>
             <mat-label>Имя</mat-label>
             <input required type="text" matInput [formControl]="name">
           </mat-form-field>
-        </div>
+        </p>
 
-        <div class="block-with-margin">
+        <p class="block-with-margin">
           <mat-form-field>
             <mat-label>Логин</mat-label>
             <input required type="text" matInput [formControl]="login">
+            <mat-error *ngIf="loginHasError">{{getLoginErrorText()}}</mat-error>
           </mat-form-field>
-        </div>
+        </p>
 
-        <div class="block-with-margin" id="password-group">
+        <p class="block-with-margin" id="password-group">
           <mat-form-field id="password-first">
             <mat-label>Пароль</mat-label>
             <input required type="password" matInput [formControl]="password" >
@@ -31,11 +32,11 @@
             <mat-label>Повторите пароль</mat-label>
             <input required type="password" matInput [formControl]="confirmPassword">
           </mat-form-field>
-        </div>
+        </p>
 
         <div id="password-extra">
-          <mat-hint *ngIf="!passwordsHaveError">Минимум 8 символов</mat-hint>
-          <mat-error *ngIf="passwordsHaveError">{{getPasswordErrorText()}}</mat-error>
+          <mat-hint *ngIf="!passwordHasError">Минимум 8 символов</mat-hint>
+          <mat-error *ngIf="passwordHasError">{{getPasswordErrorText()}}</mat-error>
         </div>
       </form>
     </div>
