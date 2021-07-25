@@ -37,7 +37,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPage> GetRecipes([FromQuery][Required]int pageSize, [FromQuery]int page = 1,
+        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required]int pageSize, [FromQuery]int page = 1,
             [FromQuery]string searchString = "")
         {
             if (pageSize <= 0)
@@ -52,9 +52,9 @@ namespace Recipes.WebApi.Controllers
 
             var recipes = _recipesRepository.GetPage(page, pageSize, searchString);
 
-            var recipesPage = new RecipesPage
+            var recipesPage = new RecipesPageDto
             {
-                Recipes = _mapper.Map<RecipePreview[]>(recipes),
+                Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
                 PageCount = pageCount
             };
             

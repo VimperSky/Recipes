@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {RecipesManagerService} from "../../core/services/recipes-manager.service";
+import {RecipesManagerService} from "../../core/services/managers/recipes-manager.service";
 
 @Component({
   selector: 'app-recipe-search',

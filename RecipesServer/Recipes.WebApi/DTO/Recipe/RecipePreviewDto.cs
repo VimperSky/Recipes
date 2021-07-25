@@ -1,6 +1,6 @@
 ﻿namespace Recipes.WebApi.DTO.Recipe
 {
-    public class RecipePreview: RecipeBase
+    public class RecipePreviewDto: RecipeBaseDto
     {        
         public int Id { get; init; }
     }

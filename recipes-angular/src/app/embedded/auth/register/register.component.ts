@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup, ValidationErrors, ValidatorFn,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators
 } from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -65,9 +67,9 @@ export class RegisterComponent implements OnInit {
   ]);
 
   constructor(private dialog: MatDialog,
-              private dialogRef: MatDialogRef<RegisterComponent>, fb: FormBuilder,
-              private authService: AuthService) {
-
+              private dialogRef: MatDialogRef<LoginComponent>,
+              private authService: AuthService,
+              fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
       secondPassword: this.confirmPassword
@@ -120,7 +122,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
-      let registerDto: Register = {login: this.login.value, passwordHash: this.password.value, name: this.name.value }
+      let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }
       this.authService.register(registerDto).subscribe(() => {
         this.dialogRef.close()
       }, ((error: HttpErrorResponse) => {

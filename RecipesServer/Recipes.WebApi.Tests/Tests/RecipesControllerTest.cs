@@ -81,12 +81,12 @@ namespace Recipes.WebApi.Tests.Tests
             
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
 
             
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
         }
 
         
@@ -100,11 +100,11 @@ namespace Recipes.WebApi.Tests.Tests
             
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
         }
         
         
@@ -118,7 +118,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -137,11 +137,11 @@ namespace Recipes.WebApi.Tests.Tests
             
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPage>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreview[]>(TestDbCreator.AllRecipes.Where(x => x.Name.ToLower().Contains(searchString))), result.Recipes);
+            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.AllRecipes.Where(x => x.Name.ToLower().Contains(searchString))), result.Recipes);
         }
     }
 }

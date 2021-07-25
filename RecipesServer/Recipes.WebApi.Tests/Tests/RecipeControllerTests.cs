@@ -60,11 +60,11 @@ namespace Recipes.WebApi.Tests.Tests
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id={recipeId}");
             var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<RecipeDetail>(content);
+            var result = JsonConvert.DeserializeObject<RecipeDetailDto>(content);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipeDetail>(TestDbCreator.AllRecipes[recipeId - 1]), result);
+            CustomAssert.Equal(_mapper.Map<RecipeDetailDto>(TestDbCreator.AllRecipes[recipeId - 1]), result);
         }
         
         [Fact]

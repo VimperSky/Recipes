@@ -37,12 +37,12 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipeDetail> GetRecipeDetail([FromQuery][Required]uint id)
+        public ActionResult<RecipeDetailDto> GetRecipeDetail([FromQuery][Required]uint id)
         {
             var detail = _recipesRepository.GetById((int)id);
             if (detail == null)
                 return NotFound();
-            var mappedDetail = _mapper.Map<RecipeDetail>(detail);
+            var mappedDetail = _mapper.Map<RecipeDetailDto>(detail);
             return mappedDetail;
         }
     }

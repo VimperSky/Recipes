@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RecipesPage} from "../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
 

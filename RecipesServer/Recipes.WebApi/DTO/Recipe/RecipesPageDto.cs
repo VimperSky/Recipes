@@ -1,8 +1,8 @@
 ﻿namespace Recipes.WebApi.DTO.Recipe
 {
-    public class RecipesPage
+    public class RecipesPageDto
     {
-        public RecipePreview[] Recipes { get; init; }
+        public RecipePreviewDto[] Recipes { get; init; }
         public int PageCount { get; init; }
     }
 }

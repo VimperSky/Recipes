@@ -2,15 +2,12 @@
 
 namespace Recipes.WebApi.DTO.Auth
 {
-    public class Register
+    public class LoginDto
     {
-        [Required]
-        public string Name { get; init; }
-        
         [Required]
         public string Login { get; init; }
         
         [Required]
-        public string PasswordHash { get; init; }
+        public string Password { get; init; }
     }
 }

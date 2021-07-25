@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RecipeService} from "../abstract/recipe.service";
 import {RecipeDetail} from "../../dto/recipe/recipe-detail";
 import {Observable, of} from "rxjs";

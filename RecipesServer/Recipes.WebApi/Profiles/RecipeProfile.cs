@@ -8,12 +8,12 @@ namespace Recipes.WebApi.Profiles
     {
         public RecipeProfile()
         {
-            CreateMap<RecipeIngredientBlock, Ingredient>();
-            CreateMap<Recipe, RecipePreview>()
+            CreateMap<RecipeIngredientBlock, IngredientDto>();
+            CreateMap<Recipe, RecipePreviewDto>()
                 .ForMember(dest => dest.ImagePath, 
                     opt => opt.MapFrom(x => Utils.GetRecipeImagePath(x.ImagePath)));
             
-            CreateMap<Recipe, RecipeDetail>()
+            CreateMap<Recipe, RecipeDetailDto>()
                 .ForMember(dest => dest.Ingredients,
                     opt => opt.MapFrom(x => x.IngredientBlocks))
                 .ForMember(dest => dest.ImagePath, 

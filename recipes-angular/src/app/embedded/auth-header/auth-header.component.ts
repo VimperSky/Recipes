@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../auth/login/login.component";
+import {environment} from "../../../environments/environment";
+import {LocalAuthManagerService} from "../../core/services/managers/local-auth-manager.service";
 
 @Component({
   selector: 'app-auth-header',
@@ -10,9 +12,13 @@ import {LoginComponent} from "../auth/login/login.component";
 export class AuthHeaderComponent implements OnInit {
 
   @Input()
-  name: string | undefined;
+  public name: string | null = null;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private authManager: LocalAuthManagerService) {
+    authManager.authChanged.subscribe(_ => {
+      this.name = authManager.getName;
+    })
+  }
 
   ngOnInit(): void {
 
@@ -22,15 +28,10 @@ export class AuthHeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   logOut() {
-    this.name = "";
+    this.authManager.removeToken();
   }
 
 }

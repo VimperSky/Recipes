@@ -7,12 +7,12 @@ namespace Recipes.WebApi.Tests.HelpClasses
 {
     public static class ModelComparator
     {
-        private static bool CompareIngredients(Ingredient a, Ingredient b)
+        private static bool CompareIngredients(IngredientDto a, IngredientDto b)
         {
             return a.Header == b.Header && a.Value == b.Value;
         }
         
-        private static bool CompareIngredientLists(IReadOnlyCollection<Ingredient> a, IReadOnlyList<Ingredient> b)
+        private static bool CompareIngredientLists(IReadOnlyCollection<IngredientDto> a, IReadOnlyList<IngredientDto> b)
         {
             if (a.Count != b.Count)
                 return false;
@@ -20,7 +20,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
             return !a.Where((t, i) => !CompareIngredients(t, b[i])).Any();
         }
         
-        public static bool CompareRecipes(RecipeDetail a, RecipeDetail b)
+        public static bool CompareRecipes(RecipeDetailDto a, RecipeDetailDto b)
         {
             return a.Id == b.Id 
                    && a.Name == b.Name
@@ -32,7 +32,7 @@ namespace Recipes.WebApi.Tests.HelpClasses
         }
         
         
-        public static bool CompareRecipes(RecipePreview a, RecipePreview b)
+        public static bool CompareRecipes(RecipePreviewDto a, RecipePreviewDto b)
         {
             return a.Id == b.Id
                    && a.Name == b.Name
