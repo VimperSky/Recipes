@@ -16,7 +16,7 @@ export class AuthHeaderComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private authManager: LocalAuthManagerService) {
     this.name = authManager.name;
-    
+
     authManager.authChanged.subscribe(_ => {
       this.name = authManager.name;
     })
@@ -28,9 +28,11 @@ export class AuthHeaderComponent implements OnInit {
   }
 
   logIn() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      panelClass: 'login-dialog-container'
-    });
+    if (this.dialog.openDialogs.length == 0) {
+      this.dialog.open(LoginComponent, {
+        panelClass: 'login-dialog-container'
+      });
+    }
   }
 
   logOut() {

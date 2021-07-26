@@ -13,6 +13,7 @@ import {LoginComponent} from "../login/login.component";
 import {AuthService} from "../../../core/services/abstract/auth.service";
 import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 declare type Errors = {
   [key: string]: string;
@@ -69,6 +70,7 @@ export class RegisterComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
+              private snackBar: MatSnackBar,
               fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
@@ -113,10 +115,9 @@ export class RegisterComponent implements OnInit {
 
   logIn() {
     this.dialogRef.close();
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
-
   }
 
   register() {
@@ -125,6 +126,9 @@ export class RegisterComponent implements OnInit {
       let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }
       this.authService.register(registerDto).subscribe(() => {
         this.dialogRef.close()
+        this.snackBar.open('Регистрация прошла успешно!', 'ОК', {
+          duration: 5000
+        })
       }, ((error: HttpErrorResponse) => {
         if (error.status == 409) {
           this.login.setErrors({takenLogin: true})

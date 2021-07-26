@@ -30,6 +30,7 @@ import {LoginComponent} from './embedded/auth/login/login.component';
 import {RegisterComponent} from './embedded/auth/register/register.component';
 import {AuthService} from "./core/services/abstract/auth.service";
 import {ApiAuthService} from "./core/services/api/api-auth.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {ApiAuthService} from "./core/services/api/api-auth.service";
     ReactiveFormsModule,
     HttpClientModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     {
