@@ -5,7 +5,6 @@ import {RegisterComponent} from "../register/register.component";
 import {AuthService} from "../../../core/services/abstract/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
-import {environment} from "../../../../environments/environment";
 import {LocalAuthManagerService} from "../../../core/services/managers/local-auth-manager.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 

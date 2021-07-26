@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../auth/login/login.component";
-import {environment} from "../../../environments/environment";
 import {LocalAuthManagerService} from "../../core/services/managers/local-auth-manager.service";
 
 @Component({
