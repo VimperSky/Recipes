@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {environment} from "../../../../environments/environment";
 import {LocalAuthManagerService} from "../../../core/services/managers/local-auth-manager.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 declare type Errors = {
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
               private authManager: LocalAuthManagerService,
+              private snackBar: MatSnackBar,
               fb: FormBuilder) {
     this.loginForm = fb.group( {
       login: this.login,
@@ -67,6 +69,9 @@ export class LoginComponent implements OnInit {
       this.authService.login(loginDto).subscribe((token: string) => {
         this.authManager.setToken(token);
         this.dialogRef.close()
+        this.snackBar.open('Авторизация прошла успешно!', 'ОК', {
+          duration: 3000
+        })
       }, ((error: HttpErrorResponse) => {
         if (error.status == 401) {
           this.loginForm.setErrors({invalidLoginPassword: true})
