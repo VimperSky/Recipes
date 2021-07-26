@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
 
   register() {
     this.dialogRef.close();
-    const dialogRef = this.dialog.open(RegisterComponent, {
+    this.dialog.open(RegisterComponent, {
       panelClass: 'register-dialog-container'
     });
    }

@@ -36,8 +36,13 @@ namespace Recipes.WebApi
             {
                 options.SuppressMapClientErrors = true;
             });
+
+            var jwtSection = Configuration.GetSection(JwtSettings.Name);
+            services.Configure<JwtSettings>(jwtSection);
             
-            var jwtSettings = Configuration.GetSection("JwtSettings");
+            var jwtSettings = new JwtSettings();
+            jwtSection.Bind(jwtSettings);
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,9 +55,9 @@ namespace Recipes.WebApi
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings.GetSection("ValidIssuer").Value,
-                    ValidAudience = jwtSettings.GetSection("ValidAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("SecurityKey").Value))
+                    ValidIssuer = jwtSettings.ValidIssuer,
+                    ValidAudience = jwtSettings.ValidAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecurityKey))
                 };
             });
             services.AddScoped<JwtHandler>();

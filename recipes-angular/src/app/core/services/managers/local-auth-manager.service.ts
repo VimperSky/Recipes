@@ -13,7 +13,6 @@ export class LocalAuthManagerService {
 
   constructor(private jwtHelper: JwtHelperService) {
     let token = localStorage.getItem(environment.jwtToken)
-    console.log(token)
     if (token == null || jwtHelper.isTokenExpired(token))
       return;
 
