@@ -2,7 +2,7 @@
 
 namespace Recipes.WebApi.Migrations
 {
-    public partial class renamepasswordhashtopassword : Migration
+    public partial class RenamePasswordHashToPassword : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

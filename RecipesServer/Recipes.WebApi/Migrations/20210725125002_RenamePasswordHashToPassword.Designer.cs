@@ -11,7 +11,7 @@ namespace Recipes.WebApi.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
     [Migration("20210725125002_renamepasswordhashtopassword")]
-    partial class renamepasswordhashtopassword
+    partial class RenamePasswordHashToPassword
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
