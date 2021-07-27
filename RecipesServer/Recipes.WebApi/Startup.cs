@@ -29,6 +29,7 @@ namespace Recipes.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
             services.ConfigureInfrastructureServices();
             services.ConfigureDatabase(Configuration.GetConnectionString("DefaultConnection"));
             
@@ -39,10 +40,12 @@ namespace Recipes.WebApi
 
             var jwtSection = Configuration.GetSection(JwtSettings.Name);
             services.Configure<JwtSettings>(jwtSection);
+            services.AddScoped<AuthService>();
             
             var jwtSettings = new JwtSettings();
             jwtSection.Bind(jwtSettings);
 
+            
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

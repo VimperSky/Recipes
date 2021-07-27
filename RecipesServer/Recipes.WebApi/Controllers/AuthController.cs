@@ -1,10 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
 using Recipes.WebApi.AuthFeatures;
+using Recipes.WebApi.AuthFeatures.Models;
 using Recipes.WebApi.DTO.Auth;
 
 namespace Recipes.WebApi.Controllers
@@ -15,15 +18,15 @@ namespace Recipes.WebApi.Controllers
     public class AuthController: ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IAuthRepository _authRepository;
+        private readonly ILogger<AuthController> _logger;
+        private readonly AuthService _authService;
         private readonly JwtHandler _jwtHandler;
 
-        public AuthController(IMapper mapper, IUnitOfWork unitOfWork, IAuthRepository authRepository, JwtHandler jwtHandler)
+        public AuthController(IMapper mapper, ILogger<AuthController> logger, AuthService authService, JwtHandler jwtHandler)
         {
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
-            _authRepository = authRepository;
+            _logger = logger;
+            _authService = authService;
             _jwtHandler = jwtHandler;
         }
 
@@ -32,20 +35,35 @@ namespace Recipes.WebApi.Controllers
         /// </summary>
         /// <param name="registerDto"></param>
         /// <response code="200">Successfully registered</response>
-        /// <response code="409">Login is taken</response>
+        /// <response code="400">Invalid input data</response>
+        /// <response code="409">Cannot register account with the specified data</response>
         /// <returns></returns>
         [HttpPost("register")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public IActionResult Register([FromBody]RegisterDto registerDto)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict)]
+        public ActionResult Register([FromBody]RegisterDto registerDto)
         {
-            if (!_authRepository.Register(registerDto.Login, registerDto.Password, registerDto.Name))
+            try
             {
-                return Conflict();
+                _authService.Register(registerDto);
+                return Ok();
             }
-            
-            _unitOfWork.Commit();
-            return Ok();
+            catch (ArgumentException e)
+            {
+                _logger.LogWarning(e.ToString());
+                return BadRequest(e.Message);
+            }
+            catch (RegisterException e)
+            {
+                _logger.LogWarning(e.ToString());
+                return Conflict(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning("Unhandled register exception: " + e);
+                return BadRequest("Unknown register exception happened");
+            }
         }
         
         /// <summary>
@@ -53,20 +71,35 @@ namespace Recipes.WebApi.Controllers
         /// </summary>
         /// <param name="loginDto"></param>
         /// <response code="200">Successfully logged in</response>
+        /// <response code="400">Invalid input data</response>
         /// <response code="401">Invalid credentials</response>
         /// <returns></returns>
         [HttpPost("login")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<string> Login([FromBody]LoginDto loginDto)
         {
-            var user = _authRepository.Login(loginDto.Login, loginDto.Password);
-            if (user == null)
-                return Unauthorized();
-            
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions); 
-            return token;
+            try
+            {
+                var loginToken = _authService.Login(loginDto);
+                return loginToken;
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogWarning(e.ToString());
+                return BadRequest(e.Message);
+            }
+            catch (LoginException e)
+            {
+                _logger.LogWarning(e.ToString());
+                return Unauthorized(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning("Unhandled login exception: " + e);
+                return BadRequest("Unknown login exception happened");
+            }
         }
     }
 }

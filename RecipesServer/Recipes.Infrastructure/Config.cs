@@ -16,7 +16,7 @@ namespace Recipes.Infrastructure
         public static void ConfigureInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             // services.AddIdentity<User, IdentityRole>(opt =>
