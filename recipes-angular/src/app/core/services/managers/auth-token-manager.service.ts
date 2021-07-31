@@ -7,7 +7,7 @@ import {Token} from "../../dto/auth/token";
 @Injectable({
   providedIn: 'root'
 })
-export class LocalAuthManagerService {
+export class AuthTokenManagerService {
   private authChangeSub = new Subject<void>()
   private token: Token | null = null;
 

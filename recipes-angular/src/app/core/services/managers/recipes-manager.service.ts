@@ -10,6 +10,7 @@ import {environment} from "../../../../environments/environment";
 export class RecipesManagerService {
   private pageCount: number = 0;
   private currentPage: number = 1;
+  private searchString: string | null = null;
 
   constructor(private recipesService: RecipesService) { }
 
@@ -38,15 +39,18 @@ export class RecipesManagerService {
   }
 
   public loadMore() {
-    this.recipesService.getRecipeList(environment.pageSize, this.currentPage + 1, null).subscribe(result => {
+    this.recipesService.getRecipeList(environment.pageSize, this.currentPage + 1, this.searchString).subscribe(result => {
       this.update(result);
       this.currentPage += 1;
     });
   }
 
-  public search(searchString: string) {
+  public search(searchString: string | null) {
+    if (searchString == "")
+      searchString = null;
     this.recipesService.getRecipeList(environment.pageSize, 1, searchString).subscribe(result => {
       this.update(result, true);
+      this.searchString = searchString;
     });
   }
 }

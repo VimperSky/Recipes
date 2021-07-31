@@ -35,7 +35,7 @@ namespace Recipes.WebApi.Controllers
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
             [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")

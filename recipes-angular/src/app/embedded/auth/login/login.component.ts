@@ -5,7 +5,7 @@ import {RegisterComponent} from "../register/register.component";
 import {AuthService} from "../../../core/services/abstract/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
-import {LocalAuthManagerService} from "../../../core/services/managers/local-auth-manager.service";
+import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
-              private authManager: LocalAuthManagerService,
+              private authManager: AuthTokenManagerService,
               private snackBar: MatSnackBar,
               fb: FormBuilder) {
     this.loginForm = fb.group( {

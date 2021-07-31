@@ -32,8 +32,8 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpPost("register")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult Register([FromBody]RegisterDto registerDto)
         {
             try
@@ -57,8 +57,8 @@ namespace Recipes.WebApi.Controllers
         /// <response code="401">Invalid credentials</response>
         /// <returns></returns>
         [HttpPost("login")] 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<string> Login([FromBody]LoginDto loginDto)
         {

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../auth/login/login.component";
-import {LocalAuthManagerService} from "../../core/services/managers/local-auth-manager.service";
+import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 
 @Component({
   selector: 'app-auth-header',
@@ -13,7 +13,7 @@ export class AuthHeaderComponent implements OnInit {
   @Input()
   public name: string | null = null;
 
-  constructor(public dialog: MatDialog, private authManager: LocalAuthManagerService) {
+  constructor(public dialog: MatDialog, private authManager: AuthTokenManagerService) {
     this.name = authManager.name;
 
     authManager.authChanged.subscribe(_ => {
