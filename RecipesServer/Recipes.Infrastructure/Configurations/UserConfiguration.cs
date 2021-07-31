@@ -11,6 +11,11 @@ namespace Recipes.Infrastructure.Configurations
             builder.ToTable("user");
 
             builder.HasIndex(p => p.Login).IsUnique();
+            
+            builder.Property(x => x.Login).IsRequired();
+            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.PasswordHash).IsRequired();
+            builder.Property(x => x.PasswordSalt).IsRequired();
         }
     }
 }

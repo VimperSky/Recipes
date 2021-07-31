@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  backendUrl: "http://localhost:5000",
+  backendUrl: "https://localhost:5001",
   pageSize: 3,
   jwtToken: 'jwt-token',
 };

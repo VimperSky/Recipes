@@ -8,6 +8,6 @@
         public string PasswordSalt { get; init; }
         public string Name { get; init; }
         
-        public string? Bio { get; init; }
+        public string Bio { get; init; }
     }
 }

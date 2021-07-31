@@ -119,20 +119,21 @@ namespace Recipes.WebApi
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseHttpsRedirection();
             
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            
+
+            app.UseSpaFallback();
+
             app.UseFileServer(new FileServerOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Storage")),
                 RequestPath = "",
             });
             
-            app.UseSpaFallback();
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

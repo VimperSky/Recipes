@@ -26,5 +26,10 @@
       <ProjectReference Include="..\Recipes.Domain\Recipes.Domain.csproj" />
       <ProjectReference Include="..\Recipes.Infrastructure\Recipes.Infrastructure.csproj" />
     </ItemGroup>
-
+    
+    <ItemGroup>
+    <Content Include="Storage\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
 </Project>

@@ -11,6 +11,8 @@ namespace Recipes.Infrastructure.Configurations
             builder.ToTable("recipe");
             builder.OwnsMany(x => x.IngredientBlocks, 
                 y => y.ToTable("recipe_ingredient_block"));
+
+            builder.Property(x => x.Name).IsRequired();
         }
     }
 }
