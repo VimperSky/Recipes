@@ -3,28 +3,27 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-using AutoMapper;
+using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.WebApi.DTO.Recipe;
 using Recipes.WebApi.Tests.HelpClasses;
+using Recipes.WebApi.Tests.TestDbProviders;
 using Xunit;
 
-namespace Recipes.WebApi.Tests.Tests
+namespace Recipes.WebApi.Tests.RecipesController
 {
     [Collection("Tests")]
     public class RecipesControllerTest: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;
+        private readonly TestRecipesDbProvider _recipesDbProvider;
         private const string BaseAddress = "api/recipes";
-        private readonly IMapper _mapper;
 
         public RecipesControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
-            
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.AddMaps(typeof(Startup)));
-            _mapper = configuration.CreateMapper();
+
+            _recipesDbProvider = new TestRecipesDbProvider();
         }
         
         
@@ -46,7 +45,7 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = page;
             
             // Act
@@ -62,7 +61,7 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = "5";
             
             // Act
@@ -77,7 +76,7 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
@@ -86,7 +85,7 @@ namespace Recipes.WebApi.Tests.Tests
             
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
+            result.Recipes.Should().BeEquivalentTo(_recipesDbProvider.List.Take(RecipesConstants.PageSize));
         }
 
         
@@ -95,7 +94,7 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = "1";
             
             // Act
@@ -104,7 +103,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.FirstPageRecipes), result.Recipes);
+            result.Recipes.Should().BeEquivalentTo(_recipesDbProvider.List.Take(RecipesConstants.PageSize));
         }
         
         
@@ -113,7 +112,7 @@ namespace Recipes.WebApi.Tests.Tests
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["searchString"] = "abcdef";
 
             // Act
@@ -132,7 +131,7 @@ namespace Recipes.WebApi.Tests.Tests
             const string searchString = "па";
             
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["pageSize"] = Constants.PageSize.ToString();
+            query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["searchString"] = searchString;
             
             // Act
@@ -141,7 +140,8 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipePreviewDto[]>(TestDbCreator.AllRecipes.Where(x => x.Name.ToLower().Contains(searchString))), result.Recipes);
+            result.Recipes.Should().BeEquivalentTo(
+                _recipesDbProvider.List.Where(x => x.Name.ToLower().Contains(searchString)));
         }
     }
 }

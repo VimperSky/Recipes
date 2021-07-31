@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Recipes.Domain;
 using Recipes.Infrastructure;
+using Recipes.WebApi.Tests.TestDbProviders;
 
-namespace Recipes.WebApi.Tests.HelpClasses
+namespace Recipes.WebApi.Tests
 {
     public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
     {
@@ -32,7 +31,8 @@ namespace Recipes.WebApi.Tests.HelpClasses
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 
-                TestDbCreator.FillWithStartData(db);
+                TestRecipesDbProvider.FillDbWithData(db);
+                db.SaveChanges();
             });
         }
     }

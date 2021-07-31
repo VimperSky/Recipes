@@ -1,32 +1,28 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
-using AutoMapper;
+using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.Domain.Models;
 using Recipes.WebApi.DTO.Recipe;
-using Recipes.WebApi.Profiles;
 using Recipes.WebApi.Tests.HelpClasses;
+using Recipes.WebApi.Tests.TestDbProviders;
 using Xunit;
 
-namespace Recipes.WebApi.Tests.Tests
+namespace Recipes.WebApi.Tests.RecipeController
 {
     [Collection("Tests")]
     public class RecipeControllerTest: IClassFixture<TestWebFactory<Startup>>
     {
-        private readonly IMapper _mapper;
         private readonly HttpClient _client;
+        private readonly TestRecipesDbProvider _recipesDbProvider;
 
         private const string BaseAddress = "api/recipe";
         
         public RecipeControllerTest(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
-            
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.AddMaps(typeof(Startup)));
-            _mapper = configuration.CreateMapper();
+
+            _recipesDbProvider = new TestRecipesDbProvider();
         }
         
         [Theory]
@@ -64,7 +60,7 @@ namespace Recipes.WebApi.Tests.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            CustomAssert.Equal(_mapper.Map<RecipeDetailDto>(TestDbCreator.AllRecipes[recipeId - 1]), result);
+            result.Should().BeEquivalentTo(_recipesDbProvider.Detail(recipeId));
         }
         
         [Fact]

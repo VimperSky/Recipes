@@ -2,7 +2,7 @@
 using Recipes.Domain.Models;
 using Recipes.WebApi.DTO.Recipe;
 
-namespace Recipes.WebApi.Profiles
+namespace Recipes.WebApi.AutoMapperProfiles
 {
     public class RecipeProfile: Profile
     {

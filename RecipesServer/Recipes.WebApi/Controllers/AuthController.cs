@@ -1,11 +1,7 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Recipes.Domain;
-using Recipes.Domain.Repositories;
 using Recipes.WebApi.AuthFeatures;
 using Recipes.WebApi.AuthFeatures.Models;
 using Recipes.WebApi.DTO.Auth;
@@ -17,17 +13,13 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class AuthController: ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly ILogger<AuthController> _logger;
         private readonly AuthService _authService;
-        private readonly JwtHandler _jwtHandler;
 
-        public AuthController(IMapper mapper, ILogger<AuthController> logger, AuthService authService, JwtHandler jwtHandler)
+        public AuthController(ILogger<AuthController> logger, AuthService authService)
         {
-            _mapper = mapper;
             _logger = logger;
             _authService = authService;
-            _jwtHandler = jwtHandler;
         }
 
         /// <summary>
@@ -46,23 +38,13 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                _authService.Register(registerDto);
+                _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
                 return Ok();
-            }
-            catch (ArgumentException e)
-            {
-                _logger.LogWarning(e.ToString());
-                return BadRequest(e.Message);
             }
             catch (RegisterException e)
             {
                 _logger.LogWarning(e.ToString());
-                return Conflict(e.Message);
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning("Unhandled register exception: " + e);
-                return BadRequest("Unknown register exception happened");
+                return Problem(e.Message, statusCode: 409);
             }
         }
         
@@ -82,23 +64,13 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                var loginToken = _authService.Login(loginDto);
+                var loginToken = _authService.Login(loginDto.Login, loginDto.Password);
                 return loginToken;
-            }
-            catch (ArgumentException e)
-            {
-                _logger.LogWarning(e.ToString());
-                return BadRequest(e.Message);
             }
             catch (LoginException e)
             {
                 _logger.LogWarning(e.ToString());
-                return Unauthorized(e.Message);
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning("Unhandled login exception: " + e);
-                return BadRequest("Unknown login exception happened");
+                return Problem(e.Message, statusCode: 401);
             }
         }
     }

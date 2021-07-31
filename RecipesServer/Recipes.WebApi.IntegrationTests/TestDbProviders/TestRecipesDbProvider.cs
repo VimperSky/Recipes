@@ -1,15 +1,33 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using AutoMapper;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
+using Recipes.WebApi.DTO.Recipe;
 
-namespace Recipes.WebApi.Tests.HelpClasses
+namespace Recipes.WebApi.Tests.TestDbProviders
 {
-    public static class TestDbCreator
+    public class TestRecipesDbProvider
     {
-        public static Recipe[] FirstPageRecipes => AllRecipes.Take(Constants.PageSize).ToArray();
+        public TestRecipesDbProvider()
+        {
+            var configuration = new MapperConfiguration(cfg =>
+                cfg.AddMaps(typeof(Startup)));
+            var mapper = configuration.CreateMapper();
+            _detailedList = mapper.Map<RecipeDetailDto[]>(RecipeList);
+            List = mapper.Map<RecipePreviewDto[]>(RecipeList);
+        }
+
+        private readonly RecipeDetailDto[] _detailedList;
+
+        public RecipeDetailDto Detail(int id)
+        {
+            return _detailedList[id-1];
+        }
         
-        public static readonly Recipe[] AllRecipes =  {
+        public readonly RecipePreviewDto[] List;
+
+        
+        private static readonly Recipe[] RecipeList =  {
                 new()
                 {
                     Name = "Клубичная Панна-Котта", 
@@ -153,12 +171,10 @@ namespace Recipes.WebApi.Tests.HelpClasses
                 },
             }; 
         
-        public static void FillWithStartData(RecipesDbContext dbContext)
+        public static void FillDbWithData(RecipesDbContext dbContext)
         {
-            foreach (var recipe in AllRecipes)
+            foreach (var recipe in RecipeList)
                 dbContext.Recipes.Add(recipe);
-            
-            dbContext.SaveChanges();
         }
     }
 }

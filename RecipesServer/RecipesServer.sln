@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.WebApi", "Recipes.WebApi\Recipes.WebApi.csproj", "{A741C066-DCD1-45B8-BB2D-DDA330C37767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.WebApi.Tests", "Recipes.WebApi.Tests\Recipes.WebApi.Tests.csproj", "{53ED1186-A202-4D57-8793-5FB8FCC59936}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.WebApi.IntegrationTests", "Recipes.WebApi.IntegrationTests\Recipes.WebApi.IntegrationTests.csproj", "{53ED1186-A202-4D57-8793-5FB8FCC59936}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Domain", "Recipes.Domain\Recipes.Domain.csproj", "{E6CE1B2F-3BB4-43C7-B2F9-761A201F4BE4}"
 EndProject

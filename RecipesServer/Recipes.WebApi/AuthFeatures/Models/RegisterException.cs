@@ -8,6 +8,8 @@ namespace Recipes.WebApi.AuthFeatures.Models
         {
             
         }
+        
+        public const string LoginIsTaken = "Login is already taken";
     }
 
 }

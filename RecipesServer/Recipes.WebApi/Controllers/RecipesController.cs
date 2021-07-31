@@ -31,21 +31,15 @@ namespace Recipes.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         /// <response code="200">OK</response>
-        /// <response code="400">Invalid page id</response>
+        /// <response code="400">Invalid input data</response>
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required]int pageSize, [FromQuery]int page = 1,
-            [FromQuery]string searchString = "")
+        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
+            [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")
         {
-            if (pageSize <= 0)
-                return BadRequest();
-
-            if (page <= 0)
-                return BadRequest();
-
             var pageCount = _recipesRepository.GetPagesCount(pageSize, searchString);
             if (page > 1 && page > pageCount)
                 return NotFound();

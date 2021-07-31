@@ -1,11 +1,7 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using System.IdentityModel.Tokens.Jwt;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
 using Recipes.WebApi.AuthFeatures.Models;
-using Recipes.WebApi.DTO.Auth;
 
 namespace Recipes.WebApi.AuthFeatures
 {
@@ -24,28 +20,17 @@ namespace Recipes.WebApi.AuthFeatures
 
         
         /// <summary>
-        /// Register an account. Throws ArgumentException or RegisterException on failure
+        /// Register an account. Throws RegisterException on failure
         /// </summary>
-        /// <param name="registerDto"></param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
         /// <exception cref="RegisterException"></exception>
-        public void Register(RegisterDto registerDto)
+        public void Register(string login, string password, string name)
         {
-            var login = registerDto.Login;
-            if (string.IsNullOrWhiteSpace(login) || login.Length < 3)
-                throw new ArgumentException("Login must be at least 3 characters long");
-            
-            var password = registerDto.Password;
-            if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
-                throw new ArgumentException("Password must be at least 8 characters long");
-
-            var name = registerDto.Name;
-            if (name == null)
-                throw new ArgumentException("Name must be not null");
-
             var user = _userRepository.GetUser(login);
             if (user != null)
-                throw new RegisterException("Login is already taken");
+                throw new RegisterException(RegisterException.LoginIsTaken);
 
             var salt = HashingTools.GenerateSalt();
             var hash = HashingTools.HashPassword(password, salt);
@@ -53,31 +38,24 @@ namespace Recipes.WebApi.AuthFeatures
             _unitOfWork.Commit();
         }
         
-        /// <summary>
-        /// Log into existing account. Returns token on success, throws an ArgumentException or LoginException on failure
-        /// </summary>
-        /// <param name="loginDto"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="LoginException"></exception>
-        public string Login(LoginDto loginDto)
-        {
-            var login = loginDto.Login;
-            if (string.IsNullOrWhiteSpace(login))
-                throw new ArgumentException("Login cannot be null or empty");
 
-            var password = loginDto.Password;
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password cannot be null or empty");
-            
+        /// <summary>
+        /// Log into existing account. Returns token on success, throws an LoginException on failure
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <exception cref="LoginException"></exception>
+        public string Login(string login, string password)
+        {
             var user = _userRepository.GetUser(login);
             if (user == null)
-                throw new LoginException("Such login doesn't exist in database");
+                throw new LoginException(LoginException.LoginDoesNotExist);
 
             var salt = HashingTools.StringToSalt(user.PasswordSalt);
             var hashedPassword = HashingTools.HashPassword(password, salt);
             if (user.PasswordHash != hashedPassword)
-                throw new LoginException("Invalid password for the login");
+                throw new LoginException(LoginException.PasswordIsIncorrect);
             
             var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

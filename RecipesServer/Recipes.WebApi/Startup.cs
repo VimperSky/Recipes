@@ -3,6 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Hellang.Middleware.SpaFallback;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,27 +28,29 @@ namespace Recipes.WebApi
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            services.AddSpaFallback();
+            
             services.ConfigureInfrastructureServices();
             services.ConfigureDatabase(Configuration.GetConnectionString("DefaultConnection"));
-            
-            services.AddControllers().ConfigureApiBehaviorOptions(options =>
-            {
-                options.SuppressMapClientErrors = true;
-            });
 
+            services.AddControllers();
+            services.AddFluentValidation(x =>
+            {
+                x.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
+            
+            
             var jwtSection = Configuration.GetSection(JwtSettings.Name);
             services.Configure<JwtSettings>(jwtSection);
             services.AddScoped<AuthService>();
-            
             var jwtSettings = new JwtSettings();
             jwtSection.Bind(jwtSettings);
 
-            
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -74,15 +79,17 @@ namespace Recipes.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
+            
             services.AddAutoMapper(typeof(Startup));
-
+                
             services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -110,7 +117,6 @@ namespace Recipes.WebApi
             
             
             app.UseRouting();
-            
             app.UseAuthentication();
             app.UseAuthorization();
             
@@ -125,20 +131,7 @@ namespace Recipes.WebApi
                 RequestPath = "",
             });
             
-            DefaultFilesOptions options = new();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("index.html");
-
-            app.Use(async (context, next) =>
-            {
-                await next();
-
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = "/index.html";
-                    await next();
-                }
-            });
+            app.UseSpaFallback();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
