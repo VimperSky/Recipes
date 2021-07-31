@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
           for (let err of Object.keys(problemDetails.errors)) {
             let val = responses.get(err);
             if (val) {
-              val.setErrors(problemDetails.errors[err]);
+              val.setErrors({notValid: true});
             }
           }
         }

@@ -15,7 +15,6 @@ import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
-import {parse} from "@typescript-eslint/parser";
 
 
 const loginErrors: Record<string, string> = {
@@ -142,7 +141,7 @@ export class RegisterComponent implements OnInit {
           for (let err of Object.keys(problemDetails.errors)) {
             let val = responses.get(err);
             if (val) {
-              val.setErrors(problemDetails.errors[err]);
+              val.setErrors({notValid: true});
             }
           }
         }
