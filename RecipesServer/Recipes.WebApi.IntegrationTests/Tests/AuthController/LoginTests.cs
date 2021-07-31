@@ -2,12 +2,14 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Recipes.WebApi.AuthFeatures.Models;
 using Recipes.WebApi.DTO.Auth;
-using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
+
+using static Recipes.WebApi.Tests.Tests.AuthController.UserDataProvider;
 
 namespace Recipes.WebApi.Tests.Tests.AuthController
 {    
@@ -34,7 +36,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Login_InvalidLogin_ReturnsBadRequest(string login)
         {
             // Arrange
-            var dto = new LoginDto {Login = login, Password = "12345678"};
+            var dto = new LoginDto {Login = login, Password = GetValidPassword()};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/login", dto);
@@ -53,7 +55,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Login_InvalidPassword_ReturnsBadRequest(string password)
         {
             // Arrange
-            var dto = new LoginDto {Login = TestAuthProvider.GetTestLogin(), Password = password};
+            var dto = new LoginDto {Login = GetValidLogin(), Password = password};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/login", dto);
@@ -68,7 +70,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Login_NonExistingAccount_ReturnsUnauthorized()
         {
             // Arrange
-            var dto = new LoginDto {Login = "NonExisting", Password = "abcdefgregh"};
+            var dto = new LoginDto {Login = "NonExisting", Password = GetValidPassword()};
 
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/login", dto);
@@ -85,11 +87,12 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         {
             // Arrange
             // Регистрируем тестовый аккаунт
-            var testLogin = TestAuthProvider.GetTestLogin();
-            var regDto = new RegisterDto {Login = testLogin, Name = "test", Password = "abcd1234"};
-            await _client.PostAsJsonAsync($"{BaseAddress}/register", regDto);
+            var login = GetValidLogin();
+            var regDto = new RegisterDto {Login = login, Name = GetValidName(), Password = GetValidPassword()};
+            (await _client.PostAsJsonAsync($"{BaseAddress}/register", regDto))
+                .StatusCode.Should().Be(HttpStatusCode.OK);
             
-            var dto = new LoginDto {Login = testLogin, Password = "abcd12345"};
+            var dto = new LoginDto {Login = login, Password = "nonvalidpassword"};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/login", dto);
@@ -97,7 +100,27 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            Assert.Equal(LoginException.LoginDoesNotExist, content.Detail);            
+            Assert.Equal(LoginException.PasswordIsIncorrect, content.Detail);            
+        }
+        
+        [Fact]
+        public async Task Post_Login_CorrectPassword_ReturnsOk()
+        {
+            // Arrange
+            // Регистрируем тестовый аккаунт
+            var login = GetValidLogin();
+            var password = GetValidPassword();
+            var regDto = new RegisterDto {Login = login, Name = GetValidName(), Password = password};
+            (await _client.PostAsJsonAsync($"{BaseAddress}/register", regDto))
+                .StatusCode.Should().Be(HttpStatusCode.OK);
+            
+            var dto = new LoginDto {Login = login, Password = password};
+            
+            // Act
+            var response = await _client.PostAsJsonAsync($"{BaseAddress}/login", dto);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
         #endregion
     }

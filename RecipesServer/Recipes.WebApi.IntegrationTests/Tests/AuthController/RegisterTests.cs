@@ -2,12 +2,14 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Recipes.WebApi.AuthFeatures.Models;
 using Recipes.WebApi.DTO.Auth;
-using Recipes.WebApi.Tests.HelpClasses;
 using Xunit;
+
+using static Recipes.WebApi.Tests.Tests.AuthController.UserDataProvider;
 
 namespace Recipes.WebApi.Tests.Tests.AuthController
 {    
@@ -34,7 +36,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_InvalidLogin_ReturnsBadRequest(string login)
         {
             // Arrange
-            var dto = new RegisterDto {Login = login, Name = "abc", Password = "12345678"};
+            var dto = new RegisterDto {Login = login, Name = GetValidName(), Password = GetValidPassword()};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -49,7 +51,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_ValidLogin_ReturnsOk(string login)
         {
             // Arrange
-            var dto = new RegisterDto {Login = login, Name = "abc", Password = "12345678"};
+            var dto = new RegisterDto {Login = login, Name = GetValidName(), Password = GetValidPassword()};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -68,7 +70,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_InvalidPassword_ReturnsBadRequest(string password)
         {
             // Arrange
-            var dto = new RegisterDto {Login = TestAuthProvider.GetTestLogin(), Name = "abc", Password = password};
+            var dto = new RegisterDto {Login = GetValidLogin(), Name = GetValidName(), Password = password};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -83,7 +85,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_ValidPassword_ReturnsOK(string password)
         {   
             // Arrange
-            var dto = new RegisterDto {Login = TestAuthProvider.GetTestLogin(), Name = "abc", Password = password};
+            var dto = new RegisterDto {Login = GetValidLogin(), Name = GetValidName(), Password = password};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -100,7 +102,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_InvalidName_ReturnsBadRequest(string name)
         {
             // Arrange
-            var dto = new RegisterDto {Login = TestAuthProvider.GetTestLogin(), Name = name, Password = "abcdefghzx"};
+            var dto = new RegisterDto {Login = GetValidLogin(), Name = name, Password = GetValidPassword()};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -114,7 +116,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_ValidName_ReturnsOk(string name)
         {
             // Arrange
-            var dto = new RegisterDto {Login = TestAuthProvider.GetTestLogin(), Name = name, Password = "abcdefghzx"};
+            var dto = new RegisterDto {Login = GetValidLogin(), Name = name, Password = GetValidPassword()};
             
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
@@ -129,13 +131,13 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
         public async Task Post_Register_TakenLogin_ReturnsConflict()
         {
             // Arrange
-            var login = TestAuthProvider.GetTestLogin();
-            var dto = new RegisterDto {Login = login, Name = "test", Password = "abcdefghzx"};
+            var login = GetValidLogin();
+            var dto = new RegisterDto {Login = login, Name = GetValidName(), Password = GetValidPassword()};
             
             await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
 
             // Act
-            var response = await _client.PostAsJsonAsync($"{BaseAddress}", dto);
+            var response = await _client.PostAsJsonAsync($"{BaseAddress}/register", dto);
             var content = JsonConvert.DeserializeObject<ProblemDetails>(await response.Content.ReadAsStringAsync());
 
             // Assert

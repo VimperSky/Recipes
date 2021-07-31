@@ -6,11 +6,10 @@ using System.Web;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.WebApi.DTO.Recipe;
-using Recipes.WebApi.Tests.HelpClasses;
 using Recipes.WebApi.Tests.TestDbProviders;
 using Xunit;
 
-namespace Recipes.WebApi.Tests.RecipesController
+namespace Recipes.WebApi.Tests.Tests.RecipesController
 {
     [Collection("Tests")]
     public class RecipesControllerTest: IClassFixture<TestWebFactory<Startup>>

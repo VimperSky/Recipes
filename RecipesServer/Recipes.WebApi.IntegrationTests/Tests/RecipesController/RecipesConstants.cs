@@ -1,4 +1,4 @@
-﻿namespace Recipes.WebApi.Tests.RecipesController
+﻿namespace Recipes.WebApi.Tests.Tests.RecipesController
 {
     public static class RecipesConstants
     {
