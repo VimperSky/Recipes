@@ -1,4 +1,5 @@
-export interface ProblemDetails {
-  title: string;
-  detail: string;
+import {ProblemDetails} from "./problem-details";
+
+export interface ValidationProblemDetails extends ProblemDetails {
+  errors: Record<string, string[]>;
 }

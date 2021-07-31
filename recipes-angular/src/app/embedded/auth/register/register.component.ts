@@ -14,18 +14,16 @@ import {AuthService} from "../../../core/services/abstract/auth.service";
 import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
-
-declare type Errors = {
-  [key: string]: string;
-};
+import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
+import {parse} from "@typescript-eslint/parser";
 
 
-const loginErrors: Errors = {
+const loginErrors: Record<string, string> = {
   'takenLogin': "Логин занят. Выберите другой",
   'default': "Введите логин"
 }
 
-const passwordErrors: Errors = {
+const passwordErrors: Record<string, string> = {
   'minLength': 'Пароль слишком короткий',
   'mismatch': "Пароли не совпадают",
   'default': "Введите пароль"
@@ -120,6 +118,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+
+
   register() {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
@@ -130,7 +130,23 @@ export class RegisterComponent implements OnInit {
           duration: 5000
         })
       }, ((error: HttpErrorResponse) => {
-        if (error.status == 409) {
+        if (error.status == 400) {
+
+          let responses = new Map<string, AbstractControl>([
+            ['Name', this.name],
+            ['Login', this.login],
+            ['Password', this.passwordForm]
+          ]);
+
+          let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
+          for (let err of Object.keys(problemDetails.errors)) {
+            let val = responses.get(err);
+            if (val) {
+              val.setErrors(problemDetails.errors[err]);
+            }
+          }
+        }
+        else if (error.status == 409) {
           this.login.setErrors({takenLogin: true})
         }
       }))

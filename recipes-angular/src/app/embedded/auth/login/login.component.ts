@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
 import {AuthService} from "../../../core/services/abstract/auth.service";
@@ -7,12 +7,9 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
 
-
-declare type Errors = {
-  [key: string]: string;
-};
-const serverErrors: Errors = {
+const serverErrors: Record<string, string> = {
   'invalidLoginPassword': "Неверная пара логин-пароль.",
   'default': "Сервер вернул неопознанную ошибку."
 }
@@ -72,7 +69,21 @@ export class LoginComponent implements OnInit {
           duration: 3000
         })
       }, ((error: HttpErrorResponse) => {
-        if (error.status == 401) {
+        if (error.status == 400) {
+          let responses = new Map<string, AbstractControl>([
+            ['Login', this.login],
+            ['Password', this.password]
+          ]);
+
+          let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
+          for (let err of Object.keys(problemDetails.errors)) {
+            let val = responses.get(err);
+            if (val) {
+              val.setErrors(problemDetails.errors[err]);
+            }
+          }
+        }
+        else if (error.status == 401) {
           this.loginForm.setErrors({invalidLoginPassword: true})
         }
       }))
