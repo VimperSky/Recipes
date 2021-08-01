@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RecipesService} from "../abstract/recipes.service";
-import {RecipePreview} from "../../dto/recipe/recipe-preview";
-import {RecipesPage} from "../../dto/recipe/recipes-page";
+import {RecipePreview} from "../../../dto/recipe/recipe-preview";
+import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable, of, throwError} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
@@ -54,7 +54,7 @@ export const recipes: RecipePreview[] = [
 ]
 
 @Injectable()
-export class TestRecipesService extends RecipesService{
+export class StubRecipesService extends RecipesService{
 
   constructor() {
     super();

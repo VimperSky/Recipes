@@ -10,7 +10,7 @@ import {
 } from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoginComponent} from "../login/login.component";
-import {AuthService} from "../../../core/services/abstract/auth.service";
+import {AuthService} from "../../../core/services/communication/abstract/auth.service";
 import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";

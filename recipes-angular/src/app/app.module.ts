@@ -15,22 +15,25 @@ import {RecipeListComponent} from './embedded/recipe-list/recipe-list.component'
 import {MatIconModule} from "@angular/material/icon";
 import {FooterComponent} from './embedded/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {RecipesService} from "./core/services/abstract/recipes.service";
+import {RecipesService} from "./core/services/communication/abstract/recipes.service";
 import {RecipeDetailComponent} from './pages/recipe-detail/recipe-detail.component';
-import {RecipeService} from "./core/services/abstract/recipe.service";
+import {RecipeService} from "./core/services/communication/abstract/recipe.service";
 import {RecipePreviewComponent} from './embedded/recipe-preview/recipe-preview.component';
 import {BackNavComponent} from './embedded/back-nav/back-nav.component';
-import {ApiRecipeService} from "./core/services/api/api-recipe.service";
-import {ApiRecipesService} from "./core/services/api/api-recipes.service";
+import {ApiRecipeService} from "./core/services/communication/api/api-recipe.service";
+import {ApiRecipesService} from "./core/services/communication/api/api-recipes.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthHeaderComponent} from './embedded/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {LoginComponent} from './embedded/auth/login/login.component';
 import {RegisterComponent} from './embedded/auth/register/register.component';
-import {AuthService} from "./core/services/abstract/auth.service";
-import {ApiAuthService} from "./core/services/api/api-auth.service";
+import {AuthService} from "./core/services/communication/abstract/auth.service";
+import {ApiAuthService} from "./core/services/communication/api/api-auth.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
+import {ImageUploadService} from "./core/services/communication/abstract/image-upload.service";
+import {StubImageUploadService} from "./core/services/communication/stub/stub-image-upload.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BackNavComponent,
     AuthHeaderComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    RecipeAddEditComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +78,10 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     {
       provide: AuthService,
       useClass: ApiAuthService
+    },
+    {
+      provide: ImageUploadService,
+      useClass: StubImageUploadService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

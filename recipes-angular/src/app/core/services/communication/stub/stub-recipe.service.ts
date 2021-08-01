@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RecipeService} from "../abstract/recipe.service";
-import {RecipeDetail} from "../../dto/recipe/recipe-detail";
+import {RecipeDetail} from "../../../dto/recipe/recipe-detail";
 import {Observable, of} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
@@ -53,7 +53,7 @@ const recipeDetail: RecipeDetail = {
 @Injectable({
   providedIn: 'root'
 })
-export class TestRecipeService implements RecipeService {
+export class StubRecipeService implements RecipeService {
   constructor() { }
 
   detail(id: number): Observable<RecipeDetail> {

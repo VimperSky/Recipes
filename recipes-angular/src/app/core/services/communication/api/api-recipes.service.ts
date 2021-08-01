@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {RecipesService} from "../abstract/recipes.service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
-import {RecipesPage} from "../../dto/recipe/recipes-page";
+import {environment} from "../../../../../environments/environment";
+import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
 
 const httpOptions = {

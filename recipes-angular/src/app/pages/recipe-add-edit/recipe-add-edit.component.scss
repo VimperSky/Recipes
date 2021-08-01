@@ -1,0 +1,81 @@
+@use '../../../constants';
+
+app-back-nav {
+  display: block;
+  margin-top: 80px - 22px;
+}
+
+#recipes-header {
+  h1 {
+    @include constants.default-header;
+    color: constants.$dark-black-color;
+  }
+}
+
+#basic-info {
+  height: 430px;
+  display: flex;
+
+  #image-block {
+    position: relative;
+    width: 430px;
+    height: 430px;
+    background: linear-gradient(0deg, #FFEFCC, #FFEFCC), #FFFCF7;
+    border-radius: 72px 0;
+
+    #input-div-clickable-wrapper {
+      height: 270px;
+      width: 270px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      padding: 0;
+      margin: 0;
+      white-space: normal;
+      background: transparent;
+      border: 1px dashed #F29E1F;
+      box-sizing: border-box;
+      border-radius: 20px;
+
+      .file-input {
+        display: none;
+      }
+
+      #input-div {
+        height: 270px;
+        width: 270px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #upload-icon {
+          width: 42px;
+          height: 42px;
+          font-size: 42px;
+          color: constants.$accent-color;
+        }
+
+        #upload-text {
+          margin-top: 20px;
+          width: 165px;
+          text-align: center;
+          @include constants.default-text;
+          font-size: 16px;
+          line-height: 20px;
+          color: constants.$accent-color;
+        }
+      }
+    }
+  }
+
+  #uploaded-image {
+    width: 430px;
+    height: 430px;
+    border-radius: 72px 0;
+  }
+
+}

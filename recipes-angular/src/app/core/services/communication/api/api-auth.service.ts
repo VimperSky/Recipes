@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from "../abstract/auth.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../../../../environments/environment";
 import {Observable} from "rxjs";
-import {Register} from "../../dto/auth/register";
-import {Login} from "../../dto/auth/login";
+import {Register} from "../../../dto/auth/register";
+import {Login} from "../../../dto/auth/login";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,9 +15,7 @@ const httpOptions = {
 
 const basePath: string = "/api/auth"
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiAuthService extends AuthService {
 
   constructor(private http: HttpClient) {

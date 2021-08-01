@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
-import {AuthService} from "../../../core/services/abstract/auth.service";
+import {AuthService} from "../../../core/services/communication/abstract/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
