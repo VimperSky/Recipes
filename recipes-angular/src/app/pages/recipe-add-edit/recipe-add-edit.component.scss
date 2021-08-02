@@ -72,10 +72,27 @@ app-back-nav {
     }
   }
 
-  #uploaded-image {
+  #uploaded-image-block {
     width: 430px;
     height: 430px;
-    border-radius: 72px 0;
+
+    #uploaded-image {
+      width: 430px;
+      height: 430px;
+      border-radius: 72px 0;
+    }
+
+    .close-icon {
+      position: absolute;
+      font-size: 14px;
+      height: 40px;
+      width: 40px;
+      padding: 0;
+
+      z-index: 1000;
+    }
   }
+
+
 
 }

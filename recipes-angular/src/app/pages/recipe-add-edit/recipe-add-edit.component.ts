@@ -33,4 +33,12 @@ export class RecipeAddEditComponent implements OnInit {
     //   this.image = data;
     // })
   }
+
+  deleteImage() {
+    if (this.image)
+    {
+      this.image = null;
+      console.log('delete yeah')
+    }
+  }
 }

@@ -16,7 +16,13 @@
     </div>
 
     <ng-template #imageUploaded>
-      <img id="uploaded-image" [src]="image" alt="preview">
+      <div id="uploaded-image-block">
+        <img id="uploaded-image" [src]="image" alt="preview">
+        <button mat-icon-button class="close-icon" (click)="deleteImage()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
     </ng-template>
 <!--    <div id="recipe-info">-->
 <!--      <div id="text-block">-->
