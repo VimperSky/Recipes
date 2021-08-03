@@ -4,53 +4,84 @@
     <h1>Добавить новый рецепт</h1>
   </div>
 
-  <div id="basic-info">
-    <div id="image-block" *ngIf="image == null; else imageUploaded">
-      <button mat-button id="input-div-clickable-wrapper" (click)="fileUpload.click()">
-        <input type="file" class="file-input" [accept]="acceptImageTypes" (change)="onFileSelected($event)" #fileUpload>
-        <span id="input-div">
+  <form [formGroup]="recipeForm">
+    <div id="primary-block">
+      <div id="image-block" *ngIf="image == null; else imageUploaded">
+        <button mat-button id="input-div-clickable-wrapper" (click)="fileUpload.click()">
+          <input type="file" class="file-input" [accept]="acceptImageTypes" (change)="onFileSelected($event)" #fileUpload>
+          <span id="input-div">
           <mat-icon id="upload-icon">cloud_download</mat-icon>
           <span id="upload-text">Загрузите фото готового блюда</span>
         </span>
-      </button>
-    </div>
-
-    <ng-template #imageUploaded>
-      <div id="uploaded-image-block">
-        <img id="uploaded-image" [src]="image" alt="preview">
-        <button mat-icon-button class="close-icon" (click)="deleteImage()">
-          <mat-icon>close</mat-icon>
         </button>
       </div>
 
-    </ng-template>
-<!--    <div id="recipe-info">-->
-<!--      <div id="text-block">-->
-<!--        <h3 *ngIf="isClickable" id="recipe-header">{{recipe.name}}</h3>-->
-<!--        <p id="recipe-description">{{recipe.description}}</p>-->
-<!--      </div>-->
+      <ng-template #imageUploaded>
+        <div id="uploaded-image-block">
+          <img id="uploaded-image" [src]="image" alt="preview">
+          <button mat-icon-button class="close-icon" (click)="deleteImage()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </ng-template>
 
-<!--      <div id="extra-info-block">-->
-<!--        <div class="extra-block" id="cooking-block">-->
-<!--          <mat-icon class="extra-icon">timer</mat-icon>-->
-<!--          <div class="extra-time-block">-->
-<!--            <span class="extra-header">Время приготовления</span>-->
-<!--            <span class="extra-value">{{recipe.cookingTimeMin}} минут</span>-->
-<!--          </div>-->
-<!--        </div>-->
 
-<!--        <div class="extra-block" id="portions-block">-->
-<!--          <mat-icon class="extra-icon">people</mat-icon>-->
-<!--          <div class="extra-time-block">-->
-<!--            <span class="extra-header">Рецепт на</span>-->
-<!--            <span class="extra-value">{{recipe.portions}} персон</span>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-  </div>
+      <div id="primary-recipe-info">
+        <div class="input-block-with-margin">
+          <mat-form-field class="wide-mat-form-field">
+            <mat-label>Название рецепта</mat-label>
+            <input required type="text" matInput [formControl]="recipeName">
+          </mat-form-field>
+        </div>
 
-  <div id="bottom-blocks">
+        <div class="input-block-with-margin">
+          <mat-form-field id="recipe-description">
+            <mat-label>Краткое описание рецепта (150 символов)</mat-label>
+            <textarea rows="5" matInput [formControl]="recipeDescription"></textarea>
+          </mat-form-field>
+        </div>
 
-  </div>
+        <div id="cooking-portions-line">
+          <mat-form-field class="line-form-field">
+            <mat-label>Время готовки</mat-label>
+            <input type="number" matInput [formControl]="cookingTime">
+          </mat-form-field>
+          <span>Минут</span>
+
+          <mat-form-field id="second-mat-form-field" class="line-form-field">
+            <mat-label>Порций в блюде</mat-label>
+            <input type="number" matInput [formControl]="portions">
+          </mat-form-field>
+          <span>Персон</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="bottom-blocks">
+      <div id="first-bottom-block">
+        <h2>Ингредиенты</h2>
+        <div id="ingredient-new">
+          <mat-form-field id="ingredient-header" class="wide-mat-form-field">
+            <mat-label>Заголовок для ингредиентов</mat-label>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-form-field id="ingredient-value">
+            <mat-label>Список продуктов для категории</mat-label>
+            <textarea rows="12" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div id="second-bottom-block">
+        <div id="step">
+          <h3 id="step-header">Шаг 1</h3>
+          <mat-form-field id="step-value">
+            <mat-label>Описание шага</mat-label>
+            <textarea rows="5" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+
 </div>

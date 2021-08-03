@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -11,7 +13,35 @@ export class RecipeAddEditComponent implements OnInit {
   image: string | SafeResourceUrl | null = null;
   readonly acceptImageTypes: string = "image/png, image/jpeg";
 
-  constructor(private sanitizer: DomSanitizer) { }
+  recipeDetail: RecipeDetail | undefined;
+
+  recipeForm: FormGroup;
+
+  recipeName = new FormControl('', [
+    Validators.required
+  ])
+
+  recipeDescription = new FormControl('', [
+    Validators.maxLength(150)
+  ])
+
+  cookingTime = new FormControl('', [
+    Validators.max(999)
+  ])
+
+  portions = new FormControl('', [
+    Validators.max(999)
+  ])
+
+
+  constructor(private sanitizer: DomSanitizer, fb: FormBuilder) {
+    this.recipeForm = fb.group({
+      recipeName: this.recipeName,
+      recipeDescription: this.recipeDescription,
+      cookingTime: this.cookingTime,
+      portions: this.portions
+    })
+  }
 
   ngOnInit(): void {
   }

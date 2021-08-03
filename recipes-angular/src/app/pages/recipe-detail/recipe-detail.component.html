@@ -6,14 +6,14 @@
   <app-recipe-preview [recipe]="recipeDetail" [isClickable]="false"></app-recipe-preview>
 
   <div id="bottom-blocks">
-    <div class="bottom-block">
+    <div id="first-bottom-block">
       <h2>Ингредиенты</h2>
       <div *ngFor="let ingredient of recipeDetail.ingredients">
         <h3 id="ingredient-header">{{ingredient.header}}</h3>
         <pre id="ingredient-value">{{ingredient.value}}</pre>
       </div>
     </div>
-    <div class="bottom-block">
+    <div id="second-bottom-block">
       <div *ngFor="let val of recipeDetail.steps; let idx = index" id="step">
         <h3 id="step-header">Шаг {{idx + 1}}</h3>
         <p id="step-value">{{val}}</p>

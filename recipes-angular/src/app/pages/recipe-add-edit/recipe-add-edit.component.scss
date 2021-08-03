@@ -5,6 +5,7 @@ app-back-nav {
   margin-top: 80px - 22px;
 }
 
+
 #recipes-header {
   h1 {
     @include constants.default-header;
@@ -12,9 +13,13 @@ app-back-nav {
   }
 }
 
-#basic-info {
+#primary-block {
   height: 430px;
   display: flex;
+  border-radius: 72px 24px 24px 0;
+  box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+  width: 100%;
+  background: white;
 
   #image-block {
     position: relative;
@@ -93,6 +98,110 @@ app-back-nav {
     }
   }
 
+  #primary-recipe-info {
+    margin-top: 15px;
+    margin-left: 50px;
+    margin-right: 70px;
+    flex-grow: 1;
+
+    .input-block-with-margin {
+      margin-top: 30px;
+    }
+
+    #recipe-description {
+      width: 100%;
+    }
+
+    #cooking-portions-line {
+      display: flex;
+      align-items: center;
+
+      span {
+        @include constants.default-text;
+        color: #25292D;
+        font-size: 16px;
+        line-height: 28px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+      }
+
+      #second-mat-form-field {
+        margin-left: 60px;
+      }
+
+      .line-form-field {
+        width: 220px;
+      }
+    }
+  }
+}
+
+#bottom-blocks {
+  margin-top: 40px;
+  display: flex;
+
+  h2 {
+    @include constants.default-text;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: constants.$light-black-color;
+  }
 
 
+  #first-bottom-block {
+    width: 380px;
+
+    #ingredient-new {
+      background: white;
+      box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+      border-radius: 24px;
+      padding: 30px 30px 45px 30px;
+
+      #ingredient-header {
+        margin: 0;
+      }
+
+      #ingredient-value {
+        height: 40px;
+        margin: 25px 0 20px;
+        width: 100%;
+      }
+    }
+  }
+
+  #second-bottom-block {
+    margin-left: 30px;
+
+    #step {
+      background: white;
+      box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+      border-radius: 24px;
+      width: 660px;
+      margin-bottom: 20px;
+      padding: 50px 70px 50px 70px;
+
+      #step-header {
+        @include constants.default-text;
+        font-weight: 600;
+        line-height: 30px;
+        color: constants.$light-black-color;
+      }
+
+      #step-value {
+        @include constants.default-text;
+        line-height: 30px;
+        margin-top: -10px;
+        color: constants.$light-black-color;
+        width: 100%;
+
+      }
+    }
+  }
+
+}
+
+.wide-mat-form-field {
+  height: 40px;
+  width: 100%;
 }
