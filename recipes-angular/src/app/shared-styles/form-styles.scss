@@ -12,6 +12,7 @@ textarea {
   color: constants.$dark-black-color;
   font-size: 16px;
   line-height: 28px;
+  resize: none !important;
 }
 
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0 !important;}

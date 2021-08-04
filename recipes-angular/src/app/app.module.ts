@@ -32,6 +32,7 @@ import {AuthService} from "./core/services/communication/abstract/auth.service";
 import {ApiAuthService} from "./core/services/communication/api/api-auth.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
+import {AutosizeModule} from "ngx-autosize";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.
     HttpClientModule,
     MatDividerModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AutosizeModule
   ],
   providers: [
     {

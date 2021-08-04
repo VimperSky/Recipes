@@ -4,6 +4,8 @@ import {FormArray, FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
 import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
+import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -48,6 +50,7 @@ export class RecipeAddEditComponent implements OnInit {
         this.recipeDescription.setValue(result.description);
         this.cookingTime.setValue(result.cookingTimeMin);
         this.portions.setValue(result.portions);
+        this.image = environment.backendUrl + "/" + result.imagePath;
 
         for (const ingredient of result.ingredients) {
           this.addIngredient(ingredient.header, ingredient.value)

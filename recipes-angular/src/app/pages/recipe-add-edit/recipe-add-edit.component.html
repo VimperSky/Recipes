@@ -41,7 +41,7 @@
         <div class="input-block-with-margin">
           <mat-form-field id="recipe-description">
             <mat-label>Краткое описание рецепта (150 символов)</mat-label>
-            <textarea rows="5" matInput formControlName="recipeDescription"></textarea>
+            <textarea autosize [rows]="4" [maxRows]="4" matInput formControlName="recipeDescription"></textarea>
           </mat-form-field>
         </div>
 
@@ -73,7 +73,7 @@
 
             <mat-form-field class="ingredient-value">
               <mat-label>Список продуктов для категории</mat-label>
-              <textarea rows="8" matInput formControlName="value"></textarea>
+              <textarea autosize [minRows]="4" [maxRows]="10" matInput formControlName="value"></textarea>
             </mat-form-field>
 
             <button mat-icon-button class="close-icon close-ingredient-icon" (click)="deleteIngredient(i)">
@@ -93,7 +93,7 @@
             <h3 class="step-header">Шаг {{i+1}}</h3>
             <mat-form-field class="step-value">
               <mat-label>Описание шага</mat-label>
-              <textarea rows="4" formControlName="value" matInput></textarea>
+              <textarea autosize [minRows]="3" [maxRows]="10" formControlName="value" matInput></textarea>
             </mat-form-field>
             <button mat-icon-button class="close-icon close-step-icon" (click)="deleteStep(i)">
               <mat-icon>close</mat-icon>
