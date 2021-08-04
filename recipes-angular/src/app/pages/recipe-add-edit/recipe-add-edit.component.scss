@@ -7,201 +7,249 @@ app-back-nav {
 
 
 #recipes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   h1 {
     @include constants.default-header;
     color: constants.$dark-black-color;
   }
+
+  #publish-recipe-button {
+    @include constants.default-text;
+    height: 60px;
+    width: 280px;
+    border-radius: 16px;
+  }
 }
 
-#primary-block {
-  height: 430px;
-  display: flex;
-  border-radius: 72px 24px 24px 0;
-  box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
-  width: 100%;
-  background: white;
-
-  #image-block {
-    position: relative;
-    width: 430px;
+form {
+  margin-top: 50px;
+  #primary-block {
     height: 430px;
-    background: linear-gradient(0deg, #FFEFCC, #FFEFCC), #FFFCF7;
-    border-radius: 72px 0;
+    display: flex;
+    border-radius: 72px 24px 24px 0;
+    box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+    width: 100%;
+    background: white;
 
-    #input-div-clickable-wrapper {
-      height: 270px;
-      width: 270px;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-      padding: 0;
-      margin: 0;
-      white-space: normal;
-      background: transparent;
-      border: 1px dashed #F29E1F;
-      box-sizing: border-box;
-      border-radius: 20px;
-
-      .file-input {
-        display: none;
-      }
-
-      #input-div {
-        height: 270px;
-        width: 270px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        #upload-icon {
-          width: 42px;
-          height: 42px;
-          font-size: 42px;
-          color: constants.$accent-color;
-        }
-
-        #upload-text {
-          margin-top: 20px;
-          width: 165px;
-          text-align: center;
-          @include constants.default-text;
-          font-size: 16px;
-          line-height: 20px;
-          color: constants.$accent-color;
-        }
-      }
-    }
-  }
-
-  #uploaded-image-block {
-    width: 430px;
-    height: 430px;
-
-    #uploaded-image {
+    #image-block {
+      position: relative;
       width: 430px;
       height: 430px;
+      background: linear-gradient(0deg, #FFEFCC, #FFEFCC), #FFFCF7;
       border-radius: 72px 0;
-    }
 
-    .close-icon {
-      position: absolute;
-      font-size: 14px;
-      height: 40px;
-      width: 40px;
-      padding: 0;
-
-      z-index: 1000;
-    }
-  }
-
-  #primary-recipe-info {
-    margin-top: 15px;
-    margin-left: 50px;
-    margin-right: 70px;
-    flex-grow: 1;
-
-    .input-block-with-margin {
-      margin-top: 30px;
-    }
-
-    #recipe-description {
-      width: 100%;
-    }
-
-    #cooking-portions-line {
-      display: flex;
-      align-items: center;
-
-      span {
-        @include constants.default-text;
-        color: #25292D;
-        font-size: 16px;
-        line-height: 28px;
-        margin-left: 10px;
-        margin-bottom: 20px;
-      }
-
-      #second-mat-form-field {
-        margin-left: 60px;
-      }
-
-      .line-form-field {
-        width: 220px;
-      }
-    }
-  }
-}
-
-#bottom-blocks {
-  margin-top: 40px;
-  display: flex;
-
-  h2 {
-    @include constants.default-text;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 30px;
-    color: constants.$light-black-color;
-  }
-
-
-  #first-bottom-block {
-    width: 380px;
-
-    #ingredient-new {
-      background: white;
-      box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
-      border-radius: 24px;
-      padding: 30px 30px 45px 30px;
-
-      #ingredient-header {
+      #input-div-clickable-wrapper {
+        height: 270px;
+        width: 270px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        padding: 0;
         margin: 0;
+        white-space: normal;
+        background: transparent;
+        border: 1px dashed #F29E1F;
+        box-sizing: border-box;
+        border-radius: 20px;
+
+        .file-input {
+          display: none;
+        }
+
+        #input-div {
+          height: 270px;
+          width: 270px;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          #upload-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 42px;
+            color: constants.$accent-color;
+          }
+
+          #upload-text {
+            margin-top: 20px;
+            width: 165px;
+            text-align: center;
+            @include constants.default-text;
+            font-size: 16px;
+            line-height: 20px;
+            color: constants.$accent-color;
+          }
+        }
+      }
+    }
+
+    #uploaded-image-block {
+      width: 430px;
+      height: 430px;
+
+      #uploaded-image {
+        width: 430px;
+        height: 430px;
+        border-radius: 72px 0;
+      }
+    }
+
+    #primary-recipe-info {
+      margin-top: 15px;
+      margin-left: 50px;
+      margin-right: 70px;
+      flex-grow: 1;
+
+      .input-block-with-margin {
+        margin-top: 30px;
       }
 
-      #ingredient-value {
-        height: 40px;
-        margin: 25px 0 20px;
+      #recipe-description {
         width: 100%;
+
+        textarea {
+          resize: none !important;
+        }
+      }
+
+      #cooking-portions-line {
+        display: flex;
+        align-items: center;
+
+        span {
+          @include constants.default-text;
+          color: #25292D;
+          font-size: 16px;
+          line-height: 28px;
+          margin-left: 10px;
+          margin-bottom: 20px;
+        }
+
+        #second-mat-form-field {
+          margin-left: 60px;
+        }
+
+        .line-form-field {
+          width: 220px;
+        }
       }
     }
   }
 
-  #second-bottom-block {
-    margin-left: 30px;
+  #bottom-blocks {
+    margin-top: 40px;
+    display: flex;
 
-    #step {
-      background: white;
-      box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
-      border-radius: 24px;
-      width: 660px;
-      margin-bottom: 20px;
-      padding: 50px 70px 50px 70px;
+    h2 {
+      @include constants.default-text;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 30px;
+      color: constants.$light-black-color;
+    }
 
-      #step-header {
-        @include constants.default-text;
-        font-weight: 600;
-        line-height: 30px;
-        color: constants.$light-black-color;
-      }
+    #first-bottom-block {
+      width: 380px;
 
-      #step-value {
-        @include constants.default-text;
-        line-height: 30px;
-        margin-top: -10px;
-        color: constants.$light-black-color;
-        width: 100%;
+      .ingredient-block {
+        margin-bottom: 50px;
+        background: white;
+        box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+        border-radius: 24px;
+        padding: 30px 30px 45px 30px;
+        position: relative;
 
+        .ingredient-header {
+          margin: 0;
+        }
+
+        .ingredient-value {
+          height: 40px;
+          margin: 25px 0 20px;
+          width: 100%;
+        }
+
+        .close-ingredient-icon {
+          top: -40px;
+        }
       }
     }
+
+    #second-bottom-block {
+      margin-left: 30px;
+
+      .step {
+        background: white;
+        box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+        border-radius: 24px;
+        width: 660px;
+        margin-bottom: 30px;
+        padding: 50px 70px 50px 70px;
+        position: relative;
+
+        .step-header {
+          @include constants.default-text;
+          font-weight: 600;
+          line-height: 30px;
+          color: constants.$light-black-color;
+        }
+
+        .step-value {
+          @include constants.default-text;
+          line-height: 30px;
+          margin-top: -10px;
+          color: constants.$light-black-color;
+          width: 100%;
+        }
+
+        .close-step-icon {
+          top: 40px;
+          right: 60px;
+        }
+      }
+
+      #add-step-wrapper {
+        text-align: center;
+
+        button {
+          margin-top: 15px;
+        }
+      }
+    }
+
+    .add-item-button {
+      @include constants.default-text;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid constants.$accent-color;
+      border-radius: 16px;
+      color: constants.$accent-color;
+      width: 380px;
+      height: 60px;
+      text-align: center;
+    }
+
   }
 
-}
+  .close-icon {
+    position: absolute;
+    font-size: 14px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    color: rgba(145, 150, 161, 0.4);
 
-.wide-mat-form-field {
-  height: 40px;
-  width: 100%;
+    z-index: 1000;
+  }
+  .wide-mat-form-field {
+    height: 40px;
+    width: 100%;
+  }
 }

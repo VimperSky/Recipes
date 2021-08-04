@@ -33,7 +33,6 @@ import {ApiAuthService} from "./core/services/communication/api/api-auth.service
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
 import {ImageUploadService} from "./core/services/communication/abstract/image-upload.service";
-import {StubImageUploadService} from "./core/services/communication/stub/stub-image-upload.service";
 
 @NgModule({
   declarations: [
@@ -78,10 +77,6 @@ import {StubImageUploadService} from "./core/services/communication/stub/stub-im
     {
       provide: AuthService,
       useClass: ApiAuthService
-    },
-    {
-      provide: ImageUploadService,
-      useClass: StubImageUploadService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
