@@ -1,4 +1,4 @@
-@use '../../../constants';
+@use '../../shared-styles/constants';
 
 app-back-nav {
   display: block;
@@ -202,10 +202,7 @@ form {
         }
 
         .step-value {
-          @include constants.default-text;
-          line-height: 30px;
           margin-top: -10px;
-          color: constants.$light-black-color;
           width: 100%;
         }
 
@@ -248,6 +245,8 @@ form {
 
     z-index: 1000;
   }
+
+
   .wide-mat-form-field {
     height: 40px;
     width: 100%;

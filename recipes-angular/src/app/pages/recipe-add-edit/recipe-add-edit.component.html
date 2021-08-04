@@ -34,7 +34,7 @@
         <div class="input-block-with-margin">
           <mat-form-field class="wide-mat-form-field">
             <mat-label>Название рецепта</mat-label>
-            <input required type="text" matInput formControlName="recipeName">
+            <input required type="text" matInput [formControl]="recipeName">
           </mat-form-field>
         </div>
 
@@ -48,13 +48,13 @@
         <div id="cooking-portions-line">
           <mat-form-field class="line-form-field">
             <mat-label>Время готовки</mat-label>
-            <input type="number" matInput formControlName="cookingTime">
+            <input type="number" matInput [formControl]="cookingTime">
           </mat-form-field>
           <span>Минут</span>
 
           <mat-form-field id="second-mat-form-field" class="line-form-field">
             <mat-label>Порций в блюде</mat-label>
-              <input type="number" matInput formControlName="portions">
+              <input type="number" matInput [formControl]="portions">
           </mat-form-field>
           <span>Персон</span>
         </div>
@@ -64,36 +64,42 @@
     <div id="bottom-blocks">
       <div id="first-bottom-block">
         <h2>Ингредиенты</h2>
-        <div formArrayName="ingredients" class="ingredient-block" *ngFor="let ingredient of ingredients.controls; let i = index">
-          <mat-form-field class="wide-mat-form-field ingredient-header">
-            <mat-label>Заголовок для ингредиентов</mat-label>
-            <input type="text" matInput>
-          </mat-form-field>
+        <div formArrayName="ingredients" class="ingredient-block" *ngFor="let _ of ingredients.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <mat-form-field class="wide-mat-form-field ingredient-header">
+              <mat-label>Заголовок для ингредиентов</mat-label>
+              <input type="text" formControlName="header" matInput>
+            </mat-form-field>
 
-          <mat-form-field class="ingredient-value">
-            <mat-label>Список продуктов для категории</mat-label>
-            <textarea rows="8" matInput></textarea>
-          </mat-form-field>
+            <mat-form-field class="ingredient-value">
+              <mat-label>Список продуктов для категории</mat-label>
+              <textarea rows="8" matInput formControlName="value"></textarea>
+            </mat-form-field>
 
-          <button mat-icon-button class="close-icon close-ingredient-icon" (click)="deleteIngredient(i)">
-            <mat-icon>close</mat-icon>
-          </button>
+            <button mat-icon-button class="close-icon close-ingredient-icon" (click)="deleteIngredient(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </ng-container>
         </div>
+
 
         <button mat-stroked-button color="accent" class="add-item-button" (click)="addIngredient()" type='button'>
           Добавить заголовок
         </button>
       </div>
       <div id="second-bottom-block">
-        <div formArrayName="steps" class="step" *ngFor="let step of steps.controls; let i = index">
-          <h3 class="step-header">Шаг {{i+1}}</h3>
-          <mat-form-field class="step-value">
-            <mat-label>Описание шага</mat-label>
-            <textarea rows="4" matInput></textarea>
-          </mat-form-field>
-          <button mat-icon-button class="close-icon close-step-icon" (click)="deleteStep(i)">
-            <mat-icon>close</mat-icon>
-          </button>
+        <div formArrayName="steps" class="step" *ngFor="let _ of steps.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <h3 class="step-header">Шаг {{i+1}}</h3>
+            <mat-form-field class="step-value">
+              <mat-label>Описание шага</mat-label>
+              <textarea rows="4" formControlName="value" matInput></textarea>
+            </mat-form-field>
+            <button mat-icon-button class="close-icon close-step-icon" (click)="deleteStep(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </ng-container>
+
         </div>
         <div id="add-step-wrapper">
           <button mat-stroked-button color="accent" class="add-item-button" (click)="addStep()" type='button'>

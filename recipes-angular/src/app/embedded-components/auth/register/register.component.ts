@@ -43,7 +43,7 @@ const minLengthValidator: ValidatorFn = (control: AbstractControl):  ValidationE
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../auth-styles.scss', './register.component.scss']
+  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/auth-styles.scss', './register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

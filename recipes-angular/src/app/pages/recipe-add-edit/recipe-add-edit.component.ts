@@ -1,48 +1,67 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, Validators} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
+import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
+import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
 
 @Component({
   selector: 'app-recipe-add-edit',
   templateUrl: './recipe-add-edit.component.html',
-  styleUrls: ['./recipe-add-edit.component.scss']
+  styleUrls: ['../../shared-styles/form-styles.scss', './recipe-add-edit.component.scss']
 })
 export class RecipeAddEditComponent implements OnInit {
 
   image: string | SafeResourceUrl | null = null;
   readonly acceptImageTypes: string = "image/png, image/jpeg";
 
+  recipeName = this.fb.control('', [Validators.required]);
+  recipeDescription = this.fb.control('', [Validators.maxLength(150)])
+  cookingTime = this.fb.control('', [Validators.max(999)]);
+  portions = this.fb.control('', [Validators.max(999)]);
+  ingredients: FormArray = this.fb.array([]);
+  steps = this.fb.array([]);
+
   recipeForm = this.fb.group({
-    recipeName: new FormControl('', [
-      Validators.required
-    ]),
-    recipeDescription: new FormControl('', [
-      Validators.maxLength(150)
-    ]),
-    cookingTime: new FormControl('', [
-      Validators.max(999)
-    ]),
-    portions: new FormControl('', [
-      Validators.max(999)
-    ]),
-    ingredients: this.fb.array([]),
-    steps: this.fb.array([])
+    recipeName: this.recipeName,
+    recipeDescription: this.recipeDescription,
+    cookingTime: this.cookingTime,
+    portions: this.portions,
+    ingredients: this.ingredients,
+    steps: this.steps
   })
 
-  get ingredients(): FormArray {
-    return this.recipeForm.controls['ingredients'] as FormArray;
-  }
+  id: number | undefined;
 
-  get steps(): FormArray {
-    return this.recipeForm.controls['steps'] as FormArray;
-  }
-
-  constructor(private sanitizer: DomSanitizer, private fb: FormBuilder) {
+  constructor(private sanitizer: DomSanitizer,
+              private fb: FormBuilder,
+              private recipeService: RecipeService,
+              route: ActivatedRoute) {
+    this.id = route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
-    this.addIngredient()
-    this.addStep()
+    if (this.id) {
+      this.recipeService.detail(this.id).subscribe((result: RecipeDetail) => {
+
+        this.recipeName.setValue(result.name);
+        this.recipeDescription.setValue(result.description);
+        this.cookingTime.setValue(result.cookingTimeMin);
+        this.portions.setValue(result.portions);
+
+        for (const ingredient of result.ingredients) {
+          this.addIngredient(ingredient.header, ingredient.value)
+        }
+
+        for (const step of result.steps) {
+          this.addStep(step)
+        }
+      })
+    }
+    else {
+      this.addIngredient()
+      this.addStep()
+    }
   }
 
   onFileSelected(event: Event) {
@@ -77,17 +96,18 @@ export class RecipeAddEditComponent implements OnInit {
       return;
   }
 
-  addIngredient() {
+  addIngredient(header: string = "", value: string = "") {
     const ingredientBlock = this.fb.group({
-      header: ['', [Validators.required, Validators.maxLength(24)]],
-      value: ['', [Validators.required, Validators.maxLength(500)]]
+      header: this.fb.control(header, [Validators.required, Validators.maxLength(24)]),
+      value: this.fb.control(value, [Validators.required, Validators.maxLength(500)]),
     })
     this.ingredients.push(ingredientBlock)
   }
 
-  addStep() {
+
+  addStep(value: string = "") {
     const step = this.fb.group({
-      value: ['', [Validators.required, Validators.maxLength(500)]]
+      value: [value, [Validators.required, Validators.maxLength(500)]]
     })
     this.steps.push(step)
   }

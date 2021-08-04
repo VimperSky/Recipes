@@ -17,7 +17,7 @@ const serverErrors: Record<string, string> = {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../auth-styles.scss', './login.component.scss']
+  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/auth-styles.scss', './login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
