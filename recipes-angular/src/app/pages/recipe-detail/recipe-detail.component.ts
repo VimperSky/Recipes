@@ -23,10 +23,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   delete() {
-
+    // TODO: добавить взаимодействие с сервером
   }
 
-  edit() {
 
-  }
 }

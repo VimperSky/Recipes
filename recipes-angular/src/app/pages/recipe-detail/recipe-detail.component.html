@@ -4,10 +4,12 @@
     <h1>{{recipeDetail.name}}</h1>
     <div id="right-buttons-block">
       <button mat-fab id="delete-recipe-button" (click)="delete()">
-        <mat-icon>delete</mat-icon>
+        <mat-icon>delete_outline</mat-icon>
       </button>
-      <button mat-flat-button color="accent" id="publish-recipe-button" (click)="edit()">
-        Редактировать
+      <button mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
+              type="button">
+        <mat-icon>edit</mat-icon>
+        <span>Редактировать</span>
       </button>
     </div>
 

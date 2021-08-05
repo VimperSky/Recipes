@@ -16,6 +16,10 @@
     width: 280px;
     border-radius: 16px;
   }
+
+  span, mat-icon {
+    margin-right: 20px;
+  }
 }
 
 #recipe-search {

@@ -17,7 +17,11 @@ export class RecipeAddEditComponent implements OnInit {
   image: string | SafeResourceUrl | null = null;
   readonly acceptImageTypes: string = "image/png, image/jpeg";
 
-  recipeName = this.fb.control('', [Validators.required]);
+  recipeName = this.fb.control('', [
+    Validators.required,
+    Validators.pattern('.*[a-zA-Zа-яА-Я].*') // хотя бы один символ из алфавита (рус англ)
+  ]);
+
   recipeDescription = this.fb.control('', [Validators.maxLength(150)])
   cookingTime = this.fb.control('', [Validators.max(999)]);
   portions = this.fb.control('', [Validators.max(999)]);
@@ -91,6 +95,8 @@ export class RecipeAddEditComponent implements OnInit {
     this.recipeForm.markAllAsTouched();
     if (this.recipeForm.invalid)
       return;
+
+    // TODO: Добавить взаимодействие с сервером, следующая итерация фичи.
   }
 
   addIngredient(header: string = "", value: string = "") {

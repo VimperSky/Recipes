@@ -227,6 +227,10 @@ form {
       width: 380px;
       height: 60px;
       text-align: center;
+
+      span, mat-icon {
+        margin-right: 50px;
+      }
     }
 
   }

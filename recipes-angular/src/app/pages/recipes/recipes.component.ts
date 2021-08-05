@@ -11,7 +11,4 @@ export class RecipesComponent implements OnInit {
 
   }
 
-  addRecipe() {
-
-  }
 }

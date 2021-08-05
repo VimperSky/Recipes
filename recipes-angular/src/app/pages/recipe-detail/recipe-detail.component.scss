@@ -28,7 +28,7 @@ app-back-nav {
 
 
       mat-icon {
-        font-size: 20px;
+        font-size: 24px;
         color: rgba(158, 163, 172, 0.7);
       }
     }
@@ -38,6 +38,10 @@ app-back-nav {
       height: 60px;
       width: 280px;
       border-radius: 16px;
+
+      span, mat-icon {
+        margin-right: 20px;
+      }
     }
   }
 

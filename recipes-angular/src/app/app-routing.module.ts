@@ -12,7 +12,7 @@ const routes: Routes = [
     component: RecipesComponent
   },
   {
-    path: 'recipe/add',
+    path: 'recipe/new',
     component: RecipeAddEditComponent,
   },
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     component: RecipeAddEditComponent,
   },
   {
-    path: 'recipe/:id',
+    path: 'recipe/detail/:id',
     component: RecipeDetailComponent
   },
   {
