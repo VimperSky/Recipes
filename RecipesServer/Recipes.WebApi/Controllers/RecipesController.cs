@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Domain;
@@ -16,11 +17,13 @@ namespace Recipes.WebApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRecipesRepository _recipesRepository;
+        private readonly IMapper _mapper;
 
-        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository)
+        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _recipesRepository = recipesRepository;
+            _mapper = mapper;
         }
         
         /// <summary>
@@ -28,30 +31,24 @@ namespace Recipes.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         /// <response code="200">OK</response>
-        /// <response code="400">Invalid page id</response>
+        /// <response code="400">Invalid input data</response>
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPage> GetRecipes([FromQuery][Required]int pageSize, [FromQuery]int page = 1,
-            [FromQuery]string searchString = "")
+        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
+            [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")
         {
-            if (pageSize <= 0)
-                return BadRequest();
-
-            if (page <= 0)
-                return BadRequest();
-
             var pageCount = _recipesRepository.GetPagesCount(pageSize, searchString);
             if (page > 1 && page > pageCount)
                 return NotFound();
 
             var recipes = _recipesRepository.GetPage(page, pageSize, searchString);
 
-            var recipesPage = new RecipesPage
+            var recipesPage = new RecipesPageDto
             {
-                Recipes = recipes.Select(RecipePreview.FromModel).ToArray(),
+                Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
                 PageCount = pageCount
             };
             

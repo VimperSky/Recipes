@@ -17,7 +17,15 @@
 }
 
 .mat-dialog-content {
-  height: 230px;
+  height: 250px;
+
+  mat-error {
+    margin-top: -9px;
+  }
+
+  mat-hint {
+    margin-top: -9px;
+  }
 }
 
 .mat-dialog-actions {

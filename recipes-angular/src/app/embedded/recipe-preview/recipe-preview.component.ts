@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RecipePreview} from "../../core/models/recipe-preview";
+import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
 import {environment} from "../../../environments/environment";
 
 @Component({
@@ -22,7 +22,7 @@ export class RecipePreviewComponent implements OnInit {
   getImagePath(recipe: RecipePreview): string {
     return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
       ? recipe.imagePath
-      : environment.backendUrl + recipe.imagePath;
+      : environment.backendUrl + "/" + recipe.imagePath;
   }
 
   constructor() { }

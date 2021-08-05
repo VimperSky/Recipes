@@ -1,14 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup, ValidationErrors, ValidatorFn,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators
 } from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoginComponent} from "../login/login.component";
+import {AuthService} from "../../../core/services/abstract/auth.service";
+import {Register} from "../../../core/dto/auth/register";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
 
+
+const loginErrors: Record<string, string> = {
+  'takenLogin': "Логин занят. Выберите другой",
+  'default': "Введите логин"
+}
+
+const passwordErrors: Record<string, string> = {
+  'minLength': 'Пароль слишком короткий',
+  'mismatch': "Пароли не совпадают",
+  'default': "Введите пароль"
+};
+
+
+const samePasswordsValidator: ValidatorFn = (control: AbstractControl):  ValidationErrors | null => {
+  const pass = control.get('firstPassword')?.value;
+  const confirmPass = control.get('secondPassword')?.value
+  return pass === confirmPass ? null : { mismatch: true };
+}
+
+const minLengthValidator: ValidatorFn = (control: AbstractControl):  ValidationErrors | null => {
+  const pass = control.get('firstPassword')!;
+  return pass.hasError('minlength') ? {minLength: true} : null;
+}
 
 @Component({
   selector: 'app-register',
@@ -34,13 +64,15 @@ export class RegisterComponent implements OnInit {
     Validators.required,
   ]);
 
-
-
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<RegisterComponent>, fb: FormBuilder) {
+  constructor(private dialog: MatDialog,
+              private dialogRef: MatDialogRef<LoginComponent>,
+              private authService: AuthService,
+              private snackBar: MatSnackBar,
+              fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
       secondPassword: this.confirmPassword
-    }, {validators: this.samePasswordsValidator});
+    }, {validators: [samePasswordsValidator, minLengthValidator]});
 
     this.registerForm = fb.group( {
       name: this.name,
@@ -49,45 +81,74 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  get passwordsHaveError(): boolean {
-    return this.passwordForm.errors != null &&
-      (this.password.hasError('minlength') || this.passwordForm.hasError('notSame'));
+  get passwordHasError(): boolean {
+    return this.passwordForm.errors != null;
   }
 
   getPasswordErrorText(): string {
-    if (this.password.hasError('minlength'))
-      return "Пароль слишком короткий";
+    for (const key of Object.keys(passwordErrors))
+      if (this.passwordForm.hasError(key))
+        return passwordErrors[key];
 
-    if (this.passwordForm.hasError('notSame'))
-      return "Пароли не совпадают";
-
-    return "Укажите пароль"
+    return passwordErrors['default'];
   }
 
-  isEmptyOrSpaces(str: string) {
-    return str === null || str.match(/^ *$/) !== null;
+  get loginHasError(): boolean {
+    return this.login.errors?.takenLogin;
   }
 
-  samePasswordsValidator: ValidatorFn = (control: AbstractControl):  ValidationErrors | null => {
-    const pass = control.get('firstPassword')?.value;
-    const confirmPass = control.get('secondPassword')?.value
-    return pass === confirmPass ? null : { notSame: true };
+  getLoginErrorText(): string {
+    for (const key of Object.keys(loginErrors))
+      if (this.login.hasError(key))
+        return loginErrors[key];
+
+    return loginErrors['default'];
   }
+
+
 
   ngOnInit(): void {
   }
 
   logIn() {
     this.dialogRef.close();
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
-
   }
 
+
+
   register() {
-    console.log(this.password.errors)
-    console.log(this.passwordForm.errors)
     this.registerForm.markAllAsTouched();
+    if (this.registerForm.valid) {
+      let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }
+      this.authService.register(registerDto).subscribe(() => {
+        this.dialogRef.close()
+        this.snackBar.open('Регистрация прошла успешно!', 'ОК', {
+          duration: 5000
+        })
+      }, ((error: HttpErrorResponse) => {
+        if (error.status == 400) {
+
+          let formControlsMap = new Map<string, AbstractControl>([
+            ['Name', this.name],
+            ['Login', this.login],
+            ['Password', this.passwordForm]
+          ]);
+
+          let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
+          for (let err of Object.keys(problemDetails.errors)) {
+            let val = formControlsMap.get(err);
+            if (val) {
+              val.setErrors({notValid: true});
+            }
+          }
+        }
+        else if (error.status == 409) {
+          this.login.setErrors({takenLogin: true})
+        }
+      }))
+    }
   }
 }

@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  backendUrl: "http://localhost:5000/",
+  backendUrl: "https://localhost:5001",
   pageSize: 3,
+  jwtToken: 'jwt-token',
 };
 
 /*
@@ -16,3 +17,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+

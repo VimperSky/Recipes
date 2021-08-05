@@ -8,7 +8,7 @@ using Recipes.Infrastructure;
 
 namespace Recipes.WebApi.Migrations
 {
-    [DbContext(typeof(RecipesContext))]
+    [DbContext(typeof(RecipesDbContext))]
     partial class RecipesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -40,6 +40,7 @@ namespace Recipes.WebApi.Migrations
                         .HasColumnName("image_path");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
@@ -55,6 +56,48 @@ namespace Recipes.WebApi.Migrations
                         .HasName("pk_recipe");
 
                     b.ToTable("recipe");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("text")
+                        .HasColumnName("bio");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("login");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_salt");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.HasIndex("Login")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_login");
+
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
@@ -79,9 +122,9 @@ namespace Recipes.WebApi.Migrations
                                 .HasColumnType("integer")
                                 .HasColumnName("position");
 
-                            b1.Property<string>("Text")
+                            b1.Property<string>("Value")
                                 .HasColumnType("text")
-                                .HasColumnName("text");
+                                .HasColumnName("value");
 
                             b1.HasKey("RecipeId", "Id")
                                 .HasName("pk_recipe_ingredient_block");

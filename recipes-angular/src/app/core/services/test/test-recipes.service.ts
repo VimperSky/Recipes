@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {RecipesService} from "../recipes.service";
-import {RecipePreview} from "../../models/recipe-preview";
-import {RecipePage} from "../../models/recipe-page";
+import {RecipesService} from "../abstract/recipes.service";
+import {RecipePreview} from "../../dto/recipe/recipe-preview";
+import {RecipesPage} from "../../dto/recipe/recipes-page";
 import {Observable, of, throwError} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
@@ -13,7 +13,7 @@ export const recipes: RecipePreview[] = [
     name: "Клубичная Панна-Котта",
     description: "Десерт, который невероятно легко и быстро готовится. " +
       "Советую подавать его порционно в красивых бокалах, украсив взбитыми сливками, свежими ягодами и мятой.",
-    cookingTime: 35,
+    cookingTimeMin: 35,
     portions: 5
   },
   {
@@ -21,7 +21,7 @@ export const recipes: RecipePreview[] = [
     imagePath: testImagesPath + "r2.png",
     name: "Мясные фрикадельки",
     description: "Мясные фрикадельки в томатном соусе - несложное и вкусное блюдо, которым можно порадовать своих близких. ",
-    cookingTime: 90,
+    cookingTimeMin: 90,
     portions: 4
   },
   {
@@ -30,7 +30,7 @@ export const recipes: RecipePreview[] = [
     name: "Панкейки",
     description: "Панкейки: меньше, чем блины, но больше, чем оладьи. Основное отличие — в тесте, " +
       "оно должно быть воздушным, чтобы панкейки не растекались по сковородке...",
-    cookingTime: 40,
+    cookingTimeMin: 40,
     portions: 3
   },
   {
@@ -39,7 +39,7 @@ export const recipes: RecipePreview[] = [
     name: "Полезное мороженое без сахара",
     description: "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
       "что будет особенно актуально для сладкоежек, соблюдающих диету.",
-    cookingTime: 35,
+    cookingTimeMin: 35,
     portions: 2
   },
   {
@@ -48,7 +48,7 @@ export const recipes: RecipePreview[] = [
     name: "БИСКВИТ КЛАССИЧЕСКИЙ",
     description: "Сегодня хочу показать, как приготовить идеально пышный бисквит для торта или пирожных." +
       " Очень простой рецепт без использования разрыхлителя и соды. Только мука, яйца, сахар и небольшая щепотка соли. Именно такие ингредиенты используются для классического пышного бисквита",
-    cookingTime: 400,
+    cookingTimeMin: 400,
     portions: 6
   }
 ]
@@ -60,7 +60,7 @@ export class TestRecipesService extends RecipesService{
     super();
   }
 
-  getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipePage> {
+  getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipesPage> {
     if (pageSize <= 0)
       throwError('pageSize should be 1 or more')
 
@@ -79,7 +79,7 @@ export class TestRecipesService extends RecipesService{
 
     result = result.slice((page - 1) * pageSize).slice(0, pageSize);
 
-    let recipePage: RecipePage = {recipes: result, pageCount: pageCount};
+    let recipePage: RecipesPage = {recipes: result, pageCount: pageCount};
 
     return of(recipePage);
   }

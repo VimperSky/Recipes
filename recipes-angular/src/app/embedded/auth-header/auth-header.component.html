@@ -1,8 +1,8 @@
 <div *ngIf="name; then authorized else nonAuthorized"></div>
 
 <ng-template #authorized>
-  <div id="authorized-block">
-    <button mat-button class="hello-btn">
+  <div id="authorized-block" class="auth-block">
+    <button mat-button class="hello-btn profile-btn">
       <mat-icon class="account-icon">account_circle</mat-icon>
       <span class="hello-text">Привет, {{name}}</span>
     </button>
@@ -15,7 +15,7 @@
 
 
 <ng-template #nonAuthorized>
-  <div id="non-authorized-block">
+  <div id="non-authorized-block" class="auth-block">
     <button mat-button class="hello-btn" (click)="logIn()">
       <mat-icon class="account-icon">account_circle</mat-icon>
       <span class="hello-text">Войти</span>

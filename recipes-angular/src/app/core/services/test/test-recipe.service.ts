@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {RecipeService} from "../recipe.service";
-import {RecipeDetail} from "../../models/recipe-detail";
+import {Injectable} from '@angular/core';
+import {RecipeService} from "../abstract/recipe.service";
+import {RecipeDetail} from "../../dto/recipe/recipe-detail";
 import {Observable, of} from "rxjs";
 
 const testImagesPath =  "../../../assets/images/test/";
@@ -10,7 +10,7 @@ const recipeDetail: RecipeDetail = {
   name: "Клубичная Панна-Котта",
   description: "Десерт, который невероятно легко и быстро готовится. " +
     "Советую подавать его порционно в красивых бокалах, украсив взбитыми сливками, свежими ягодами и мятой.",
-  cookingTime: 35,
+  cookingTimeMin: 35,
   portions: 5,
     steps: ['Приготовим панна котту: Зальем желатин молоком и поставим на 30 минут для набухания. ' +
       'В сливки добавим сахар и ванильный сахар. Доводим до кипения (не кипятим!).',

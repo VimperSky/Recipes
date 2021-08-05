@@ -4,16 +4,16 @@ namespace Recipes.Infrastructure
 {
     public class UnitOfWork: IUnitOfWork
     {
-        private readonly RecipesContext _context;
+        private readonly RecipesDbContext _dbContext;
 
-        public UnitOfWork(RecipesContext context)
+        public UnitOfWork(RecipesDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
         
         public void Commit()
         {
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

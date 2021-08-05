@@ -20,6 +20,9 @@
             <input required type="password" matInput [formControl]="password">
           </mat-form-field>
         </div>
+        <div id="password-extra">
+          <mat-error *ngIf="hasError">{{getErrorText()}}</mat-error>
+        </div>
       </form>
     </div>
 

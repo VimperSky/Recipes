@@ -18,7 +18,7 @@ namespace Recipes.Infrastructure
             var services = scope.ServiceProvider;
             try
             {
-                var context = services.GetRequiredService<RecipesContext>();
+                var context = services.GetRequiredService<RecipesDbContext>();
                 context.Database.Migrate();
                 FillWithStartData(context);
             }
@@ -29,9 +29,9 @@ namespace Recipes.Infrastructure
             }
         }
         
-        private static void FillWithStartData(RecipesContext context)
+        private static void FillWithStartData(RecipesDbContext dbContext)
         {
-            if (context.Recipes.Any())
+            if (dbContext.Recipes.Any())
             {
                 return;   // DB has been seeded
             }
@@ -73,7 +73,7 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "Для панна котты", 
-                            Text = "Сливки-20-30% - 500мл.\n" +
+                            Value = "Сливки-20-30% - 500мл.\n" +
                                    "Молоко - 100мл.\n" +
                                    "Желатин - 2ч.л.\n" +
                                    "Сахар - 3ст.л.\n" +
@@ -82,7 +82,7 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "Для клубничного желе", 
-                            Text = "Сливки-20-30% - 500мл.\n" +
+                            Value = "Сливки-20-30% - 500мл.\n" +
                                    "Молоко - 100мл.\n" +
                                    "Желатин - 2ч.л.\n" +
                                    "Сахар - 3ст.л.\n" +
@@ -115,7 +115,7 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "", 
-                            Text = "Мясо 50г.\n" +
+                            Value = "Мясо 50г.\n" +
                                    "Белый хлеб 15г.\n" +
                                    "Яичный белок 1 шт..\n" +
                                    "Соль по вкусу.\n",
@@ -146,7 +146,7 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "", 
-                            Text = "молоко 210 г (мл)\nяйцо 1 шт.\nмука 200 г\nразрыхлитель 5 г (1 ч. ложка)\n" +
+                            Value = "молоко 210 г (мл)\nяйцо 1 шт.\nмука 200 г\nразрыхлитель 5 г (1 ч. ложка)\n" +
                             "масло растительное 25 г (2 ст. ложки)\nсахар 30 г (2 ст. ложки)\nсоль 1/2 ч. ложки"
                         },
                     }
@@ -176,7 +176,7 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "", 
-                            Text = "2 банана\n1 ст. л. какао\nХолод"
+                            Value = "2 банана\n1 ст. л. какао\nХолод"
                         },
                     }
                 },
@@ -213,16 +213,16 @@ namespace Recipes.Infrastructure
                         new()
                         {
                             Header = "", 
-                            Text = "Куриные яйца 4 шт. \nМука 100 гр.\nСахар 150гр.\nВанильный сахар 1 чайн. л."
+                            Value = "Куриные яйца 4 шт. \nМука 100 гр.\nСахар 150гр.\nВанильный сахар 1 чайн. л."
                         },
                     }
                 },
             };
             
             foreach (var recipe in recipes)
-                context.Recipes.Add(recipe);
+                dbContext.Recipes.Add(recipe);
             
-            context.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }
