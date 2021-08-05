@@ -7,7 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
+import {FormErrorsHandlingService} from "../../../core/services/tools/form-errors-handling.service";
 
 const serverErrors: Record<string, string> = {
   'invalidLoginPassword': "Неверная пара логин-пароль.",
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
               private authService: AuthService,
               private authManager: AuthTokenManagerService,
               private snackBar: MatSnackBar,
+              private formErrorHandlingService: FormErrorsHandlingService,
               fb: FormBuilder) {
     this.loginForm = fb.group( {
       login: this.login,
@@ -75,13 +76,7 @@ export class LoginComponent implements OnInit {
             ['Password', this.password]
           ]);
 
-          let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
-          for (let err of Object.keys(problemDetails.errors)) {
-            let val = formControlsMap.get(err);
-            if (val) {
-              val.setErrors({notValid: true});
-            }
-          }
+          this.formErrorHandlingService.setValidationErrors(error, formControlsMap);
         }
         else if (error.status == 401) {
           this.loginForm.setErrors({invalidLoginPassword: true})

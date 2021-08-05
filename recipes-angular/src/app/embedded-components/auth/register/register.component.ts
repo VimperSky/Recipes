@@ -15,6 +15,7 @@ import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
+import {FormErrorsHandlingService} from "../../../core/services/tools/form-errors-handling.service";
 
 
 const loginErrors: Record<string, string> = {
@@ -68,6 +69,7 @@ export class RegisterComponent implements OnInit {
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
               private snackBar: MatSnackBar,
+              private formErrorHandlingService: FormErrorsHandlingService,
               fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
@@ -117,8 +119,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-
-
   register() {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
@@ -137,13 +137,7 @@ export class RegisterComponent implements OnInit {
             ['Password', this.passwordForm]
           ]);
 
-          let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
-          for (let err of Object.keys(problemDetails.errors)) {
-            let val = formControlsMap.get(err);
-            if (val) {
-              val.setErrors({notValid: true});
-            }
-          }
+          this.formErrorHandlingService.setValidationErrors(error, formControlsMap);
         }
         else if (error.status == 409) {
           this.login.setErrors({takenLogin: true})
