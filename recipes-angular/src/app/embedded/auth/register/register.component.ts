@@ -131,7 +131,7 @@ export class RegisterComponent implements OnInit {
       }, ((error: HttpErrorResponse) => {
         if (error.status == 400) {
 
-          let responses = new Map<string, AbstractControl>([
+          let formControlsMap = new Map<string, AbstractControl>([
             ['Name', this.name],
             ['Login', this.login],
             ['Password', this.passwordForm]
@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
 
           let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
           for (let err of Object.keys(problemDetails.errors)) {
-            let val = responses.get(err);
+            let val = formControlsMap.get(err);
             if (val) {
               val.setErrors({notValid: true});
             }

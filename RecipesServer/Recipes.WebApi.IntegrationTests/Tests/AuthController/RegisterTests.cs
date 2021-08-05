@@ -142,7 +142,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
 
             // Assert
             Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
-            Assert.Equal(RegisterException.LoginIsTaken, content.Detail);
+            Assert.Equal(UserRegistrationException.LoginIsTaken, content.Detail);
         }
         #endregion
 

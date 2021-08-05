@@ -2,9 +2,9 @@
 
 namespace Recipes.WebApi.AuthFeatures.Models
 {
-    public class RegisterException : Exception
+    public class UserRegistrationException : Exception
     {
-        public RegisterException(string message): base(message)
+        public UserRegistrationException(string message): base(message)
         {
             
         }
