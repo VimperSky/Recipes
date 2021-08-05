@@ -12,15 +12,7 @@ export class RecipesManagerService {
   private currentPage: number = 1;
   private searchString: string | null = null;
 
-  constructor(private recipesService: RecipesService) { }
-
-  public recipeList: RecipePreview[] = [];
-
-  public get hasMore(): boolean {
-    return this.pageCount > this.currentPage;
-  }
-
-  public update (recipePage: RecipesPage, clear: boolean = false) {
+  private updateRecipeList(recipePage: RecipesPage, clear: boolean = false) {
     if (clear) {
       this.recipeList = recipePage.recipes;
       this.currentPage = 1;
@@ -32,15 +24,22 @@ export class RecipesManagerService {
     this.pageCount = recipePage.pageCount;
   }
 
+  constructor(private recipesService: RecipesService) { }
+
+  public recipeList: RecipePreview[] = [];
+
+  public get hasMore(): boolean {
+    return this.pageCount > this.currentPage;
+  }
   public loadInitial() {
     this.recipesService.getRecipeList(environment.pageSize, 1, null).subscribe(result => {
-      this.update(result, true);
+      this.updateRecipeList(result, true);
     });
   }
 
   public loadMore() {
     this.recipesService.getRecipeList(environment.pageSize, this.currentPage + 1, this.searchString).subscribe(result => {
-      this.update(result);
+      this.updateRecipeList(result);
       this.currentPage += 1;
     });
   }
@@ -49,7 +48,7 @@ export class RecipesManagerService {
     if (searchString == "")
       searchString = null;
     this.recipesService.getRecipeList(environment.pageSize, 1, searchString).subscribe(result => {
-      this.update(result, true);
+      this.updateRecipeList(result, true);
       this.searchString = searchString;
     });
   }

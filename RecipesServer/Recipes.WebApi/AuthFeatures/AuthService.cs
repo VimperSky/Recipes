@@ -25,12 +25,12 @@ namespace Recipes.WebApi.AuthFeatures
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <param name="name"></param>
-        /// <exception cref="RegisterException"></exception>
+        /// <exception cref="UserRegistrationException"></exception>
         public void Register(string login, string password, string name)
         {
             var user = _userRepository.GetUser(login);
             if (user != null)
-                throw new RegisterException(RegisterException.LoginIsTaken);
+                throw new UserRegistrationException(UserRegistrationException.LoginIsTaken);
 
             var salt = HashingTools.GenerateSalt();
             var hash = HashingTools.HashPassword(password, salt);
@@ -45,17 +45,17 @@ namespace Recipes.WebApi.AuthFeatures
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        /// <exception cref="LoginException"></exception>
+        /// <exception cref="UserLoginException"></exception>
         public string Login(string login, string password)
         {
             var user = _userRepository.GetUser(login);
             if (user == null)
-                throw new LoginException(LoginException.LoginDoesNotExist);
+                throw new UserLoginException(UserLoginException.LoginDoesNotExist);
 
             var salt = HashingTools.StringToSalt(user.PasswordSalt);
             var hashedPassword = HashingTools.HashPassword(password, salt);
             if (user.PasswordHash != hashedPassword)
-                throw new LoginException(LoginException.PasswordIsIncorrect);
+                throw new UserLoginException(UserLoginException.PasswordIsIncorrect);
             
             var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

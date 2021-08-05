@@ -41,7 +41,7 @@ namespace Recipes.WebApi.Controllers
                 _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
                 return Ok();
             }
-            catch (RegisterException e)
+            catch (UserRegistrationException e)
             {
                 _logger.LogWarning(e.ToString());
                 return Problem(e.Message, statusCode: 409);
@@ -67,7 +67,7 @@ namespace Recipes.WebApi.Controllers
                 var loginToken = _authService.Login(loginDto.Login, loginDto.Password);
                 return loginToken;
             }
-            catch (LoginException e)
+            catch (UserLoginException e)
             {
                 _logger.LogWarning(e.ToString());
                 return Problem(e.Message, statusCode: 401);

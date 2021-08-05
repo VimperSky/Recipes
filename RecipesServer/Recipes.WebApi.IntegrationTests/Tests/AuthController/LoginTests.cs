@@ -78,7 +78,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            Assert.Equal(LoginException.LoginDoesNotExist, content.Detail);            
+            Assert.Equal(UserLoginException.LoginDoesNotExist, content.Detail);            
         }
         
         
@@ -100,7 +100,7 @@ namespace Recipes.WebApi.Tests.Tests.AuthController
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            Assert.Equal(LoginException.PasswordIsIncorrect, content.Detail);            
+            Assert.Equal(UserLoginException.PasswordIsIncorrect, content.Detail);            
         }
         
         [Fact]
