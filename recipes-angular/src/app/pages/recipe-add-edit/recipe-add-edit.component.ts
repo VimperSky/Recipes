@@ -78,18 +78,12 @@ export class RecipeAddEditComponent implements OnInit {
 
     const imagePath = URL.createObjectURL(file);
     this.image = this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
-
-    console.log(this.image)
-    // this.imageUploadService.uploadFile(file).subscribe((data: string) => {
-    //   this.image = data;
-    // })
   }
 
   deleteImage() {
     if (this.image)
     {
       this.image = null;
-      console.log('delete yeah')
     }
   }
 

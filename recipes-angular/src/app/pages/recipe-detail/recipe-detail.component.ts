@@ -20,6 +20,13 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.detail(id).subscribe(result => {
       this.recipeDetail = result;
     });
+  }
+
+  delete() {
+
+  }
+
+  edit() {
 
   }
 }
