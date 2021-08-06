@@ -18,6 +18,9 @@ namespace Recipes.WebApi.AutoMapperProfiles
                     opt => opt.MapFrom(x => x.IngredientBlocks))
                 .ForMember(dest => dest.ImagePath, 
                     opt => opt.MapFrom(x => Utils.GetRecipeImagePath(x.ImagePath)));
+
+            CreateMap<RecipeCreateDto, Recipe>();
+            CreateMap<RecipeEditDto, Recipe>();
         }
     }
 }

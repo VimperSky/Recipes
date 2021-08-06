@@ -35,6 +35,35 @@ namespace Recipes.Infrastructure.Repositories
             return (int)Math.Ceiling(result.Count() * 1d / pageSize);
         }
 
+        public int AddRecipe(Recipe recipe)
+        {
+            if (recipe.Id != default)
+            {
+                throw new ArgumentException("Cannot add recipe with predefined ID.");
+            }
+            var addedRecipe = _recipesDbContext.Recipes.Add(recipe);
+            return addedRecipe.Entity.Id;
+        }
+
+        public void EditRecipe(Recipe recipe)
+        {
+            var dbRecipe = _recipesDbContext.Recipes.Find(recipe.Id);
+            if (dbRecipe == null)
+                throw new ArgumentException("Couldn't edit recipe because recipe with id: " +
+                                            $"{recipe.Id} doesn't exist");
+
+            _recipesDbContext.Recipes.Update(recipe);
+        }
+
+        public void DeleteRecipe(int id)
+        {
+            var dbRecipe = _recipesDbContext.Recipes.Find(id);
+            if (dbRecipe == null)
+                throw new ArgumentException($"Cannot delete recipe with id: {id} because it doesn't exist in database");
+
+            _recipesDbContext.Recipes.Remove(dbRecipe);
+        }
+
         IEnumerable<Recipe> IRecipesRepository.GetPage(int page, int pageSize, string searchString)
         {
             if (pageSize <= 0)
@@ -55,5 +84,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             return _recipesDbContext.Recipes.Find(id);
         }
+        
+        
     }
 }

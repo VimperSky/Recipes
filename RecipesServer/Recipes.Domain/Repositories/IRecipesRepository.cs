@@ -8,6 +8,12 @@ namespace Recipes.Domain.Repositories
         IEnumerable<Recipe> GetPage(int page, int pageSize, string searchString);
 
         int GetPagesCount(int pageSize, string searchString);
+
+        int AddRecipe(Recipe recipe);
+
+        void EditRecipe(Recipe recipe);
+
+        void DeleteRecipe(int id);
         
         Recipe GetById(int id);
     }
