@@ -1,0 +1,72 @@
+@use '../../shared-styles/constants';
+
+.auth-block {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .hello-btn {
+    height: 38px;
+    color: constants.$accent-color;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+
+    ::ng-deep .mat-fab {
+      .mat-button-wrapper {
+        padding: 0 !important;
+      }
+    }
+
+    .account-icon-wrapper {
+      margin-right: 14px;
+      width: 38px;
+      height: 38px;
+      text-align: center;
+      padding: 0;
+
+      .account-icon {
+        font-size: 24px;
+      }
+    }
+
+    .hello-text {
+      @include constants.default-text;
+      font-weight: 600;
+    }
+  }
+
+}
+
+
+
+
+#authorized-block {
+  width: 235px;
+  .profile-btn {
+    margin-right: 5px;
+  }
+
+  #divider {
+    height: 19px;
+    border-right-color: constants.$accent-color;
+    margin-right: 10px;
+  }
+
+  #exit-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+
+    #logout-icon {
+      color: #9196A1;
+      font-size: 18px;
+    }
+  }
+}
+
+#non-authorized-block {
+  width: 135px;
+}

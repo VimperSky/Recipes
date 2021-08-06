@@ -1,0 +1,42 @@
+@use '../../shared-styles/constants';
+
+#search-form {
+  height: 70px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  h2 {
+    @include constants.default-header;
+    font-size: 24px;
+    line-height: 30px;
+    height: 100%;
+    flex: 0 0.2 200px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #search-input {
+    @include constants.default-text;
+    line-height: 22px;
+    font-weight: 500;
+    height: 66px;
+    padding: 0 0 0 15px;
+    margin: 0 0 0 5px;
+    flex: 1 1 200px;
+    border-radius: 16px;
+    border-color: transparent;
+    background: white;
+    box-shadow: 0 8px 42px rgba(34, 39, 47, 0.04);
+  }
+
+  #search-button {
+    @include constants.default-text;
+    height: 100%;
+    margin-left: 16px;
+    flex: 0 0 150px;
+    border-radius: 16px;
+  }
+}

@@ -1,0 +1,18 @@
+@use '../../shared-styles/constants';
+
+#scroll-block {
+  margin-top: 85px;
+  text-align: center;
+  #load-more-button {
+    @include constants.default-text;
+    font-weight: 600;
+    background: transparent;
+    border: 1px solid constants.$accent-color;
+    border-radius: 16px;
+    color: constants.$accent-color;
+
+    width: 300px;
+    height: 60px;
+    text-align: center;
+  }
+}

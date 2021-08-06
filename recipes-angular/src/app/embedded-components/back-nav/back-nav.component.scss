@@ -1,0 +1,31 @@
+@use '../../shared-styles/constants';
+
+#nav-div {
+  height: 22px;
+  display: flex;
+  text-align: center;
+
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+
+    mat-icon {
+      height: 18px;
+      width: 18px;
+      font-size: 18px;
+      color: constants.$accent-color;
+    }
+
+    span {
+      @include constants.default-text;
+      color: constants.$accent-color;
+      margin-left: 10px;
+      font-weight: 500;
+    }
+  }
+
+
+
+}

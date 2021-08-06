@@ -4,6 +4,7 @@ import {RecipesComponent} from "./pages/recipes/recipes.component";
 import {RecipeDetailComponent} from "./pages/recipe-detail/recipe-detail.component";
 import {JwtModule} from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
+import {RecipeAddEditComponent} from "./pages/recipe-add-edit/recipe-add-edit.component";
 
 const routes: Routes = [
   {
@@ -11,7 +12,15 @@ const routes: Routes = [
     component: RecipesComponent
   },
   {
-    path: 'recipe/:id',
+    path: 'recipe/new',
+    component: RecipeAddEditComponent,
+  },
+  {
+    path: 'recipe/edit/:id',
+    component: RecipeAddEditComponent,
+  },
+  {
+    path: 'recipe/detail/:id',
     component: RecipeDetailComponent
   },
   {

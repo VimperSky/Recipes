@@ -1,0 +1,33 @@
+@use '../../../shared-styles/constants';
+
+#password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  #password-second {
+    margin-left: 25px;
+  }
+}
+
+#password-extra {
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
+.mat-dialog-content {
+  height: 250px;
+
+  mat-error {
+    margin-top: -9px;
+  }
+
+  mat-hint {
+    margin-top: -9px;
+  }
+}
+
+.mat-dialog-actions {
+  margin-top: 20px;
+}

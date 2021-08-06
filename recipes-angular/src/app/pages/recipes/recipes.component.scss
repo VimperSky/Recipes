@@ -1,10 +1,24 @@
-@use '../../../constants';
+@use '../../shared-styles/constants';
 
 #recipes-header {
   margin-top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   h1 {
     @include constants.default-header;
+  }
+
+  #add-recipe-button {
+    @include constants.default-text;
+    height: 60px;
+    width: 280px;
+    border-radius: 16px;
+  }
+
+  span, mat-icon {
+    margin-right: 20px;
   }
 }
 

@@ -1,5 +1,5 @@
 @use '~@angular/material' as mat;
-@use 'constants';
+@use 'app/shared-styles/constants';
 
 @include mat.core();
 
@@ -38,5 +38,4 @@ html, body {
     width: 700px;
   }
 }
-
 
