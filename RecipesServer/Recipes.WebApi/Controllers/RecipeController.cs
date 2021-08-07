@@ -52,11 +52,10 @@ namespace Recipes.WebApi.Controllers
         /// <param name="recipeCreateDto"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Authorize]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
+        public async Task<ActionResult<int>> CreateRecipe([FromForm]RecipeCreateDto recipeCreateDto)
         {
             var recipeId = await _recipesService.CreateRecipe(recipeCreateDto);
             return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);

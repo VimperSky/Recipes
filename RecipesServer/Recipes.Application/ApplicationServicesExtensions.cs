@@ -15,7 +15,6 @@ namespace Recipes.Application
         public static void AddAuthorization(this IServiceCollection services, IConfigurationSection jwtSection)
         {
             services.Configure<JwtSettings>(jwtSection);
-            services.AddScoped<AuthService>();
             var jwtSettings = new JwtSettings();
             jwtSection.Bind(jwtSettings);
 
@@ -40,10 +39,11 @@ namespace Recipes.Application
         
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(ApplicationServicesExtensions));
+
             services.AddScoped<AuthService>();  
             services.AddScoped<RecipesService>();
             services.AddScoped<JwtHandler>();
-            services.AddAutoMapper(typeof(ApplicationServicesExtensions));
         }
     }
 }

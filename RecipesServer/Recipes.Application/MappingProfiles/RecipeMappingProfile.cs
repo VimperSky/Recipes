@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 
@@ -9,15 +10,11 @@ namespace Recipes.Application.MappingProfiles
         public RecipeMappingProfile()
         {
             CreateMap<RecipeIngredientBlock, IngredientDto>();
-            CreateMap<Recipe, RecipePreviewDto>()
-                .ForMember(dest => dest.ImagePath, 
-                    opt => opt.MapFrom(x => ApplicationUtils.GetRecipeImagePath(x.ImagePath)));
+            CreateMap<Recipe, RecipePreviewDto>();
             
             CreateMap<Recipe, RecipeDetailDto>()
                 .ForMember(dest => dest.Ingredients,
-                    opt => opt.MapFrom(x => x.IngredientBlocks))
-                .ForMember(dest => dest.ImagePath, 
-                    opt => opt.MapFrom(x => ApplicationUtils.GetRecipeImagePath(x.ImagePath)));
+                    opt => opt.MapFrom(x => x.IngredientBlocks));
 
             CreateMap<RecipeCreateDto, Recipe>();
             CreateMap<RecipeEditDto, Recipe>();

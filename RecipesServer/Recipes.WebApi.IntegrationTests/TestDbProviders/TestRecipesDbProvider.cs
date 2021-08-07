@@ -35,7 +35,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                                   "Советую подавать его порционно в красивых бокалах, " +
                                   "украсив взбитыми сливками, свежими ягодами и мятой.",
                     Portions = 5,
-                    ImagePath = "r1.png",
+                    ImagePath = "images/r1.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -85,7 +85,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Name = "Мясные фрикадельки", 
                     Description = "Мясные фрикадельки в томатном соусе - несложное и вкусное блюдо, которым можно порадовать своих близких.",
                     Portions = 4,
-                    ImagePath = "r2.png",
+                    ImagePath = "images/r2.png",
                     CookingTimeMin = 90,
                     Steps = new [] 
                     {
@@ -115,7 +115,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Description = "Панкейки: меньше, чем блины, но больше, чем оладьи. Основное отличие — в тесте, " +
                                   "оно должно быть воздушным, чтобы панкейки не растекались по сковородке...",
                     Portions = 3,
-                    ImagePath = "r3.png",
+                    ImagePath = "images/r3.png",
                     CookingTimeMin = 40,
                     Steps = new [] 
                     {
@@ -145,7 +145,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Description = "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
                                   "что будет особенно актуально для сладкоежек, соблюдающих диету.",
                     Portions = 2,
-                    ImagePath = "r3.png",
+                    ImagePath = "images/r4.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain;
 using Recipes.Domain.Models;
@@ -30,7 +31,7 @@ namespace Recipes.Application.Services.Recipes
             if (page > 1 && page > pageCount)
                 throw new ArgumentOutOfRangeException(nameof(page));
 
-            var recipes = _recipesRepository.Get(searchString, (page - 1) * pageSize, pageSize);
+            var recipes = await _recipesRepository.Get(searchString, (page - 1) * pageSize, pageSize);
             var recipesPage = new RecipesPageDto
             {
                 Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
@@ -48,25 +49,27 @@ namespace Recipes.Application.Services.Recipes
             return _mapper.Map<RecipeDetailDto>(recipe);
         }
 
+        private static async Task<string> CreateFile(IFormFile formFile)
+        {
+            var guid = Guid.NewGuid();
+            var imagePath = Path.Combine("Storage", "images", $"recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
+            await using Stream fileStream = new FileStream(imagePath, FileMode.Create);
+            await formFile.CopyToAsync(fileStream);
+
+            return Path.Combine("images", $"recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
+        }
+        
         public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
-            var addedRecipeId = await _recipesRepository.AddRecipe(recipeModel);
 
             if (recipeCreateDto.ImageFile != null)
             {
-                var imagePath = Path.Combine("Storage", "images", $"recipe_img_{addedRecipeId}");
-                await using (Stream fileStream = new FileStream(imagePath, FileMode.Create)) 
-                { 
-                    await recipeCreateDto.ImageFile.CopyToAsync(fileStream);
-                }
-
-                recipeModel.Id = addedRecipeId;
-                recipeModel.ImagePath = imagePath;
-                await _recipesRepository.EditRecipe(recipeModel);
+                recipeModel.ImagePath = await CreateFile(recipeCreateDto.ImageFile);
             }
 
-            
+            var addedRecipeId = await _recipesRepository.AddRecipe(recipeModel);
+
             _unitOfWork.Commit();
             return addedRecipeId;
         }
@@ -74,7 +77,13 @@ namespace Recipes.Application.Services.Recipes
         public async Task EditRecipe(RecipeEditDto recipeEditDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
+
+            if (recipeEditDto.ImageFile != null)
+            {
+                recipeModel.ImagePath = await CreateFile(recipeEditDto.ImageFile);
+            }
             await _recipesRepository.EditRecipe(recipeModel);
+
             _unitOfWork.Commit();
         }
 

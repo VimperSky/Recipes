@@ -6,7 +6,6 @@ namespace Recipes.Application.DTOs.Recipe
     {
         public IngredientDto[] Ingredients { get; init; }
         public string[] Steps { get; init; }
-        
         public IFormFile ImageFile { get; init; }
     }
 }
