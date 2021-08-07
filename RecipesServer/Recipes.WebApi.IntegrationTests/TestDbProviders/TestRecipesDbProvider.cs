@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
-using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.Tests.TestDbProviders
 {

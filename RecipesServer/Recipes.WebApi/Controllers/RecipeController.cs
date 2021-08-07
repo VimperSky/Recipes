@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Domain;
-using Recipes.Domain.Models;
-using Recipes.Domain.Repositories;
-using Recipes.WebApi.DTO.Recipe;
+using Microsoft.Extensions.Logging;
+using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Services.Recipes;
 
 namespace Recipes.WebApi.Controllers
 {   
@@ -15,15 +14,13 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class RecipeController: ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IRecipesRepository _recipesRepository;
-        private readonly IMapper _mapper;
+        private readonly ILogger<RecipesController> _logger;
+        private readonly RecipesService _recipesService;
 
-        public RecipeController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository, IMapper mapper)
+        public RecipeController(ILogger<RecipesController> logger, RecipesService recipesService)
         {
-            _unitOfWork = unitOfWork;
-            _recipesRepository = recipesRepository;
-            _mapper = mapper;
+            _logger = logger;
+            _recipesService = recipesService;
         }
 
         
@@ -41,12 +38,11 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<RecipeDetailDto> GetRecipeDetail([FromQuery][Required, Range(1, int.MaxValue)]int id)
         {
-            var detail = _recipesRepository.GetById(id);
+            var detail = _recipesService.GetRecipeDetail(id);
             if (detail == null)
                 return NotFound();
             
-            var mappedDetail = _mapper.Map<RecipeDetailDto>(detail);
-            return mappedDetail;
+            return detail;
         }
 
         /// <summary>
@@ -56,13 +52,20 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpPost("create")]
         [Authorize]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         public ActionResult<int> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
-            var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
-            var recipe = _recipesRepository.AddRecipe(recipeModel);
-            return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipe }, recipe);
+            try
+            {
+                var recipeId = _recipesService.CreateRecipe(recipeCreateDto);
+                return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
         
         /// <summary>
@@ -77,8 +80,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public ActionResult EditRecipe([FromBody]RecipeEditDto recipeEditDto)
         {
-            var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
-            _recipesRepository.EditRecipe(recipeModel);
+            _recipesService.EditRecipe(recipeEditDto);
             return NoContent();
         }
         
@@ -95,7 +97,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public ActionResult DeleteRecipe([FromQuery]int id)
         {
-            _recipesRepository.DeleteRecipe(id);
+            _recipesService.DeleteRecipe(id);
             return NoContent();
         }
         

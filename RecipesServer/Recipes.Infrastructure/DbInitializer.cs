@@ -19,7 +19,6 @@ namespace Recipes.Infrastructure
             try
             {
                 var context = services.GetRequiredService<RecipesDbContext>();
-                context.Database.Migrate();
                 FillWithStartData(context);
             }
             catch (Exception ex)
@@ -35,6 +34,7 @@ namespace Recipes.Infrastructure
             {
                 return;   // DB has been seeded
             }
+            
 
             var recipes = new Recipe[]
             {

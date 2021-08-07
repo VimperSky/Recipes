@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Recipes.WebApi.AuthFeatures;
-using Recipes.WebApi.AuthFeatures.Models;
+using Recipes.Application.Services.Auth;
+using Recipes.Application.Services.Auth.Models;
 using Recipes.WebApi.DTO.Auth;
 
 namespace Recipes.WebApi.Controllers
@@ -64,8 +63,7 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                var loginToken = _authService.Login(loginDto.Login, loginDto.Password);
-                return loginToken;
+                return _authService.Login(loginDto.Login, loginDto.Password);
             }
             catch (UserLoginException e)
             {

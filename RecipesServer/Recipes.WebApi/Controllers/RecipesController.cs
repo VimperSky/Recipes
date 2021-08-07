@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using AutoMapper;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Domain;
-using Recipes.Domain.Repositories;
-using Recipes.WebApi.DTO;
-using Recipes.WebApi.DTO.Recipe;
+using Microsoft.Extensions.Logging;
+using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Services.Recipes;
 
 namespace Recipes.WebApi.Controllers
 {
@@ -15,15 +13,13 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class RecipesController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IRecipesRepository _recipesRepository;
-        private readonly IMapper _mapper;
+        private readonly ILogger<RecipesController> _logger;
+        private readonly RecipesService _recipesService;
 
-        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository, IMapper mapper)
+        public RecipesController(ILogger<RecipesController> logger, RecipesService recipesService)
         {
-            _unitOfWork = unitOfWork;
-            _recipesRepository = recipesRepository;
-            _mapper = mapper;
+            _logger = logger;
+            _recipesService = recipesService;
         }
         
         /// <summary>
@@ -40,19 +36,21 @@ namespace Recipes.WebApi.Controllers
         public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
             [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")
         {
-            var pageCount = _recipesRepository.GetPagesCount(pageSize, searchString);
-            if (page > 1 && page > pageCount)
-                return NotFound();
-
-            var recipes = _recipesRepository.GetPage(page, pageSize, searchString);
-
-            var recipesPage = new RecipesPageDto
+            try
             {
-                Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
-                PageCount = pageCount
-            };
-            
-            return recipesPage;
+                var recipesPage = _recipesService.GetRecipesPage(searchString, pageSize, page);
+                return recipesPage;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return Problem($"Parameter is not correct: {e.ParamName}", statusCode: 400);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Internal server error happened while processing client request with parameters:\r\n" +
+                                 $"pageSize: {pageSize}, page: {page}, searchString: {searchString}. Error text:\r\n" + e);
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+            }
         }
     }
 }

@@ -16,23 +16,29 @@ namespace Recipes.Infrastructure.Repositories
             _recipesDbContext = recipesDbContext;
         }
 
-        private IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
+        private static IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
         {
             return searchString == null ? recipes : 
                 recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
         
-        public int GetPagesCount(int pageSize, string searchString)
+        public IEnumerable<Recipe> Get(string searchString, int skipItems, int takeItems)
         {
-            if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException(nameof(pageSize));
-            
+            return SortBySearchString(_recipesDbContext.Recipes, searchString)
+                .OrderBy(x => x.Id)
+                .Skip(skipItems)
+                .Take(takeItems)
+                .Include(x => x.IngredientBlocks)
+                .ToList();
+        }
+
+        public int GetRecipesCount(string searchString)
+        {
             IQueryable<Recipe> result = _recipesDbContext.Recipes;
 
             // Сортируем по поисковой строке
             result = SortBySearchString(result, searchString);
-            
-            return (int)Math.Ceiling(result.Count() * 1d / pageSize);
+            return result.Count();
         }
 
         public int AddRecipe(Recipe recipe)
@@ -62,22 +68,6 @@ namespace Recipes.Infrastructure.Repositories
                 throw new ArgumentException($"Cannot delete recipe with id: {id} because it doesn't exist in database");
 
             _recipesDbContext.Recipes.Remove(dbRecipe);
-        }
-
-        IEnumerable<Recipe> IRecipesRepository.GetPage(int page, int pageSize, string searchString)
-        {
-            if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException(nameof(pageSize));
-            
-            if (page <= 0)
-                throw new ArgumentOutOfRangeException(nameof(page));
-
-            return SortBySearchString(_recipesDbContext.Recipes, searchString)
-                .OrderBy(x => x.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Include(x => x.IngredientBlocks)
-                .ToList();
         }
 
         public Recipe GetById(int id)

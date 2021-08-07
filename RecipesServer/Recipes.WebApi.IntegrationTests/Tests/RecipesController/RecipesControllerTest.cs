@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.WebApi.DTO.Recipe;
+using Recipes.Application.DTOs.Recipe;
 using Recipes.WebApi.Tests.TestDbProviders;
 using Xunit;
 

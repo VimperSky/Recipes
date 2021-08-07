@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Domain", "Recipes.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Infrastructure", "Recipes.Infrastructure\Recipes.Infrastructure.csproj", "{D95831FA-0E2E-4A18-B928-CE5FF65C4A7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Application", "Recipes.Application\Recipes.Application.csproj", "{90B0D99A-56F7-48BD-B3F4-1D636C636C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Migrations", "Recipes.Migrations\Recipes.Migrations.csproj", "{B4687916-B895-4D3F-96DD-ACC161B7109E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{D95831FA-0E2E-4A18-B928-CE5FF65C4A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D95831FA-0E2E-4A18-B928-CE5FF65C4A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D95831FA-0E2E-4A18-B928-CE5FF65C4A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90B0D99A-56F7-48BD-B3F4-1D636C636C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90B0D99A-56F7-48BD-B3F4-1D636C636C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90B0D99A-56F7-48BD-B3F4-1D636C636C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90B0D99A-56F7-48BD-B3F4-1D636C636C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

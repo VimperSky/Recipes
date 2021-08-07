@@ -15,8 +15,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Recipes.Application;
+using Recipes.Application.Services.Auth;
+using Recipes.Application.Services.Auth.HelpClasses;
+using Recipes.Application.Services.Auth.Models;
 using Recipes.Infrastructure;
-using Recipes.WebApi.AuthFeatures;
 
 namespace Recipes.WebApi
 {
@@ -35,9 +38,12 @@ namespace Recipes.WebApi
             services.AddLogging();
             services.AddSpaFallback();
             
-            services.ConfigureInfrastructureServices();
+            services.Configure();
+            
             services.ConfigureDatabase(Configuration.GetConnectionString("DefaultConnection"));
 
+            services.ConfigureServices();
+            
             services.AddControllers();
             services.AddFluentValidation(x =>
             {
@@ -80,7 +86,7 @@ namespace Recipes.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
             
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(ApplicationServiceCollection), typeof(Startup));
                 
             services.AddCors();
         }
