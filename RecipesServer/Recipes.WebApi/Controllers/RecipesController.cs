@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,12 +34,12 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
+        public async Task<ActionResult<RecipesPageDto>> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
             [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")
         {
             try
             {
-                var recipesPage = _recipesService.GetRecipesPage(searchString, pageSize, page);
+                var recipesPage = await _recipesService.GetRecipesPage(searchString, pageSize, page);
                 return recipesPage;
             }
             catch (ArgumentOutOfRangeException e)

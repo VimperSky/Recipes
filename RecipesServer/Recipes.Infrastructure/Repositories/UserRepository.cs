@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 
@@ -14,9 +16,9 @@ namespace Recipes.Infrastructure.Repositories
             _recipesDbContext = recipesDbContext;
         }
         
-        public void CreateUser(string login, string passwordHash, string passwordSalt, string name)
+        public async Task CreateUser(string login, string passwordHash, string passwordSalt, string name)
         {
-            _recipesDbContext.Users.Add(new User
+            await _recipesDbContext.Users.AddAsync(new User
             {
                 Login = login,
                 PasswordHash = passwordHash,
@@ -25,9 +27,9 @@ namespace Recipes.Infrastructure.Repositories
             });
         }
 
-        public User GetUser(string login)
+        public async Task<User> GetUser(string login)
         {
-            return _recipesDbContext.Users.FirstOrDefault(x => x.Login == login);
+            return await _recipesDbContext.Users.FirstOrDefaultAsync(x => x.Login == login);
         }
     }
 }

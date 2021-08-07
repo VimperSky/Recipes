@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using AutoMapper;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain;
@@ -21,9 +22,9 @@ namespace Recipes.Application.Services.Recipes
             _mapper = mapper;
         }
 
-        public RecipesPageDto GetRecipesPage(string searchString, int pageSize, int page)
+        public async Task<RecipesPageDto> GetRecipesPage(string searchString, int pageSize, int page)
         {
-            var count = _recipesRepository.GetRecipesCount(searchString);
+            var count = await _recipesRepository.GetRecipesCount(searchString);
             var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
             if (page > 1 && page > pageCount)
@@ -38,33 +39,48 @@ namespace Recipes.Application.Services.Recipes
             return recipesPage;
         }
 
-        public RecipeDetailDto GetRecipeDetail(int id)
+        public async Task<RecipeDetailDto> GetRecipeDetail(int id)
         {
-            var recipe = _recipesRepository.GetById(id);
+            var recipe = await _recipesRepository.GetById(id);
             if (recipe == null)
                 return null;
 
             return _mapper.Map<RecipeDetailDto>(recipe);
         }
 
-        public int CreateRecipe(RecipeCreateDto recipeCreateDto)
+        public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
-            var addedRecipeId = _recipesRepository.AddRecipe(recipeModel);
+            var addedRecipeId = await _recipesRepository.AddRecipe(recipeModel);
+
+            if (recipeCreateDto.ImageFile != null)
+            {
+                var imagePath = Path.Combine("Storage", "images", $"recipe_img_{addedRecipeId}");
+                await using (Stream fileStream = new FileStream(imagePath, FileMode.Create)) 
+                { 
+                    await recipeCreateDto.ImageFile.CopyToAsync(fileStream);
+                }
+
+                recipeModel.Id = addedRecipeId;
+                recipeModel.ImagePath = imagePath;
+                await _recipesRepository.EditRecipe(recipeModel);
+            }
+
+            
             _unitOfWork.Commit();
             return addedRecipeId;
         }
 
-        public void EditRecipe(RecipeEditDto recipeEditDto)
+        public async Task EditRecipe(RecipeEditDto recipeEditDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
-            _recipesRepository.EditRecipe(recipeModel);
+            await _recipesRepository.EditRecipe(recipeModel);
             _unitOfWork.Commit();
         }
 
-        public void DeleteRecipe(int id)
+        public async Task DeleteRecipe(int id)
         {
-            _recipesRepository.DeleteRecipe(id);
+            await _recipesRepository.DeleteRecipe(id);
             _unitOfWork.Commit();
         }
     }

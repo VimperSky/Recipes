@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Recipes.Application.Services.Auth;
@@ -33,11 +34,11 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public ActionResult Register([FromBody]RegisterDto registerDto)
+        public async Task<ActionResult> Register([FromBody]RegisterDto registerDto)
         {
             try
             {
-                _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
+                await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
                 return Ok();
             }
             catch (UserRegistrationException e)
@@ -59,11 +60,11 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<string> Login([FromBody]LoginDto loginDto)
+        public async Task<ActionResult<string>> Login([FromBody]LoginDto loginDto)
         {
             try
             {
-                return _authService.Login(loginDto.Login, loginDto.Password);
+                return await _authService.Login(loginDto.Login, loginDto.Password);
             }
             catch (UserLoginException e)
             {

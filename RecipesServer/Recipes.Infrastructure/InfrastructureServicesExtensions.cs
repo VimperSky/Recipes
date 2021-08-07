@@ -11,9 +11,9 @@ using Recipes.Infrastructure.Repositories;
 
 namespace Recipes.Infrastructure
 {
-    public static class InfrastructureServiceCollection
+    public static class InfrastructureServicesExtensions
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -22,7 +22,7 @@ namespace Recipes.Infrastructure
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
-        public static void ConfigureDatabase(this IServiceCollection serviceCollection, string connectionString)
+        public static void AddDatabase(this IServiceCollection serviceCollection, string connectionString)
         {
             serviceCollection.AddDbContext<RecipesDbContext>(options =>
                 ConfigureDatabase(options, connectionString));

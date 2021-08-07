@@ -2,7 +2,7 @@
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 
-namespace Recipes.Application.AutoMapperProfiles
+namespace Recipes.Application.MappingProfiles
 {
     public class RecipeMappingProfile: Profile
     {

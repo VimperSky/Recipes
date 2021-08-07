@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +37,9 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipeDetailDto> GetRecipeDetail([FromQuery][Required, Range(1, int.MaxValue)]int id)
+        public async Task<ActionResult<RecipeDetailDto>> GetRecipeDetail([FromQuery][Required, Range(1, int.MaxValue)]int id)
         {
-            var detail = _recipesService.GetRecipeDetail(id);
+            var detail = await _recipesService.GetRecipeDetail(id);
             if (detail == null)
                 return NotFound();
             
@@ -55,17 +56,10 @@ namespace Recipes.WebApi.Controllers
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
-        public ActionResult<int> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
+        public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
-            try
-            {
-                var recipeId = _recipesService.CreateRecipe(recipeCreateDto);
-                return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
-            }
-            catch (Exception e)
-            {
-                return BadRequest();
-            }
+            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto);
+            return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
         }
         
         /// <summary>
@@ -75,6 +69,7 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpPatch("edit")]
         [Authorize]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -95,7 +90,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult DeleteRecipe([FromQuery]int id)
+        public ActionResult DeleteRecipe([FromQuery][Required]int id)
         {
             _recipesService.DeleteRecipe(id);
             return NoContent();

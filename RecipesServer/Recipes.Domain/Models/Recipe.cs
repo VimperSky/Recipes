@@ -4,11 +4,12 @@ namespace Recipes.Domain.Models
 {
     public class Recipe
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
         
+        public string ImagePath { get; set; }
+
         public string Name { get; init; }
         public string Description { get; init; }
-        public string ImagePath { get; init; }
 
         public ushort CookingTimeMin { get; init; }
         public ushort Portions { get; init; }

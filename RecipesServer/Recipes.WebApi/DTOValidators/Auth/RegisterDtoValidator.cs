@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Recipes.WebApi.DTO.Auth;
 
-namespace Recipes.WebApi.FluentValidators
+namespace Recipes.WebApi.DTOValidators.Auth
 {
     public class RegisterDtoValidator: AbstractValidator<RegisterDto>
     {

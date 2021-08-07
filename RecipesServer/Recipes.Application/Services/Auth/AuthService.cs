@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using Recipes.Application.Services.Auth.HelpClasses;
 using Recipes.Application.Services.Auth.Models;
 using Recipes.Domain;
@@ -27,7 +28,7 @@ namespace Recipes.Application.Services.Auth
         /// <param name="password"></param>
         /// <param name="name"></param>
         /// <exception cref="UserRegistrationException"></exception>
-        public void Register(string login, string password, string name)
+        public async Task Register(string login, string password, string name)
         {
             var user = _userRepository.GetUser(login);
             if (user != null)
@@ -35,7 +36,7 @@ namespace Recipes.Application.Services.Auth
 
             var salt = HashingTools.GenerateSalt();
             var hash = HashingTools.HashPassword(password, salt);
-            _userRepository.CreateUser(login, hash, HashingTools.SaltToString(salt), name);
+            await _userRepository.CreateUser(login, hash, HashingTools.SaltToString(salt), name);
             _unitOfWork.Commit();
         }
         
@@ -47,9 +48,9 @@ namespace Recipes.Application.Services.Auth
         /// <param name="password"></param>
         /// <returns></returns>
         /// <exception cref="UserLoginException"></exception>
-        public string Login(string login, string password)
+        public async Task<string> Login(string login, string password)
         {
-            var user = _userRepository.GetUser(login);
+            var user = await _userRepository.GetUser(login);
             if (user == null)
                 throw new UserLoginException(UserLoginException.LoginDoesNotExist);
 
