@@ -1,11 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Recipes.Domain;
-using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 using Recipes.Infrastructure.Repositories;
 

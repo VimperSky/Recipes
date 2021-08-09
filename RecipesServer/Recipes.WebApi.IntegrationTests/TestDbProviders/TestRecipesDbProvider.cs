@@ -58,7 +58,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                         "Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник " +
                         "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {

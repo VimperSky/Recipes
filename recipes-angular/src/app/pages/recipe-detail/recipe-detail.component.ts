@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
 import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,7 +14,10 @@ export class RecipeDetailComponent implements OnInit {
 
   recipeDetail: RecipeDetail | undefined;
 
-  constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private recipeService: RecipeService,
+              private snackBar: MatSnackBar,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,8 +28,13 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   delete() {
-    // TODO: добавить взаимодействие с сервером
+    if (this.recipeDetail) {
+      this.recipeService.delete(this.recipeDetail.id).subscribe(() => {
+        this.snackBar.open('Рецепт был успешно удален!',
+          'ОК', {duration: 5000
+          });
+        this.router.navigate(['recipes'])
+      })
+    }
   }
-
-
 }

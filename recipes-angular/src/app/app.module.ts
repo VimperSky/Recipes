@@ -33,6 +33,12 @@ import {ApiAuthService} from "./core/services/communication/api/api-auth.service
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
 import {AutosizeModule} from "ngx-autosize";
+import {JwtModule} from "@auth0/angular-jwt";
+import {environment} from "../environments/environment";
+
+function getToken() {
+  return localStorage.getItem(environment.jwtToken);
+}
 
 @NgModule({
   declarations: [
@@ -64,7 +70,13 @@ import {AutosizeModule} from "ngx-autosize";
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
-    AutosizeModule
+    AutosizeModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getToken,
+        allowedDomains: [environment.backendUrl],
+      }})
   ],
   providers: [
     {

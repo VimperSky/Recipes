@@ -29,7 +29,7 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
-                .Include(x => x.IngredientBlocks)
+                .Include(x => x.Ingredients)
                 .ToListAsync();
         }
 
@@ -40,14 +40,14 @@ namespace Recipes.Infrastructure.Repositories
                 .CountAsync();
         }
 
-        public async Task<int> AddRecipe(Recipe recipe)
+        public async Task<Recipe> AddRecipe(Recipe recipe)
         {
             if (recipe.Id != default)
             {
                 throw new ArgumentException("Cannot add recipe with predefined ID.");
             }
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
-            return addedRecipe.Entity.Id;
+            return addedRecipe.Entity;
         }
 
         public async Task EditRecipe(Recipe recipe)
@@ -56,8 +56,8 @@ namespace Recipes.Infrastructure.Repositories
             if (dbRecipe == null)
                 throw new ArgumentException("Couldn't edit recipe because recipe with id: " +
                                             $"{recipe.Id} doesn't exist");
-
-            _recipesDbContext.Recipes.Update(recipe);
+            
+            _recipesDbContext.Entry(dbRecipe).CurrentValues.SetValues(recipe);
         }
 
         public async Task DeleteRecipe(int id)

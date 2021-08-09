@@ -10,7 +10,7 @@ namespace Recipes.Domain.Repositories
 
         Task<int> GetRecipesCount(string searchString);
 
-        Task<int> AddRecipe(Recipe recipe);
+        Task<Recipe> AddRecipe(Recipe recipe);
 
         Task EditRecipe(Recipe recipe);
 

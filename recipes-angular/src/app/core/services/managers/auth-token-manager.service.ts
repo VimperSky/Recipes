@@ -17,6 +17,7 @@ export class AuthTokenManagerService {
       return;
 
     this.token = this.jwtHelper.decodeToken<Token>(token);
+    this.token.raw = token;
   }
 
   private raiseTokenChange () {
@@ -30,6 +31,10 @@ export class AuthTokenManagerService {
     return this.token ? this.token.name : null;
   }
 
+  public get tokenValue(): string | null {
+    return this.token ? this.token.raw : null;
+  }
+
   public removeToken() {
     localStorage.removeItem(environment.jwtToken);
     this.token = null;
@@ -40,6 +45,7 @@ export class AuthTokenManagerService {
   public setToken(token: string) {
     localStorage.setItem(environment.jwtToken, token);
     this.token = this.jwtHelper.decodeToken<Token>(token);
+    this.token.raw = token;
 
     this.raiseTokenChange();
   }

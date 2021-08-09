@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
 import {environment} from "../../../environments/environment";
 
+const defaultImagePath: string = "../../../assets/images/default_recipe.jpg"
+
 @Component({
   selector: 'app-recipe-preview',
   templateUrl: './recipe-preview.component.html',
@@ -20,9 +22,12 @@ export class RecipePreviewComponent implements OnInit {
   }
 
   getImagePath(recipe: RecipePreview): string {
-    return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
-      ? recipe.imagePath
-      : environment.backendUrl + "/" + recipe.imagePath;
+    if (recipe.imagePath) {
+      return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
+        ? recipe.imagePath
+        : environment.backendUrl + "/" + recipe.imagePath;
+    }
+    return defaultImagePath;
   }
 
   constructor() { }

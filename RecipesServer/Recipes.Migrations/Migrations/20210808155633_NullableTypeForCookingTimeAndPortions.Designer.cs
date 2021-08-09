@@ -2,16 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Recipes.Infrastructure;
 
-namespace Recipes.Infrastructure.Migrations
+namespace Recipes.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20210808155633_NullableTypeForCookingTimeAndPortions")]
+    partial class NullableTypeForCookingTimeAndPortions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace Recipes.Infrastructure.Migrations
 
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
-                    b.OwnsMany("Recipes.Domain.Models.RecipeIngredients", "Ingredients", b1 =>
+                    b.OwnsMany("Recipes.Domain.Models.RecipeIngredientBlock", "IngredientBlocks", b1 =>
                         {
                             b1.Property<int>("RecipeId")
                                 .HasColumnType("integer")
@@ -136,7 +138,7 @@ namespace Recipes.Infrastructure.Migrations
                                 .HasConstraintName("fk_recipe_ingredient_block_recipe_recipe_id");
                         });
 
-                    b.Navigation("Ingredients");
+                    b.Navigation("IngredientBlocks");
                 });
 #pragma warning restore 612, 618
         }

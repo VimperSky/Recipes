@@ -68,7 +68,7 @@ namespace Recipes.Infrastructure
                         "Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник " +
                         "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -110,7 +110,7 @@ namespace Recipes.Infrastructure
                         "через 5 минут фрикадельки вынуть на решето, дать им обсохнуть, потом опустить в суп," +
                         " прокипятить и подавать к столу."
                     }, 
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -141,7 +141,7 @@ namespace Recipes.Infrastructure
                         
                         "Наливаем растительное масло (25 г (~2 ст. ложки) и снова хорошенько перемешиваем.",
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -171,7 +171,7 @@ namespace Recipes.Infrastructure
 
                         "Готовое мороженое выкладываем в чашку, миску..."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -208,7 +208,7 @@ namespace Recipes.Infrastructure
                         "И взбиваем их до твёрдых пиков. Готовность белков проверяем очень просто - " +
                         "наклоняем миску с белками в сторону и, если белковая масса не стремится убежать, значит всё готово.."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {

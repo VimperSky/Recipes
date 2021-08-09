@@ -56,34 +56,40 @@ namespace Recipes.Application.Services.Recipes
             await using Stream fileStream = new FileStream(imagePath, FileMode.Create);
             await formFile.CopyToAsync(fileStream);
 
-            return Path.Combine("images", $"recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
+            return Path.Combine($"images/recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
         }
         
         public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
-
-            if (recipeCreateDto.ImageFile != null)
-            {
-                recipeModel.ImagePath = await CreateFile(recipeCreateDto.ImageFile);
-            }
-
-            var addedRecipeId = await _recipesRepository.AddRecipe(recipeModel);
+            
+            var addedRecipe = await _recipesRepository.AddRecipe(recipeModel);
 
             _unitOfWork.Commit();
-            return addedRecipeId;
+            return addedRecipe.Id;
         }
 
         public async Task EditRecipe(RecipeEditDto recipeEditDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
 
-            if (recipeEditDto.ImageFile != null)
-            {
-                recipeModel.ImagePath = await CreateFile(recipeEditDto.ImageFile);
-            }
-            await _recipesRepository.EditRecipe(recipeModel);
+            var editRecipe = _recipesRepository.EditRecipe(recipeModel);
+            await editRecipe;
 
+            _unitOfWork.Commit();
+        }
+
+        public async Task UploadImage(int recipeId, IFormFile formFile)
+        {
+            if (formFile == null)
+                throw new ArgumentNullException(nameof(formFile));
+            
+            var recipe = await _recipesRepository.GetById(recipeId);
+            if (recipe == null)
+                throw new ArgumentException("recipeId with this id doesn't exist", nameof(recipeId));
+            
+            recipe.ImagePath = await CreateFile(formFile);
+            await _recipesRepository.EditRecipe(recipe);
             _unitOfWork.Commit();
         }
 

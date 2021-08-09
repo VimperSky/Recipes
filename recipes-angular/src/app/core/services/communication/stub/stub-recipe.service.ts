@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {RecipeService} from "../abstract/recipe.service";
 import {RecipeDetail} from "../../../dto/recipe/recipe-detail";
 import {Observable, of} from "rxjs";
+import {RecipeCreate} from "../../../dto/recipe/recipe-create";
+import {RecipeEdit} from "../../../dto/recipe/recipe-edit";
 
 const testImagesPath =  "../../../assets/images/test/";
 const recipeDetail: RecipeDetail = {
@@ -58,5 +60,21 @@ export class StubRecipeService implements RecipeService {
 
   detail(id: number): Observable<RecipeDetail> {
     return of(recipeDetail);
+  }
+
+  create(recipeCreate: RecipeCreate): Observable<number> {
+    throw "Not Implemented";
+  }
+
+  delete(id: number): Observable<void> {
+    throw "Not Implemented";
+  }
+
+  edit(recipeEdit: RecipeEdit): Observable<void> {
+    throw "Not Implemented";
+  }
+
+  uploadImage(recipeId: number, file: File): Observable<void> {
+    throw "Not Implemented";
   }
 }

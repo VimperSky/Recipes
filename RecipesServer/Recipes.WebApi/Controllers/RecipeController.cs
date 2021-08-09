@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Services.Recipes;
+using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.Controllers
 {   
@@ -52,13 +53,22 @@ namespace Recipes.WebApi.Controllers
         /// <param name="recipeCreateDto"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Consumes("multipart/form-data")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<int>> CreateRecipe([FromForm]RecipeCreateDto recipeCreateDto)
+        public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
-            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto);
-            return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
+            try
+            {
+                var recipeId = await _recipesService.CreateRecipe(recipeCreateDto);
+                return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An exception happened while processing CreateRecipe\r\n" + ex);
+                return BadRequest();
+            }
         }
         
         /// <summary>
@@ -68,14 +78,22 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpPatch("edit")]
         [Authorize]
-        [Consumes("multipart/form-data")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult EditRecipe([FromBody]RecipeEditDto recipeEditDto)
+        public async Task<ActionResult> EditRecipe([FromBody]RecipeEditDto recipeEditDto)
         {
-            _recipesService.EditRecipe(recipeEditDto);
-            return NoContent();
+            try
+            {
+                await _recipesService.EditRecipe(recipeEditDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An exception happened while processing EditRecipe\r\n" + ex);
+                return BadRequest();
+            }
         }
         
         
@@ -86,13 +104,42 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpDelete("delete")]
         [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult DeleteRecipe([FromQuery][Required]int id)
+        public async Task<ActionResult> DeleteRecipe([FromQuery, Required]int id)
         {
-            _recipesService.DeleteRecipe(id);
-            return NoContent();
+            try
+            {
+                await _recipesService.DeleteRecipe(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An exception happened while processing DeleteRecipe\r\n" + ex);
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("uploadImage")]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> UploadImage([FromForm]UploadImageDto uploadImageDtoDto)
+        {
+            try
+            {
+                await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An exception happened while processing UploadImage\r\n" + ex);
+                return BadRequest();
+            }
         }
         
     }

@@ -1,6 +1,6 @@
 ﻿namespace Recipes.Domain.Models
 {
-    public class RecipeIngredientBlock
+    public class RecipeIngredientsBlock
     {
         public int Id { get; init; }
         public int Position { get; init; }

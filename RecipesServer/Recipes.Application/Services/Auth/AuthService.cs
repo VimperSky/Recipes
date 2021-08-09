@@ -30,7 +30,7 @@ namespace Recipes.Application.Services.Auth
         /// <exception cref="UserRegistrationException"></exception>
         public async Task Register(string login, string password, string name)
         {
-            var user = _userRepository.GetUser(login);
+            var user = await _userRepository.GetUser(login);
             if (user != null)
                 throw new UserRegistrationException(UserRegistrationException.LoginIsTaken);
 
