@@ -4,20 +4,20 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.Application.DTOs.Recipe;
-using Recipes.WebApi.Tests.TestDbProviders;
+using Recipes.WebApi.Tests.Utils;
 using Xunit;
 
 namespace Recipes.WebApi.Tests.Tests.RecipeController
 {
     [Collection("Tests")]
-    public class RecipeControllerTest: IClassFixture<TestWebFactory<Startup>>
+    public class DetailTests: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;
         private readonly TestRecipesDbProvider _recipesDbProvider;
 
         private const string BaseAddress = "api/recipe";
         
-        public RecipeControllerTest(TestWebFactory<Startup> factory)
+        public DetailTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
 

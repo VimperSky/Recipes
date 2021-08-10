@@ -6,7 +6,7 @@ using System.Web;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.Application.DTOs.Recipe;
-using Recipes.WebApi.Tests.TestDbProviders;
+using Recipes.WebApi.Tests.Utils;
 using Xunit;
 
 namespace Recipes.WebApi.Tests.Tests.RecipesController

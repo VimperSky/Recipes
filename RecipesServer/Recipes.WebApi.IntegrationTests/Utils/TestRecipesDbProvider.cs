@@ -4,7 +4,7 @@ using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
 
-namespace Recipes.WebApi.Tests.TestDbProviders
+namespace Recipes.WebApi.Tests.Utils
 {
     public class TestRecipesDbProvider
     {
@@ -16,6 +16,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
             _detailedList = mapper.Map<RecipeDetailDto[]>(RecipeList);
             List = mapper.Map<RecipePreviewDto[]>(RecipeList);
         }
+        
 
         private readonly RecipeDetailDto[] _detailedList;
 

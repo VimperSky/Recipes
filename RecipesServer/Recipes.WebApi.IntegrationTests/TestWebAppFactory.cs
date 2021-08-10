@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Recipes.Infrastructure;
-using Recipes.WebApi.Tests.TestDbProviders;
+using Recipes.WebApi.Tests.Utils;
 
 namespace Recipes.WebApi.Tests
 {
