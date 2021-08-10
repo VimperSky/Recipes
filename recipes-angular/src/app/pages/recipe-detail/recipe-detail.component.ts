@@ -15,7 +15,6 @@ export class RecipeDetailComponent implements OnInit {
 
   recipeDetail: RecipeDetail | undefined;
   get isAvailableToModify(): boolean {
-    return true;
     return this.tokenService.isAuthorized && this.recipeDetail?.authorId == this.tokenService.userId;
   }
 
