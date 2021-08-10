@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Recipes.Application.Services.Recipes.HelpClasses
+namespace Recipes.Application.Services.Recipes
 {
     public static class FileTools
     {

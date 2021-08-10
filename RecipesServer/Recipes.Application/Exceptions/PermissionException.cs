@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Recipes.Application.Permissions.Models
+namespace Recipes.Application.Exceptions
 {
     public class PermissionException : Exception
     {

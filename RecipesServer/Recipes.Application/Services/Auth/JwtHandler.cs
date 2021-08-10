@@ -6,10 +6,9 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.Application.Permissions.Models;
-using Recipes.Application.Services.Auth.Models;
 using Recipes.Domain.Models;
 
-namespace Recipes.Application.Services.Auth.HelpClasses
+namespace Recipes.Application.Services.Auth
 {
     public class JwtHandler
     {

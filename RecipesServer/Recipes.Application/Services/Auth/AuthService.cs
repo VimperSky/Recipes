@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using Recipes.Application.Services.Auth.HelpClasses;
-using Recipes.Application.Services.Auth.Models;
+using Recipes.Application.Exceptions;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
 

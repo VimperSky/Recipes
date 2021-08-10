@@ -13,7 +13,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Recipes.Application;
-using Recipes.Application.Services.Auth.Models;
+using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
 
 namespace Recipes.WebApi

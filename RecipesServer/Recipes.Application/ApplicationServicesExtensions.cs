@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.Application.Services.Auth;
-using Recipes.Application.Services.Auth.HelpClasses;
-using Recipes.Application.Services.Auth.Models;
 using Recipes.Application.Services.Recipes;
 
 namespace Recipes.Application

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Recipes.Application.Services.Auth.Models
+namespace Recipes.Application.Exceptions
 {
     public class UserRegistrationException : Exception
     {

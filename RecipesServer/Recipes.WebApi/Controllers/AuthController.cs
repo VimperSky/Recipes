@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Recipes.Application.Exceptions;
 using Recipes.Application.Services.Auth;
-using Recipes.Application.Services.Auth.Models;
 using Recipes.WebApi.DTO.Auth;
 
 namespace Recipes.WebApi.Controllers

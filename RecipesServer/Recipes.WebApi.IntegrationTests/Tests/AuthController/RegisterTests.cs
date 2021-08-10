@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Recipes.Application.Services.Auth.Models;
+using Recipes.Application.Exceptions;
 using Recipes.WebApi.DTO.Auth;
 using Xunit;
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions;
 using Recipes.Application.Permissions.Models;
 using Recipes.Application.Services.Recipes;
