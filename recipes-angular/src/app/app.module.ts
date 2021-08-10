@@ -35,10 +35,8 @@ import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.
 import {AutosizeModule} from "ngx-autosize";
 import {JwtModule} from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
+import { AuthComponent } from './embedded-components/auth/auth/auth.component';
 
-function getToken() {
-  return localStorage.getItem(environment.jwtToken);
-}
 
 @NgModule({
   declarations: [
@@ -54,7 +52,8 @@ function getToken() {
     AuthHeaderComponent,
     LoginComponent,
     RegisterComponent,
-    RecipeAddEditComponent
+    RecipeAddEditComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -74,9 +73,10 @@ function getToken() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: getToken,
-        allowedDomains: [environment.backendUrl],
-      }})
+        // ...
+        throwNoTokenError: true,
+      },
+    })
   ],
   providers: [
     {

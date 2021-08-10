@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
   ]);
 
   constructor(private dialog: MatDialog,
-              private dialogRef: MatDialogRef<LoginComponent>,
+              private dialogRef: MatDialogRef<RegisterComponent>,
               private authService: AuthService,
               private snackBar: MatSnackBar,
               private formErrorHandlingService: FormErrorsHandlingService,

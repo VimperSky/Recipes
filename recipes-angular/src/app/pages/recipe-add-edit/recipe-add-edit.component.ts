@@ -143,12 +143,13 @@ export class RecipeAddEditComponent implements OnInit {
       };
 
       this.recipeService.edit(dto).subscribe(() => {
-        if (this.file)
+        if (this.file) {
           this.recipeService.uploadImage(this.id as number, this.file).subscribe(() => {
             this.finalizeRecipeProcessing();
           }, (error: HttpErrorResponse) => {
             console.log(error)
           });
+        }
         else {
           this.finalizeRecipeProcessing();
         }
@@ -186,7 +187,7 @@ export class RecipeAddEditComponent implements OnInit {
 
   addIngredient(header: string = "", value: string = "") {
     const ingredientBlock = this.fb.group({
-      header: this.fb.control(header, [Validators.required, Validators.maxLength(24)]),
+      header: this.fb.control(header, [Validators.maxLength(24)]),
       value: this.fb.control(value, [Validators.required, Validators.maxLength(500)]),
     })
     this.ingredients.push(ingredientBlock)

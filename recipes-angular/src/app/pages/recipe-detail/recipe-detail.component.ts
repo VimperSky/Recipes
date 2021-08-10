@@ -4,6 +4,7 @@ import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
 import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Location} from "@angular/common";
+import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,11 +14,15 @@ import {Location} from "@angular/common";
 export class RecipeDetailComponent implements OnInit {
 
   recipeDetail: RecipeDetail | undefined;
+  get isAuthorized(): boolean {
+    return this.tokenService.isAuthorized;
+  }
 
   constructor(private activatedRoute: ActivatedRoute,
               private recipeService: RecipeService,
               private snackBar: MatSnackBar,
-              private router: Router) {
+              private router: Router,
+              private tokenService: AuthTokenManagerService) {
   }
 
   ngOnInit(): void {

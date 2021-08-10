@@ -72,9 +72,8 @@ namespace Recipes.Application.Services.Recipes
         public async Task EditRecipe(RecipeEditDto recipeEditDto)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
-
-            var editRecipe = _recipesRepository.EditRecipe(recipeModel);
-            await editRecipe;
+            
+            await _recipesRepository.EditRecipe(recipeModel);
 
             _unitOfWork.Commit();
         }

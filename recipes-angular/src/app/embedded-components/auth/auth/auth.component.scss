@@ -1,0 +1,20 @@
+@use '../../../shared-styles/constants';
+
+.content-container {
+  .mat-dialog-title {
+    text-transform: none;
+  }
+
+  .content {
+    p {
+      @include constants.default-text;
+      text-align: left;
+      line-height: 28px;
+    }
+
+    .mat-dialog-actions {
+      margin-top: 20px;
+    }
+  }
+
+}

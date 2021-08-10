@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Domain.Models;
@@ -57,7 +58,15 @@ namespace Recipes.Infrastructure.Repositories
                 throw new ArgumentException("Couldn't edit recipe because recipe with id: " +
                                             $"{recipe.Id} doesn't exist");
             
-            _recipesDbContext.Entry(dbRecipe).CurrentValues.SetValues(recipe);
+            foreach(var toProp in typeof(Recipe).GetProperties())
+            {
+                var value = toProp.GetValue(recipe, null);
+                if (value != null)
+                {
+                    toProp.SetValue(dbRecipe, value, null);
+                }
+            }
+            Console.WriteLine("Yes");
         }
 
         public async Task DeleteRecipe(int id)

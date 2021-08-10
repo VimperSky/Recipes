@@ -27,6 +27,10 @@ export class AuthTokenManagerService {
   // public methods
   public authChanged = this.authChangeSub.asObservable();
 
+  public get isAuthorized(): boolean {
+    return this.token != null;
+  }
+
   public get name(): string | null {
     return this.token ? this.token.name : null;
   }

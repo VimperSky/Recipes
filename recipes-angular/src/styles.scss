@@ -39,3 +39,11 @@ html, body {
   }
 }
 
+
+.auth-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+    height: 340px;
+    width: 700px;
+  }
+}
