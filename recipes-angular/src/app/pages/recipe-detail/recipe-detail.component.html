@@ -3,10 +3,10 @@
   <div id="recipes-header">
     <h1>{{recipeDetail.name}}</h1>
     <div id="right-buttons-block">
-      <button *ngIf="isAuthorized" mat-icon-button  id="delete-recipe-button" (click)="delete()">
+      <button *ngIf="isAvailableToModify" mat-icon-button id="delete-recipe-button" (click)="delete()">
         <mat-icon>delete_outline</mat-icon>
       </button>
-      <button *ngIf="isAuthorized" mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
+      <button *ngIf="isAvailableToModify" mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
               type="button">
         <mat-icon>edit</mat-icon>
         <span>Редактировать</span>

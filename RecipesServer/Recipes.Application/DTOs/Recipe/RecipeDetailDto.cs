@@ -8,5 +8,7 @@
         public string[] Steps { get; init; }
         
         public string ImagePath { get; init; }
+        
+        public int AuthorId { get; set; }
     }
 }

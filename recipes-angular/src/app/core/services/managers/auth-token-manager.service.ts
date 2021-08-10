@@ -39,6 +39,10 @@ export class AuthTokenManagerService {
     return this.token ? this.token.raw : null;
   }
 
+  public get userId(): number | null {
+    return this.token? parseInt(this.token.userId) : null;
+  }
+
   public removeToken() {
     localStorage.removeItem(environment.jwtToken);
     this.token = null;

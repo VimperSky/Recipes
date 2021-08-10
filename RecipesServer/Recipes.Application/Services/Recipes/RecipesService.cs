@@ -1,9 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Permissions.Models;
+using Recipes.Application.Services.Recipes.HelpClasses;
 using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
@@ -49,19 +50,10 @@ namespace Recipes.Application.Services.Recipes
             return _mapper.Map<RecipeDetailDto>(recipe);
         }
 
-        private static async Task<string> CreateFile(IFormFile formFile)
-        {
-            var guid = Guid.NewGuid();
-            var imagePath = Path.Combine("Storage", "images", $"recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
-            await using Stream fileStream = new FileStream(imagePath, FileMode.Create);
-            await formFile.CopyToAsync(fileStream);
-
-            return Path.Combine($"images/recipe_img_{guid}.{Path.GetExtension(formFile.FileName)}");
-        }
-        
-        public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto)
+        public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto, UserClaims userClaims)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
+            recipeModel.AuthorId = userClaims.UserId;
             
             var addedRecipe = await _recipesRepository.AddRecipe(recipeModel);
 
@@ -69,16 +61,18 @@ namespace Recipes.Application.Services.Recipes
             return addedRecipe.Id;
         }
 
-        public async Task EditRecipe(RecipeEditDto recipeEditDto)
+        public async Task EditRecipe(RecipeEditDto recipeEditDto, UserClaims userClaims)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
+            if (recipeModel.AuthorId != userClaims.UserId)
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
             
             await _recipesRepository.EditRecipe(recipeModel);
 
             _unitOfWork.Commit();
         }
 
-        public async Task UploadImage(int recipeId, IFormFile formFile)
+        public async Task UploadImage(int recipeId, IFormFile formFile, UserClaims userClaims)
         {
             if (formFile == null)
                 throw new ArgumentNullException(nameof(formFile));
@@ -86,15 +80,25 @@ namespace Recipes.Application.Services.Recipes
             var recipe = await _recipesRepository.GetById(recipeId);
             if (recipe == null)
                 throw new ArgumentException("recipeId with this id doesn't exist", nameof(recipeId));
+
+            if (recipe.AuthorId != userClaims.UserId)
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
             
-            recipe.ImagePath = await CreateFile(formFile);
+            recipe.ImagePath = await FileTools.CreateFile(formFile);
             await _recipesRepository.EditRecipe(recipe);
             _unitOfWork.Commit();
         }
 
-        public async Task DeleteRecipe(int id)
+        public async Task DeleteRecipe(int recipeId, UserClaims userClaims)
         {
-            await _recipesRepository.DeleteRecipe(id);
+            var recipe = await _recipesRepository.GetById(recipeId);
+            if (recipe == null)
+                throw new ArgumentException("recipeId with this id doesn't exist", nameof(recipeId));
+            
+            if (recipe.AuthorId != userClaims.UserId)
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
+            
+            await _recipesRepository.DeleteRecipe(recipeId);
             _unitOfWork.Commit();
         }
     }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Permissions;
+using Recipes.Application.Permissions.Models;
 using Recipes.Application.Services.Recipes;
 using Recipes.WebApi.DTO.Recipe;
 
@@ -61,8 +63,12 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                var recipeId = await _recipesService.CreateRecipe(recipeCreateDto);
+                var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetPermissions());
                 return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
+            }
+            catch (PermissionException ex)
+            {
+                return Problem(ex.Value, statusCode:403);
             }
             catch (Exception ex)
             {
@@ -86,8 +92,12 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                await _recipesService.EditRecipe(recipeEditDto);
+                await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetPermissions());
                 return Ok();
+            }
+            catch (PermissionException ex)
+            {
+                return Problem(ex.Value, statusCode:403);
             }
             catch (Exception ex)
             {
@@ -112,8 +122,12 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                await _recipesService.DeleteRecipe(id);
+                await _recipesService.DeleteRecipe(id, HttpContext.User.GetPermissions());
                 return Ok();
+            }
+            catch (PermissionException ex)
+            {
+                return Problem(ex.Value, statusCode:403);
             }
             catch (Exception ex)
             {
@@ -132,8 +146,12 @@ namespace Recipes.WebApi.Controllers
         {
             try
             {
-                await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File);
+                await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File, HttpContext.User.GetPermissions());
                 return Ok();
+            }
+            catch (PermissionException ex)
+            {
+                return Problem(ex.Value, statusCode:403);
             }
             catch (Exception ex)
             {

@@ -14,8 +14,9 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 export class RecipeDetailComponent implements OnInit {
 
   recipeDetail: RecipeDetail | undefined;
-  get isAuthorized(): boolean {
-    return this.tokenService.isAuthorized;
+  get isAvailableToModify(): boolean {
+    return true;
+    return this.tokenService.isAuthorized && this.recipeDetail?.authorId == this.tokenService.userId;
   }
 
   constructor(private activatedRoute: ActivatedRoute,

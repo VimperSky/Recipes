@@ -2,16 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Recipes.Infrastructure;
 
-namespace Recipes.Infrastructure.Migrations
+namespace Recipes.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20210810094332_AuthorForRecipe")]
+    partial class AuthorForRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,7 @@ namespace Recipes.Infrastructure.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("integer")
                         .HasColumnName("author_id");
 
@@ -112,7 +114,9 @@ namespace Recipes.Infrastructure.Migrations
                     b.HasOne("Recipes.Domain.Models.User", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
-                        .HasConstraintName("fk_recipe_users_author_id");
+                        .HasConstraintName("fk_recipe_users_author_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsMany("Recipes.Domain.Models.RecipeIngredientsBlock", "Ingredients", b1 =>
                         {
@@ -129,6 +133,10 @@ namespace Recipes.Infrastructure.Migrations
                             b1.Property<string>("Header")
                                 .HasColumnType("text")
                                 .HasColumnName("header");
+
+                            b1.Property<int>("Position")
+                                .HasColumnType("integer")
+                                .HasColumnName("position");
 
                             b1.Property<string>("Value")
                                 .HasColumnType("text")

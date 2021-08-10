@@ -215,7 +215,7 @@ namespace Recipes.Infrastructure
                             Header = "", 
                             Value = "Куриные яйца 4 шт. \nМука 100 гр.\nСахар 150гр.\nВанильный сахар 1 чайн. л."
                         },
-                    }
+                    },
                 },
             };
             

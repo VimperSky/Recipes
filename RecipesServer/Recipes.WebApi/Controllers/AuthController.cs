@@ -43,7 +43,7 @@ namespace Recipes.WebApi.Controllers
             catch (UserRegistrationException e)
             {
                 _logger.LogWarning(e.ToString());
-                return Problem(e.Message, statusCode: 409);
+                return Problem(e.Value, statusCode: 409);
             }
         }
         
@@ -68,7 +68,7 @@ namespace Recipes.WebApi.Controllers
             catch (UserLoginException e)
             {
                 _logger.LogWarning(e.ToString());
-                return Problem(e.Message, statusCode: 401);
+                return Problem(e.Value, statusCode: 401);
             }
         }
     }

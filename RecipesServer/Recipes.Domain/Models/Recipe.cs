@@ -6,6 +6,10 @@ namespace Recipes.Domain.Models
     {
         public int Id { get; set; }
         
+        public User Author { get; set; }
+        
+        public int? AuthorId { get; set; }
+        
         public string ImagePath { get; set; }
 
         public string Name { get; set; }
