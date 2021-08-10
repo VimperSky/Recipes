@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
-              private authManager: AuthTokenManagerService,
+              private tokenManagerService: AuthTokenManagerService,
               private snackBar: MatSnackBar,
               private formErrorHandlingService: FormErrorsHandlingService,
               fb: FormBuilder) {
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let loginDto: Login = {login: this.login.value, password: this.password.value }
       this.authService.login(loginDto).subscribe((token: string) => {
-        this.authManager.setToken(token);
+        this.tokenManagerService.setToken(token);
         this.dialogRef.close()
         this.snackBar.open('Авторизация прошла успешно!', 'ОК', {
           duration: 3000

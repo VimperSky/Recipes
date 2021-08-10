@@ -16,6 +16,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
 import {FormErrorsHandlingService} from "../../../core/services/tools/form-errors-handling.service";
+import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 
 
 const loginErrors: Record<string, string> = {
@@ -70,6 +71,7 @@ export class RegisterComponent implements OnInit {
               private authService: AuthService,
               private snackBar: MatSnackBar,
               private formErrorHandlingService: FormErrorsHandlingService,
+              private tokenManagerService: AuthTokenManagerService,
               fb: FormBuilder) {
     this.passwordForm = fb.group({
       firstPassword: this.password,
@@ -123,7 +125,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
       let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }
-      this.authService.register(registerDto).subscribe(() => {
+      this.authService.register(registerDto).subscribe((token: string) => {
+        this.tokenManagerService.setToken(token);
         this.dialogRef.close()
         this.snackBar.open('Регистрация прошла успешно!', 'ОК', {
           duration: 5000

@@ -5,6 +5,6 @@ import {Login} from "../../../dto/auth/login";
 
 @Injectable()
 export abstract class AuthService {
-  abstract register(register: Register): Observable<void>;
+  abstract register(register: Register): Observable<string>;
   abstract login(login: Login): Observable<string>;
 }

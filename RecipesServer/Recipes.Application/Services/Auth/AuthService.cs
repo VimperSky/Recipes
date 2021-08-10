@@ -28,16 +28,19 @@ namespace Recipes.Application.Services.Auth
         /// <param name="password"></param>
         /// <param name="name"></param>
         /// <exception cref="UserRegistrationException"></exception>
-        public async Task Register(string login, string password, string name)
+        public async Task<string> Register(string login, string password, string name)
         {
-            var user = await _userRepository.GetUser(login);
-            if (user != null)
+            if (await _userRepository.GetUser(login) != null)
                 throw new UserRegistrationException(UserRegistrationException.LoginIsTaken);
 
             var salt = HashingTools.GenerateSalt();
             var hash = HashingTools.HashPassword(password, salt);
-            await _userRepository.CreateUser(login, hash, HashingTools.SaltToString(salt), name);
+            var user = await _userRepository.CreateUser(login, hash, HashingTools.SaltToString(salt), name);
             _unitOfWork.Commit();
+            
+            var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            return token;
         }
         
 

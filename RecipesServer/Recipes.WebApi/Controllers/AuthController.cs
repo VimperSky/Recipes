@@ -34,12 +34,11 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult> Register([FromBody]RegisterDto registerDto)
+        public async Task<ActionResult<string>> Register([FromBody]RegisterDto registerDto)
         {
             try
             {
-                await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
-                return Ok();
+                return await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
             }
             catch (UserRegistrationException e)
             {

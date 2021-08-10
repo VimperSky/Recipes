@@ -16,15 +16,17 @@ namespace Recipes.Infrastructure.Repositories
             _recipesDbContext = recipesDbContext;
         }
         
-        public async Task CreateUser(string login, string passwordHash, string passwordSalt, string name)
+        public async Task<User> CreateUser(string login, string passwordHash, string passwordSalt, string name)
         {
-            await _recipesDbContext.Users.AddAsync(new User
+            var newUser = new User
             {
                 Login = login,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Name = name
-            });
+            };
+            await _recipesDbContext.Users.AddAsync(newUser);
+            return newUser;
         }
 
         public async Task<User> GetUser(string login)
