@@ -10,7 +10,7 @@ namespace Recipes.Application.Exceptions
             Value = message;
         }
         
-        public const string LoginDoesNotExist = "The login doesn't exist in database";
-        public const string PasswordIsIncorrect = "Incorrect password for the login";
+        public const string LoginDoesNotExist = "Такой логин не существует";
+        public const string PasswordIsIncorrect = "Пароль неверный";
     }
 }

@@ -10,6 +10,9 @@ import {Ingredient} from "../../core/dto/recipe/ingredient";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {RecipeEdit} from "../../core/dto/recipe/recipe-edit";
+import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {ProblemDetails} from "../../core/dto/base/problem-details";
+import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -53,6 +56,7 @@ export class RecipeAddEditComponent implements OnInit {
               private recipeService: RecipeService,
               private snackBar: MatSnackBar,
               private router: Router,
+              private errorHandlingService: ErrorHandlingService,
               activatedRoute: ActivatedRoute) {
     this.id = activatedRoute.snapshot.params['id'];
   }
@@ -147,7 +151,7 @@ export class RecipeAddEditComponent implements OnInit {
           this.recipeService.uploadImage(this.id as number, this.file).subscribe(() => {
             this.finalizeRecipeProcessing();
           }, (error: HttpErrorResponse) => {
-            console.log(error)
+            this.errorHandlingService.openErrorDialog(error, "При загрузке изображения произошла неопознанная ошибка.");
           });
         }
         else {
@@ -155,7 +159,7 @@ export class RecipeAddEditComponent implements OnInit {
         }
 
       }, (error: HttpErrorResponse) => {
-        console.log(error)
+        this.errorHandlingService.openErrorDialog(error, "При редактировании рецепта произошла неопознанная ошибка.");
       })
     }
     else {
@@ -173,14 +177,14 @@ export class RecipeAddEditComponent implements OnInit {
           this.recipeService.uploadImage(id, this.file).subscribe(() => {
             this.finalizeRecipeProcessing(id);
           }, (error: HttpErrorResponse) => {
-            console.log(error)
+            this.errorHandlingService.openErrorDialog(error, "При загрузке изображения произошла неопознанная ошибка.");
           });
         else {
           this.finalizeRecipeProcessing(id);
         }
 
       }, (error: HttpErrorResponse) => {
-        console.log(error)
+        this.errorHandlingService.openErrorDialog(error, "При создании рецепта произошла неопознанная ошибка.");
       })
     }
   }

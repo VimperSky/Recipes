@@ -36,6 +36,7 @@ import {AutosizeModule} from "ngx-autosize";
 import {JwtModule} from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
 import { AuthComponent } from './embedded-components/auth/auth/auth.component';
+import { ErrorComponent } from './embedded-components/error/error.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AuthComponent } from './embedded-components/auth/auth/auth.component';
     LoginComponent,
     RegisterComponent,
     RecipeAddEditComponent,
-    AuthComponent
+    AuthComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,6 @@ import { AuthComponent } from './embedded-components/auth/auth/auth.component';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        // ...
         throwNoTokenError: true,
       },
     })

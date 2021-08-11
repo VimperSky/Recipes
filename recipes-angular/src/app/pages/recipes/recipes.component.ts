@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
-import {MatDialog} from "@angular/material/dialog";
-import {AuthComponent} from "../../embedded-components/auth/auth/auth.component";
+import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 
 @Component({
   selector: 'app-recipes',
@@ -13,7 +12,7 @@ export class RecipesComponent implements OnInit {
 
   constructor(private router: Router,
               private tokenManager: AuthTokenManagerService,
-              private dialog: MatDialog) {
+              private dialogDisplayService: DialogDisplayService) {
   }
 
   ngOnInit() {
@@ -25,9 +24,7 @@ export class RecipesComponent implements OnInit {
       this.router.navigate(["/recipe/new"]);
     }
     else {
-      this.dialog.open(AuthComponent, {
-        panelClass: 'auth-dialog-container'
-      });
+      this.dialogDisplayService.openAuthDialog();
     }
 
   }

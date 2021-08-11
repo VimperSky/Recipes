@@ -6,7 +6,7 @@ import {LoginComponent} from "../login/login.component";
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/auth-styles.scss', './auth.component.scss']
+  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './auth.component.scss']
 })
 export class AuthComponent implements OnInit {
 

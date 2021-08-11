@@ -5,6 +5,10 @@ import {RecipeService} from "../../core/services/communication/abstract/recipe.s
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Location} from "@angular/common";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {ProblemDetails} from "../../core/dto/base/problem-details";
+import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -21,8 +25,10 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private recipeService: RecipeService,
               private snackBar: MatSnackBar,
+              private dialogDisplayService: DialogDisplayService,
               private router: Router,
-              private tokenService: AuthTokenManagerService) {
+              private tokenService: AuthTokenManagerService,
+              private errorHandlingService: ErrorHandlingService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +45,8 @@ export class RecipeDetailComponent implements OnInit {
           'ОК', {duration: 5000
           });
         this.router.navigate(['recipes'])
+      }, (error: HttpErrorResponse) => {
+        this.errorHandlingService.openErrorDialog(error, "При удалении рецепта произошла неопознанная ошибка.")
       })
     }
   }

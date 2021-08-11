@@ -15,7 +15,7 @@ import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
-import {FormErrorsHandlingService} from "../../../core/services/tools/form-errors-handling.service";
+import {ErrorHandlingService} from "../../../core/services/tools/error-handling.service";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 
 
@@ -45,7 +45,7 @@ const minLengthValidator: ValidatorFn = (control: AbstractControl):  ValidationE
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/auth-styles.scss', './register.component.scss']
+  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
               private dialogRef: MatDialogRef<RegisterComponent>,
               private authService: AuthService,
               private snackBar: MatSnackBar,
-              private formErrorHandlingService: FormErrorsHandlingService,
+              private errorHandlingService: ErrorHandlingService,
               private tokenManagerService: AuthTokenManagerService,
               fb: FormBuilder) {
     this.passwordForm = fb.group({
@@ -140,7 +140,7 @@ export class RegisterComponent implements OnInit {
             ['Password', this.passwordForm]
           ]);
 
-          this.formErrorHandlingService.setValidationErrors(error, formControlsMap);
+          this.errorHandlingService.setValidationErrors(error, formControlsMap);
         }
         else if (error.status == 409) {
           this.login.setErrors({takenLogin: true})

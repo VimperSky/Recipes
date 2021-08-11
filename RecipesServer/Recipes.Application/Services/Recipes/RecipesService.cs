@@ -66,14 +66,14 @@ namespace Recipes.Application.Services.Recipes
         
         public async Task EditRecipe(RecipeEditDto recipeEditDto, UserClaims userClaims)
         {
-            var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
-            if (recipeModel.AuthorId != userClaims.UserId)
-                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
-
             var recipeDb = await _recipesRepository.GetById(recipeEditDto.Id);
             if (recipeDb == null)
                 throw new ArgumentException($"Couldn't find recipe with id: {recipeEditDto.Id}");
             
+            if (recipeDb.AuthorId != userClaims.UserId)
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
+            
+            var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
             foreach(var toProp in typeof(Recipe).GetProperties())
             {
                 var value = toProp.GetValue(recipeModel, null);
@@ -96,7 +96,7 @@ namespace Recipes.Application.Services.Recipes
                 throw new ArgumentException("recipeId with this id doesn't exist", nameof(recipeId));
 
             if (recipe.AuthorId != userClaims.UserId)
-                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
             
             recipe.ImagePath = await _imageFileSaver.CreateFile(formFile);
             _unitOfWork.Commit();
@@ -109,7 +109,7 @@ namespace Recipes.Application.Services.Recipes
                 throw new ArgumentException("recipeId with this id doesn't exist", nameof(recipeId));
             
             if (recipe.AuthorId != userClaims.UserId)
-                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
+                throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
             
             await _recipesRepository.DeleteRecipe(recipeId);
             _unitOfWork.Commit();

@@ -10,6 +10,6 @@ namespace Recipes.Application.Exceptions
             Value = message;
         }
         
-        public const string NotEnoughPermissionsToModifyRecipe = "You don't have permission to modify this recipe";
+        public const string NotEnoughPermissionsToModifyResource = "У вас нет прав на модификацию данного ресурса.";
     }
 }
