@@ -102,5 +102,17 @@ app-back-nav {
         color: constants.$light-black-color;
       }
     }
+
+    #bon-appetit-text {
+      margin-top: 40px;
+      @include constants.default-text;
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: constants.$accent-color;
+      opacity: 50%;
+      text-align: center;
+    }
   }
 }
