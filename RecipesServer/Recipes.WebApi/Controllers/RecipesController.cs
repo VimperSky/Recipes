@@ -48,7 +48,7 @@ namespace Recipes.WebApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError("Internal server error happened while processing client request with parameters:\r\n" +
+                _logger.LogError("An unhandled exception happened while processing GetRecipes with parameters:\r\n" +
                                  $"pageSize: {pageSize}, page: {page}, searchString: {searchString}. Error text:\r\n" + e);
                 return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }

@@ -73,7 +73,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing CreateRecipe\r\n" + ex);
-                return BadRequest();
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
         
@@ -102,7 +102,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing EditRecipe\r\n" + ex);
-                return BadRequest();
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
         
@@ -132,7 +132,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing DeleteRecipe\r\n" + ex);
-                return BadRequest();
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing UploadImage\r\n" + ex);
-                return BadRequest();
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
         

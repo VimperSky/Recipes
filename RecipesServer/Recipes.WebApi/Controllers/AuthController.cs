@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,8 +43,12 @@ namespace Recipes.WebApi.Controllers
             }
             catch (UserRegistrationException e)
             {
-                _logger.LogWarning(e.ToString());
                 return Problem(e.Value, statusCode: 409);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An unhandled exception happened while processing Register\r\n" + e);
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
         
@@ -67,8 +72,12 @@ namespace Recipes.WebApi.Controllers
             }
             catch (UserLoginException e)
             {
-                _logger.LogWarning(e.ToString());
                 return Problem(e.Value, statusCode: 401);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An unhandled exception happened while processing Login\r\n" + e);
+                return Problem("Unknown error happened while processing your request.", statusCode: 400);
             }
         }
     }
