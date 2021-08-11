@@ -11,7 +11,7 @@ using Recipes.Domain.Repositories;
 
 namespace Recipes.Application.Services.Recipes
 {
-    public class RecipesService
+    public class RecipesService : IRecipesService
     {
         private readonly IRecipesRepository _recipesRepository;
         private readonly IUnitOfWork _unitOfWork;

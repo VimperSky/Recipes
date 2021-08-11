@@ -15,9 +15,9 @@ namespace Recipes.WebApi.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly ILogger<RecipesController> _logger;
-        private readonly RecipesService _recipesService;
+        private readonly IRecipesService _recipesService;
 
-        public RecipesController(ILogger<RecipesController> logger, RecipesService recipesService)
+        public RecipesController(ILogger<RecipesController> logger, IRecipesService recipesService)
         {
             _logger = logger;
             _recipesService = recipesService;

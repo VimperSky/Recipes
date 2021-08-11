@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions;
-using Recipes.Application.Permissions.Models;
 using Recipes.Application.Services.Recipes;
 using Recipes.WebApi.DTO.Recipe;
 
@@ -20,9 +19,9 @@ namespace Recipes.WebApi.Controllers
     public class RecipeController: ControllerBase
     {
         private readonly ILogger<RecipesController> _logger;
-        private readonly RecipesService _recipesService;
+        private readonly IRecipesService _recipesService;
 
-        public RecipeController(ILogger<RecipesController> logger, RecipesService recipesService)
+        public RecipeController(ILogger<RecipesController> logger, IRecipesService recipesService)
         {
             _logger = logger;
             _recipesService = recipesService;

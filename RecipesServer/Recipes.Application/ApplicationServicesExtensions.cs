@@ -38,10 +38,10 @@ namespace Recipes.Application
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ApplicationServicesExtensions));
-
-            services.AddScoped<AuthService>();  
-            services.AddScoped<RecipesService>();
+            
             services.AddScoped<JwtHandler>();
+            services.AddScoped<IAuthService, AuthService>();  
+            services.AddScoped<IRecipesService, RecipesService>();
         }
     }
 }

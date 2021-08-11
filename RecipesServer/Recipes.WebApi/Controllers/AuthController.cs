@@ -14,9 +14,9 @@ namespace Recipes.WebApi.Controllers
     public class AuthController: ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public AuthController(ILogger<AuthController> logger, AuthService authService)
+        public AuthController(ILogger<AuthController> logger, IAuthService authService)
         {
             _logger = logger;
             _authService = authService;

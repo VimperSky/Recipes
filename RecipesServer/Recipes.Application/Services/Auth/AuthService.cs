@@ -6,7 +6,7 @@ using Recipes.Domain.Repositories;
 
 namespace Recipes.Application.Services.Auth
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
