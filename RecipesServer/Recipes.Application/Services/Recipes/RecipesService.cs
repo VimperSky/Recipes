@@ -16,12 +16,14 @@ namespace Recipes.Application.Services.Recipes
         private readonly IRecipesRepository _recipesRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IImageFileSaver _imageFileSaver;
 
-        public RecipesService(IRecipesRepository recipesRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public RecipesService(IRecipesRepository recipesRepository, IUnitOfWork unitOfWork, IMapper mapper, IImageFileSaver imageFileSaver)
         {
             _recipesRepository = recipesRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _imageFileSaver = imageFileSaver;
         }
 
         public async Task<RecipesPageDto> GetRecipesPage(string searchString, int pageSize, int page)
@@ -32,7 +34,7 @@ namespace Recipes.Application.Services.Recipes
             if (page > 1 && page > pageCount)
                 throw new ArgumentOutOfRangeException(nameof(page));
 
-            var recipes = await _recipesRepository.Get(searchString, (page - 1) * pageSize, pageSize);
+            var recipes = await _recipesRepository.GetList(searchString, (page - 1) * pageSize, pageSize);
             var recipesPage = new RecipesPageDto
             {
                 Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
@@ -60,14 +62,26 @@ namespace Recipes.Application.Services.Recipes
             _unitOfWork.Commit();
             return addedRecipe.Id;
         }
-
+        
+        
         public async Task EditRecipe(RecipeEditDto recipeEditDto, UserClaims userClaims)
         {
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
             if (recipeModel.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
+
+            var recipeDb = await _recipesRepository.GetById(recipeEditDto.Id);
+            if (recipeDb == null)
+                throw new ArgumentException($"Couldn't find recipe with id: {recipeEditDto.Id}");
             
-            await _recipesRepository.EditRecipe(recipeModel);
+            foreach(var toProp in typeof(Recipe).GetProperties())
+            {
+                var value = toProp.GetValue(recipeModel, null);
+                if (value != null)
+                {
+                    toProp.SetValue(recipeDb, value, null);
+                }
+            }
 
             _unitOfWork.Commit();
         }
@@ -84,8 +98,7 @@ namespace Recipes.Application.Services.Recipes
             if (recipe.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyRecipe);
             
-            recipe.ImagePath = await FileTools.CreateFile(formFile);
-            await _recipesRepository.EditRecipe(recipe);
+            recipe.ImagePath = await _imageFileSaver.CreateFile(formFile);
             _unitOfWork.Commit();
         }
 

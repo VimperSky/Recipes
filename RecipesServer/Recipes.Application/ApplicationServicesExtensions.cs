@@ -40,6 +40,7 @@ namespace Recipes.Application
             services.AddAutoMapper(typeof(ApplicationServicesExtensions));
             
             services.AddScoped<JwtHandler>();
+            services.AddScoped<IImageFileSaver, ImageFileSaver>();
             services.AddScoped<IAuthService, AuthService>();  
             services.AddScoped<IRecipesService, RecipesService>();
         }

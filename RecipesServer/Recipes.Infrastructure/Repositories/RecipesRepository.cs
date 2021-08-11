@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Domain.Models;
@@ -24,7 +23,7 @@ namespace Recipes.Infrastructure.Repositories
                 recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
         
-        public async Task<IEnumerable<Recipe>> Get(string searchString, int skipItems, int takeItems)
+        public async Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems)
         {
             return await SortBySearchString(_recipesDbContext.Recipes, searchString)
                 .OrderBy(x => x.Id)
@@ -51,23 +50,6 @@ namespace Recipes.Infrastructure.Repositories
             return addedRecipe.Entity;
         }
 
-        public async Task EditRecipe(Recipe recipe)
-        {
-            var dbRecipe = await _recipesDbContext.Recipes.FindAsync(recipe.Id);
-            if (dbRecipe == null)
-                throw new ArgumentException("Couldn't edit recipe because recipe with id: " +
-                                            $"{recipe.Id} doesn't exist");
-            
-            foreach(var toProp in typeof(Recipe).GetProperties())
-            {
-                var value = toProp.GetValue(recipe, null);
-                if (value != null)
-                {
-                    toProp.SetValue(dbRecipe, value, null);
-                }
-            }
-            Console.WriteLine("Yes");
-        }
 
         public async Task DeleteRecipe(int id)
         {
