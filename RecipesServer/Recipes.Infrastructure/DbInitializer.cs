@@ -34,7 +34,8 @@ namespace Recipes.Infrastructure
             {
                 return;   // DB has been seeded
             }
-            
+
+            var baseImagesPath = "default_images/";
 
             var recipes = new Recipe[]
             {
@@ -45,7 +46,7 @@ namespace Recipes.Infrastructure
                                   "Советую подавать его порционно в красивых бокалах, " +
                                   "украсив взбитыми сливками, свежими ягодами и мятой.",
                     Portions = 5,
-                    ImagePath = "images/r1.png",
+                    ImagePath = $"{baseImagesPath}/r1.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -95,7 +96,7 @@ namespace Recipes.Infrastructure
                     Name = "Мясные фрикадельки", 
                     Description = "Мясные фрикадельки в томатном соусе - несложное и вкусное блюдо, которым можно порадовать своих близких.",
                     Portions = 4,
-                    ImagePath = "images/r2.png",
+                    ImagePath = $"{baseImagesPath}/r2.png",
                     CookingTimeMin = 90,
                     Steps = new [] 
                     {
@@ -128,7 +129,7 @@ namespace Recipes.Infrastructure
                     Description = "Панкейки: меньше, чем блины, но больше, чем оладьи. Основное отличие — в тесте, " +
                                   "оно должно быть воздушным, чтобы панкейки не растекались по сковородке...",
                     Portions = 3,
-                    ImagePath = "images/r3.png",
+                    ImagePath = $"{baseImagesPath}/r3.png",
                     CookingTimeMin = 40,
                     Steps = new [] 
                     {
@@ -157,7 +158,7 @@ namespace Recipes.Infrastructure
                     Description = "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
                                   "что будет особенно актуально для сладкоежек, соблюдающих диету.",
                     Portions = 2,
-                    ImagePath = "images/r4.png",
+                    ImagePath = $"{baseImagesPath}/r4.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -186,7 +187,7 @@ namespace Recipes.Infrastructure
                     Description = "Приготовить нежный и воздушный бисквит совсем несложно! Бисквит по этому рецепту" +
                                   " я готовлю уже достаточно давно и он меня не подводил",
                     Portions = 6,
-                    ImagePath = "images/r5.jpg",
+                    ImagePath = $"{baseImagesPath}/r5.jpg",
                     CookingTimeMin = 400,
                     Steps = new [] 
                     {

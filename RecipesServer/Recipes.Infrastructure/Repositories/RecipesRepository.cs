@@ -16,12 +16,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-
-        private static IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
-        {
-            return searchString == null ? recipes : 
-                recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
-        }
+        
         
         public async Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems)
         {
@@ -63,6 +58,12 @@ namespace Recipes.Infrastructure.Repositories
         public async Task<Recipe> GetById(int id)
         {
             return await _recipesDbContext.Recipes.FindAsync(id);
+        }
+        
+        private static IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
+        {
+            return searchString == null ? recipes : 
+                recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
 
     }
