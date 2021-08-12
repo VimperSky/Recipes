@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.Application.DTOs.Recipe;
-using Recipes.WebApi.Tests.Utils;
+using Recipes.WebApi.IntegrationTests.TestDbProviders;
 using Xunit;
 
-namespace Recipes.WebApi.Tests.Tests.RecipeController
+namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 {
     [Collection("Tests")]
     public class DetailTests: IClassFixture<TestWebFactory<Startup>>

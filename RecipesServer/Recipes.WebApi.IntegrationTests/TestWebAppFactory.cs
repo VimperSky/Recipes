@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
-using Recipes.WebApi.Tests.Utils;
+using Recipes.WebApi.IntegrationTests.TestDbProviders;
 
-namespace Recipes.WebApi.Tests
+namespace Recipes.WebApi.IntegrationTests
 {
     public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
     {
@@ -20,20 +21,26 @@ namespace Recipes.WebApi.Tests
                     .Build();
                 
                 config.AddConfiguration(Configuration);
+                
+                var configuration = Configuration.GetSection(JwtSettings.Name);
+                TestUserDbProvider.SetUserTokens(configuration);
             });
-
+            
             builder.ConfigureServices(services =>
             {
                 using var scope = services.BuildServiceProvider().CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<RecipesDbContext>();
+                
 
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 
                 TestRecipesDbProvider.FillDbWithData(db);
+                TestUserDbProvider.FillDbWithData(db);
                 db.SaveChanges();
             });
+            
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Newtonsoft.Json;
 using Recipes.Application.DTOs.Recipe;
-using Recipes.WebApi.Tests.Utils;
 using Xunit;
 
-namespace Recipes.WebApi.Tests.Tests.RecipeController
+namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 {    
     [Collection("Tests")]
     public class CreateTests: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;
-        
+
         private const string BaseAddress = "api/recipe";
         
-        private static readonly RecipeCreateDto TestRecipeCreateDto = new()
+        public static readonly RecipeCreateDto TestRecipeCreateDto = new()
         {
             Name = "Какое-то название",
             Description = "Описание рецепта",
@@ -41,8 +41,7 @@ namespace Recipes.WebApi.Tests.Tests.RecipeController
             CookingTimeMin = 60,
             Portions = 5
         };
-
-
+        
         public CreateTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
@@ -61,13 +60,16 @@ namespace Recipes.WebApi.Tests.Tests.RecipeController
         [Fact]
         public async Task Post_Create_Authorized_ReturnsCreated()
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TestAccountProvider.Token);
-            
+            _client.SetAuthToken();
+
             // Act
-            var createRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             
-            // Assert
-            Assert.Equal(HttpStatusCode.Created, createRecipe.StatusCode);
+            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id=" + 
+                                                JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync()));
+            
+            detail.Should().BeEquivalentTo(TestRecipeCreateDto);
         }
     }
 }

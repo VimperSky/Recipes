@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Recipes.WebApi.Tests.Tests.AuthController
+namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
 {
     public static class UserDataProvider
     {
