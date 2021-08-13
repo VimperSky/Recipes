@@ -85,17 +85,7 @@ namespace Recipes.Application.Services.Recipes
 
             _unitOfWork.Commit();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="recipeId"></param>
-        /// <param name="formFile"></param>
-        /// <param name="userClaims"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="PermissionException"></exception>
-        /// <exception cref="ImageSavingException"></exception>
+        
         public async Task UploadImage(int recipeId, IFormFile formFile, UserClaims userClaims)
         {
             if (formFile == null)

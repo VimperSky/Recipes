@@ -42,9 +42,9 @@ namespace Recipes.WebApi.Controllers
                 var recipesPage = await _recipesService.GetRecipesPage(searchString, pageSize, page);
                 return recipesPage;
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException _)
             {
-                return Problem($"Parameter is not correct: {e.ParamName}", statusCode: 400);
+                return Problem("Такой страницы не существует", statusCode: 404);
             }
             catch (Exception e)
             {

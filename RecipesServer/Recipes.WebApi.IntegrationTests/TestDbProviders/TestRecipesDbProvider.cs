@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Recipes.Application;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
@@ -11,8 +12,9 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
         public TestRecipesDbProvider()
         {
             var configuration = new MapperConfiguration(cfg =>
-                cfg.AddMaps(typeof(Startup)));
+                cfg.AddMaps(typeof(ApplicationServicesExtensions)));
             var mapper = configuration.CreateMapper();
+            
             _detailedList = mapper.Map<RecipeDetailDto[]>(RecipeList);
             List = mapper.Map<RecipePreviewDto[]>(RecipeList);
         }
@@ -177,6 +179,7 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
         {
             foreach (var recipe in RecipeList)
                 dbContext.Recipes.Add(recipe);
+
         }
     }
 }

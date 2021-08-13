@@ -2,14 +2,17 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
+using Recipes.WebApi.IntegrationTests.Logging;
 using Recipes.WebApi.IntegrationTests.TestDbProviders;
 
 namespace Recipes.WebApi.IntegrationTests
 {
     public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
     {
+        
         private IConfiguration Configuration { get; set; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -26,12 +29,16 @@ namespace Recipes.WebApi.IntegrationTests
                 TestUserDbProvider.SetUserTokens(configuration);
             });
             
+            builder.ConfigureLogging(loggingBuilder =>
+            {
+                loggingBuilder.Services.AddSingleton<ILoggerProvider>(serviceProvider => new XUnitLoggerProvider());
+            });
+            
             builder.ConfigureServices(services =>
             {
                 using var scope = services.BuildServiceProvider().CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<RecipesDbContext>();
-                
 
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();

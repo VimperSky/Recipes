@@ -102,7 +102,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing EditRecipe\r\n" + ex);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("Произошла неизвестная ошибка.", statusCode: 400);
             }
         }
         

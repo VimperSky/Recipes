@@ -46,13 +46,12 @@ namespace Recipes.Infrastructure.Repositories
         }
 
 
-        public async Task DeleteRecipe(int id)
+        public Task DeleteRecipe(int id)
         {
-            var dbRecipe = await _recipesDbContext.Recipes.FindAsync(id);
-            if (dbRecipe == null)
-                throw new ArgumentException($"Cannot delete recipe with id: {id} because it doesn't exist in database");
-
-            _recipesDbContext.Recipes.Remove(dbRecipe);
+            var recipe = new Recipe { Id = id };
+            _recipesDbContext.Attach(recipe);
+            _recipesDbContext.Recipes.Remove(recipe);
+            return Task.CompletedTask;
         }
 
         public async Task<Recipe> GetById(int id)
