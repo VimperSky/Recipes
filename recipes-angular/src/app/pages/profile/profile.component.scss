@@ -1,0 +1,59 @@
+@use '../../shared-styles/constants';
+
+app-back-nav {
+  display: block;
+  margin-top: 80px - 22px;
+}
+
+#recipes-header {
+  h1 {
+    @include constants.default-header;
+    color: constants.$dark-black-color;
+  }
+}
+
+#profile-info {
+  position: relative;
+  display: flex;
+  padding: 60px 75px;
+
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+  border-radius: 24px;
+
+  #left-profile-block {
+    flex: 1;
+
+    .wide-mat-form-field {
+      height: 40px;
+      width: 100%;
+    }
+  }
+
+  #right-profile-block {
+    margin-left: 40px;
+    flex: 1;
+
+    #bio {
+      width: 100%;
+    }
+  }
+
+
+  .input-block-with-margin {
+    margin-top: 25px;
+  }
+
+  .edit-icon {
+    position: absolute;
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    color: rgba(145, 150, 161, 0.4);
+    z-index: 1000;
+    top: 23px;
+    right: 23px;
+  }
+}

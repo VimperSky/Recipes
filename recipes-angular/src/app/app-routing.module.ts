@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RecipesComponent} from "./pages/recipes/recipes.component";
 import {RecipeDetailComponent} from "./pages/recipe-detail/recipe-detail.component";
 import {RecipeAddEditComponent} from "./pages/recipe-add-edit/recipe-add-edit.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'recipe/detail/:id',
     component: RecipeDetailComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   },
   {
     path: '**',

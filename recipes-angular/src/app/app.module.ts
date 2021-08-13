@@ -37,6 +37,7 @@ import {JwtModule} from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
 import { AuthComponent } from './embedded-components/auth/auth/auth.component';
 import { ErrorComponent } from './embedded-components/error/error.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ErrorComponent } from './embedded-components/error/error.component';
     RegisterComponent,
     RecipeAddEditComponent,
     AuthComponent,
-    ErrorComponent
+    ErrorComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

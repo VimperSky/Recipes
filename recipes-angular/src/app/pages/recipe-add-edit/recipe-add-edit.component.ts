@@ -10,8 +10,6 @@ import {Ingredient} from "../../core/dto/recipe/ingredient";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {RecipeEdit} from "../../core/dto/recipe/recipe-edit";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
-import {ProblemDetails} from "../../core/dto/base/problem-details";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 
 @Component({

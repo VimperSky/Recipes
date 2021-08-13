@@ -2,12 +2,12 @@
 
 <ng-template #authorized>
   <div id="authorized-block" class="auth-block">
-    <button mat-button class="hello-btn profile-btn">
+    <a mat-button class="hello-btn profile-btn" [routerLink]="['/profile']">
       <button mat-fab class="account-icon-wrapper">
         <mat-icon class="account-icon">person_outline</mat-icon>
       </button>
       <span class="hello-text">Привет, {{name}}</span>
-    </button>
+    </a>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
     <button mat-icon-button id="exit-btn" (click)="logOut()">
       <mat-icon id="logout-icon">logout</mat-icon>

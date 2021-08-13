@@ -41,7 +41,7 @@
         <div class="input-block-with-margin">
           <mat-form-field id="recipe-description">
             <mat-label>Краткое описание рецепта (150 символов)</mat-label>
-            <textarea autosize [rows]="4" [maxRows]="4" matInput formControlName="recipeDescription"></textarea>
+            <textarea autosize [rows]="4" [maxRows]="4" matInput [formControl]="recipeDescription"></textarea>
           </mat-form-field>
         </div>
 
@@ -100,15 +100,14 @@
               <mat-icon>close</mat-icon>
             </button>
           </ng-container>
-
         </div>
+
         <div id="add-step-wrapper">
           <button mat-stroked-button color="accent" class="add-item-button" (click)="addStep()" type='button'>
             <mat-icon>add</mat-icon>
             <span>Добавить шаг</span>
           </button>
         </div>
-
       </div>
     </div>
   </form>
