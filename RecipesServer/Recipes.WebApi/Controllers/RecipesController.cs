@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Exceptions;
 using Recipes.Application.Services.Recipes;
 
 namespace Recipes.WebApi.Controllers
@@ -42,15 +43,15 @@ namespace Recipes.WebApi.Controllers
                 var recipesPage = await _recipesService.GetRecipesPage(searchString, pageSize, page);
                 return recipesPage;
             }
-            catch (ArgumentOutOfRangeException _)
+            catch (ResourceNotFoundException ex)
             {
-                return Problem("Такой страницы не существует", statusCode: 404);
+                return Problem(ex.Value, statusCode: 404);
             }
             catch (Exception e)
             {
                 _logger.LogError("An unhandled exception happened while processing GetRecipes with parameters:\r\n" +
                                  $"pageSize: {pageSize}, page: {page}, searchString: {searchString}. Error text:\r\n" + e);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
     }

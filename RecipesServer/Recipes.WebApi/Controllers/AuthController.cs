@@ -48,7 +48,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception e)
             {
                 _logger.LogError("An unhandled exception happened while processing Register\r\n" + e);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
         
@@ -77,7 +77,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception e)
             {
                 _logger.LogError("An unhandled exception happened while processing Login\r\n" + e);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
     }

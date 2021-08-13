@@ -59,12 +59,17 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
             try
             {
                 var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetPermissions());
                 return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return Problem(ex.Value, statusCode: 404);
             }
             catch (PermissionException ex)
             {
@@ -73,7 +78,7 @@ namespace Recipes.WebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing CreateRecipe\r\n" + ex);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
         
@@ -88,6 +93,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> EditRecipe([FromBody]RecipeEditDto recipeEditDto)
         {
             try
@@ -95,14 +101,18 @@ namespace Recipes.WebApi.Controllers
                 await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetPermissions());
                 return Ok();
             }
+            catch (ResourceNotFoundException ex)
+            {
+                return Problem(ex.Value, statusCode: 404);
+            }
             catch (PermissionException ex)
             {
-                return Problem(ex.Value, statusCode:403);
+                return Problem(ex.Value, statusCode: 403);
             }
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing EditRecipe\r\n" + ex);
-                return Problem("Произошла неизвестная ошибка.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
         
@@ -118,6 +128,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteRecipe([FromQuery, Required]int id)
         {
             try
@@ -125,14 +136,18 @@ namespace Recipes.WebApi.Controllers
                 await _recipesService.DeleteRecipe(id, HttpContext.User.GetPermissions());
                 return Ok();
             }
+            catch (ResourceNotFoundException ex)
+            {
+                return Problem(ex.Value, statusCode: 404);
+            }
             catch (PermissionException ex)
             {
-                return Problem(ex.Value, statusCode:403);
+                return Problem(ex.Value, statusCode: 403);
             }
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing DeleteRecipe\r\n" + ex);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
 
@@ -142,6 +157,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> UploadImage([FromForm]UploadImageDto uploadImageDtoDto)
         {
             try
@@ -149,16 +165,19 @@ namespace Recipes.WebApi.Controllers
                 await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File, HttpContext.User.GetPermissions());
                 return Ok();
             }
+            catch (ResourceNotFoundException ex)
+            {
+                return Problem(ex.Value, statusCode: 404);
+            }
             catch (PermissionException ex)
             {
-                return Problem(ex.Value, statusCode:403);
+                return Problem(ex.Value, statusCode: 403);
             }
             catch (Exception ex)
             {
                 _logger.LogError("An exception happened while processing UploadImage\r\n" + ex);
-                return Problem("Unknown error happened while processing your request.", statusCode: 400);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
             }
         }
-        
     }
 }
