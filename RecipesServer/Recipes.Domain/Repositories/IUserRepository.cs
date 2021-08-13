@@ -1,11 +1,12 @@
-﻿using Recipes.Domain.Models;
+﻿using System.Threading.Tasks;
+using Recipes.Domain.Models;
 
 namespace Recipes.Domain.Repositories
 {
     public interface IUserRepository
     {
-        void CreateUser(string login, string passwordHash, string passwordSalt, string name);
+        Task<User> CreateUser(string login, string passwordHash, string passwordSalt, string name);
 
-        User GetUser(string login);
+        Task<User> GetUser(string login);
     }
 }

@@ -7,7 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {FormErrorsHandlingService} from "../../../core/services/tools/form-errors-handling.service";
+import {ErrorHandlingService} from "../../../core/services/tools/error-handling.service";
 
 const serverErrors: Record<string, string> = {
   'invalidLoginPassword': "Неверная пара логин-пароль.",
@@ -17,7 +17,7 @@ const serverErrors: Record<string, string> = {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/auth-styles.scss', './login.component.scss']
+  styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
               private authService: AuthService,
-              private authManager: AuthTokenManagerService,
+              private tokenManagerService: AuthTokenManagerService,
               private snackBar: MatSnackBar,
-              private formErrorHandlingService: FormErrorsHandlingService,
+              private errorHandlingService: ErrorHandlingService,
               fb: FormBuilder) {
     this.loginForm = fb.group( {
       login: this.login,
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let loginDto: Login = {login: this.login.value, password: this.password.value }
       this.authService.login(loginDto).subscribe((token: string) => {
-        this.authManager.setToken(token);
+        this.tokenManagerService.setToken(token);
         this.dialogRef.close()
         this.snackBar.open('Авторизация прошла успешно!', 'ОК', {
           duration: 3000
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
             ['Password', this.password]
           ]);
 
-          this.formErrorHandlingService.setValidationErrors(error, formControlsMap);
+          this.errorHandlingService.setValidationErrors(error, formControlsMap);
         }
         else if (error.status == 401) {
           this.loginForm.setErrors({invalidLoginPassword: true})

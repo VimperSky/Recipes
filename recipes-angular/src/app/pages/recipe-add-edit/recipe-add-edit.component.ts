@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {FormArray, FormBuilder, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
 import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
-import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
 import {environment} from "../../../environments/environment";
+import {RecipeCreate} from "../../core/dto/recipe/recipe-create";
+import {Ingredient} from "../../core/dto/recipe/ingredient";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {HttpErrorResponse} from "@angular/common/http";
+import {RecipeEdit} from "../../core/dto/recipe/recipe-edit";
+import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {ProblemDetails} from "../../core/dto/base/problem-details";
+import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -14,7 +21,8 @@ import {environment} from "../../../environments/environment";
 })
 export class RecipeAddEditComponent implements OnInit {
 
-  image: string | SafeResourceUrl | null = null;
+  image: string | SafeResourceUrl | undefined;
+  private file: File | undefined;
   readonly acceptImageTypes: string = "image/png, image/jpeg";
 
   recipeName = this.fb.control('', [
@@ -39,16 +47,23 @@ export class RecipeAddEditComponent implements OnInit {
 
   id: number | undefined;
 
+  get isEdit(): boolean {
+    return this.id != null;
+  }
+
   constructor(private sanitizer: DomSanitizer,
               private fb: FormBuilder,
               private recipeService: RecipeService,
-              route: ActivatedRoute) {
-    this.id = route.snapshot.params['id'];
+              private snackBar: MatSnackBar,
+              private router: Router,
+              private errorHandlingService: ErrorHandlingService,
+              activatedRoute: ActivatedRoute) {
+    this.id = activatedRoute.snapshot.params['id'];
   }
 
   ngOnInit(): void {
-    if (this.id) {
-      this.recipeService.detail(this.id).subscribe((result: RecipeDetail) => {
+    if (this.isEdit) {
+      this.recipeService.detail(this.id!).subscribe((result: RecipeDetail) => {
 
         this.recipeName.setValue(result.name);
         this.recipeDescription.setValue(result.description);
@@ -80,6 +95,7 @@ export class RecipeAddEditComponent implements OnInit {
     if (!file)
       return;
 
+    this.file = file;
     const imagePath = URL.createObjectURL(file);
     this.image = this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
   }
@@ -87,8 +103,17 @@ export class RecipeAddEditComponent implements OnInit {
   deleteImage() {
     if (this.image)
     {
-      this.image = null;
+      this.image = undefined;
     }
+  }
+
+  private finalizeRecipeProcessing(recipeId: number | undefined = undefined) {
+    this.snackBar.open(!recipeId ? 'Рецепт был успешно отредактирован!' : 'Рецепт был успешно создан!',
+      'ОК', {duration: 5000
+    });
+    if (!recipeId)
+      recipeId = this.id;
+    this.router.navigate([`/recipe/detail/${recipeId}`])
   }
 
   publish() {
@@ -96,12 +121,77 @@ export class RecipeAddEditComponent implements OnInit {
     if (this.recipeForm.invalid)
       return;
 
-    // TODO: Добавить взаимодействие с сервером, следующая итерация фичи.
+    let steps: string[] = [];
+    for (let step of this.steps.controls) {
+      steps.push(step.value.value);
+    }
+
+    let ingredients: Ingredient[] = [];
+    for (let ingredient of this.ingredients.controls) {
+      let ingredientDto: Ingredient = {
+        header: ingredient.value.header,
+        value: ingredient.value.value
+      }
+      ingredients.push(ingredientDto);
+    }
+
+    if (this.isEdit) {
+      const dto: RecipeEdit = {
+        id: this.id as number,
+        name: this.recipeName.value,
+        description: this.recipeDescription.value,
+        steps: steps,
+        ingredients: ingredients,
+        cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
+        portions: this.portions.value == "" ? 0: this.portions.value
+      };
+
+      this.recipeService.edit(dto).subscribe(() => {
+        if (this.file) {
+          this.recipeService.uploadImage(this.id as number, this.file).subscribe(() => {
+            this.finalizeRecipeProcessing();
+          }, (error: HttpErrorResponse) => {
+            this.errorHandlingService.openErrorDialog(error, "При загрузке изображения произошла неопознанная ошибка.");
+          });
+        }
+        else {
+          this.finalizeRecipeProcessing();
+        }
+
+      }, (error: HttpErrorResponse) => {
+        this.errorHandlingService.openErrorDialog(error, "При редактировании рецепта произошла неопознанная ошибка.");
+      })
+    }
+    else {
+      const dto: RecipeCreate = {
+        name: this.recipeName.value,
+        description: this.recipeDescription.value,
+        steps: steps,
+        ingredients: ingredients,
+        cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
+        portions: this.portions.value == "" ? 0: this.portions.value
+      };
+
+      this.recipeService.create(dto).subscribe((id: number) => {
+        if (this.file)
+          this.recipeService.uploadImage(id, this.file).subscribe(() => {
+            this.finalizeRecipeProcessing(id);
+          }, (error: HttpErrorResponse) => {
+            this.errorHandlingService.openErrorDialog(error, "При загрузке изображения произошла неопознанная ошибка.");
+          });
+        else {
+          this.finalizeRecipeProcessing(id);
+        }
+
+      }, (error: HttpErrorResponse) => {
+        this.errorHandlingService.openErrorDialog(error, "При создании рецепта произошла неопознанная ошибка.");
+      })
+    }
   }
 
   addIngredient(header: string = "", value: string = "") {
     const ingredientBlock = this.fb.group({
-      header: this.fb.control(header, [Validators.required, Validators.maxLength(24)]),
+      header: this.fb.control(header, [Validators.maxLength(24)]),
       value: this.fb.control(value, [Validators.required, Validators.maxLength(500)]),
     })
     this.ingredients.push(ingredientBlock)

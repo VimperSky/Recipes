@@ -2,21 +2,19 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.SpaFallback;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Recipes.Application;
+using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
-using Recipes.WebApi.AuthFeatures;
 
 namespace Recipes.WebApi
 {
@@ -32,44 +30,23 @@ namespace Recipes.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Application
+            services.AddAuthorization(Configuration.GetSection(JwtSettings.Name));
+            services.AddApplicationDependencies();
+            
+            // Infrastructure
+            services.AddDatabase(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddInfrastructureDependencies();
+            
+            // Web Api
             services.AddLogging();
             services.AddSpaFallback();
-            
-            services.ConfigureInfrastructureServices();
-            services.ConfigureDatabase(Configuration.GetConnectionString("DefaultConnection"));
-
             services.AddControllers();
             services.AddFluentValidation(x =>
             {
                 x.RegisterValidatorsFromAssemblyContaining<Startup>();
             });
             
-            
-            var jwtSection = Configuration.GetSection(JwtSettings.Name);
-            services.Configure<JwtSettings>(jwtSection);
-            services.AddScoped<AuthService>();
-            var jwtSettings = new JwtSettings();
-            jwtSection.Bind(jwtSettings);
-
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings.ValidIssuer,
-                    ValidAudience = jwtSettings.ValidAudience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecurityKey))
-                };
-            });
-            services.AddScoped<JwtHandler>();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Recipes.WebApi", Version = "v1"});
@@ -80,8 +57,6 @@ namespace Recipes.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
             
-            services.AddAutoMapper(typeof(Startup));
-                
             services.AddCors();
         }
 

@@ -1,0 +1,19 @@
+<button mat-icon-button class="close-icon" mat-dialog-close>
+  <mat-icon>close</mat-icon>
+</button>
+
+<div class="content-container">
+  <h1 mat-dialog-title>Войдите в профиль</h1>
+  <div class="content">
+    <div mat-dialog-content>
+      <p>Добавлять рецепты могут только зарегистрированные пользователи.</p>
+    </div>
+
+    <div mat-dialog-actions>
+      <div class="main-buttons-block">
+        <button mat-stroked-button class="action-button submit-button" (click)="logIn()">Войти</button>
+        <button mat-stroked-button class="action-button cancel-button" (click)="register()">Регистрация</button>
+      </div>
+    </div>
+  </div>
+</div>

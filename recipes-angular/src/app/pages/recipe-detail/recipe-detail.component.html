@@ -3,10 +3,10 @@
   <div id="recipes-header">
     <h1>{{recipeDetail.name}}</h1>
     <div id="right-buttons-block">
-      <button mat-fab id="delete-recipe-button" (click)="delete()">
+      <button *ngIf="isAvailableToModify" mat-icon-button id="delete-recipe-button" (click)="delete()">
         <mat-icon>delete_outline</mat-icon>
       </button>
-      <button mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
+      <button *ngIf="isAvailableToModify" mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
               type="button">
         <mat-icon>edit</mat-icon>
         <span>Редактировать</span>
@@ -29,6 +29,7 @@
         <h3 id="step-header">Шаг {{idx + 1}}</h3>
         <p id="step-value">{{val}}</p>
       </div>
+      <p id="bon-appetit-text">Приятного аппетита!</p>
     </div>
   </div>
 </div>

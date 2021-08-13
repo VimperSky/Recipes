@@ -19,7 +19,6 @@ namespace Recipes.Infrastructure
             try
             {
                 var context = services.GetRequiredService<RecipesDbContext>();
-                context.Database.Migrate();
                 FillWithStartData(context);
             }
             catch (Exception ex)
@@ -36,6 +35,8 @@ namespace Recipes.Infrastructure
                 return;   // DB has been seeded
             }
 
+            var baseImagesPath = "default_images/";
+
             var recipes = new Recipe[]
             {
                 new()
@@ -45,7 +46,7 @@ namespace Recipes.Infrastructure
                                   "Советую подавать его порционно в красивых бокалах, " +
                                   "украсив взбитыми сливками, свежими ягодами и мятой.",
                     Portions = 5,
-                    ImagePath = "r1.png",
+                    ImagePath = $"{baseImagesPath}/r1.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -68,7 +69,7 @@ namespace Recipes.Infrastructure
                         "Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник " +
                         "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -95,7 +96,7 @@ namespace Recipes.Infrastructure
                     Name = "Мясные фрикадельки", 
                     Description = "Мясные фрикадельки в томатном соусе - несложное и вкусное блюдо, которым можно порадовать своих близких.",
                     Portions = 4,
-                    ImagePath = "r2.png",
+                    ImagePath = $"{baseImagesPath}/r2.png",
                     CookingTimeMin = 90,
                     Steps = new [] 
                     {
@@ -110,7 +111,7 @@ namespace Recipes.Infrastructure
                         "через 5 минут фрикадельки вынуть на решето, дать им обсохнуть, потом опустить в суп," +
                         " прокипятить и подавать к столу."
                     }, 
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -128,7 +129,7 @@ namespace Recipes.Infrastructure
                     Description = "Панкейки: меньше, чем блины, но больше, чем оладьи. Основное отличие — в тесте, " +
                                   "оно должно быть воздушным, чтобы панкейки не растекались по сковородке...",
                     Portions = 3,
-                    ImagePath = "r3.png",
+                    ImagePath = $"{baseImagesPath}/r3.png",
                     CookingTimeMin = 40,
                     Steps = new [] 
                     {
@@ -141,7 +142,7 @@ namespace Recipes.Infrastructure
                         
                         "Наливаем растительное масло (25 г (~2 ст. ложки) и снова хорошенько перемешиваем.",
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -157,7 +158,7 @@ namespace Recipes.Infrastructure
                     Description = "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
                                   "что будет особенно актуально для сладкоежек, соблюдающих диету.",
                     Portions = 2,
-                    ImagePath = "r4.png",
+                    ImagePath = $"{baseImagesPath}/r4.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -171,7 +172,7 @@ namespace Recipes.Infrastructure
 
                         "Готовое мороженое выкладываем в чашку, миску..."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -186,7 +187,7 @@ namespace Recipes.Infrastructure
                     Description = "Приготовить нежный и воздушный бисквит совсем несложно! Бисквит по этому рецепту" +
                                   " я готовлю уже достаточно давно и он меня не подводил",
                     Portions = 6,
-                    ImagePath = "r5.jpg",
+                    ImagePath = $"{baseImagesPath}/r5.jpg",
                     CookingTimeMin = 400,
                     Steps = new [] 
                     {
@@ -208,14 +209,14 @@ namespace Recipes.Infrastructure
                         "И взбиваем их до твёрдых пиков. Готовность белков проверяем очень просто - " +
                         "наклоняем миску с белками в сторону и, если белковая масса не стремится убежать, значит всё готово.."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
                             Header = "", 
                             Value = "Куриные яйца 4 шт. \nМука 100 гр.\nСахар 150гр.\nВанильный сахар 1 чайн. л."
                         },
-                    }
+                    },
                 },
             };
             

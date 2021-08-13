@@ -1,0 +1,27 @@
+@use '../../shared-styles/constants';
+
+.content-container {
+  padding: 20px;
+  width: 400px;
+  height: 200px;
+  text-align: center;
+
+  p {
+    @include constants.default-text;
+    height: 65px;
+  }
+
+  .mat-dialog-actions {
+
+    .main-buttons-block {
+      display: block !important;
+      text-align: center !important;
+
+      .submit-button {
+        width: 100%;
+      }
+    }
+
+
+  }
+}

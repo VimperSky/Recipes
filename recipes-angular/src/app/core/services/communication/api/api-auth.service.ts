@@ -22,8 +22,8 @@ export class ApiAuthService extends AuthService {
     super();
   }
 
-  register(register: Register): Observable<void> {
-    return this.http.post<void>(environment.backendUrl + basePath + "/register", register, httpOptions);
+  register(register: Register): Observable<string> {
+    return this.http.post<string>(environment.backendUrl + basePath + "/register", register, httpOptions);
   }
 
   login(login: Login): Observable<string> {

@@ -2,18 +2,15 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Recipes.WebApi.AuthFeatures.Models;
+using Recipes.Application.Exceptions;
 using Recipes.WebApi.DTO.Auth;
 using Xunit;
+using static Recipes.WebApi.IntegrationTests.Tests.AuthController.UserDataProvider;
 
-using static Recipes.WebApi.Tests.Tests.AuthController.UserDataProvider;
-
-namespace Recipes.WebApi.Tests.Tests.AuthController
+namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
 {    
-    [Collection("Tests")]
     public class RegisterTests: IClassFixture<TestWebFactory<Startup>>
     {
         private readonly HttpClient _client;

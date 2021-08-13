@@ -2,7 +2,7 @@
 {
     public class User
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
         public string Login { get; init; }
         public string PasswordHash { get; init; }
         public string PasswordSalt { get; init; }

@@ -9,7 +9,7 @@ namespace Recipes.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Recipe> builder)
         {
             builder.ToTable("recipe");
-            builder.OwnsMany(x => x.IngredientBlocks, 
+            builder.OwnsMany(x => x.Ingredients, 
                 y => y.ToTable("recipe_ingredient_block"));
 
             builder.Property(x => x.Name).IsRequired();

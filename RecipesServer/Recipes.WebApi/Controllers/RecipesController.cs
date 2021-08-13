@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using AutoMapper;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Domain;
-using Recipes.Domain.Repositories;
-using Recipes.WebApi.DTO;
-using Recipes.WebApi.DTO.Recipe;
+using Microsoft.Extensions.Logging;
+using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Exceptions;
+using Recipes.Application.Services.Recipes;
 
 namespace Recipes.WebApi.Controllers
 {
@@ -15,15 +15,13 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class RecipesController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IRecipesRepository _recipesRepository;
-        private readonly IMapper _mapper;
+        private readonly ILogger<RecipesController> _logger;
+        private readonly IRecipesService _recipesService;
 
-        public RecipesController(IUnitOfWork unitOfWork, IRecipesRepository recipesRepository, IMapper mapper)
+        public RecipesController(ILogger<RecipesController> logger, IRecipesService recipesService)
         {
-            _unitOfWork = unitOfWork;
-            _recipesRepository = recipesRepository;
-            _mapper = mapper;
+            _logger = logger;
+            _recipesService = recipesService;
         }
         
         /// <summary>
@@ -37,22 +35,24 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<RecipesPageDto> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
+        public async Task<ActionResult<RecipesPageDto>> GetRecipes([FromQuery][Required, Range(1, int.MaxValue)]int pageSize, 
             [FromQuery][Range(1, int.MaxValue)]int page = 1, [FromQuery]string searchString = "")
         {
-            var pageCount = _recipesRepository.GetPagesCount(pageSize, searchString);
-            if (page > 1 && page > pageCount)
-                return NotFound();
-
-            var recipes = _recipesRepository.GetPage(page, pageSize, searchString);
-
-            var recipesPage = new RecipesPageDto
+            try
             {
-                Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
-                PageCount = pageCount
-            };
-            
-            return recipesPage;
+                var recipesPage = await _recipesService.GetRecipesPage(searchString, pageSize, page);
+                return recipesPage;
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return Problem(ex.Value, statusCode: 404);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An unhandled exception happened while processing GetRecipes with parameters:\r\n" +
+                                 $"pageSize: {pageSize}, page: {page}, searchString: {searchString}. Error text:\r\n" + e);
+                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
+            }
         }
     }
 }

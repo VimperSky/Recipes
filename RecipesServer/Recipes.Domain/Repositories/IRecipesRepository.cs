@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Recipes.Domain.Models;
 
 namespace Recipes.Domain.Repositories
 {
     public interface IRecipesRepository
     {
-        IEnumerable<Recipe> GetPage(int page, int pageSize, string searchString);
+        Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems);
 
-        int GetPagesCount(int pageSize, string searchString);
+        Task<int> GetRecipesCount(string searchString);
+
+        Task<Recipe> AddRecipe(Recipe recipe);
         
-        Recipe GetById(int id);
+        Task DeleteRecipe(int id);
+        
+        Task<Recipe> GetById(int id);
     }
 }

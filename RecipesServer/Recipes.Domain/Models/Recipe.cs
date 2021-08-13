@@ -4,17 +4,22 @@ namespace Recipes.Domain.Models
 {
     public class Recipe
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
         
-        public string Name { get; init; }
-        public string Description { get; init; }
-        public string ImagePath { get; init; }
+        public User Author { get; set; }
+        
+        public int? AuthorId { get; set; }
+        
+        public string ImagePath { get; set; }
 
-        public ushort CookingTimeMin { get; init; }
-        public ushort Portions { get; init; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        public string[] Steps { get; init; } = System.Array.Empty<string>();
+        public ushort CookingTimeMin { get; set; }
+        public ushort Portions { get; set; }
 
-        public ICollection<RecipeIngredientBlock> IngredientBlocks { get; init; } = new List<RecipeIngredientBlock>();
+        public string[] Steps { get; set; } = System.Array.Empty<string>();
+
+        public ICollection<RecipeIngredientsBlock> Ingredients { get; set; } = new List<RecipeIngredientsBlock>();
     }
 }

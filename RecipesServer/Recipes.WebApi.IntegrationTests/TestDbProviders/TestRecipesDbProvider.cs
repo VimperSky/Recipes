@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Recipes.Application;
+using Recipes.Application.DTOs.Recipe;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
-using Recipes.WebApi.DTO.Recipe;
 
-namespace Recipes.WebApi.Tests.TestDbProviders
+namespace Recipes.WebApi.IntegrationTests.TestDbProviders
 {
     public class TestRecipesDbProvider
     {
         public TestRecipesDbProvider()
         {
             var configuration = new MapperConfiguration(cfg =>
-                cfg.AddMaps(typeof(Startup)));
+                cfg.AddMaps(typeof(ApplicationServicesExtensions)));
             var mapper = configuration.CreateMapper();
+            
             _detailedList = mapper.Map<RecipeDetailDto[]>(RecipeList);
             List = mapper.Map<RecipePreviewDto[]>(RecipeList);
         }
-
+        
         private readonly RecipeDetailDto[] _detailedList;
 
         public RecipeDetailDto Detail(int id)
@@ -26,6 +28,8 @@ namespace Recipes.WebApi.Tests.TestDbProviders
         
         public readonly RecipePreviewDto[] List;
 
+
+        private const string BaseImagesPath = "default_images/";
         
         private static readonly Recipe[] RecipeList =  {
                 new()
@@ -35,7 +39,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                                   "Советую подавать его порционно в красивых бокалах, " +
                                   "украсив взбитыми сливками, свежими ягодами и мятой.",
                     Portions = 5,
-                    ImagePath = "r1.png",
+                    ImagePath = $"{BaseImagesPath}/r1.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -58,7 +62,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                         "Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник " +
                         "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                     },
-                    IngredientBlocks = new List<RecipeIngredientBlock>
+                    Ingredients = new List<RecipeIngredientsBlock>
                     {
                         new()
                         {
@@ -85,7 +89,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Name = "Мясные фрикадельки", 
                     Description = "Мясные фрикадельки в томатном соусе - несложное и вкусное блюдо, которым можно порадовать своих близких.",
                     Portions = 4,
-                    ImagePath = "r2.png",
+                    ImagePath = $"{BaseImagesPath}/r2.png",
                     CookingTimeMin = 90,
                     Steps = new [] 
                     {
@@ -115,7 +119,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Description = "Панкейки: меньше, чем блины, но больше, чем оладьи. Основное отличие — в тесте, " +
                                   "оно должно быть воздушным, чтобы панкейки не растекались по сковородке...",
                     Portions = 3,
-                    ImagePath = "r3.png",
+                    ImagePath = $"{BaseImagesPath}/r3.png",
                     CookingTimeMin = 40,
                     Steps = new [] 
                     {
@@ -145,7 +149,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
                     Description = "Йогуртовое мороженое сочетает в себе нежный вкус и низкую калорийность, " +
                                   "что будет особенно актуально для сладкоежек, соблюдающих диету.",
                     Portions = 2,
-                    ImagePath = "r3.png",
+                    ImagePath = $"{BaseImagesPath}/r4.png",
                     CookingTimeMin = 35,
                     Steps = new [] 
                     {
@@ -175,6 +179,7 @@ namespace Recipes.WebApi.Tests.TestDbProviders
         {
             foreach (var recipe in RecipeList)
                 dbContext.Recipes.Add(recipe);
+
         }
     }
 }

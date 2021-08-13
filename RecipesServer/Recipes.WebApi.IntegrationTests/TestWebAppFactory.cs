@@ -2,13 +2,17 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
-using Recipes.WebApi.Tests.TestDbProviders;
+using Recipes.WebApi.IntegrationTests.Logging;
+using Recipes.WebApi.IntegrationTests.TestDbProviders;
 
-namespace Recipes.WebApi.Tests
+namespace Recipes.WebApi.IntegrationTests
 {
     public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
     {
+        
         private IConfiguration Configuration { get; set; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -20,8 +24,16 @@ namespace Recipes.WebApi.Tests
                     .Build();
                 
                 config.AddConfiguration(Configuration);
+                
+                var configuration = Configuration.GetSection(JwtSettings.Name);
+                TestUserDbProvider.SetUserTokens(configuration);
             });
-
+            
+            builder.ConfigureLogging(loggingBuilder =>
+            {
+                loggingBuilder.Services.AddSingleton<ILoggerProvider>(serviceProvider => new XUnitLoggerProvider());
+            });
+            
             builder.ConfigureServices(services =>
             {
                 using var scope = services.BuildServiceProvider().CreateScope();
@@ -32,8 +44,10 @@ namespace Recipes.WebApi.Tests
                 db.Database.EnsureCreated();
                 
                 TestRecipesDbProvider.FillDbWithData(db);
+                TestUserDbProvider.FillDbWithData(db);
                 db.SaveChanges();
             });
+            
         }
     }
 }

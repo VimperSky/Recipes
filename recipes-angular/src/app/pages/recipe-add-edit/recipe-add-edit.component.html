@@ -1,9 +1,9 @@
 <div id="content">
   <app-back-nav></app-back-nav>
   <div id="recipes-header">
-    <h1>Добавить новый рецепт</h1>
+    <h1>{{isEdit? "Редактировать рецепт" : "Добавить новый рецепт"}}</h1>
     <button mat-flat-button color="accent" id="publish-recipe-button" type='submit' (click)="publish()">
-      Опубликовать
+      {{isEdit ? "Внести изменения": "Опубликовать"}}
     </button>
   </div>
 
@@ -12,7 +12,7 @@
     <div id="primary-block">
       <div id="image-block" *ngIf="image == null; else imageUploaded">
         <button mat-button id="input-div-clickable-wrapper" (click)="fileUpload.click()">
-          <input type="file" class="file-input" [accept]="acceptImageTypes" (change)="onFileSelected($event)" #fileUpload>
+          <input required type="file" class="file-input" [accept]="acceptImageTypes" (change)="onFileSelected($event)" #fileUpload>
           <span id="input-div">
           <mat-icon id="upload-icon">cloud_download</mat-icon>
           <span id="upload-text">Загрузите фото готового блюда</span>

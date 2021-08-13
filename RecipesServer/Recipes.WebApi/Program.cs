@@ -13,7 +13,6 @@ namespace Recipes.WebApi
             DbInitializer.CreateDbIfNotExists(host);
 
             host.Run();
-            
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
