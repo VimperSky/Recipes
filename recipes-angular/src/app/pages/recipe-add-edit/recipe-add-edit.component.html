@@ -1,5 +1,5 @@
-<div id="content">
-  <app-back-nav></app-back-nav>
+<app-back-nav></app-back-nav>
+<ng-container>
   <div id="recipes-header">
     <h1>{{isEdit? "Редактировать рецепт" : "Добавить новый рецепт"}}</h1>
     <button mat-flat-button color="accent" id="publish-recipe-button" type='submit' (click)="publish()">
@@ -7,16 +7,15 @@
     </button>
   </div>
 
-
   <form [formGroup]="recipeForm">
     <div id="primary-block">
       <div id="image-block" *ngIf="image == null; else imageUploaded">
         <button mat-button id="input-div-clickable-wrapper" (click)="fileUpload.click()">
           <input required type="file" class="file-input" [accept]="acceptImageTypes" (change)="onFileSelected($event)" #fileUpload>
           <span id="input-div">
-          <mat-icon id="upload-icon">cloud_download</mat-icon>
-          <span id="upload-text">Загрузите фото готового блюда</span>
-        </span>
+        <mat-icon id="upload-icon">cloud_download</mat-icon>
+        <span id="upload-text">Загрузите фото готового блюда</span>
+      </span>
         </button>
       </div>
 
@@ -54,7 +53,7 @@
 
           <mat-form-field id="second-mat-form-field" class="line-form-field">
             <mat-label>Порций в блюде</mat-label>
-              <input type="number" matInput [formControl]="portions">
+            <input type="number" matInput [formControl]="portions">
           </mat-form-field>
           <span>Персон</span>
         </div>
@@ -112,4 +111,4 @@
     </div>
   </form>
 
-</div>
+</ng-container>

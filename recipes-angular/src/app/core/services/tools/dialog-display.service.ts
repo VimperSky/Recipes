@@ -18,9 +18,12 @@ export class DialogDisplayService {
     });
   }
 
-  openAuthDialog() {
+  openAuthDialog(text: string | undefined = undefined) {
     this.dialog.open(AuthComponent, {
-      panelClass: 'auth-dialog-container'
+      panelClass: 'auth-dialog-container',
+      data: {
+        text: text
+      }
     });
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="recipeDetail">
+<ng-container *ngIf="recipeDetail">
   <app-back-nav></app-back-nav>
   <div id="recipes-header">
     <h1>{{recipeDetail.name}}</h1>
@@ -31,4 +31,4 @@
       <p id="bon-appetit-text">Приятного аппетита!</p>
     </div>
   </div>
-</div>
+</ng-container>

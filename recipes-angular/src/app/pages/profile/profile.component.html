@@ -1,60 +1,63 @@
 <app-back-nav></app-back-nav>
-<div id="recipes-header">
-  <h1>Мой профиль</h1>
-</div>
 
-<div id="profile-info" [formGroup]="profileForm">
-  <div id="left-profile-block">
-    <div>
-      <mat-form-field class="wide-mat-form-field">
-        <mat-label>Имя</mat-label>
-        <input required type="text" matInput [formControl]="name">
-      </mat-form-field>
-    </div>
-
-    <div class="input-block-with-margin">
-      <mat-form-field class="wide-mat-form-field">
-        <mat-label>Логин</mat-label>
-        <input required type="text" matInput [formControl]="login">
-      </mat-form-field>
-    </div>
-
-    <div class="input-block-with-margin">
-      <mat-form-field class="wide-mat-form-field">
-        <mat-label>Пароль</mat-label>
-        <input required type="password" matInput [formControl]="password">
-        <mat-hint>Минимум 8 символов</mat-hint>
-      </mat-form-field>
-    </div>
+<ng-container>
+  <div id="recipes-header">
+    <h1>Мой профиль</h1>
   </div>
 
-  <div id="right-profile-block">
-    <div>
-      <mat-form-field id="bio" disabled="true">
-        <mat-label>Напишите немного о себе</mat-label>
-        <textarea autosize [rows]="6" [maxRows]="6" matInput [formControl]="bio"></textarea>
-      </mat-form-field>
+  <div id="profile-info" [formGroup]="profileForm">
+    <div id="left-profile-block">
+      <div>
+        <mat-form-field class="wide-mat-form-field">
+          <mat-label>Имя</mat-label>
+          <input required type="text" matInput [formControl]="name">
+        </mat-form-field>
+      </div>
+
+      <div class="input-block-with-margin">
+        <mat-form-field class="wide-mat-form-field">
+          <mat-label>Логин</mat-label>
+          <input required type="text" matInput [formControl]="login">
+        </mat-form-field>
+      </div>
+
+      <div class="input-block-with-margin">
+        <mat-form-field class="wide-mat-form-field">
+          <mat-label>Пароль</mat-label>
+          <input required type="password" matInput [formControl]="password">
+          <mat-hint>Минимум 8 символов</mat-hint>
+        </mat-form-field>
+      </div>
     </div>
-  </div>
 
-  <button *ngIf="!isEditMode else applyChangesButton" mat-icon-button class="edit-icon" (click)="editProfile()">
-    <mat-icon>edit</mat-icon>
-  </button>
+    <div id="right-profile-block">
+      <div>
+        <mat-form-field id="bio" disabled="true">
+          <mat-label>Напишите немного о себе</mat-label>
+          <textarea autosize [rows]="6" [maxRows]="6" matInput [formControl]="bio"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
 
-  <ng-template #applyChangesButton>
-    <button mat-icon-button class="edit-icon edit-icon-approve" (click)="applyChanges()">
-      <mat-icon>done</mat-icon>
+    <button *ngIf="!isEditMode else applyChangesButton" mat-icon-button class="edit-icon" (click)="editProfile()">
+      <mat-icon>edit</mat-icon>
     </button>
-  </ng-template>
 
-</div>
+    <ng-template #applyChangesButton>
+      <button mat-icon-button class="edit-icon edit-icon-approve" (click)="applyChanges()">
+        <mat-icon>done</mat-icon>
+      </button>
+    </ng-template>
 
-<div id="overview-block">
-  <app-activity-overview></app-activity-overview>
-</div>
+  </div>
+
+  <div id="overview-block">
+    <app-activity-overview></app-activity-overview>
+  </div>
 
 
-<div id="my-recipes-block">
-  <h2>Мои рецепты</h2>
-  <app-recipe-list></app-recipe-list>
-</div>
+  <div id="my-recipes-block">
+    <h2>Мои рецепты</h2>
+    <app-recipe-list></app-recipe-list>
+  </div>
+</ng-container>

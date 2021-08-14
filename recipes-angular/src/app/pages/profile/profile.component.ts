@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
+import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 
 @Component({
   selector: 'app-profile',

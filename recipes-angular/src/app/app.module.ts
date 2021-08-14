@@ -34,11 +34,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
 import {AutosizeModule} from "ngx-autosize";
 import {JwtModule} from "@auth0/angular-jwt";
-import {environment} from "../environments/environment";
 import { AuthComponent } from './embedded-components/auth/auth/auth.component';
 import { ErrorComponent } from './embedded-components/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
+import {MainComponent} from "./pages/main/main.component";
 
 
 @NgModule({
@@ -59,7 +59,8 @@ import { ActivityOverviewComponent } from './embedded-components/activity-overvi
     AuthComponent,
     ErrorComponent,
     ProfileComponent,
-    ActivityOverviewComponent
+    ActivityOverviewComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

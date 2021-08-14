@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
 import {LoginComponent} from "../login/login.component";
+
+export interface AuthDialogData {
+  text: string | undefined;
+}
 
 @Component({
   selector: 'app-auth',
@@ -10,9 +14,21 @@ import {LoginComponent} from "../login/login.component";
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<AuthComponent>) { }
+  text: string = "Добавлять рецепты могут только зарегистрированные пользователи.";
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthDialogData,
+              private dialog: MatDialog,
+              private dialogRef: MatDialogRef<AuthComponent>) {
+    if (data == null ) {
+      return;
+    }
+
+    if (data.text != null)
+      this.text = data.text;
+  }
 
   ngOnInit(): void {
+
   }
 
 
