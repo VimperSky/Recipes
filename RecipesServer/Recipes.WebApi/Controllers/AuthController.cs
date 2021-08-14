@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Recipes.Application.Exceptions;
 using Recipes.Application.Services.Auth;
 using Recipes.WebApi.DTO.Auth;
+using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
 {
@@ -14,12 +12,10 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class AuthController: ControllerBase
     {
-        private readonly ILogger<AuthController> _logger;
         private readonly IAuthService _authService;
 
-        public AuthController(ILogger<AuthController> logger, IAuthService authService)
+        public AuthController(IAuthService authService)
         {
-            _logger = logger;
             _authService = authService;
         }
 
@@ -32,24 +28,12 @@ namespace Recipes.WebApi.Controllers
         /// <response code="409">Cannot register account with the specified data</response>
         /// <returns></returns>
         [HttpPost("register")] 
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status409Conflict)]
         public async Task<ActionResult<string>> Register([FromBody]RegisterDto registerDto)
         {
-            try
-            {
-                return await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
-            }
-            catch (UserRegistrationException e)
-            {
-                return Problem(e.Value, statusCode: 409);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("An unhandled exception happened while processing Register\r\n" + e);
-                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
-            }
+            return await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
         }
         
         /// <summary>
@@ -63,22 +47,10 @@ namespace Recipes.WebApi.Controllers
         [HttpPost("login")] 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> Login([FromBody]LoginDto loginDto)
         {
-            try
-            {
-                return await _authService.Login(loginDto.Login, loginDto.Password);
-            }
-            catch (UserLoginException e)
-            {
-                return Problem(e.Value, statusCode: 401);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("An unhandled exception happened while processing Login\r\n" + e);
-                return Problem("При обработке запроса произошла неизвестная ошибка.", statusCode: 500);
-            }
+            return await _authService.Login(loginDto.Login, loginDto.Password);
         }
     }
 }
