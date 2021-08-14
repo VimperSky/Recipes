@@ -9,7 +9,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 export class ProfileComponent implements OnInit {
   name = this.fb.control('', [Validators.required])
   login = this.fb.control('', [Validators.required]);
-  password = this.fb.control('', [Validators.required]);
+  password = this.fb.control('', [Validators.required, Validators.minLength(8)]);
 
   bio = this.fb.control('', []);
 
@@ -33,6 +33,10 @@ export class ProfileComponent implements OnInit {
   }
 
   applyChanges() {
+    this.profileForm.markAllAsTouched();
+    if (!this.profileForm.valid)
+      return;
+
     this.profileForm.disable();
   }
 
