@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Recipes.Application.Exceptions
+﻿namespace Recipes.Application.Exceptions
 {
     public class ResourceNotFoundException: ExceptionWithValue
     {
