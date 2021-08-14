@@ -1,0 +1,59 @@
+@use '../../shared-styles/constants';
+
+#activity-overview-block {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  height: 180px;
+
+  .activity-item {
+    width: 340px;
+    height: 110px;
+    background: #FFFFFF;
+    box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+    border-radius: 24px;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+
+    .left-activity-block {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      span {
+        margin-top: 10px;
+        width: 46px;
+        height: 46px;
+        line-height: 46px;
+        background: #FFEFCC;
+        border-radius: 12px;
+        text-align: center;
+        padding: 0;
+
+        mat-icon {
+          vertical-align: middle;
+          font-size: 24px;
+          color: constants.$accent-color;
+        }
+      }
+
+      p {
+        @include constants.default-header;
+        font-size: 18px;
+        line-height: 30px;
+      }
+    }
+
+    .activity-number {
+      @include constants.default-header;
+      width: 120px;
+      font-size: 107px;
+      line-height: 107px;
+      font-weight: 600;
+      color: constants.$accent-color;
+    }
+  }
+}

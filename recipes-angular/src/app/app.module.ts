@@ -38,6 +38,7 @@ import {environment} from "../environments/environment";
 import { AuthComponent } from './embedded-components/auth/auth/auth.component';
 import { ErrorComponent } from './embedded-components/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     RecipeAddEditComponent,
     AuthComponent,
     ErrorComponent,
-    ProfileComponent
+    ProfileComponent,
+    ActivityOverviewComponent
   ],
   imports: [
     BrowserModule,
