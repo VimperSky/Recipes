@@ -6,6 +6,7 @@ app-back-nav {
 }
 
 #recipes-header {
+  margin-top: 10px;
   h1 {
     @include constants.default-header;
     color: constants.$dark-black-color;
@@ -46,14 +47,17 @@ app-back-nav {
 
   .edit-icon {
     position: absolute;
-    font-size: 18px;
+    font-size: 24px;
     height: 40px;
     width: 40px;
     padding: 0;
-    color: rgba(145, 150, 161, 0.4);
     z-index: 1000;
     top: 23px;
     right: 23px;
+  }
+
+  .edit-icon-approve {
+    color: constants.$accent-color;
   }
 }
 

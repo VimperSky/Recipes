@@ -29,16 +29,23 @@
 
   <div id="right-profile-block">
     <div>
-      <mat-form-field id="bio">
+      <mat-form-field id="bio" disabled="true">
         <mat-label>Напишите немного о себе</mat-label>
         <textarea autosize [rows]="6" [maxRows]="6" matInput [formControl]="bio"></textarea>
       </mat-form-field>
     </div>
   </div>
 
-  <button mat-icon-button class="edit-icon" (click)="editProfile()">
+  <button *ngIf="!isEditMode else applyChangesButton" mat-icon-button class="edit-icon" (click)="editProfile()">
     <mat-icon>edit</mat-icon>
   </button>
+
+  <ng-template #applyChangesButton>
+    <button mat-icon-button class="edit-icon edit-icon-approve" (click)="applyChanges()">
+      <mat-icon>done</mat-icon>
+    </button>
+  </ng-template>
+
 </div>
 
 <div id="overview-block">

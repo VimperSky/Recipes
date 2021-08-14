@@ -13,7 +13,6 @@ export class ProfileComponent implements OnInit {
 
   bio = this.fb.control('', []);
 
-
   profileForm = this.fb.group({
     name: this.name,
     login: this.login,
@@ -21,10 +20,20 @@ export class ProfileComponent implements OnInit {
     bio: this.bio
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this.profileForm.disable();
+  }
+
+  get isEditMode(): boolean {
+    return !this.profileForm.disabled;
+  }
 
   editProfile() {
+    this.profileForm.enable();
+  }
 
+  applyChanges() {
+    this.profileForm.disable();
   }
 
   ngOnInit(): void {}
