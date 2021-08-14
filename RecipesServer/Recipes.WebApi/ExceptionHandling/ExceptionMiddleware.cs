@@ -31,40 +31,24 @@ namespace Recipes.WebApi.ExceptionHandling
         {
             var statusCode = HttpStatusCode.InternalServerError;
             var message = "При обработке запроса произошла неизвестная ошибка.";
-            
-            switch (exception)
+
+            if (exception is ExceptionWithValue exceptionWithValue)
             {
-                case UserRegistrationException userRegistrationException:
+                statusCode = exception switch
                 {
-                    statusCode = HttpStatusCode.Conflict;
-                    message = userRegistrationException.Value;
-                    break;
-                }
-                case UserLoginException userLoginException:
-                {
-                    statusCode = HttpStatusCode.Unauthorized;
-                    message = userLoginException.Value;
-                    break;
-                }
-                case ResourceNotFoundException resourceNotFoundException:
-                {
-                    statusCode = HttpStatusCode.NotFound;
-                    message = resourceNotFoundException.Value;
-                    break;
-                }
-                case PermissionException permissionException:
-                {
-                    statusCode = HttpStatusCode.Forbidden;
-                    message = permissionException.Value;
-                    break;
-                }
-                default:
-                {
-                    _logger.LogError("An unhandled exception has reached the middleware:\r\n" + exception);
-                    break;
-                }
+                    UserRegistrationException => HttpStatusCode.Conflict,
+                    UserLoginException => HttpStatusCode.Unauthorized,
+                    ResourceNotFoundException => HttpStatusCode.NotFound,
+                    PermissionException => HttpStatusCode.Forbidden,
+                    _ => HttpStatusCode.InternalServerError
+                };
+                message = exceptionWithValue.Value;
             }
-            
+            else
+            {
+                _logger.LogError("An unhandled exception has reached the middleware:\r\n" + exception);
+            }
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
             
