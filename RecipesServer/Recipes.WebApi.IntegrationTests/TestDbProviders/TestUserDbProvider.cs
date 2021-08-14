@@ -19,13 +19,9 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
             configurationSection.Bind(jwtSettings);
             
             var jwtHandler = new JwtHandler(Options.Create(jwtSettings));
-
-            Users[0].Id = 1;
-            Users[1].Id = 2;
+            
             Token1 = GetUserToken(jwtHandler, Users[0]);
             Token2 = GetUserToken(jwtHandler, Users[1]);
-            Users[0].Id = 0;
-            Users[1].Id = 0;
         }
 
         private static string GetUserToken(JwtHandler jwtHandler, User user)

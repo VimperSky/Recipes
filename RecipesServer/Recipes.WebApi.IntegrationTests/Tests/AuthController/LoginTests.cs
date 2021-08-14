@@ -4,7 +4,6 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Recipes.Application.Exceptions;
 using Recipes.WebApi.DTO.Auth;
@@ -13,7 +12,8 @@ using static Recipes.WebApi.IntegrationTests.Tests.AuthController.UserDataProvid
 
 namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
 {    
-    public class LoginTests: IClassFixture<TestWebFactory<Startup>>
+    [Collection("TestsCollection")]
+    public class LoginTests
     {
         private readonly HttpClient _client;
 

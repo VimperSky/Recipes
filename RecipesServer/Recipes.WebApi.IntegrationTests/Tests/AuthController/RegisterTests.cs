@@ -11,7 +11,8 @@ using static Recipes.WebApi.IntegrationTests.Tests.AuthController.UserDataProvid
 
 namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
 {    
-    public class RegisterTests: IClassFixture<TestWebFactory<Startup>>
+    [Collection("TestsCollection")]
+    public class RegisterTests
     {
         private readonly HttpClient _client;
 

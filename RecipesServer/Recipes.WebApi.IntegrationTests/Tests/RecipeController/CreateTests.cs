@@ -9,7 +9,8 @@ using Xunit;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 {    
-    public class CreateTests: IClassFixture<TestWebFactory<Startup>>
+    [Collection("TestsCollection")]
+    public class CreateTests
     {
         private readonly HttpClient _client;
 

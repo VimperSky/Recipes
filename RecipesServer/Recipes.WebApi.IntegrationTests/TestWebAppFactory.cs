@@ -12,7 +12,6 @@ namespace Recipes.WebApi.IntegrationTests
 {
     public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
     {
-        
         private IConfiguration Configuration { get; set; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -24,14 +23,6 @@ namespace Recipes.WebApi.IntegrationTests
                     .Build();
                 
                 config.AddConfiguration(Configuration);
-                
-                var configuration = Configuration.GetSection(JwtSettings.Name);
-                TestUserDbProvider.SetUserTokens(configuration);
-            });
-            
-            builder.ConfigureLogging(loggingBuilder =>
-            {
-                loggingBuilder.Services.AddSingleton<ILoggerProvider>(serviceProvider => new XUnitLoggerProvider());
             });
             
             builder.ConfigureServices(services =>
@@ -46,6 +37,8 @@ namespace Recipes.WebApi.IntegrationTests
                 TestRecipesDbProvider.FillDbWithData(db);
                 TestUserDbProvider.FillDbWithData(db);
                 db.SaveChanges();
+                
+                TestUserDbProvider.SetUserTokens(Configuration.GetSection(JwtSettings.Name));
             });
             
         }
