@@ -38,18 +38,15 @@ namespace Recipes.Infrastructure.Repositories
         public async Task<Recipe> AddRecipe(Recipe recipe)
         {
             if (recipe.Id != default)
-            {
-                throw new ArgumentException("Cannot add recipe with predefined ID.");
-            }
+                recipe.Id = default;
+            
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
             return addedRecipe.Entity;
         }
 
 
-        public Task DeleteRecipe(int id)
+        public Task DeleteRecipe(Recipe recipe)
         {
-            var recipe = new Recipe { Id = id };
-            _recipesDbContext.Attach(recipe);
             _recipesDbContext.Recipes.Remove(recipe);
             return Task.CompletedTask;
         }

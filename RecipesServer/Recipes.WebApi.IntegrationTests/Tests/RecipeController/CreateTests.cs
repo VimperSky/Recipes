@@ -6,6 +6,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Recipes.Application.DTOs.Recipe;
 using Xunit;
+using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders.RecipeDataProvider;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 {    
@@ -16,31 +17,6 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 
         private const string BaseAddress = "api/recipe";
         
-        public static readonly RecipeCreateDto TestRecipeCreateDto = new()
-        {
-            Name = "Какое-то название",
-            Description = "Описание рецепта",
-            Ingredients = new [] 
-            {
-                new IngredientDto 
-                { 
-                    Header = "заголовок 1", Value = "Клубника\nМолоко"
-                },
-                new IngredientDto
-                {
-                    Header = "Заголовок 2", Value = "Какао\nЧто-тоеще"
-                }
-            },
-            Steps = new []
-            {
-                "Берем что-то там",
-                "Делаем что-то с этим",
-                "Еще что-то делаем",
-                "Готово!"
-            },
-            CookingTimeMin = 60,
-            Portions = 5
-        };
         
         public CreateTests(TestWebFactory<Startup> factory)
         {
@@ -58,8 +34,25 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         }
         
         [Fact]
+        public async Task Post_Create_InvalidArguments_ReturnsBadRequest()
+        {
+            // Arrange
+            var copyDto = TestRecipeCreateDto;
+            copyDto.Name = null;
+            _client.SetAuthToken();
+            
+            // Act
+            var response = await _client.PostAsJsonAsync($"{BaseAddress}/create", copyDto);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        
+        [Fact]
         public async Task Post_Create_Authorized_ReturnsCreated()
         {
+            // Arrange
             _client.SetAuthToken();
 
             // Act

@@ -52,7 +52,6 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
             var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetPermissions());
@@ -69,7 +68,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> EditRecipe([FromBody]RecipeEditDto recipeEditDto)
         {

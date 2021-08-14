@@ -30,7 +30,6 @@ namespace Recipes.Application.Services.Recipes
         /// </summary>
         /// <param name="recipeCreateDto"></param>
         /// <param name="userClaims"></param>
-        /// <exception cref="ArgumentException"></exception>
         Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto, UserClaims userClaims);
         
         /// <summary>

@@ -111,7 +111,7 @@ namespace Recipes.Application.Services.Recipes
             if (recipe.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
             
-            await _recipesRepository.DeleteRecipe(recipeId);
+            await _recipesRepository.DeleteRecipe(recipe);
             _unitOfWork.Commit();
         }
     }
