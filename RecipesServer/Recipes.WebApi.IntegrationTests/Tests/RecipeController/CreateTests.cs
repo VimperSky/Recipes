@@ -55,7 +55,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Arrange
             _client.SetAuthToken();
 
-            // Act
+            // Act && Assert
             var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             

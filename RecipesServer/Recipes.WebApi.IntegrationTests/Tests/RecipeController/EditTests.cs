@@ -51,6 +51,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         [Fact]
         public async Task Patch_Edit_OwnedRecipe_ReturnsOk()
         {
+            // Arrange
             _client.SetAuthToken();
             var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -59,17 +60,19 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             var copyRecipe = TestRecipeEditDto;
             copyRecipe.Id = recipeId;
             
-            var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", TestRecipeEditDto);
+            // Act && Assert
+            var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             
             var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
             
-            detail.Should().BeEquivalentTo(TestRecipeEditDto);
+            detail.Should().BeEquivalentTo(copyRecipe);
         }
         
         [Fact]
         public async Task Patch_Edit_ForeignRecipe_ReturnsForbidden()
         {
+            // Arrange
             _client.SetAuthToken();
             var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -78,12 +81,14 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             _client.SetAuthToken(true);
             var copyRecipe = TestRecipeEditDto;
             copyRecipe.Id = recipeId;
-            var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", TestRecipeEditDto);
+            
+            // Act && Assert
+            var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
             
             var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
             
-            detail.Should().BeEquivalentTo(TestRecipeCreateDto);
+            detail.Should().BeEquivalentTo(copyRecipe);
         }
     }
 }
