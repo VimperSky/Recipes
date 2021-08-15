@@ -12,6 +12,7 @@ using Recipes.WebApi.ExceptionHandling;
 namespace Recipes.WebApi.Controllers
 {   
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class RecipeController: ControllerBase
@@ -30,6 +31,7 @@ namespace Recipes.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("detail")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(RecipeDetailDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
@@ -48,7 +50,6 @@ namespace Recipes.WebApi.Controllers
         /// <param name="recipeCreateDto"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Authorize]
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
@@ -64,7 +65,6 @@ namespace Recipes.WebApi.Controllers
         /// <param name="recipeEditDto"></param>
         /// <returns></returns>
         [HttpPatch("edit")]
-        [Authorize]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
@@ -82,7 +82,6 @@ namespace Recipes.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("delete")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]

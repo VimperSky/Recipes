@@ -10,8 +10,11 @@ namespace Recipes.WebApi.DTOValidators.Recipe
 
         public UploadImageDtoValidator()
         {
-            RuleFor(x => x.RecipeId).NotNull().GreaterThanOrEqualTo(0);
-            RuleFor(x => x.File.ContentType).Must(x => AcceptedImageExtensions.Contains(x));
+            RuleFor(x => x.RecipeId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.File).NotNull().DependentRules(() =>
+            {
+                RuleFor(x => x.File.ContentType).Must(x => AcceptedImageExtensions.Contains(x));
+            });
         }
     }
 }

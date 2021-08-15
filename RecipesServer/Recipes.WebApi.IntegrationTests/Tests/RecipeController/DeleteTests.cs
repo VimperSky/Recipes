@@ -44,6 +44,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         [Fact]
         public async Task Delete_NotOwnedRecipe_ReturnsForbidden()
         {
+            // Arrange
             _client.SetAuthToken();
             
             // Act
@@ -56,6 +57,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         [Fact]
         public async Task Delete_NonExistingRecipe_ReturnsNotFound()
         {
+            // Arrange
             _client.SetAuthToken();
             
             // Act
@@ -68,8 +70,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         [Fact]
         public async Task Delete_OwnedRecipe_ReturnsOk()
         {
-            _client.SetAuthToken();
             // Arrange
+            _client.SetAuthToken();
             var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());

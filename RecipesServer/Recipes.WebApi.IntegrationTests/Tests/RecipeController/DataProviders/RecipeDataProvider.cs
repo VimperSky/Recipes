@@ -1,4 +1,6 @@
-﻿using Recipes.Application.DTOs.Recipe;
+﻿using System.IO;
+using System.Net.Http;
+using Recipes.Application.DTOs.Recipe;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
 {
@@ -55,5 +57,18 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
             CookingTimeMin = 60,
             Portions = 5
         };
+
+        public static StreamContent TestImageStream
+        {
+            get
+            {
+                var file = File.OpenRead(TestImagePath);
+                var fileContent = new StreamContent(file);
+                fileContent.Headers.Add("Content-Type", TestImageContentType);
+                return fileContent;
+            }
+        }
+        public const string TestImagePath = "test_image.jpg";
+        private const string TestImageContentType = "image/jpeg";
     }
 }
