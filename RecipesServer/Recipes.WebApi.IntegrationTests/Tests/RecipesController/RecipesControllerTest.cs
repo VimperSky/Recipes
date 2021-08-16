@@ -11,8 +11,8 @@ using Xunit;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 {
-    [Collection("Tests")]
-    public class RecipesControllerTest: IClassFixture<TestWebFactory<Startup>>
+    [Collection("TestsCollection")]
+    public class RecipesControllerTest
     {
         private readonly HttpClient _client;
         private readonly TestRecipesDbProvider _recipesDbProvider;

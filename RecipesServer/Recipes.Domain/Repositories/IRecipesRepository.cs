@@ -12,7 +12,7 @@ namespace Recipes.Domain.Repositories
 
         Task<Recipe> AddRecipe(Recipe recipe);
         
-        Task DeleteRecipe(int id);
+        Task DeleteRecipe(Recipe recipe);
         
         Task<Recipe> GetById(int id);
     }

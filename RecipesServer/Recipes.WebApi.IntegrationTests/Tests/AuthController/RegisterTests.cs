@@ -7,11 +7,12 @@ using Newtonsoft.Json;
 using Recipes.Application.Exceptions;
 using Recipes.WebApi.DTO.Auth;
 using Xunit;
-using static Recipes.WebApi.IntegrationTests.Tests.AuthController.UserDataProvider;
+using static Recipes.WebApi.IntegrationTests.Tests.AuthController.DataProviders.UserDataProvider;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
 {    
-    public class RegisterTests: IClassFixture<TestWebFactory<Startup>>
+    [Collection("TestsCollection")]
+    public class RegisterTests
     {
         private readonly HttpClient _client;
 

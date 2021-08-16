@@ -1,16 +1,10 @@
-﻿using System;
-
-namespace Recipes.Application.Exceptions
+﻿namespace Recipes.Application.Exceptions
 {
-    public class UserRegistrationException : Exception
+    public class UserRegistrationException : ExceptionWithValue
     {
-        public string Value { get; }
-        public UserRegistrationException(string message): base("UserRegistrationException: " + message)
-        {
-            Value = message;
-        }
+        public UserRegistrationException(string message): base(message) {}
         
-        public const string LoginIsTaken = "Login is already taken";
+        public const string LoginIsTaken = "Данный логин занят.";
     }
 
 }

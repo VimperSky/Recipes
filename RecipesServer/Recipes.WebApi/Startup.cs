@@ -6,7 +6,9 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.SpaFallback;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -15,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using Recipes.Application;
 using Recipes.Application.Services.Auth;
 using Recipes.Infrastructure;
+using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi
 {
@@ -90,7 +93,8 @@ namespace Recipes.WebApi
                     .WithOrigins("http://localhost:4200"));
             }
             
-            
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

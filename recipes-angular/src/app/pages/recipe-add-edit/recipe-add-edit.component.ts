@@ -11,7 +11,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {RecipeEdit} from "../../core/dto/recipe/recipe-edit";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
-import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 
 @Component({
   selector: 'app-recipe-add-edit',
