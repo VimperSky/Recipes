@@ -1,16 +1,9 @@
 import {Injectable} from '@angular/core';
 import {RecipesService} from "../abstract/recipes.service";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': "*"
-  })
-};
 
 const basePath: string = "/api/recipes"
 
@@ -28,7 +21,7 @@ export class ApiRecipesService extends RecipesService {
     if (page) params = params.append("page", page);
     if (searchString) params = params.append('searchString', searchString);
 
-    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {...httpOptions, params: params});
+    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {params: params});
   }
 
 }

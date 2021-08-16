@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
-import {AuthService} from "../../../core/services/communication/abstract/auth.service";
+import {UserService} from "../../../core/services/communication/abstract/user.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Login} from "../../../core/dto/auth/login";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
-              private authService: AuthService,
+              private authService: UserService,
               private tokenManagerService: AuthTokenManagerService,
               private snackBar: MatSnackBar,
               private errorHandlingService: ErrorHandlingService,

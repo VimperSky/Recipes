@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Recipes.Application.Exceptions;
-using Recipes.WebApi.DTO.Auth;
+using Recipes.WebApi.DTO.User;
 using Xunit;
-using static Recipes.WebApi.IntegrationTests.Tests.AuthController.DataProviders.UserDataProvider;
+using static Recipes.WebApi.IntegrationTests.Tests.UsersController.DataProviders.UserDataProvider;
 
-namespace Recipes.WebApi.IntegrationTests.Tests.AuthController
+namespace Recipes.WebApi.IntegrationTests.Tests.UsersController
 {    
     [Collection("TestsCollection")]
     public class RegisterTests
     {
         private readonly HttpClient _client;
 
-        private const string BaseAddress = "api/auth";
+        private const string BaseAddress = "api/user";
         
         public RegisterTests(TestWebFactory<Startup> factory)
         {

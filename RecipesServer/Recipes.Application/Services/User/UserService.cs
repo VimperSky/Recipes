@@ -1,22 +1,27 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using AutoMapper;
+using Recipes.Application.DTOs.User;
 using Recipes.Application.Exceptions;
+using Recipes.Application.Permissions.Models;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
 
-namespace Recipes.Application.Services.Auth
+namespace Recipes.Application.Services.User
 {
-    public class AuthService : IAuthService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly JwtHandler _jwtHandler;
+        private readonly IMapper _mapper;
 
-        public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, JwtHandler jwtHandler)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, JwtHandler jwtHandler, IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _jwtHandler = jwtHandler;
+            _mapper = mapper;
         }
 
         
@@ -29,7 +34,7 @@ namespace Recipes.Application.Services.Auth
         /// <exception cref="UserRegistrationException"></exception>
         public async Task<string> Register(string login, string password, string name)
         {
-            if (await _userRepository.GetUser(login) != null)
+            if (await _userRepository.GetUserByLogin(login) != null)
                 throw new UserRegistrationException(UserRegistrationException.LoginIsTaken);
 
             var salt = HashingTools.GenerateSalt();
@@ -52,7 +57,7 @@ namespace Recipes.Application.Services.Auth
         /// <exception cref="UserLoginException"></exception>
         public async Task<string> Login(string login, string password)
         {
-            var user = await _userRepository.GetUser(login);
+            var user = await _userRepository.GetUserByLogin(login);
             if (user == null)
                 throw new UserLoginException(UserLoginException.LoginDoesNotExist);
 
@@ -64,6 +69,15 @@ namespace Recipes.Application.Services.Auth
             var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return token;
+        }
+
+        public async Task<UserProfileDto> GetUserProfile(UserClaims userClaims)
+        {
+            var user = await _userRepository.GetUserById(userClaims.UserId);
+            if (user == null)
+                throw new UserProfileException(UserProfileException.AccountDoesNotExist);
+
+            return _mapper.Map<UserProfileDto>(user);
         }
     }
 }

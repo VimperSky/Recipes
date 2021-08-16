@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Recipes.Application.DTOs.User;
 using Recipes.Application.Exceptions;
+using Recipes.Application.Permissions.Models;
 
-namespace Recipes.Application.Services.Auth
+namespace Recipes.Application.Services.User
 {
-    public interface IAuthService
+    public interface IUserService
     {
         /// <summary>
         /// Register an account. Throws RegisterException on failure
@@ -22,5 +24,9 @@ namespace Recipes.Application.Services.Auth
         /// <returns></returns>
         /// <exception cref="UserLoginException"></exception>
         Task<string> Login(string login, string password);
+        
+        Task<UserProfileDto> GetUserProfile(UserClaims userClaims);
+        
+        
     }
 }

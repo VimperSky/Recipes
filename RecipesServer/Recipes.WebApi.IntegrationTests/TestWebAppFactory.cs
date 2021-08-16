@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Recipes.Application.Services.Auth;
+using Recipes.Application.Services.User;
 using Recipes.Infrastructure;
 using Recipes.WebApi.IntegrationTests.Logging;
 using Recipes.WebApi.IntegrationTests.TestDbProviders;

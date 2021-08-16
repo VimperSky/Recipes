@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Recipes.WebApi.DTO.Auth;
+using Recipes.WebApi.DTO.User;
 
 namespace Recipes.WebApi.DTOValidators.Auth
 {

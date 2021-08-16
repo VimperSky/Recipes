@@ -1,4 +1,4 @@
-﻿namespace Recipes.WebApi.DTO.Auth
+﻿namespace Recipes.WebApi.DTO.User
 {
     public class RegisterDto
     {

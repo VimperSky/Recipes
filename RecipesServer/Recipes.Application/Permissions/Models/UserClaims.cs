@@ -18,6 +18,7 @@ namespace Recipes.Application.Permissions.Models
                 
                 if (claim.Type == CustomClaimTypes.UserId)
                     UserId = Convert.ToInt32(claim.Value);
+                
             }
         }
     }

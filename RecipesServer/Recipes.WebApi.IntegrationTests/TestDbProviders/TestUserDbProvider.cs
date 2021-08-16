@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Recipes.Application.Services.Auth;
+using Recipes.Application.Services.User;
 using Recipes.Domain.Models;
 using Recipes.Infrastructure;
 using Xunit;

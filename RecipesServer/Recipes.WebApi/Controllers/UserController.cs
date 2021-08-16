@@ -1,22 +1,26 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Application.Services.Auth;
-using Recipes.WebApi.DTO.Auth;
+using Recipes.Application.DTOs.User;
+using Recipes.Application.Permissions;
+using Recipes.Application.Services.User;
+using Recipes.WebApi.DTO.User;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class AuthController: ControllerBase
+    public class UserController: ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IUserService _userService;
 
-        public AuthController(IAuthService authService)
+        public UserController(IUserService userService)
         {
-            _authService = authService;
+            _userService = userService;
         }
 
         /// <summary>
@@ -28,12 +32,13 @@ namespace Recipes.WebApi.Controllers
         /// <response code="409">Cannot register account with the specified data</response>
         /// <returns></returns>
         [HttpPost("register")] 
+        [AllowAnonymous]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status409Conflict)]
         public async Task<ActionResult<string>> Register([FromBody]RegisterDto registerDto)
         {
-            return await _authService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
+            return await _userService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
         }
         
         /// <summary>
@@ -45,12 +50,25 @@ namespace Recipes.WebApi.Controllers
         /// <response code="401">Invalid credentials</response>
         /// <returns></returns>
         [HttpPost("login")] 
+        [AllowAnonymous]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> Login([FromBody]LoginDto loginDto)
         {
-            return await _authService.Login(loginDto.Login, loginDto.Password);
+            return await _userService.Login(loginDto.Login, loginDto.Password);
+        }
+        
+        
+        /// <summary>
+        /// Get Profile Info
+        /// </summary>
+        [HttpGet("profile")] 
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<UserProfileDto>> GetProfile()
+        {
+            return await _userService.GetUserProfile(HttpContext.User.GetClaims());
         }
     }
 }

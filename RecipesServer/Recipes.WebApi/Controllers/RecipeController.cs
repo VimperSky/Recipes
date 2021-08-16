@@ -55,7 +55,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
         {
-            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetPermissions());
+            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetClaims());
             return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
         }
         
@@ -72,7 +72,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> EditRecipe([FromBody]RecipeEditDto recipeEditDto)
         {
-            await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetPermissions());
+            await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetClaims());
             return Ok();
         }
         
@@ -89,7 +89,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteRecipe([FromQuery, Required]int id)
         {
-            await _recipesService.DeleteRecipe(id, HttpContext.User.GetPermissions());
+            await _recipesService.DeleteRecipe(id, HttpContext.User.GetClaims());
             return Ok();
         }
 
@@ -107,7 +107,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
         public async Task<ActionResult> UploadImage([FromForm]UploadImageDto uploadImageDtoDto)
         {
-            await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File, HttpContext.User.GetPermissions());
+            await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File, HttpContext.User.GetClaims());
             return Ok();
         }
     }

@@ -63,7 +63,6 @@ namespace Recipes.Application.Services.Recipes
             return addedRecipe.Id;
         }
         
-        
         public async Task EditRecipe(RecipeEditDto recipeEditDto, UserClaims userClaims)
         {
             var recipeDb = await _recipesRepository.GetById(recipeEditDto.Id);

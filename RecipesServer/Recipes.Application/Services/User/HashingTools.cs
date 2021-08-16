@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Recipes.Application.Services.Auth
+namespace Recipes.Application.Services.User
 {
     public static class HashingTools
     {

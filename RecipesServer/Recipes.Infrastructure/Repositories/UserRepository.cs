@@ -29,9 +29,14 @@ namespace Recipes.Infrastructure.Repositories
             return newUser;
         }
 
-        public async Task<User> GetUser(string login)
+        public async Task<User> GetUserByLogin(string login)
         {
             return await _recipesDbContext.Users.FirstOrDefaultAsync(x => x.Login == login);
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            return await _recipesDbContext.Users.FindAsync(id);
         }
     }
 }

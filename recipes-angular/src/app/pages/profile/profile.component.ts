@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
+import {UserService} from "../../core/services/communication/abstract/user.service";
+import {UserProfile} from "../../core/dto/user/user-profile";
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +13,7 @@ export class ProfileComponent implements OnInit {
   name = this.fb.control('', [Validators.required])
   login = this.fb.control('', [Validators.required]);
   password = this.fb.control('', [Validators.required, Validators.minLength(8)]);
+  passwordPlaceHolder: string = "Введите ваш старый пароль или придумайте новый";
 
   bio = this.fb.control('', []);
 
@@ -21,8 +24,17 @@ export class ProfileComponent implements OnInit {
     bio: this.bio
   })
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private userService: UserService) {
     this.profileForm.disable();
+  }
+
+  ngOnInit(): void {
+    this.userService.getProfile().subscribe((userProfile: UserProfile) => {
+      this.name.setValue(userProfile.name);
+      this.login.setValue(userProfile.login);
+      this.bio.setValue(userProfile.bio);
+    });
   }
 
   get isEditMode(): boolean {
@@ -41,5 +53,5 @@ export class ProfileComponent implements OnInit {
     this.profileForm.disable();
   }
 
-  ngOnInit(): void {}
+
 }

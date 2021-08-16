@@ -6,9 +6,8 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.Application.Permissions.Models;
-using Recipes.Domain.Models;
 
-namespace Recipes.Application.Services.Auth
+namespace Recipes.Application.Services.User
 {
     public class JwtHandler
     {
@@ -25,7 +24,7 @@ namespace Recipes.Application.Services.Auth
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
         
-        private IEnumerable<Claim> GetClaims(User user)
+        private IEnumerable<Claim> GetClaims(Domain.Models.User user)
         {
             var claims = new List<Claim>
             {
@@ -36,7 +35,7 @@ namespace Recipes.Application.Services.Auth
             return claims;
         }
         
-        public JwtSecurityToken GenerateTokenOptions(User user)
+        public JwtSecurityToken GenerateTokenOptions(Domain.Models.User user)
         {
             var tokenOptions = new JwtSecurityToken(
                  _jwtSettings.Value.ValidIssuer, 

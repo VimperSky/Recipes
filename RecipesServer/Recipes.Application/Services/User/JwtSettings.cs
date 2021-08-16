@@ -1,4 +1,4 @@
-﻿namespace Recipes.Application.Services.Auth
+﻿namespace Recipes.Application.Services.User
 {
     public class JwtSettings
     {
