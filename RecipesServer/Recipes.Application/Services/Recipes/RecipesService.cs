@@ -32,7 +32,7 @@ namespace Recipes.Application.Services.Recipes
             var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
             if (page > 1 && page > pageCount)
-                throw new ResourceNotFoundException(ResourceNotFoundException.RecipesPageNotFound);
+                throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
 
             var recipes = await _recipesRepository.GetList(searchString, (page - 1) * pageSize, pageSize);
             var recipesPage = new RecipesPageDto
@@ -67,7 +67,7 @@ namespace Recipes.Application.Services.Recipes
         {
             var recipeDb = await _recipesRepository.GetById(recipeEditDto.Id);
             if (recipeDb == null)
-                throw new ResourceNotFoundException(ResourceNotFoundException.RecipeNotFound);
+                throw new ElementNotFoundException(ElementNotFoundException.RecipeNotFound);
             
             if (recipeDb.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
@@ -92,7 +92,7 @@ namespace Recipes.Application.Services.Recipes
             
             var recipe = await _recipesRepository.GetById(recipeId);
             if (recipe == null)
-                throw new ResourceNotFoundException(ResourceNotFoundException.RecipeNotFound);
+                throw new ElementNotFoundException(ElementNotFoundException.RecipeNotFound);
 
             if (recipe.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
@@ -105,7 +105,7 @@ namespace Recipes.Application.Services.Recipes
         {
             var recipe = await _recipesRepository.GetById(recipeId);
             if (recipe == null)
-                throw new ResourceNotFoundException(ResourceNotFoundException.RecipeNotFound);
+                throw new ElementNotFoundException(ElementNotFoundException.RecipeNotFound);
             
             if (recipe.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);

@@ -66,9 +66,18 @@ namespace Recipes.WebApi.Controllers
         [HttpGet("profile")] 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserProfileDto>> GetProfile()
+        public async Task<ActionResult<UserProfileInfoDto>> GetProfileInfo()
         {
-            return await _userService.GetUserProfile(HttpContext.User.GetClaims());
+            return await _userService.GetUserProfileInfo(HttpContext.User.GetClaims());
+        }
+        
+        [HttpPatch("profile")] 
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<UserProfileInfoDto>> SetProfileInfo(SetUserProfileInfoDto dto)
+        {
+            await _userService.SetUserProfileInfo(dto.Login, dto.Password, dto.Name, dto.Bio, HttpContext.User.GetClaims());
+            return Ok();
         }
     }
 }

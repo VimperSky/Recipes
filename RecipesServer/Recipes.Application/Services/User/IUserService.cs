@@ -25,8 +25,8 @@ namespace Recipes.Application.Services.User
         /// <exception cref="UserLoginException"></exception>
         Task<string> Login(string login, string password);
         
-        Task<UserProfileDto> GetUserProfile(UserClaims userClaims);
-        
-        
+        Task<UserProfileInfoDto> GetUserProfileInfo(UserClaims userClaims);
+
+        Task SetUserProfileInfo(string login, string password, string name, string bio, UserClaims userClaims);
     }
 }

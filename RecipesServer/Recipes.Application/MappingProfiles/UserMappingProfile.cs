@@ -8,7 +8,7 @@ namespace Recipes.Application.MappingProfiles
     {
         public UserMappingProfile()
         {
-            CreateMap<User, UserProfileDto>();
+            CreateMap<User, UserProfileInfoDto>();
         }
     }
 }

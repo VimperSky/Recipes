@@ -15,7 +15,7 @@ namespace Recipes.Application.Services.Recipes
         /// <param name="searchString"></param>
         /// <param name="pageSize"></param>
         /// <param name="page"></param>
-        /// <exception cref="ResourceNotFoundException"></exception>
+        /// <exception cref="ElementNotFoundException"></exception>
         Task<RecipesPageDto> GetRecipesPage(string searchString, int pageSize, int page);
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Recipes.Application.Services.Recipes
         /// <param name="userClaims"></param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="PermissionException"></exception>
-        /// <exception cref="ResourceNotFoundException"></exception>
+        /// <exception cref="ElementNotFoundException"></exception>
         Task EditRecipe(RecipeEditDto recipeEditDto, UserClaims userClaims);
         
         /// <summary>
@@ -49,7 +49,7 @@ namespace Recipes.Application.Services.Recipes
         /// <param name="formFile"></param>
         /// <param name="userClaims"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ResourceNotFoundException"></exception>
+        /// <exception cref="ElementNotFoundException"></exception>
         /// <exception cref="PermissionException"></exception>
         /// <exception cref="ImageSavingException"></exception>
         Task UploadImage(int recipeId, IFormFile formFile, UserClaims userClaims);
@@ -61,7 +61,7 @@ namespace Recipes.Application.Services.Recipes
         /// <param name="userClaims"></param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="PermissionException"></exception>
-        /// <exception cref="ResourceNotFoundException"></exception>
+        /// <exception cref="ElementNotFoundException"></exception>
         Task DeleteRecipe(int recipeId, UserClaims userClaims);
     }
 }

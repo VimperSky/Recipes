@@ -5,8 +5,9 @@ import {environment} from "../../../../../environments/environment";
 import {Observable} from "rxjs";
 import {Register} from "../../../dto/auth/register";
 import {Login} from "../../../dto/auth/login";
-import {UserProfile} from "../../../dto/user/user-profile";
+import {UserProfileInfoDto} from "../../../dto/user/user-profile-info-dto";
 import {AuthTokenManagerService} from "../../managers/auth-token-manager.service";
+import {SetUserProfileInfoDto} from "../../../dto/user/set-user-profile-info-dto";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,7 +38,11 @@ export class ApiUserService extends UserService {
     return this.http.post<string>(environment.backendUrl + basePath + "/login", login);
   }
 
-  getProfile(): Observable<UserProfile> {
-    return this.http.get<UserProfile>(environment.backendUrl + basePath + "/profile", this.optionsWithAuth);
+  getProfileInfo(): Observable<UserProfileInfoDto> {
+    return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile", this.optionsWithAuth);
+  }
+
+  setProfileInfo(dto: SetUserProfileInfoDto): Observable<void> {
+    return this.http.patch<void>(environment.backendUrl + basePath + "/profile", dto, this.optionsWithAuth);
   }
 }

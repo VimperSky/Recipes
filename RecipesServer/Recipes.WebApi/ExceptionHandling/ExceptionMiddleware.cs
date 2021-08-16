@@ -38,7 +38,7 @@ namespace Recipes.WebApi.ExceptionHandling
                 {
                     UserRegistrationException => HttpStatusCode.Conflict,
                     UserLoginException => HttpStatusCode.Unauthorized,
-                    ResourceNotFoundException => HttpStatusCode.NotFound,
+                    ElementNotFoundException => HttpStatusCode.NotFound,
                     PermissionException => HttpStatusCode.Forbidden,
                     _ => HttpStatusCode.InternalServerError
                 };

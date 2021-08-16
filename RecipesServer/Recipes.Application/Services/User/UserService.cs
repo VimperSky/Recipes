@@ -23,7 +23,7 @@ namespace Recipes.Application.Services.User
             _jwtHandler = jwtHandler;
             _mapper = mapper;
         }
-
+        
         
         /// <summary>
         /// Register an account. Throws RegisterException on failure
@@ -71,13 +71,29 @@ namespace Recipes.Application.Services.User
             return token;
         }
 
-        public async Task<UserProfileDto> GetUserProfile(UserClaims userClaims)
+        public async Task<UserProfileInfoDto> GetUserProfileInfo(UserClaims userClaims)
         {
             var user = await _userRepository.GetUserById(userClaims.UserId);
             if (user == null)
-                throw new UserProfileException(UserProfileException.AccountDoesNotExist);
+                throw new ElementNotFoundException(ElementNotFoundException.AccountDoesNotExist);
 
-            return _mapper.Map<UserProfileDto>(user);
+            return _mapper.Map<UserProfileInfoDto>(user);
+        }
+
+        public async Task SetUserProfileInfo(string login, string password, string name, string bio, UserClaims userClaims)
+        {
+            var user = await _userRepository.GetUserById(userClaims.UserId);
+            if (user == null)
+                throw new ElementNotFoundException(ElementNotFoundException.AccountDoesNotExist);
+
+            user.Login = login;
+            user.Name = name;
+            user.Bio = bio;
+            
+            var salt = HashingTools.GenerateSalt();
+            user.PasswordSalt = HashingTools.SaltToString(salt);
+            user.PasswordHash = HashingTools.HashPassword(password, salt);
+            _unitOfWork.Commit();
         }
     }
 }

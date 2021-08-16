@@ -1,11 +1,11 @@
 ﻿namespace Recipes.Application.Exceptions
 {
-    public class ResourceNotFoundException: ExceptionWithValue
+    public class ElementNotFoundException: ExceptionWithValue
     {
-        public ResourceNotFoundException(string message): base(message) {}
+        public ElementNotFoundException(string message): base(message) {}
 
         public const string RecipeNotFound = "Такой рецепт не существует";
         public const string RecipesPageNotFound = "Такая страница с рецептами не существует";
-
+        public const string AccountDoesNotExist = "Такой аккаунт не существует.";
     }
 }

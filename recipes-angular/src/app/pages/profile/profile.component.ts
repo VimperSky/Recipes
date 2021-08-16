@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {UserService} from "../../core/services/communication/abstract/user.service";
-import {UserProfile} from "../../core/dto/user/user-profile";
+import {UserProfileInfoDto} from "../../core/dto/user/user-profile-info-dto";
+import {SetUserProfileInfoDto} from "../../core/dto/user/set-user-profile-info-dto";
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getProfile().subscribe((userProfile: UserProfile) => {
+    this.userService.getProfileInfo().subscribe((userProfile: UserProfileInfoDto) => {
       this.name.setValue(userProfile.name);
       this.login.setValue(userProfile.login);
       this.bio.setValue(userProfile.bio);
@@ -50,7 +51,15 @@ export class ProfileComponent implements OnInit {
     if (!this.profileForm.valid)
       return;
 
-    this.profileForm.disable();
+    const dto: SetUserProfileInfoDto = {
+      login: this.login.value,
+      password: this.password.value,
+      name: this.name.value,
+      bio: this.bio.value
+    }
+    this.userService.setProfileInfo(dto).subscribe(() => {
+      this.profileForm.disable();
+    })
   }
 
 
