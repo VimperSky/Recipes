@@ -26,6 +26,7 @@ export class AuthHeaderComponent implements OnInit {
 
   }
 
+
   logIn() {
     if (this.dialog.openDialogs.length == 0) {
       this.dialog.open(LoginComponent, {

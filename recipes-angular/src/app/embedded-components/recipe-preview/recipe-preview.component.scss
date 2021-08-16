@@ -54,7 +54,6 @@
           margin-left: 70px;
         }
 
-
         .extra-block {
           display: inline-flex;
           flex-direction: row;
@@ -64,6 +63,7 @@
             height: 56px;
             font-size: 56px;
             color: constants.$accent-color;
+            opacity: 0.5;
           }
 
           .extra-time-block {
