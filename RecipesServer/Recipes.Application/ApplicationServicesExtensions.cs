@@ -34,14 +34,14 @@ namespace Recipes.Application
                 };
             });
         }
-        
+
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ApplicationServicesExtensions));
-            
+
             services.AddScoped<JwtHandler>();
             services.AddScoped<IImageFileSaver, ImageFileSaver>();
-            services.AddScoped<IUserService, UserService>();  
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipesService, RecipesService>();
         }
     }

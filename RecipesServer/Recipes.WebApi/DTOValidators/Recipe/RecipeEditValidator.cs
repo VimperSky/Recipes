@@ -3,9 +3,9 @@ using Recipes.Application.DTOs.Recipe;
 
 namespace Recipes.WebApi.DTOValidators.Recipe
 {
-    public class RecipeCreateDtoValidator: AbstractValidator<RecipeCreateDto>
+    public class RecipeEditValidator : AbstractValidator<RecipeEditDto>
     {
-        public RecipeCreateDtoValidator()
+        public RecipeEditValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
         }

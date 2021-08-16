@@ -1,6 +1,6 @@
 ﻿namespace Recipes.Application.DTOs.User
 {
-    public class UserProfileInfoDto
+    public class ProfileInfo
     {
         public string Login { get; set; }
         public string Name { get; set; }

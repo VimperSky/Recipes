@@ -1,10 +1,12 @@
 namespace Recipes.Application.Exceptions
 {
-    public class UserLoginException : ExceptionWithValue
+    public class UserAuthenticationException : ExceptionWithValue
     {
-        public UserLoginException(string message): base(message) {}
-
         public const string LoginDoesNotExist = "Такой логин не существует.";
         public const string PasswordIsIncorrect = "Пароль неверный.";
+
+        public UserAuthenticationException(string message) : base(message)
+        {
+        }
     }
 }

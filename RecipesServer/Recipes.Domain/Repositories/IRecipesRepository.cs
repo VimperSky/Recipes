@@ -11,9 +11,9 @@ namespace Recipes.Domain.Repositories
         Task<int> GetRecipesCount(string searchString);
 
         Task<Recipe> AddRecipe(Recipe recipe);
-        
+
         Task DeleteRecipe(Recipe recipe);
-        
+
         Task<Recipe> GetById(int id);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,7 @@ using Recipes.Domain.Repositories;
 
 namespace Recipes.Infrastructure.Repositories
 {
-    public class RecipesRepository: IRecipesRepository
+    public class RecipesRepository : IRecipesRepository
     {
         private readonly RecipesDbContext _recipesDbContext;
 
@@ -16,8 +15,8 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-        
-        
+
+
         public async Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems)
         {
             return await SortBySearchString(_recipesDbContext.Recipes, searchString)
@@ -39,7 +38,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             if (recipe.Id != default)
                 recipe.Id = default;
-            
+
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
             return addedRecipe.Entity;
         }
@@ -55,12 +54,12 @@ namespace Recipes.Infrastructure.Repositories
         {
             return await _recipesDbContext.Recipes.FindAsync(id);
         }
-        
+
         private static IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
         {
-            return searchString == null ? recipes : 
-                recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+            return searchString == null
+                ? recipes
+                : recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
-
     }
 }

@@ -2,15 +2,13 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Recipes.Application.Services.User;
 using Recipes.Infrastructure;
-using Recipes.WebApi.IntegrationTests.Logging;
 using Recipes.WebApi.IntegrationTests.TestDbProviders;
 
 namespace Recipes.WebApi.IntegrationTests
 {
-    public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup: class   
+    public class TestWebFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         private IConfiguration Configuration { get; set; }
 
@@ -21,10 +19,10 @@ namespace Recipes.WebApi.IntegrationTests
                 Configuration = new ConfigurationBuilder()
                     .AddJsonFile("settings.json")
                     .Build();
-                
+
                 config.AddConfiguration(Configuration);
             });
-            
+
             builder.ConfigureServices(services =>
             {
                 using var scope = services.BuildServiceProvider().CreateScope();
@@ -33,14 +31,13 @@ namespace Recipes.WebApi.IntegrationTests
 
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                
+
                 TestRecipesDbProvider.FillDbWithData(db);
                 TestUserDbProvider.FillDbWithData(db);
                 db.SaveChanges();
-                
+
                 TestUserDbProvider.SetUserTokens(Configuration.GetSection(JwtSettings.Name));
             });
-            
         }
     }
 }

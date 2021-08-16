@@ -4,11 +4,11 @@ using Recipes.Domain.Models;
 
 namespace Recipes.Application.MappingProfiles
 {
-    public class UserMappingProfile: Profile
+    public class UserMappingProfile : Profile
     {
         public UserMappingProfile()
         {
-            CreateMap<User, UserProfileInfoDto>();
+            CreateMap<User, ProfileInfo>();
         }
     }
 }

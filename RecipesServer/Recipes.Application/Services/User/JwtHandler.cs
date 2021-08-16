@@ -17,13 +17,14 @@ namespace Recipes.Application.Services.User
         {
             _jwtSettings = jwtSettings;
         }
+
         private SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Value.SecurityKey);
             var secret = new SymmetricSecurityKey(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
-        
+
         private IEnumerable<Claim> GetClaims(Domain.Models.User user)
         {
             var claims = new List<Claim>
@@ -34,17 +35,16 @@ namespace Recipes.Application.Services.User
 
             return claims;
         }
-        
+
         public JwtSecurityToken GenerateTokenOptions(Domain.Models.User user)
         {
             var tokenOptions = new JwtSecurityToken(
-                 _jwtSettings.Value.ValidIssuer, 
-                 _jwtSettings.Value.ValidAudience, 
-                 GetClaims(user),
-                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.Value.ExpiryInMinutes)), 
-                 signingCredentials: GetSigningCredentials());
+                _jwtSettings.Value.ValidIssuer,
+                _jwtSettings.Value.ValidAudience,
+                GetClaims(user),
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.Value.ExpiryInMinutes)),
+                signingCredentials: GetSigningCredentials());
             return tokenOptions;
         }
-        
     }
 }

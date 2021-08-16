@@ -4,11 +4,11 @@ using Recipes.WebApi.DTO.Recipe;
 
 namespace Recipes.WebApi.DTOValidators.Recipe
 {
-    public class UploadImageDtoValidator: AbstractValidator<UploadImageDto>
+    public class UploadImageValidator : AbstractValidator<UploadImageDto>
     {
-        private static readonly string[] AcceptedImageExtensions = {"image/jpeg", "image/png" };
+        private static readonly string[] AcceptedImageExtensions = { "image/jpeg", "image/png" };
 
-        public UploadImageDtoValidator()
+        public UploadImageValidator()
         {
             RuleFor(x => x.RecipeId).NotEmpty().GreaterThan(0);
             RuleFor(x => x.File).NotNull().DependentRules(() =>

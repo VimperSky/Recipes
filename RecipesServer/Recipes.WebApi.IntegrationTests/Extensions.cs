@@ -13,12 +13,12 @@ namespace Recipes.WebApi.IntegrationTests
     {
         public static void SetAuthToken(this HttpClient httpClient, bool useSecondToken = false)
         {
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",  
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                 useSecondToken ? TestUserDbProvider.Token2 : TestUserDbProvider.Token1);
-        }    
-        
+        }
+
         /// <summary>
-        /// Copied from HttpClientJsonExtensions PostAsJsonAsync and modified to Patch
+        ///     Copied from HttpClientJsonExtensions PostAsJsonAsync and modified to Patch
         /// </summary>
         /// <param name="client"></param>
         /// <param name="requestUri"></param>
@@ -28,14 +28,12 @@ namespace Recipes.WebApi.IntegrationTests
         /// <typeparam name="TValue"></typeparam>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this HttpClient client, string? requestUri, TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+        public static Task<HttpResponseMessage> PatchAsJsonAsync<TValue>(this HttpClient client, string? requestUri,
+            TValue value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            if (client == null) throw new ArgumentNullException(nameof(client));
 
-            JsonContent content = JsonContent.Create(value, mediaType: null, options);
+            var content = JsonContent.Create(value, null, options);
             return client.PatchAsync(requestUri, content, cancellationToken);
         }
     }

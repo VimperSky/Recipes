@@ -11,89 +11,88 @@ namespace Recipes.Application.Services.User
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly JwtHandler _jwtHandler;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, JwtHandler jwtHandler, IMapper mapper)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, JwtHandler jwtHandler,
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _jwtHandler = jwtHandler;
             _mapper = mapper;
         }
-        
-        
+
         /// <summary>
-        /// Register an account. Throws RegisterException on failure
+        ///     Register an account. Throws RegisterException on failure
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <param name="name"></param>
-        /// <exception cref="UserRegistrationException"></exception>
+        /// <exception cref="UserModificationException"></exception>
         public async Task<string> Register(string login, string password, string name)
         {
             if (await _userRepository.GetUserByLogin(login) != null)
-                throw new UserRegistrationException(UserRegistrationException.LoginIsTaken);
+                throw new UserModificationException(UserModificationException.LoginIsTaken);
 
-            var salt = HashingTools.GenerateSalt();
-            var hash = HashingTools.HashPassword(password, salt);
-            var user = await _userRepository.CreateUser(login, hash, HashingTools.SaltToString(salt), name);
+            var (hash, salt) = HashingTools.QuickHash(password);
+            var user = await _userRepository.CreateUser(login, hash, salt, name);
             _unitOfWork.Commit();
-            
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return token;
+
+            return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
         }
-        
+
 
         /// <summary>
-        /// Log into existing account. Returns token on success, throws an LoginException on failure
+        ///     Log into existing account. Returns token on success, throws an LoginException on failure
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        /// <exception cref="UserLoginException"></exception>
+        /// <exception cref="UserAuthenticationException"></exception>
         public async Task<string> Login(string login, string password)
         {
             var user = await _userRepository.GetUserByLogin(login);
             if (user == null)
-                throw new UserLoginException(UserLoginException.LoginDoesNotExist);
+                throw new UserAuthenticationException(UserAuthenticationException.LoginDoesNotExist);
 
-            var salt = HashingTools.StringToSalt(user.PasswordSalt);
-            var hashedPassword = HashingTools.HashPassword(password, salt);
+            var hashedPassword = HashingTools.HashPassword(password, user.PasswordSalt);
             if (user.PasswordHash != hashedPassword)
-                throw new UserLoginException(UserLoginException.PasswordIsIncorrect);
-            
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(user);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return token;
+                throw new UserAuthenticationException(UserAuthenticationException.PasswordIsIncorrect);
+
+            return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
         }
 
-        public async Task<UserProfileInfoDto> GetUserProfileInfo(UserClaims userClaims)
+        public async Task<ProfileInfo> GetProfileInfo(UserClaims userClaims)
         {
             var user = await _userRepository.GetUserById(userClaims.UserId);
             if (user == null)
                 throw new ElementNotFoundException(ElementNotFoundException.AccountDoesNotExist);
 
-            return _mapper.Map<UserProfileInfoDto>(user);
+            return _mapper.Map<ProfileInfo>(user);
         }
 
-        public async Task SetUserProfileInfo(string login, string password, string name, string bio, UserClaims userClaims)
+        public async Task<string> SetProfileInfo(string login, string password, string name, string bio,
+            UserClaims userClaims)
         {
             var user = await _userRepository.GetUserById(userClaims.UserId);
             if (user == null)
                 throw new ElementNotFoundException(ElementNotFoundException.AccountDoesNotExist);
 
+            if (login != user.Login && await _userRepository.GetUserByLogin(login) != null)
+                throw new UserModificationException(UserModificationException.LoginIsTaken);
             user.Login = login;
             user.Name = name;
             user.Bio = bio;
-            
-            var salt = HashingTools.GenerateSalt();
-            user.PasswordSalt = HashingTools.SaltToString(salt);
-            user.PasswordHash = HashingTools.HashPassword(password, salt);
+
+            var (hash, salt) = HashingTools.QuickHash(password);
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
             _unitOfWork.Commit();
+
+            return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
         }
     }
 }

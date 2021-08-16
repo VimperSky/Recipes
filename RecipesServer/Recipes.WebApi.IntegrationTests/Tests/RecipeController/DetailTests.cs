@@ -12,18 +12,17 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
     [Collection("TestsCollection")]
     public class DetailTests
     {
+        private const string BaseAddress = "api/recipe";
         private readonly HttpClient _client;
         private readonly TestRecipesDbProvider _recipesDbProvider;
 
-        private const string BaseAddress = "api/recipe";
-        
         public DetailTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
 
             _recipesDbProvider = new TestRecipesDbProvider();
         }
-        
+
         [Theory]
         [InlineData("-1")]
         [InlineData("test")]
@@ -31,21 +30,21 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id={id}");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Get_Detail_NonExistingRecipeId_ReturnsNotFound()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id=555");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Get_Detail_ExistingRecipeId_ReturnsValue()
         {
@@ -61,7 +60,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             result.Should().BeEquivalentTo(_recipesDbProvider.Detail(recipeId));
         }
-        
+
         [Fact]
         public async Task Get_Detail_RecipeIdNotPassed_ReturnsBadRequest()
         {

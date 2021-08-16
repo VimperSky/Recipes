@@ -8,25 +8,36 @@ namespace Recipes.Application.Services.User
     public interface IUserService
     {
         /// <summary>
-        /// Register an account. Throws RegisterException on failure
+        ///     Register an account. Throws RegisterException on failure
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <param name="name"></param>
-        /// <exception cref="UserRegistrationException"></exception>
+        /// <exception cref="UserModificationException"></exception>
         Task<string> Register(string login, string password, string name);
 
         /// <summary>
-        /// Log into existing account. Returns token on success, throws an LoginException on failure
+        ///     Log into existing account. Returns token on success, throws an LoginException on failure
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        /// <exception cref="UserLoginException"></exception>
+        /// <exception cref="UserAuthenticationException"></exception>
         Task<string> Login(string login, string password);
-        
-        Task<UserProfileInfoDto> GetUserProfileInfo(UserClaims userClaims);
 
-        Task SetUserProfileInfo(string login, string password, string name, string bio, UserClaims userClaims);
+        Task<ProfileInfo> GetProfileInfo(UserClaims userClaims);
+
+        /// <summary>
+        ///     Set new profile info for a user
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="bio"></param>
+        /// <param name="userClaims"></param>
+        /// <returns></returns>
+        /// <exception cref="PermissionException"></exception>
+        /// <exception cref="UserModificationException"></exception>
+        Task<string> SetProfileInfo(string login, string password, string name, string bio, UserClaims userClaims);
     }
 }

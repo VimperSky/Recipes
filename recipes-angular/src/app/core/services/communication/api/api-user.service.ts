@@ -42,7 +42,7 @@ export class ApiUserService extends UserService {
     return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile", this.optionsWithAuth);
   }
 
-  setProfileInfo(dto: SetUserProfileInfoDto): Observable<void> {
-    return this.http.patch<void>(environment.backendUrl + basePath + "/profile", dto, this.optionsWithAuth);
+  setProfileInfo(dto: SetUserProfileInfoDto): Observable<string> {
+    return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto, this.optionsWithAuth);
   }
 }

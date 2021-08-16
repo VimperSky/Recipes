@@ -10,5 +10,5 @@ export abstract class UserService {
   abstract register(register: Register): Observable<string>;
   abstract login(login: Login): Observable<string>;
   abstract getProfileInfo(): Observable<UserProfileInfoDto>;
-  abstract setProfileInfo(setProfileInfo: SetUserProfileInfoDto): Observable<void>
+  abstract setProfileInfo(setProfileInfo: SetUserProfileInfoDto): Observable<string>
 }

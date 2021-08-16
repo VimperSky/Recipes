@@ -5,7 +5,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.UsersController.DataProviders
     public static class UserDataProvider
     {
         private static int _id;
-        
+
         public static string GetValidLogin()
         {
             return "Login" + Interlocked.Increment(ref _id);

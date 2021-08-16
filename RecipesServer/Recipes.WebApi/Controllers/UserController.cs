@@ -14,7 +14,7 @@ namespace Recipes.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class UserController: ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -24,60 +24,64 @@ namespace Recipes.WebApi.Controllers
         }
 
         /// <summary>
-        /// Register a new user account
+        ///     Register a new user account
         /// </summary>
         /// <param name="registerDto"></param>
         /// <response code="200">Successfully registered</response>
         /// <response code="400">Invalid input data</response>
         /// <response code="409">Cannot register account with the specified data</response>
         /// <returns></returns>
-        [HttpPost("register")] 
+        [HttpPost("register")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<string>> Register([FromBody]RegisterDto registerDto)
+        public async Task<ActionResult<string>> Register([FromBody] RegisterDto registerDto)
         {
             return await _userService.Register(registerDto.Login, registerDto.Password, registerDto.Name);
         }
-        
+
         /// <summary>
-        /// Log into an existing account
+        ///     Log into an existing account
         /// </summary>
         /// <param name="loginDto"></param>
         /// <response code="200">Successfully logged in</response>
         /// <response code="400">Invalid input data</response>
         /// <response code="401">Invalid credentials</response>
         /// <returns></returns>
-        [HttpPost("login")] 
+        [HttpPost("login")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> Login([FromBody]LoginDto loginDto)
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> Login([FromBody] LoginDto loginDto)
         {
             return await _userService.Login(loginDto.Login, loginDto.Password);
         }
-        
-        
+
         /// <summary>
-        /// Get Profile Info
+        ///     Get profile info of user
         /// </summary>
-        [HttpGet("profile")] 
+        [HttpGet("profile")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserProfileInfoDto>> GetProfileInfo()
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ProfileInfo>> GetProfileInfo()
         {
-            return await _userService.GetUserProfileInfo(HttpContext.User.GetClaims());
+            return await _userService.GetProfileInfo(HttpContext.User.GetClaims());
         }
-        
-        [HttpPatch("profile")] 
+
+        /// <summary>
+        ///     Set profile info for user
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPatch("profile")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserProfileInfoDto>> SetProfileInfo(SetUserProfileInfoDto dto)
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> SetProfileInfo(SetProfileInfo dto)
         {
-            await _userService.SetUserProfileInfo(dto.Login, dto.Password, dto.Name, dto.Bio, HttpContext.User.GetClaims());
-            return Ok();
+            return await _userService.SetProfileInfo(dto.Login, dto.Password, dto.Name, dto.Bio,
+                HttpContext.User.GetClaims());
         }
     }
 }

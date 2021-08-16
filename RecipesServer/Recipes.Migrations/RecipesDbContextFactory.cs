@@ -19,7 +19,7 @@ namespace Recipes.Migrations
             var builder = new DbContextOptionsBuilder<RecipesDbContext>();
 
             var connectionString = configuration.GetConnectionString("MigrationsConnection");
-            
+
             builder.ConfigureDatabase(connectionString);
 
             return new RecipesDbContext(builder.Options);

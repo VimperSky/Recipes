@@ -10,19 +10,18 @@ using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProvider
 
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
-{    
+{
     [Collection("TestsCollection")]
     public class EditTests
     {
-        private readonly HttpClient _client;
-        
         private const string BaseAddress = "api/recipe";
+        private readonly HttpClient _client;
 
         public EditTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
-        
+
         [Fact]
         public async Task Patch_Edit_NoAuthorization_ReturnsUnauthorized()
         {
@@ -32,7 +31,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Patch_Edit_InvalidArguments_ReturnsBadRequest()
         {
@@ -40,14 +39,14 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             var copyDto = TestRecipeEditDto;
             copyDto.Name = null;
             _client.SetAuthToken();
-            
+
             // Act
             var response = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyDto);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Patch_Edit_OwnedRecipe_ReturnsOk()
         {
@@ -59,16 +58,16 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
 
             var copyRecipe = TestRecipeEditDto;
             copyRecipe.Id = recipeId;
-            
+
             // Act && Assert
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            
+
             var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
-            
+
             detail.Should().BeEquivalentTo(copyRecipe);
         }
-        
+
         [Fact]
         public async Task Patch_Edit_ForeignRecipe_ReturnsForbidden()
         {
@@ -81,13 +80,13 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             _client.SetAuthToken(true);
             var copyRecipe = TestRecipeEditDto;
             copyRecipe.Id = recipeId;
-            
+
             // Act && Assert
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-            
+
             var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
-            
+
             detail.Should().BeEquivalentTo(copyRecipe);
         }
     }
