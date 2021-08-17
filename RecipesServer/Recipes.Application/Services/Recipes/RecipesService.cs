@@ -27,15 +27,19 @@ namespace Recipes.Application.Services.Recipes
             _imageFileSaver = imageFileSaver;
         }
 
-        public async Task<RecipesPageDto> GetRecipesPage(string searchString, int pageSize, int page)
+        public async Task<RecipesPageDto> GetRecipesPage(int pageSize, int page,
+            string searchString = null, UserClaims authorClaims = null)
         {
-            var count = await _recipesRepository.GetRecipesCount(searchString);
+            var authorId = authorClaims?.UserId ?? 0;
+            
+            var count = await _recipesRepository.GetRecipesCount(searchString, authorId);
             var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
             if (page > 1 && page > pageCount)
                 throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
 
-            var recipes = await _recipesRepository.GetList(searchString, (page - 1) * pageSize, pageSize);
+            var recipes = await _recipesRepository.GetList((page - 1) * pageSize, pageSize, 
+                searchString, authorId);
             var recipesPage = new RecipesPageDto
             {
                 Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),

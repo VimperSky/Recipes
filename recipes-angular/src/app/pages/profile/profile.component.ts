@@ -6,6 +6,10 @@ import {SetUserProfileInfoDto} from "../../core/dto/user/set-user-profile-info-d
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
+import {RecipesService} from "../../core/services/communication/abstract/recipes.service";
+import {ApiRecipesService} from "../../core/services/communication/api/api-recipes.service";
+import {BaseRecipesManagerService} from "../../core/services/managers/recipes/base-recipes-manager.service";
+import {OwnRecipesManagerService} from "../../core/services/managers/recipes/own-recipes-manager.service";
 
 export const loginErrors: Record<string, string> = {
   'takenLogin': "Логин занят. Выберите другой",
@@ -15,8 +19,14 @@ export const loginErrors: Record<string, string> = {
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['../../shared-styles/form-styles.scss', './profile.component.scss']
-})
+  styleUrls: ['../../shared-styles/form-styles.scss', './profile.component.scss'],
+  providers: [
+    {
+      provide: BaseRecipesManagerService,
+      useClass: OwnRecipesManagerService
+    },
+  ]}
+)
 export class ProfileComponent implements OnInit {
   name = this.fb.control('', [Validators.required])
   login = this.fb.control('', [Validators.required]);

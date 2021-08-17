@@ -6,8 +6,8 @@ import {Observable} from "rxjs";
 import {Register} from "../../../dto/auth/register";
 import {Login} from "../../../dto/auth/login";
 import {UserProfileInfoDto} from "../../../dto/user/user-profile-info-dto";
-import {AuthTokenManagerService} from "../../managers/auth-token-manager.service";
 import {SetUserProfileInfoDto} from "../../../dto/user/set-user-profile-info-dto";
+import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,13 +20,7 @@ const basePath: string = "/api/user"
 
 @Injectable()
 export class ApiUserService extends UserService {
-  get optionsWithAuth() {
-    let newOptions = {headers: new HttpHeaders()};
-    newOptions.headers = newOptions.headers.set('Authorization', 'Bearer ' + this.tokenManager.tokenValue);
-    return newOptions;
-  }
-
-  constructor(private http: HttpClient, private tokenManager: AuthTokenManagerService) {
+  constructor(private http: HttpClient, private paramsBuilder: HttpParamsBuilderService) {
     super();
   }
 
@@ -39,10 +33,10 @@ export class ApiUserService extends UserService {
   }
 
   getProfileInfo(): Observable<UserProfileInfoDto> {
-    return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile", this.optionsWithAuth);
+    return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile", this.paramsBuilder.authOptions);
   }
 
   setProfileInfo(dto: SetUserProfileInfoDto): Observable<string> {
-    return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto, this.optionsWithAuth);
+    return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto, this.paramsBuilder.authOptions);
   }
 }

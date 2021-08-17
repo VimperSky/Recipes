@@ -17,9 +17,11 @@ namespace Recipes.Infrastructure.Repositories
         }
 
 
-        public async Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems)
+        public async Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default,
+            int authorId = default)
         {
-            return await SortBySearchString(_recipesDbContext.Recipes, searchString)
+            return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
+                .SortBySearchString(searchString)
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
@@ -27,10 +29,10 @@ namespace Recipes.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> GetRecipesCount(string searchString)
+        public async Task<int> GetRecipesCount(string searchString, int authorId)
         {
-            // Сортируем по поисковой строке
-            return await SortBySearchString(_recipesDbContext.Recipes, searchString)
+            return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
+                .SortBySearchString(searchString)
                 .CountAsync();
         }
 
@@ -53,13 +55,6 @@ namespace Recipes.Infrastructure.Repositories
         public async Task<Recipe> GetById(int id)
         {
             return await _recipesDbContext.Recipes.FindAsync(id);
-        }
-
-        private static IQueryable<Recipe> SortBySearchString(IQueryable<Recipe> recipes, string searchString)
-        {
-            return searchString == null
-                ? recipes
-                : recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
     }
 }

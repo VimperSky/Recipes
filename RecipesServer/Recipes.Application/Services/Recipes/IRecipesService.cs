@@ -15,8 +15,9 @@ namespace Recipes.Application.Services.Recipes
         /// <param name="searchString"></param>
         /// <param name="pageSize"></param>
         /// <param name="page"></param>
+        /// <param name="authorClaims"></param>
         /// <exception cref="ElementNotFoundException"></exception>
-        Task<RecipesPageDto> GetRecipesPage(string searchString, int pageSize, int page);
+        Task<RecipesPageDto> GetRecipesPage(int pageSize, int page, string searchString = null, UserClaims authorClaims = null);
 
         /// <summary>
         ///     Get detail of recipe with the given id

@@ -84,4 +84,24 @@ export class StubRecipesService extends RecipesService{
     return of(recipePage);
   }
 
+  getMyRecipes(pageSize: number, page: number | null): Observable<RecipesPage> {
+    if (pageSize <= 0)
+      throwError('pageSize should be 1 or more')
+
+    if (page == null || page <= 0)
+      page = 1;
+
+    let result = recipes;
+
+    let pageCount = Math.ceil(result.length / pageSize);
+    if (page > pageCount) {
+      throwError("This page doesn't exist");
+    }
+
+    result = result.slice((page - 1) * pageSize).slice(0, pageSize);
+
+    let recipePage: RecipesPage = {recipes: result, pageCount: pageCount};
+
+    return of(recipePage);
+  }
 }

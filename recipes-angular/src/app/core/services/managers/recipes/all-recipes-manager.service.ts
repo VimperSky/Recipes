@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
-import {RecipePreview} from "../../dto/recipe/recipe-preview";
-import {RecipesPage} from "../../dto/recipe/recipes-page";
-import {RecipesService} from "../communication/abstract/recipes.service";
-import {environment} from "../../../../environments/environment";
+import {RecipePreview} from "../../../dto/recipe/recipe-preview";
+import {RecipesPage} from "../../../dto/recipe/recipes-page";
+import {RecipesService} from "../../communication/abstract/recipes.service";
+import {environment} from "../../../../../environments/environment";
+import {BaseRecipesManagerService} from "./base-recipes-manager.service";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class RecipesManagerService {
+@Injectable()
+export class AllRecipesManagerService extends BaseRecipesManagerService {
   private pageCount: number = 0;
   private currentPage: number = 1;
   private searchString: string | null = null;
@@ -24,13 +23,16 @@ export class RecipesManagerService {
     this.pageCount = recipePage.pageCount;
   }
 
-  constructor(private recipesService: RecipesService) { }
+  constructor(private recipesService: RecipesService) {
+    super();
+  }
 
   public recipeList: RecipePreview[] = [];
 
   public get hasMore(): boolean {
     return this.pageCount > this.currentPage;
   }
+
   public loadInitial() {
     this.recipesService.getRecipeList(environment.pageSize, 1, null).subscribe(result => {
       this.updateRecipeList(result, true);

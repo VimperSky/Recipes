@@ -6,9 +6,9 @@ namespace Recipes.Domain.Repositories
 {
     public interface IRecipesRepository
     {
-        Task<IEnumerable<Recipe>> GetList(string searchString, int skipItems, int takeItems);
-
-        Task<int> GetRecipesCount(string searchString);
+        Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default, int authorId = default);
+ 
+        Task<int> GetRecipesCount(string searchString, int authorId = default);
 
         Task<Recipe> AddRecipe(Recipe recipe);
 
