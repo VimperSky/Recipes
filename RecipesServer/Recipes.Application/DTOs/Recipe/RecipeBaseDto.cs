@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ushort? CookingTimeMin { get; set; }
-        public ushort? Portions { get; set; }
+        public ushort CookingTimeMin { get; set; }
+        public ushort Portions { get; set; }
     }
 }

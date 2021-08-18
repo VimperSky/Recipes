@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Application", "Reci
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Migrations", "Recipes.Migrations\Recipes.Migrations.csproj", "{B4687916-B895-4D3F-96DD-ACC161B7109E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.Application.UnitTests", "Recipes.Application.UnitTests\Recipes.Application.UnitTests.csproj", "{6AB6C798-7052-4325-9459-9B9FF5CDE4BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4687916-B895-4D3F-96DD-ACC161B7109E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB6C798-7052-4325-9459-9B9FF5CDE4BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB6C798-7052-4325-9459-9B9FF5CDE4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB6C798-7052-4325-9459-9B9FF5CDE4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB6C798-7052-4325-9459-9B9FF5CDE4BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

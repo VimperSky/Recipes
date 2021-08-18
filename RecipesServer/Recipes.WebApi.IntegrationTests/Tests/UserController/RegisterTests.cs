@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 using Recipes.Application.Exceptions;
 using Recipes.WebApi.DTO.User;
 using Xunit;
-using static Recipes.WebApi.IntegrationTests.Tests.UsersController.DataProviders.UserDataProvider;
+using static Recipes.WebApi.IntegrationTests.Tests.UserController.DataProviders.UserDataProvider;
 
-namespace Recipes.WebApi.IntegrationTests.Tests.UsersController
+namespace Recipes.WebApi.IntegrationTests.Tests.UserController
 {
     [Collection("TestsCollection")]
     public class RegisterTests
