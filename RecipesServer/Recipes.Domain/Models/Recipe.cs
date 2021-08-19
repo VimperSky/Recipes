@@ -23,8 +23,6 @@ namespace Recipes.Domain.Models
 
         public ICollection<RecipeIngredientsBlock> Ingredients { get; set; } = new List<RecipeIngredientsBlock>();
         
-        public int[] TagIds { get; set; }
-        
-        public List<Tag> Tags { get; set; } 
+        public ICollection<Tag> Tags { get; set; } 
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.Application.MappingProfiles;
 using Recipes.Application.Services.Recipes;
+using Recipes.Application.Services.Tags;
 using Recipes.Application.Services.User;
 
 namespace Recipes.Application
@@ -42,6 +43,7 @@ namespace Recipes.Application
             services.AddSingleton(CreateMapper());
             services.AddScoped<JwtHandler>();
             services.AddScoped<IImageFileSaver, ImageFileSaver>();
+            services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipesService, RecipesService>();
         }

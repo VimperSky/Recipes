@@ -10,6 +10,7 @@ namespace Recipes.Infrastructure
     {
         public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
+            services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

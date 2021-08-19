@@ -2,16 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Recipes.Infrastructure;
 
-namespace Recipes.Infrastructure.Migrations
+namespace Recipes.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20210819160613_TagAddIdAgain")]
+    partial class TagAddIdAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +77,10 @@ namespace Recipes.Infrastructure.Migrations
                         .HasColumnType("text[]")
                         .HasColumnName("steps");
 
+                    b.Property<int[]>("TagIds")
+                        .HasColumnType("integer[]")
+                        .HasColumnName("tag_ids");
+
                     b.HasKey("Id")
                         .HasName("pk_recipe");
 
@@ -90,13 +96,9 @@ namespace Recipes.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("value");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_selected");
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     b.HasKey("Value")
                         .HasName("pk_tag");

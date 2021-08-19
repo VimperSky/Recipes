@@ -39,6 +39,7 @@ import { ErrorComponent } from './embedded-components/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
 import {MainComponent} from "./pages/main/main.component";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -62,28 +63,29 @@ import {MainComponent} from "./pages/main/main.component";
     ActivityOverviewComponent,
     MainComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    AutosizeModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        throwNoTokenError: true,
-      },
-    })
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        AutosizeModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                throwNoTokenError: true,
+            },
+        }),
+        MatChipsModule
+    ],
   providers: [
     {
       provide: RecipesService,

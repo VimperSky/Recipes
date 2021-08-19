@@ -1,16 +1,23 @@
-﻿namespace Recipes.Domain.Models
+﻿using System.Collections.Generic;
+
+namespace Recipes.Domain.Models
 {
     public class Tag
     {
-        public int Id { get; init; }
-        
         public string Value { get; set; }
 
-        public static Tag Create(string value)
+        public bool IsSelected { get; set; } = false;
+
+        public string Description { get; set; } = null;
+
+        public ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
+
+        public static Tag Create(string value, bool isSelected = false)
         {
            return new Tag
            {
-               Value = value
+               Value = value,
+               IsSelected = isSelected
            };
         }
     }

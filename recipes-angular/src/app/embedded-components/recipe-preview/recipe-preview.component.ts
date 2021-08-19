@@ -33,7 +33,6 @@ export class RecipePreviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.recipe);
   }
 
 }

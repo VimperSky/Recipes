@@ -32,14 +32,19 @@ namespace Recipes.Infrastructure
             Tag.Create("десерты"),
             Tag.Create("сливки"),
             Tag.Create("вторые блюда"),
-            Tag.Create("мясо"),
             Tag.Create("соевый соус"),
             Tag.Create("завтрак"),
             Tag.Create("блины"),
             Tag.Create("вишня"),
             Tag.Create("мороженое"),
             Tag.Create("сладости"),
-            Tag.Create("бисквит")
+            Tag.Create("бисквит"),
+            Tag.Create("мясо", true),
+            Tag.Create("деликатесы", true),
+            Tag.Create("пироги", true),
+            Tag.Create("рыба", true),
+            Tag.Create("пост", true),
+            Tag.Create("пасха2021", true),
         };
         
         private static readonly Dictionary<string, Tag> TagsDict = Tags.ToDictionary(x => x.Value, x => x);

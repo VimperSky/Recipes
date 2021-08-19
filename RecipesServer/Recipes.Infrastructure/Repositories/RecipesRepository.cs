@@ -33,6 +33,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
                 .SortBySearchString(searchString)
+                .Include(x => x.Tags)
                 .CountAsync();
         }
 
@@ -40,7 +41,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             if (recipe.Id != default)
                 recipe.Id = default;
-
+            
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
             return addedRecipe.Entity;
         }

@@ -47,7 +47,18 @@
         <div class="input-block-with-margin">
           <mat-form-field class="wide-mat-form-field">
             <mat-label>Теги</mat-label>
-            <input required type="text" matInput [formControl]="recipeName">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let tag of tags" [selectable]="true"
+                        [removable]="true" (removed)="removeTag(tag)">
+                {{tag}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Добавить тег..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="true"
+                     (matChipInputTokenEnd)="addTag($event)">
+            </mat-chip-list>
           </mat-form-field>
         </div>
 

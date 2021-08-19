@@ -2,41 +2,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Recipes.Infrastructure;
 
-namespace Recipes.Infrastructure.Migrations
+namespace Recipes.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20210819154934_TestRemoveTagId")]
+    partial class TestRemoveTagId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("RecipeTag", b =>
-                {
-                    b.Property<int>("RecipesId")
-                        .HasColumnType("integer")
-                        .HasColumnName("recipes_id");
-
-                    b.Property<string>("TagsValue")
-                        .HasColumnType("text")
-                        .HasColumnName("tags_value");
-
-                    b.HasKey("RecipesId", "TagsValue")
-                        .HasName("pk_recipe_tag");
-
-                    b.HasIndex("TagsValue")
-                        .HasDatabaseName("ix_recipe_tag_tags_value");
-
-                    b.ToTable("recipe_tag");
-                });
 
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
@@ -75,6 +58,10 @@ namespace Recipes.Infrastructure.Migrations
                         .HasColumnType("text[]")
                         .HasColumnName("steps");
 
+                    b.Property<int[]>("TagIds")
+                        .HasColumnType("integer[]")
+                        .HasColumnName("tag_ids");
+
                     b.HasKey("Id")
                         .HasName("pk_recipe");
 
@@ -90,16 +77,15 @@ namespace Recipes.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("value");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_selected");
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("recipe_id");
 
                     b.HasKey("Value")
                         .HasName("pk_tag");
+
+                    b.HasIndex("RecipeId")
+                        .HasDatabaseName("ix_tag_recipe_id");
 
                     b.HasIndex("Value")
                         .IsUnique()
@@ -150,23 +136,6 @@ namespace Recipes.Infrastructure.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("RecipeTag", b =>
-                {
-                    b.HasOne("Recipes.Domain.Models.Recipe", null)
-                        .WithMany()
-                        .HasForeignKey("RecipesId")
-                        .HasConstraintName("fk_recipe_tag_recipes_recipes_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Recipes.Domain.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsValue")
-                        .HasConstraintName("fk_recipe_tag_tag_tags_value")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
                     b.HasOne("Recipes.Domain.Models.User", "Author")
@@ -207,6 +176,19 @@ namespace Recipes.Infrastructure.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.Tag", b =>
+                {
+                    b.HasOne("Recipes.Domain.Models.Recipe", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("RecipeId")
+                        .HasConstraintName("fk_tag_recipes_recipe_id");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

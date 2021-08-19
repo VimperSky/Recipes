@@ -6,7 +6,10 @@ namespace Recipes.Domain.Repositories
 {
     public interface ITagRepository
     {
-        Task<IEnumerable<Tag>> GetSelectedTags();
-        Task<IEnumerable<Tag>> VerifyTags(string[] tags);
+        Task<List<Tag>> GetSelectedTags();
+        
+        Task<List<Tag>> GetTags(string[] tags);
+        
+        Task<Tag> CreateTag(string tag);
     }
 }
