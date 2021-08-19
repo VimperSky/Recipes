@@ -5,12 +5,10 @@ namespace Recipes.WebApi.ExceptionHandling
 {
     public class ErrorDetails
     {
-        [JsonPropertyName("status")]
-        public int Status { get; set; }
-        
-        [JsonPropertyName("detail")]
-        public string Message { get; set; }
-        
+        [JsonPropertyName("status")] public int Status { get; set; }
+
+        [JsonPropertyName("detail")] public string Message { get; set; }
+
         public override string ToString()
         {
             return JsonSerializer.Serialize(this);

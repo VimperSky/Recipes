@@ -4,7 +4,7 @@ using Recipes.Domain.Models;
 
 namespace Recipes.Application.MappingProfiles
 {
-    public class RecipeMappingProfile: Profile
+    public class RecipeMappingProfile : Profile
     {
         public RecipeMappingProfile()
         {
@@ -12,6 +12,11 @@ namespace Recipes.Application.MappingProfiles
             CreateMap<Recipe, RecipePreviewDto>();
             CreateMap<Recipe, RecipeDetailDto>();
             
+            // Нужны для тестов, как минимум
+            CreateMap<Recipe, RecipeCreateDto>();
+            CreateMap<Recipe, RecipeEditDto>();
+            // Конец
+
             CreateMap<IngredientDto, RecipeIngredientsBlock>();
             CreateMap<RecipeCreateDto, Recipe>();
             CreateMap<RecipeEditDto, Recipe>();

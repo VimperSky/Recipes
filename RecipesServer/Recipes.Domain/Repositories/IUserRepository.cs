@@ -7,6 +7,8 @@ namespace Recipes.Domain.Repositories
     {
         Task<User> CreateUser(string login, string passwordHash, string passwordSalt, string name);
 
-        Task<User> GetUser(string login);
+        Task<User> GetUserByLogin(string login);
+
+        Task<User> GetUserById(int id);
     }
 }

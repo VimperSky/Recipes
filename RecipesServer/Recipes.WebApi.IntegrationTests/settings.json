@@ -1,18 +1,18 @@
 ﻿{
-    "Logging": {
-        "LogLevel": {
-            "Default": "Debug",
-            "System": "Information",
-            "Microsoft": "Information"
-        }
-    },
-    "ConnectionStrings": {
-        "DefaultConnection": "Host=localhost;Database=recipes_testdb;Username=postgres;Password=admin"
-    },
-    "JWTSettings": {
-        "SecurityKey": "SuperSecretRecipeKey",
-        "ValidIssuer": "RecipesApi",
-        "ValidAudience": "https://localhost:5001",
-        "ExpiryInMinutes": 60
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
     }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=recipes_testdb;Username=postgres;Password=admin"
+  },
+  "JWTSettings": {
+    "SecurityKey": "SuperSecretRecipeKey",
+    "ValidIssuer": "RecipesApi",
+    "ValidAudience": "https://localhost:5001",
+    "ExpiryInMinutes": 60
+  }
 }

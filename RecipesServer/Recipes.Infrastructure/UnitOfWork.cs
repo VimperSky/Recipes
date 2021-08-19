@@ -2,7 +2,7 @@
 
 namespace Recipes.Infrastructure
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly RecipesDbContext _dbContext;
 
@@ -10,7 +10,7 @@ namespace Recipes.Infrastructure
         {
             _dbContext = dbContext;
         }
-        
+
         public void Commit()
         {
             _dbContext.SaveChanges();

@@ -10,10 +10,10 @@ namespace Recipes.Infrastructure
     {
         public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
-            services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -22,7 +22,7 @@ namespace Recipes.Infrastructure
             serviceCollection.AddDbContext<RecipesDbContext>(options =>
                 ConfigureDatabase(options, connectionString));
         }
-        
+
         public static void ConfigureDatabase(this DbContextOptionsBuilder dbOptions, string connectionString)
         {
             dbOptions.UseNpgsql(connectionString, b =>

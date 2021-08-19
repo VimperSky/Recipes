@@ -9,15 +9,14 @@ using Xunit;
 using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders.RecipeDataProvider;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
-{    
+{
     [Collection("TestsCollection")]
     public class CreateTests
     {
+        private const string BaseAddress = "api/recipe";
         private readonly HttpClient _client;
 
-        private const string BaseAddress = "api/recipe";
-        
-        
+
         public CreateTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
@@ -32,7 +31,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Post_Create_InvalidArguments_ReturnsBadRequest()
         {
@@ -40,7 +39,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             var copyDto = TestRecipeCreateDto;
             copyDto.Name = null;
             _client.SetAuthToken();
-            
+
             // Act
             var response = await _client.PostAsJsonAsync($"{BaseAddress}/create", copyDto);
 
@@ -48,7 +47,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        
+
         [Fact]
         public async Task Post_Create_Authorized_ReturnsCreated()
         {
@@ -58,10 +57,12 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Act && Assert
             var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
-            
-            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id=" + 
-                                                JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync()));
-            
+
+            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id=" +
+                                                                         JsonConvert.DeserializeObject<int>(
+                                                                             await createdRecipe.Content
+                                                                                 .ReadAsStringAsync()));
+
             detail.Should().BeEquivalentTo(TestRecipeCreateDto);
         }
     }

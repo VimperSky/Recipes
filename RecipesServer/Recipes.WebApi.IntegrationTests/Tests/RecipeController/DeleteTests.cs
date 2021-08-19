@@ -8,19 +8,19 @@ using Xunit;
 using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders.RecipeDataProvider;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
-{    
+{
     [Collection("TestsCollection")]
     public class DeleteTests
     {
         private const string BaseAddress = "api/recipe";
 
         private readonly HttpClient _client;
-        
+
         public DeleteTests(TestWebFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
-        
+
         [Fact]
         public async Task Delete_NoIdPassed_ReturnsBadRequest()
         {
@@ -30,7 +30,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Delete_NoAuthorization_ReturnsUnauthorized()
         {
@@ -40,33 +40,33 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Delete_NotOwnedRecipe_ReturnsForbidden()
         {
             // Arrange
             _client.SetAuthToken();
-            
+
             // Act
             var response = await _client.DeleteAsync($"{BaseAddress}/delete?id=1");
 
             // Assert
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Delete_NonExistingRecipe_ReturnsNotFound()
         {
             // Arrange
             _client.SetAuthToken();
-            
+
             // Act
             var response = await _client.DeleteAsync($"{BaseAddress}/delete?id=777");
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Delete_OwnedRecipe_ReturnsOk()
         {

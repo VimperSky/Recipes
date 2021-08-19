@@ -4,15 +4,15 @@ using Recipes.Infrastructure.Configurations;
 
 namespace Recipes.Infrastructure
 {
-    public class RecipesDbContext: DbContext
+    public class RecipesDbContext : DbContext
     {
-        public DbSet<Recipe> Recipes { get; init; }
-        public DbSet<User> Users { get; init; }
-
         public RecipesDbContext(DbContextOptions<RecipesDbContext> options) : base(options)
         {
         }
-        
+
+        public DbSet<Recipe> Recipes { get; init; }
+        public DbSet<User> Users { get; init; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

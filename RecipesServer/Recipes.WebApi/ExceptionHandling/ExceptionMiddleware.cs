@@ -9,13 +9,15 @@ namespace Recipes.WebApi.ExceptionHandling
 {
     public class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly RequestDelegate _next;
+
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _logger = logger;
             _next = next;
         }
+
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -27,6 +29,7 @@ namespace Recipes.WebApi.ExceptionHandling
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
+
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var statusCode = HttpStatusCode.InternalServerError;
@@ -36,9 +39,9 @@ namespace Recipes.WebApi.ExceptionHandling
             {
                 statusCode = exception switch
                 {
-                    UserRegistrationException => HttpStatusCode.Conflict,
-                    UserLoginException => HttpStatusCode.Unauthorized,
-                    ResourceNotFoundException => HttpStatusCode.NotFound,
+                    UserModificationException => HttpStatusCode.Conflict,
+                    UserAuthenticationException => HttpStatusCode.Unauthorized,
+                    ElementNotFoundException => HttpStatusCode.NotFound,
                     PermissionException => HttpStatusCode.Forbidden,
                     _ => HttpStatusCode.InternalServerError
                 };
@@ -51,7 +54,7 @@ namespace Recipes.WebApi.ExceptionHandling
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
-            
+
             await context.Response.WriteAsync(new ErrorDetails
             {
                 Status = context.Response.StatusCode,

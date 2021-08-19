@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Recipes.Domain.Models
 {
     public class Recipe
     {
         public int Id { get; set; }
-        
+
         public User Author { get; set; }
-        
+
         public int? AuthorId { get; set; }
-        
+
         public string ImagePath { get; set; }
 
         public string Name { get; set; }
@@ -18,7 +19,7 @@ namespace Recipes.Domain.Models
         public ushort CookingTimeMin { get; set; }
         public ushort Portions { get; set; }
 
-        public string[] Steps { get; set; } = System.Array.Empty<string>();
+        public string[] Steps { get; set; } = Array.Empty<string>();
 
         public ICollection<RecipeIngredientsBlock> Ingredients { get; set; } = new List<RecipeIngredientsBlock>();
     }

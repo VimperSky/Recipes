@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {RecipesManagerService} from "../../core/services/managers/recipes-manager.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {BaseRecipesManagerService} from "../../core/services/managers/recipes/base-recipes-manager.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,8 +7,9 @@ import {RecipesManagerService} from "../../core/services/managers/recipes-manage
   styleUrls: ['./recipe-list.component.scss']
 })
 export class RecipeListComponent implements OnInit {
-
-  constructor(public recipesManager: RecipesManagerService) { }
+  constructor(public recipesManager: BaseRecipesManagerService) {
+    console.log (recipesManager)
+  }
 
   ngOnInit(): void {
     this.recipesManager.loadInitial();

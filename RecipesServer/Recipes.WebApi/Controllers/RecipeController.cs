@@ -10,12 +10,12 @@ using Recipes.WebApi.DTO.Recipe;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
-{   
+{
     [ApiController]
     [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class RecipeController: ControllerBase
+    public class RecipeController : ControllerBase
     {
         private readonly IRecipesService _recipesService;
 
@@ -24,9 +24,9 @@ namespace Recipes.WebApi.Controllers
             _recipesService = recipesService;
         }
 
-        
+
         /// <summary>
-        /// Get detail information about recipe
+        ///     Get detail information about recipe
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -34,18 +34,19 @@ namespace Recipes.WebApi.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(RecipeDetailDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RecipeDetailDto>> GetRecipeDetail([FromQuery][Required, Range(1, int.MaxValue)]int id)
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RecipeDetailDto>> GetRecipeDetail(
+            [FromQuery] [Required] [Range(1, int.MaxValue)] int id)
         {
             var detail = await _recipesService.GetRecipeDetail(id);
             if (detail == null)
                 return NotFound();
-            
+
             return detail;
         }
 
         /// <summary>
-        /// Create a new recipe
+        ///     Create a new recipe
         /// </summary>
         /// <param name="recipeCreateDto"></param>
         /// <returns></returns>
@@ -53,14 +54,14 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<int>> CreateRecipe([FromBody]RecipeCreateDto recipeCreateDto)
+        public async Task<ActionResult<int>> CreateRecipe([FromBody] RecipeCreateDto recipeCreateDto)
         {
-            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetPermissions());
+            var recipeId = await _recipesService.CreateRecipe(recipeCreateDto, HttpContext.User.GetClaims());
             return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
         }
-        
+
         /// <summary>
-        /// Edit an existing recipe
+        ///     Edit an existing recipe
         /// </summary>
         /// <param name="recipeEditDto"></param>
         /// <returns></returns>
@@ -70,14 +71,14 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> EditRecipe([FromBody]RecipeEditDto recipeEditDto)
+        public async Task<ActionResult> EditRecipe([FromBody] RecipeEditDto recipeEditDto)
         {
-            await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetPermissions());
+            await _recipesService.EditRecipe(recipeEditDto, HttpContext.User.GetClaims());
             return Ok();
         }
-        
+
         /// <summary>
-        /// Delete an existing recipe
+        ///     Delete an existing recipe
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -85,16 +86,16 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteRecipe([FromQuery, Required]int id)
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteRecipe([FromQuery] [Required] int id)
         {
-            await _recipesService.DeleteRecipe(id, HttpContext.User.GetPermissions());
+            await _recipesService.DeleteRecipe(id, HttpContext.User.GetClaims());
             return Ok();
         }
 
         /// <summary>
-        /// Upload image for the recipe 
+        ///     Upload image for the recipe
         /// </summary>
         /// <param name="uploadImageDtoDto"></param>
         /// <returns></returns>
@@ -102,12 +103,13 @@ namespace Recipes.WebApi.Controllers
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(ErrorDetails),StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UploadImage([FromForm]UploadImageDto uploadImageDtoDto)
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UploadImage([FromForm] UploadImageDto uploadImageDtoDto)
         {
-            await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File, HttpContext.User.GetPermissions());
+            await _recipesService.UploadImage(uploadImageDtoDto.RecipeId, uploadImageDtoDto.File,
+                HttpContext.User.GetClaims());
             return Ok();
         }
     }

@@ -28,8 +28,8 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {LoginComponent} from './embedded-components/auth/login/login.component';
 import {RegisterComponent} from './embedded-components/auth/register/register.component';
-import {AuthService} from "./core/services/communication/abstract/auth.service";
-import {ApiAuthService} from "./core/services/communication/api/api-auth.service";
+import {UserService} from "./core/services/communication/abstract/user.service";
+import {ApiUserService} from "./core/services/communication/api/api-user.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
 import {AutosizeModule} from "ngx-autosize";
@@ -94,8 +94,8 @@ import {MainComponent} from "./pages/main/main.component";
       useClass: ApiRecipeService
     },
     {
-      provide: AuthService,
-      useClass: ApiAuthService
+      provide: UserService,
+      useClass: ApiUserService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

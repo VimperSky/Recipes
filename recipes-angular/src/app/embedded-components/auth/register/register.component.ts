@@ -10,7 +10,7 @@ import {
 } from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LoginComponent} from "../login/login.component";
-import {AuthService} from "../../../core/services/communication/abstract/auth.service";
+import {UserService} from "../../../core/services/communication/abstract/user.service";
 import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<RegisterComponent>,
-              private authService: AuthService,
+              private authService: UserService,
               private snackBar: MatSnackBar,
               private errorHandlingService: ErrorHandlingService,
               private tokenManagerService: AuthTokenManagerService,

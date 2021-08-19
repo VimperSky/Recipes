@@ -14,9 +14,9 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
     [Collection("TestsCollection")]
     public class RecipesControllerTest
     {
+        private const string BaseAddress = "api/recipes";
         private readonly HttpClient _client;
         private readonly TestRecipesDbProvider _recipesDbProvider;
-        private const string BaseAddress = "api/recipes";
 
         public RecipesControllerTest(TestWebFactory<Startup> factory)
         {
@@ -24,18 +24,18 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             _recipesDbProvider = new TestRecipesDbProvider();
         }
-        
-        
+
+
         [Fact]
         public async Task Get_RecipeList_NoPageSizePassed_ReturnsBadRequest()
         {
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
-        
+
         [Theory]
         [InlineData("test")]
         [InlineData("-5")]
@@ -46,15 +46,15 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = page;
-            
+
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
-        
-        
+
+
         [Fact]
         public async Task Get_RecipeList_NonExistingPage_ReturnsNotFound()
         {
@@ -62,32 +62,32 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = "5";
-            
+
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
-        
+
         [Fact]
         public async Task Get_RecipeList_NoPagePassed_ReturnsFirstPage()
         {
             // Arrange
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pageSize"] = RecipesConstants.PageSize.ToString();
-            
+
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
             var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
 
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             result.Recipes.Should().BeEquivalentTo(_recipesDbProvider.List.Take(RecipesConstants.PageSize));
         }
 
-        
+
         [Fact]
         public async Task Get_RecipeList_PassedExistingPage_ReturnThisPage()
         {
@@ -95,7 +95,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["page"] = "1";
-            
+
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
             var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
@@ -104,8 +104,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             result.Recipes.Should().BeEquivalentTo(_recipesDbProvider.List.Take(RecipesConstants.PageSize));
         }
-        
-        
+
+
         [Fact]
         public async Task Get_RecipeList_SearchForNonExistingItems_ReturnEmptyRecipeList()
         {
@@ -122,17 +122,17 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Empty(result.Recipes);
         }
-        
+
         [Fact]
         public async Task Get_RecipeList_SearchForExistingItems_ReturnExpectedRecipeList()
         {
             // Arrange
             const string searchString = "па";
-            
+
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pageSize"] = RecipesConstants.PageSize.ToString();
             query["searchString"] = searchString;
-            
+
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
             var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());

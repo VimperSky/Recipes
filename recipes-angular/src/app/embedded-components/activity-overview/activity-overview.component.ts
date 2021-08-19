@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-activity-overview',
@@ -8,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class ActivityOverviewComponent implements OnInit {
 
   constructor() { }
+
+  // Пока что делать смысла нет, без ActivityController это работать не будет
+  ownRecipes: number = 0;
+  likedRecipes: number = 0;
+  starredRecipes: number = 0;
 
   ngOnInit(): void {
   }
