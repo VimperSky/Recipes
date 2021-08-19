@@ -142,7 +142,8 @@ export class RecipeAddEditComponent implements OnInit {
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value
+        portions: this.portions.value == "" ? 0: this.portions.value,
+        tags: []
       };
 
       this.recipeService.edit(dto).subscribe(() => {
@@ -168,7 +169,8 @@ export class RecipeAddEditComponent implements OnInit {
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value
+        portions: this.portions.value == "" ? 0: this.portions.value,
+        tags: []
       };
 
       this.recipeService.create(dto).subscribe((id: number) => {

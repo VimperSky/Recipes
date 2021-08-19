@@ -22,5 +22,9 @@ namespace Recipes.Domain.Models
         public string[] Steps { get; set; } = Array.Empty<string>();
 
         public ICollection<RecipeIngredientsBlock> Ingredients { get; set; } = new List<RecipeIngredientsBlock>();
+        
+        public int[] TagIds { get; set; }
+        
+        public List<Tag> Tags { get; set; } 
     }
 }

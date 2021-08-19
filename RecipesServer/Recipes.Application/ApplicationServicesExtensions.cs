@@ -1,8 +1,10 @@
 ﻿using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Recipes.Application.MappingProfiles;
 using Recipes.Application.Services.Recipes;
 using Recipes.Application.Services.User;
 
@@ -37,12 +39,21 @@ namespace Recipes.Application
 
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ApplicationServicesExtensions));
-
+            services.AddSingleton(CreateMapper());
             services.AddScoped<JwtHandler>();
             services.AddScoped<IImageFileSaver, ImageFileSaver>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipesService, RecipesService>();
+        }
+
+        public static IMapper CreateMapper()
+        {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<UserMappingProfile>();
+                cfg.AddProfile<RecipeMappingProfile>();
+            });
+            return configuration.CreateMapper();
         }
     }
 }

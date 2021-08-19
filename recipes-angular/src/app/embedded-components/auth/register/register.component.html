@@ -8,14 +8,14 @@
     <div mat-dialog-content>
       <form [formGroup]="registerForm" >
         <div>
-          <mat-form-field>
+          <mat-form-field class="wide-mat-form-field">
             <mat-label>Имя</mat-label>
             <input required type="text" matInput [formControl]="name">
           </mat-form-field>
         </div>
 
         <div class="block-with-margin">
-          <mat-form-field>
+          <mat-form-field class="wide-mat-form-field">
             <mat-label>Логин</mat-label>
             <input required type="text" matInput [formControl]="login">
             <mat-error *ngIf="loginHasError">{{getLoginErrorText()}}</mat-error>
@@ -23,12 +23,12 @@
         </div>
 
         <div class="block-with-margin" id="password-group">
-          <mat-form-field id="password-first">
+          <mat-form-field id="password-first" class="wide-mat-form-field">
             <mat-label>Пароль</mat-label>
             <input required type="password" matInput [formControl]="password" >
           </mat-form-field>
 
-          <mat-form-field id="password-second">
+          <mat-form-field id="password-second" class="wide-mat-form-field">
             <mat-label>Повторите пароль</mat-label>
             <input required type="password" matInput [formControl]="confirmPassword">
           </mat-form-field>

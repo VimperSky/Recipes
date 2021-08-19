@@ -8,6 +8,7 @@ import {RecipeEdit} from "../../../dto/recipe/recipe-edit";
 const testImagesPath =  "../../../assets/images/test/";
 const recipeDetail: RecipeDetail = {
   id: 1,
+  authorId: 1,
   imagePath: testImagesPath + "r1.png",
   name: "Клубичная Панна-Котта",
   description: "Десерт, который невероятно легко и быстро готовится. " +
@@ -32,7 +33,7 @@ const recipeDetail: RecipeDetail = {
     'Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник ' +
     'до полного застывания клубничного желе. Готовую панна коту подаем с фруктами.'
   ],
-  ingredients: [
+   ingredients: [
     {
       header: 'Для панна котты',
       value: 'Сливки-20-30% - 500мл.\n' +
@@ -49,7 +50,8 @@ const recipeDetail: RecipeDetail = {
         'Сахар - 3ст.л.\n' +
         'Ванильный сахар - 2 ч.л.'
     }
-  ]
+  ],
+  tags: ["десерты", "клубника", "сливки"]
 };
 
 @Injectable({

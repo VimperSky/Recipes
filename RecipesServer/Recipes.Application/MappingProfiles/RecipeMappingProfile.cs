@@ -8,14 +8,15 @@ namespace Recipes.Application.MappingProfiles
     {
         public RecipeMappingProfile()
         {
+            CreateMap<Tag, string>().ConvertUsing(x => x.Value);
+            CreateMap<string, Tag>().ConvertUsing(x => new Tag {Value = x});
+            
             CreateMap<RecipeIngredientsBlock, IngredientDto>();
             CreateMap<Recipe, RecipePreviewDto>();
             CreateMap<Recipe, RecipeDetailDto>();
             
-            // Нужны для тестов, как минимум
             CreateMap<Recipe, RecipeCreateDto>();
             CreateMap<Recipe, RecipeEditDto>();
-            // Конец
 
             CreateMap<IngredientDto, RecipeIngredientsBlock>();
             CreateMap<RecipeCreateDto, Recipe>();

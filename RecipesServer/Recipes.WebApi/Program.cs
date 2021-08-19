@@ -10,7 +10,7 @@ namespace Recipes.WebApi
         {
             var host = CreateHostBuilder(args).Build();
 
-            DbInitializer.CreateDbIfNotExists(host);
+            StartDataDbInitializer.CreateDbIfNotExists(host);
 
             host.Run();
         }

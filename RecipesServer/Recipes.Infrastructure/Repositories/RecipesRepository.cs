@@ -25,7 +25,7 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
-                .Include(x => x.Ingredients)
+                .Include(x => x.Tags)
                 .ToListAsync();
         }
 
@@ -54,7 +54,9 @@ namespace Recipes.Infrastructure.Repositories
 
         public async Task<Recipe> GetById(int id)
         {
-            return await _recipesDbContext.Recipes.FindAsync(id);
+            return await _recipesDbContext.Recipes
+                .Include(x => x.Tags)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

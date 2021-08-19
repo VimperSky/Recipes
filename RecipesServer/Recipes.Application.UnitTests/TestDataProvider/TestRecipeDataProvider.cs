@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using AutoMapper;
 using Recipes.Application.DTOs.Recipe;
@@ -21,9 +22,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         
         static TestRecipeDataProvider()
         {
-            var mapperConfiguration = new MapperConfiguration(cfg =>
-                cfg.AddMaps(typeof(ApplicationServicesExtensions)));
-            MapperInst = mapperConfiguration.CreateMapper();
+            MapperInst = ApplicationServicesExtensions.CreateMapper();
         }
         
         public static Recipe MainRecipe => new()
@@ -51,7 +50,8 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             CookingTimeMin = 60,
             Portions = 5,
             Id = MainRecipeId,
-            AuthorId = MainUserId
+            AuthorId = MainUserId,
+            Tags = new List<Tag>()
         };
         
         public static Recipe OtherRecipe => new()
@@ -72,7 +72,8 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             CookingTimeMin = 33,
             Portions = 7,
             Id = OtherRecipeId,
-            AuthorId = OtherUserId
+            AuthorId = OtherUserId,
+            Tags = new List<Tag>()
         };
 
         public static RecipeCreateDto RecipeCreateDto => MapperInst.Map<RecipeCreateDto>(MainRecipe);

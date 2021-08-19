@@ -32,7 +32,7 @@ namespace Recipes.WebApi.IntegrationTests
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
-                TestRecipesDbProvider.FillDbWithData(db);
+                StartDataDbInitializer.FillDbWithData(db);
                 TestUserDbProvider.FillDbWithData(db);
                 db.SaveChanges();
 
