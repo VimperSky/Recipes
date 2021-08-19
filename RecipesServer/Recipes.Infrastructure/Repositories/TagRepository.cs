@@ -17,9 +17,9 @@ namespace Recipes.Infrastructure.Repositories
             _recipesDbContext = recipesDbContext;
         }
         
-        public async Task<List<Tag>> GetSelectedTags()
+        public async Task<List<Tag>> GetTagsByLevel(TagLevel tagLevel)
         {
-            return await _recipesDbContext.Tags.Where(x => x.IsSelected).ToListAsync();
+            return await _recipesDbContext.Tags.Where(x => x.TagLevel == tagLevel).ToListAsync();
         }
 
         public async Task<List<Tag>> GetTags(string[] tags)

@@ -6,18 +6,18 @@ namespace Recipes.Domain.Models
     {
         public string Value { get; set; }
 
-        public bool IsSelected { get; set; } = false;
+        public TagLevel TagLevel { get; set; } = TagLevel.Regular;
 
         public string Description { get; set; } = null;
 
         public ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 
-        public static Tag Create(string value, bool isSelected = false)
+        public static Tag Create(string value, TagLevel tagLevel = TagLevel.Regular)
         {
            return new Tag
            {
                Value = value,
-               IsSelected = isSelected
+               TagLevel = tagLevel
            };
         }
     }

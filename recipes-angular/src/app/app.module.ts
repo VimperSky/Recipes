@@ -40,6 +40,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
 import {MainComponent} from "./pages/main/main.component";
 import {MatChipsModule} from "@angular/material/chips";
+import {TagsService} from "./core/services/communication/abstract/tags.service";
+import {ApiTagsService} from "./core/services/communication/api/api-tags";
 
 
 @NgModule({
@@ -98,6 +100,10 @@ import {MatChipsModule} from "@angular/material/chips";
     {
       provide: UserService,
       useClass: ApiUserService
+    },
+    {
+      provide: TagsService,
+      useClass: ApiTagsService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

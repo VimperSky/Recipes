@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Recipes.Application.DTOs.Tags;
 using Recipes.Domain.Models;
 
 namespace Recipes.Application.Services.Tags
@@ -12,5 +13,7 @@ namespace Recipes.Application.Services.Tags
         /// <param name="tags"></param>
         /// <returns></returns>
         public Task<List<Tag>> VerifyTags(string[] tags);
+
+        public Task<SuggestedTagsDto> GetSuggestedSearchTags();
     }
 }

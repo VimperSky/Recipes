@@ -10,19 +10,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.0"/>
-        <PackageReference Include="Hellang.Middleware.SpaFallback" Version="2.0.0"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.0" />
+        <PackageReference Include="Hellang.Middleware.SpaFallback" Version="2.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Recipes.Application\Recipes.Application.csproj"/>
-        <ProjectReference Include="..\Recipes.Domain\Recipes.Domain.csproj"/>
-        <ProjectReference Include="..\Recipes.Infrastructure\Recipes.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Recipes.Application\Recipes.Application.csproj" />
+        <ProjectReference Include="..\Recipes.Domain\Recipes.Domain.csproj" />
+        <ProjectReference Include="..\Recipes.Infrastructure\Recipes.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

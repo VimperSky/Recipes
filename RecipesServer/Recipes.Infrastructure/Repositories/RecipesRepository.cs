@@ -15,8 +15,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-
-
+        
         public async Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default,
             int authorId = default)
         {

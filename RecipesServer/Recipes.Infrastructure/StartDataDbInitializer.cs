@@ -39,12 +39,12 @@ namespace Recipes.Infrastructure
             Tag.Create("мороженое"),
             Tag.Create("сладости"),
             Tag.Create("бисквит"),
-            Tag.Create("мясо", true),
-            Tag.Create("деликатесы", true),
-            Tag.Create("пироги", true),
-            Tag.Create("рыба", true),
-            Tag.Create("пост", true),
-            Tag.Create("пасха2021", true),
+            Tag.Create("мясо", TagLevel.SearchSuggested),
+            Tag.Create("деликатесы", TagLevel.SearchSuggested),
+            Tag.Create("пироги", TagLevel.SearchSuggested),
+            Tag.Create("рыба", TagLevel.SearchSuggested),
+            Tag.Create("пост", TagLevel.SearchSuggested),
+            Tag.Create("пасха2021", TagLevel.SearchSuggested),
         };
         
         private static readonly Dictionary<string, Tag> TagsDict = Tags.ToDictionary(x => x.Value, x => x);
@@ -249,6 +249,9 @@ namespace Recipes.Infrastructure
         {
             if (dbContext.Recipes.Any()) return; // DB has been seeded
 
+            foreach (var tag in Tags)
+                dbContext.Tags.Add(tag);
+            
             foreach (var recipe in Recipes)
                 dbContext.Recipes.Add(recipe);
 

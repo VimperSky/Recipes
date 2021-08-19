@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Recipes.Application.DTOs.Tags;
 using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
@@ -41,6 +42,16 @@ namespace Recipes.Application.Services.Tags
             }
             
             return dbTags;
+        }
+
+        public async Task<SuggestedTagsDto> GetSuggestedSearchTags()
+        {
+            var dto = new SuggestedTagsDto 
+            {
+                TagValues = (await _tagsRepository.GetTagsByLevel(TagLevel.SearchSuggested))
+                    .Select(x => x.Value).ToArray()
+            };
+            return dto;
         }
     }
 }
