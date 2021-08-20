@@ -31,4 +31,8 @@ export class RecipeSearchComponent implements OnInit {
     this.recipesManager.search(this.searchString.value);
   }
 
+  selectTag(tag: string) {
+    this.searchString.setValue(tag);
+    this.search();
+  }
 }
