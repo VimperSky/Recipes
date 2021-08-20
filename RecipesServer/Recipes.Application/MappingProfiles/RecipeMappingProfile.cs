@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.DTOs.User;
 using Recipes.Domain.Models;
 
 namespace Recipes.Application.MappingProfiles
@@ -10,6 +11,8 @@ namespace Recipes.Application.MappingProfiles
         {
             CreateMap<Tag, string>().ConvertUsing(x => x.Value);
             CreateMap<string, Tag>().ConvertUsing(x => new Tag {Value = x});
+
+            CreateMap<User, AuthorDto>();
             
             CreateMap<RecipeIngredientsBlock, IngredientDto>();
             CreateMap<Recipe, RecipePreviewDto>();

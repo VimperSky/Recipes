@@ -7,7 +7,6 @@ import {Location} from "@angular/common";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
-import {ProblemDetails} from "../../core/dto/base/problem-details";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 
 @Component({
@@ -19,7 +18,7 @@ export class RecipeDetailComponent implements OnInit {
 
   recipeDetail: RecipeDetail | undefined;
   get isAvailableToModify(): boolean {
-    return this.tokenService.isAuthorized && this.recipeDetail?.authorId == this.tokenService.userId;
+    return this.tokenService.isAuthorized && this.recipeDetail?.author?.id == this.tokenService.userId;
   }
 
   constructor(private activatedRoute: ActivatedRoute,

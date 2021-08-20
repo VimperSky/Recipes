@@ -1,6 +1,11 @@
 <ng-template #recipeBlock>
   <div id="recipe-block">
-    <img src="{{getImagePath(recipe)}}" width="430" height="430" alt="{{getImagePath(recipe)}}" id="recipe-image">
+    <div id="recipe-image-block">
+      <img src="{{getImagePath(recipe)}}" width="430" height="430" alt="{{getImagePath(recipe)}}" id="recipe-image">
+      <div id="recipe-author-block" >
+        <p>{{login}}</p>
+      </div>
+    </div>
     <div id="recipe-info">
       <div id="tags-block">
         <div *ngFor="let tag of recipe.tags; first as isFirst" class="chip" [class.margined-chip]="!isFirst">

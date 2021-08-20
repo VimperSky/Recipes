@@ -25,6 +25,7 @@ namespace Recipes.Infrastructure.Repositories
                 .Skip(skipItems)
                 .Take(takeItems)
                 .Include(x => x.Tags)
+                .Include(x => x.Author)
                 .ToListAsync();
         }
 
@@ -34,6 +35,14 @@ namespace Recipes.Infrastructure.Repositories
                 .SortBySearchString(searchString)
                 .Include(x => x.Tags)
                 .CountAsync();
+        }
+        
+        public async Task<Recipe> GetById(int id)
+        {
+            return await _recipesDbContext.Recipes
+                .Include(x => x.Tags)
+                .Include(x => x.Author)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Recipe> AddRecipe(Recipe recipe)
@@ -50,13 +59,6 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext.Recipes.Remove(recipe);
             return Task.CompletedTask;
-        }
-
-        public async Task<Recipe> GetById(int id)
-        {
-            return await _recipesDbContext.Recipes
-                .Include(x => x.Tags)
-                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
