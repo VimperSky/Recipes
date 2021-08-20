@@ -40,7 +40,7 @@
 </ng-template>
 
 
-<a *ngIf="isClickable; else decorativeInfo" mat-button id="clickable-wrapper" class="wrapper" [routerLink]="['/recipe/detail', recipe.id]">
+<a mat-button *ngIf="isClickable; else decorativeInfo" id="clickable-wrapper" class="wrapper" [routerLink]="['/recipe/detail', recipe.id]">
   <ng-template [ngTemplateOutlet]="recipeBlock"></ng-template>
 </a>
 

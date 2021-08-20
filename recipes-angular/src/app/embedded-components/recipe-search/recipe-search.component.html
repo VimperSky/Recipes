@@ -1,7 +1,7 @@
 <div id="search-form">
   <h2>Поиск рецепта</h2>
   <div id="search-block">
-    <input matInput placeholder="Название блюда .." id="search-input" [formControl]="searchString" (keyup.enter)="search()">
+    <input matInput placeholder="Название блюда .." id="search-input" [formControl]="searchService.searchString" (keyup.enter)="search()">
     <div *ngIf="tags" id="selected-tags-line">
       <button mat-button *ngFor="let tag of tags" class="tag" (click)="selectTag(tag)">
         {{tag}}

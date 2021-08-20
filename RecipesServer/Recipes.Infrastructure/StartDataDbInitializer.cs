@@ -39,16 +39,28 @@ namespace Recipes.Infrastructure
             Tag.Create("мороженое"),
             Tag.Create("сладости"),
             Tag.Create("бисквит"),
-            Tag.Create("мясо", TagLevel.SearchSuggested),
-            Tag.Create("деликатесы", TagLevel.SearchSuggested),
-            Tag.Create("пироги", TagLevel.SearchSuggested),
-            Tag.Create("рыба", TagLevel.SearchSuggested),
-            Tag.Create("пост", TagLevel.SearchSuggested),
-            Tag.Create("пасха2021", TagLevel.SearchSuggested),
+            Tag.Create("мясо", TagLevel.Suggested),
+            Tag.Create("деликатесы", TagLevel.Suggested),
+            Tag.Create("пироги", TagLevel.Suggested),
+            Tag.Create("рыба", TagLevel.Suggested),
+            Tag.Create("пост", TagLevel.Suggested),
+            Tag.Create("пасха2021", TagLevel.Suggested),
+            Tag.Create("Простые блюда", TagLevel.Featured, BaseTagIconsPath + "simple.svg", 
+                "Время приготвления таких блюд не более 1 часа"),
+            
+            Tag.Create("Детское", TagLevel.Featured,  BaseTagIconsPath + "child.svg", 
+                "Самые полезные блюда которые можно детям любого возраста"),
+            
+            Tag.Create("От шеф-поваров", TagLevel.Featured, BaseTagIconsPath + "chef.svg", 
+                "Требуют умения, времени и терпения, зато как в ресторане"),
+            
+            Tag.Create("На праздник", TagLevel.Featured, BaseTagIconsPath + "holiday.svg", 
+                "Чем удивить гостей, чтобы все были сыты за праздничным столом"),
         };
         
         private static readonly Dictionary<string, Tag> TagsDict = Tags.ToDictionary(x => x.Value, x => x);
 
+        private const string BaseTagIconsPath = "default_images/tags/";
         private const string BaseImagesPath = "default_images/";
         
         private static Tag GetTag(string value)

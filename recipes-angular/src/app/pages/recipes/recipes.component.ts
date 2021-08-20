@@ -4,6 +4,7 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 import {BaseRecipesManagerService} from "../../core/services/managers/recipes/base-recipes-manager.service";
 import {AllRecipesManagerService} from "../../core/services/managers/recipes/all-recipes-manager.service";
+import {SearchManagerService} from "../../core/services/managers/recipes/search-manager.service";
 
 @Component({
   selector: 'app-recipes',
@@ -11,9 +12,13 @@ import {AllRecipesManagerService} from "../../core/services/managers/recipes/all
   styleUrls: ['./recipes.component.scss'],
   providers: [
     {
+      provide: SearchManagerService,
+    },
+    {
       provide: BaseRecipesManagerService,
       useClass: AllRecipesManagerService
     },
+
   ]
 })
 export class RecipesComponent implements OnInit {

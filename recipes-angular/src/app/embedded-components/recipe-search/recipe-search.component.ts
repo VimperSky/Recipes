@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
-import {BaseRecipesManagerService} from "../../core/services/managers/recipes/base-recipes-manager.service";
-import {AllRecipesManagerService} from "../../core/services/managers/recipes/all-recipes-manager.service";
 import {TagsService} from "../../core/services/communication/abstract/tags.service";
-import {SuggestedTags} from "../../core/dto/tag/suggested-tags";
+import {SuggestedTagsDto} from "../../core/dto/tag/suggested-tags-dto";
+import {SearchManagerService} from "../../core/services/managers/recipes/search-manager.service";
 
 @Component({
   selector: 'app-recipe-search',
@@ -12,27 +10,22 @@ import {SuggestedTags} from "../../core/dto/tag/suggested-tags";
 })
 export class RecipeSearchComponent implements OnInit {
 
-  searchString = new FormControl('', []);
-  public recipesManager: AllRecipesManagerService;
-
   public tags: string[] | undefined;
 
-  constructor(recipesManager: BaseRecipesManagerService, private tagsService: TagsService) {
-    this.recipesManager = recipesManager as AllRecipesManagerService
-  }
+  constructor(public searchService: SearchManagerService, private tagsService: TagsService) {}
 
   ngOnInit(): void {
-    this.tagsService.getSuggestedSearchTags().subscribe((result: SuggestedTags) => {
+    this.tagsService.getSuggestedSearchTags().subscribe((result: SuggestedTagsDto) => {
       this.tags = result.tagValues;
     })
   }
 
   search() {
-    this.recipesManager.search(this.searchString.value);
+    this.searchService.search();
   }
 
   selectTag(tag: string) {
-    this.searchString.setValue(tag);
+    this.searchService.setString(tag);
     this.search();
   }
 }

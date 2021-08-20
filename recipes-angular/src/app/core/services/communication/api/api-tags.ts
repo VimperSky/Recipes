@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {TagsService} from "../abstract/tags.service";
 import {Observable} from "rxjs";
 import {environment} from "../../../../../environments/environment";
-import {SuggestedTags} from "../../../dto/tag/suggested-tags";
+import {SuggestedTagsDto} from "../../../dto/tag/suggested-tags-dto";
+import {FeaturedTagsDto} from "../../../dto/tag/featured-tags-dto";
 
 const basePath: string = "/api/tags"
 
@@ -14,7 +15,11 @@ export class ApiTagsService extends TagsService {
     super();
   }
 
-  getSuggestedSearchTags(): Observable<SuggestedTags> {
-    return this.http.get<SuggestedTags>(environment.backendUrl + basePath + "/suggested");
+  getSuggestedSearchTags(): Observable<SuggestedTagsDto> {
+    return this.http.get<SuggestedTagsDto>(environment.backendUrl + basePath + "/suggested");
+  }
+
+  getFeaturedTags(): Observable<FeaturedTagsDto> {
+    return this.http.get<FeaturedTagsDto>(environment.backendUrl + basePath + "/featured");
   }
 }

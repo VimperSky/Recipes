@@ -3,7 +3,7 @@
     public enum TagLevel
     {
         Regular,
-        SearchSuggested,
-        Extended,
+        Suggested,
+        Featured,
     }
 }

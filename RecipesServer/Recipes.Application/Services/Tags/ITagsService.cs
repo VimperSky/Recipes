@@ -15,5 +15,8 @@ namespace Recipes.Application.Services.Tags
         public Task<List<Tag>> VerifyTags(string[] tags);
 
         public Task<SuggestedTagsDto> GetSuggestedSearchTags();
+
+        public Task<FeaturedTagsDto> GetFeaturedTags();
+
     }
 }

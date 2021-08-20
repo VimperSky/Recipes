@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Recipes.Application.DTOs.Tags;
-using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 
@@ -12,13 +11,11 @@ namespace Recipes.Application.Services.Tags
     public class TagsService: ITagsService
     {
         private readonly ITagRepository _tagsRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public TagsService(ITagRepository tagsRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public TagsService(ITagRepository tagsRepository, IMapper mapper)
         {
             _tagsRepository = tagsRepository;
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         
@@ -48,8 +45,17 @@ namespace Recipes.Application.Services.Tags
         {
             var dto = new SuggestedTagsDto 
             {
-                TagValues = (await _tagsRepository.GetTagsByLevel(TagLevel.SearchSuggested))
+                TagValues = (await _tagsRepository.GetTagsByLevel(TagLevel.Suggested))
                     .Select(x => x.Value).ToArray()
+            };
+            return dto;
+        }
+
+        public async Task<FeaturedTagsDto> GetFeaturedTags()
+        {
+            var dto = new FeaturedTagsDto
+            {
+                Tags = _mapper.Map<TagDto[]>(await _tagsRepository.GetTagsByLevel(TagLevel.Featured))
             };
             return dto;
         }

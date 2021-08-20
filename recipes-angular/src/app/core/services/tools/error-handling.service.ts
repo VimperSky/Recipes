@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {AbstractControl} from "@angular/forms";
 import {ValidationProblemDetails} from "../../dto/base/validation-problem-details";
-import {MatDialog} from "@angular/material/dialog";
 import {ProblemDetails} from "../../dto/base/problem-details";
-import {ErrorComponent} from "../../../embedded-components/error/error.component";
 import {DialogDisplayService} from "./dialog-display.service";
 
 @Injectable({

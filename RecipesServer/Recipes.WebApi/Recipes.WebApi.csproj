@@ -30,4 +30,8 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Storage\default_images\tags" />
+    </ItemGroup>
 </Project>

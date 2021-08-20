@@ -1,7 +1,9 @@
 ﻿namespace Recipes.Application.DTOs.Tags
 {
-    public class SuggestedTagsDto
+    public class TagDto
     {
-        public string[] TagValues { get; set; }
+        public string Value { get; set; }
+        public string Description { get; set; }
+        public string Icon { get; set; }
     }
 }

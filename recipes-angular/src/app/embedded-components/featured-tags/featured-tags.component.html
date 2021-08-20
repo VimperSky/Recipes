@@ -1,0 +1,10 @@
+<div *ngIf="tags" id="featured-tags-block">
+  <div matRipple *ngFor="let tag of tags; first as isFirst" class="featured-tag" [class.featured-tag-margined]="!isFirst"
+       (click)="searchForTag(tag)">
+    <div class="tag-icon-block">
+      <img src="{{getImagePath(tag)}}" width="24" height="24" alt="{{getImagePath(tag)}}" class="tag-icon">
+    </div>
+    <h2>{{tag.value}}</h2>
+    <p *ngIf="isFull">{{tag.description}}</p>
+  </div>
+</div>

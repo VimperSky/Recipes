@@ -24,5 +24,13 @@ namespace Recipes.WebApi.Controllers
         {
             return await _tagsService.GetSuggestedSearchTags();
         }
+        
+        [HttpGet("featured")]
+        [ProducesResponseType(typeof(FeaturedTagsDto), StatusCodes.Status200OK)]
+        public async Task<FeaturedTagsDto> GetFeaturedTags()
+        {
+            return await _tagsService.GetFeaturedTags();
+        }
+        
     }
 }

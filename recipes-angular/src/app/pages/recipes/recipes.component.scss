@@ -1,14 +1,14 @@
 @use '../../shared-styles/constants';
 
+h1 {
+  @include constants.default-header;
+}
+
 #recipes-header {
   margin-top: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  h1 {
-    @include constants.default-header;
-  }
 
   #add-recipe-button {
     @include constants.default-text;
@@ -22,9 +22,14 @@
   }
 }
 
+#featured-tags {
+  display: block;
+  margin-top: 50px;
+}
+
 #recipe-search {
   display: block;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 #recipe-list {

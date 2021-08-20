@@ -42,6 +42,8 @@ import {MainComponent} from "./pages/main/main.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {TagsService} from "./core/services/communication/abstract/tags.service";
 import {ApiTagsService} from "./core/services/communication/api/api-tags";
+import { FeaturedTagsComponent } from './embedded-components/featured-tags/featured-tags.component';
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -63,7 +65,8 @@ import {ApiTagsService} from "./core/services/communication/api/api-tags";
     ErrorComponent,
     ProfileComponent,
     ActivityOverviewComponent,
-    MainComponent
+    MainComponent,
+    FeaturedTagsComponent
   ],
     imports: [
         BrowserModule,
@@ -86,7 +89,8 @@ import {ApiTagsService} from "./core/services/communication/api/api-tags";
                 throwNoTokenError: true,
             },
         }),
-        MatChipsModule
+        MatChipsModule,
+        MatRippleModule
     ],
   providers: [
     {
