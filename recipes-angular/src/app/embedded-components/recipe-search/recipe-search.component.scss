@@ -25,7 +25,7 @@
       @include constants.default-text;
       padding: 0 0 0 15px;
 
-      height: 66px;
+      height: 70px;
       line-height: 22px;
       font-weight: 500;
       width: 100%;
@@ -54,7 +54,7 @@
   #search-button {
     @include constants.default-text;
     height: 70px;
-    margin-left: 26px;
+    margin-left: 30px;
     flex: 0 0 150px;
     border-radius: 16px;
   }
