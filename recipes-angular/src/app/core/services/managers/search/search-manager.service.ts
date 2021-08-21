@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {AllRecipesManagerService} from "./all-recipes-manager.service";
-import {BaseRecipesManagerService} from "./base-recipes-manager.service";
+import {AllRecipesManagerService} from "../recipes/all-recipes-manager.service";
+import {BaseRecipesManagerService} from "../recipes/base-recipes-manager.service";
 import {FormControl} from "@angular/forms";
+import {BaseSearchManagerService} from "./base-search-manager.service";
 
 @Injectable()
-export class SearchManagerService {
+export class SearchManagerService extends BaseSearchManagerService {
   private recipesManager: AllRecipesManagerService;
 
   constructor(recipesManager: BaseRecipesManagerService) {
+    super();
     this.recipesManager = recipesManager as AllRecipesManagerService;
   }
 

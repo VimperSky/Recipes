@@ -1,0 +1,52 @@
+@use '../../shared-styles/constants';
+
+#header-block {
+  margin-top: 140px;
+  width: 600px;
+  h1 {
+    @include constants.default-header;
+    font-size: 72px;
+    line-height: 88px;
+  }
+
+  p {
+    @include constants.default-text;
+    line-height: 28px;
+    width: 460px;
+  }
+
+  #action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 520px;
+
+    .action-button {
+      @include constants.default-text;
+      height: 60px;
+      line-height: 28px;
+      font-weight: 600;
+      border: 1px solid constants.$accent-color;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .add-recipe-button {
+      width: 280px;
+
+      background: constants.$accent-color;
+      color: constants.$contrast-white;
+
+      span, mat-icon {
+        margin-right: 20px;
+      }
+    }
+
+    .login-button {
+      width: 220px;
+      background: transparent;
+      color: constants.$accent-color;
+    }
+
+  }
+}

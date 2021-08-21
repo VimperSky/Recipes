@@ -44,6 +44,7 @@ import {TagsService} from "./core/services/communication/abstract/tags.service";
 import {ApiTagsService} from "./core/services/communication/api/api-tags";
 import { FeaturedTagsComponent } from './embedded-components/featured-tags/featured-tags.component';
 import {MatRippleModule} from "@angular/material/core";
+import { MainHeaderComponent } from './embedded-components/main-header/main-header.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import {MatRippleModule} from "@angular/material/core";
     ProfileComponent,
     ActivityOverviewComponent,
     MainComponent,
-    FeaturedTagsComponent
+    FeaturedTagsComponent,
+    MainHeaderComponent
   ],
     imports: [
         BrowserModule,

@@ -1,8 +1,21 @@
 @use '../../shared-styles/constants';
 
-#featured-tags-block {
+#featured-tags-header-block {
+  h2 {
+    @include constants.default-header;
+  }
+
+  p {
+    @include constants.default-text;
+    line-height: 32px;
+    color: constants.$light-black-color;
+  }
+}
+
+#featured-tags-content-block {
   display: flex;
   max-height: 275px;
+  margin-top: 50px;
 
   .featured-tag {
     width: 280px;

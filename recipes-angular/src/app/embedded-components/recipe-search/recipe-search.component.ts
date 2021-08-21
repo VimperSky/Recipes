@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TagsService} from "../../core/services/communication/abstract/tags.service";
 import {SuggestedTagsDto} from "../../core/dto/tag/suggested-tags-dto";
-import {SearchManagerService} from "../../core/services/managers/recipes/search-manager.service";
+import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
 
 @Component({
   selector: 'app-recipe-search',
@@ -12,7 +12,7 @@ export class RecipeSearchComponent implements OnInit {
 
   public tags: string[] | undefined;
 
-  constructor(public searchService: SearchManagerService, private tagsService: TagsService) {}
+  constructor(public searchService: BaseSearchManagerService, private tagsService: TagsService) {}
 
   ngOnInit(): void {
     this.tagsService.getSuggestedSearchTags().subscribe((result: SuggestedTagsDto) => {

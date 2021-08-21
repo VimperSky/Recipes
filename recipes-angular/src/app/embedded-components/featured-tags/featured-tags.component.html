@@ -1,4 +1,9 @@
-<div *ngIf="tags" id="featured-tags-block">
+<div *ngIf="isFull" id="featured-tags-header-block">
+  <h2>Умная сортировка по тегам</h2>
+  <p>Добавляй рецепты и указывай наиболее популярные теги. Это позволит быстро находить любые категории.</p>
+</div>
+
+<div *ngIf="tags" id="featured-tags-content-block">
   <div matRipple *ngFor="let tag of tags; first as isFirst" class="featured-tag" [class.featured-tag-margined]="!isFirst"
        (click)="searchForTag(tag)">
     <div class="tag-icon-block">

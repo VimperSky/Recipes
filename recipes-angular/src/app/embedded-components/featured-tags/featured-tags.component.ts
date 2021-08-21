@@ -3,7 +3,7 @@ import {TagsService} from "../../core/services/communication/abstract/tags.servi
 import {FeaturedTagsDto} from "../../core/dto/tag/featured-tags-dto";
 import {TagDto} from "../../core/dto/tag/tag-dto";
 import {environment} from "../../../environments/environment";
-import {SearchManagerService} from "../../core/services/managers/recipes/search-manager.service";
+import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
 
 @Component({
   selector: 'app-featured-tags',
@@ -12,7 +12,7 @@ import {SearchManagerService} from "../../core/services/managers/recipes/search-
 })
 export class FeaturedTagsComponent implements OnInit {
 
-  constructor(private tagsService: TagsService, private searchService: SearchManagerService) {}
+  constructor(private tagsService: TagsService, private searchService: BaseSearchManagerService) {}
 
   @Input()
   public isFull: boolean = false;
