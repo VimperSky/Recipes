@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TagsService} from "../../core/services/communication/abstract/tags.service";
 import {SuggestedTagsDto} from "../../core/dto/tag/suggested-tags-dto";
 import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
@@ -9,6 +9,9 @@ import {BaseSearchManagerService} from "../../core/services/managers/search/base
   styleUrls: ['./recipe-search.component.scss']
 })
 export class RecipeSearchComponent implements OnInit {
+
+  @Input()
+  public isExtended: boolean = false;
 
   public tags: string[] | undefined;
 

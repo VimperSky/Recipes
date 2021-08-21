@@ -2,39 +2,28 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
-import {BaseRecipesManagerService} from "../../core/services/managers/recipes/base-recipes-manager.service";
-import {AllRecipesManagerService} from "../../core/services/managers/recipes/all-recipes-manager.service";
-import {SearchManagerService} from "../../core/services/managers/search/search-manager.service";
 import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.scss'],
-  providers: [
-    {
-      provide: BaseSearchManagerService,
-      useClass: SearchManagerService
-    },
-    {
-      provide: BaseRecipesManagerService,
-      useClass: AllRecipesManagerService
-    },
-  ]
 })
 export class RecipesComponent implements OnInit {
 
   constructor(private router: Router,
               private tokenManager: AuthTokenManagerService,
               private activatedRoute: ActivatedRoute,
-              private dialogDisplayService: DialogDisplayService) {
-
-    const routeParams = this.activatedRoute.snapshot.queryParams['searchString'];
-
+              private dialogDisplayService: DialogDisplayService,
+              private searchManagerService: BaseSearchManagerService) {
   }
 
   ngOnInit() {
-
+    const searchString = this.activatedRoute.snapshot.queryParams['searchString'];
+    if (searchString != null) {
+      this.searchManagerService.setString(searchString);
+      this.searchManagerService.search();
+    }
   }
 
   addNewRecipe() {
@@ -44,6 +33,5 @@ export class RecipesComponent implements OnInit {
     else {
       this.dialogDisplayService.openAuthDialog();
     }
-
   }
 }

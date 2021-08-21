@@ -1,4 +1,4 @@
-<div *ngIf="isFull" id="featured-tags-header-block">
+<div *ngIf="isExtended" id="featured-tags-header-block">
   <h2>Умная сортировка по тегам</h2>
   <p>Добавляй рецепты и указывай наиболее популярные теги. Это позволит быстро находить любые категории.</p>
 </div>
@@ -10,6 +10,6 @@
       <img src="{{getImagePath(tag)}}" width="24" height="24" alt="{{getImagePath(tag)}}" class="tag-icon">
     </div>
     <h2>{{tag.value}}</h2>
-    <p *ngIf="isFull">{{tag.description}}</p>
+    <p *ngIf="isExtended">{{tag.description}}</p>
   </div>
 </div>

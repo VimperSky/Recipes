@@ -15,7 +15,7 @@ export class FeaturedTagsComponent implements OnInit {
   constructor(private tagsService: TagsService, private searchService: BaseSearchManagerService) {}
 
   @Input()
-  public isFull: boolean = false;
+  public isExtended: boolean = false;
 
   public tags: TagDto[] | undefined;
 

@@ -45,6 +45,10 @@ import {ApiTagsService} from "./core/services/communication/api/api-tags";
 import { FeaturedTagsComponent } from './embedded-components/featured-tags/featured-tags.component';
 import {MatRippleModule} from "@angular/material/core";
 import { MainHeaderComponent } from './embedded-components/main-header/main-header.component';
+import {BaseSearchManagerService} from "./core/services/managers/search/base-search-manager.service";
+import {SearchManagerService} from "./core/services/managers/search/search-manager.service";
+import {BaseRecipesManagerService} from "./core/services/managers/recipes/base-recipes-manager.service";
+import {AllRecipesManagerService} from "./core/services/managers/recipes/all-recipes-manager.service";
 
 
 @NgModule({
@@ -110,6 +114,14 @@ import { MainHeaderComponent } from './embedded-components/main-header/main-head
     {
       provide: TagsService,
       useClass: ApiTagsService
+    },
+    {
+      provide: BaseSearchManagerService,
+      useClass: SearchManagerService
+    },
+    {
+      provide: BaseRecipesManagerService,
+      useClass: AllRecipesManagerService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

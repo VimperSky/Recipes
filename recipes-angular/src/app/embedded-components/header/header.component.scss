@@ -18,19 +18,22 @@
       font-weight: bold;
       font-size: 24px;
       line-height: 29px;
+      text-decoration: none;
 
       color: constants.$accent-color;
     }
 
     #menu-list {
       height: 100%;
-      margin-left: 80px;
-
+      margin-left: 40px;
 
       .nav-btn {
         @include constants.default-text;
+        margin-left: 5px;
         color: #9196A1;
         font-weight: 600;
+        margin-top: -15px;
+        padding: 15px 20px;
       }
 
       .nav-btn-active {
