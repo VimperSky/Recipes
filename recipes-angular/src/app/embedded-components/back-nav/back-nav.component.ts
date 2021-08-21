@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
@@ -6,12 +6,9 @@ import {Location} from '@angular/common';
   templateUrl: './back-nav.component.html',
   styleUrls: ['./back-nav.component.scss']
 })
-export class BackNavComponent implements OnInit {
+export class BackNavComponent {
 
-  constructor(private location: Location) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private location: Location){ }
 
   goBack() {
     this.location.back();

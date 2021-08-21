@@ -16,10 +16,7 @@ import {ErrorHandlingService} from "../../core/services/tools/error-handling.ser
 })
 export class RecipeDetailComponent implements OnInit {
 
-  recipeDetail: RecipeDetail | undefined;
-  get isAvailableToModify(): boolean {
-    return this.tokenService.isAuthorized && this.recipeDetail?.author?.id == this.tokenService.userId;
-  }
+  public recipeDetail: RecipeDetail | undefined;
 
   constructor(private activatedRoute: ActivatedRoute,
               private recipeService: RecipeService,
@@ -30,14 +27,18 @@ export class RecipeDetailComponent implements OnInit {
               private errorHandlingService: ErrorHandlingService) {
   }
 
-  ngOnInit(): void {
+  public get isAvailableToModify(): boolean {
+    return this.tokenService.isAuthorized && this.recipeDetail?.author?.id == this.tokenService.userId;
+  }
+
+  public ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     this.recipeService.detail(id).subscribe(result => {
       this.recipeDetail = result;
     });
   }
 
-  delete() {
+  public delete() {
     if (this.recipeDetail) {
       this.recipeService.delete(this.recipeDetail.id).subscribe(() => {
         this.snackBar.open('Рецепт был успешно удален!',

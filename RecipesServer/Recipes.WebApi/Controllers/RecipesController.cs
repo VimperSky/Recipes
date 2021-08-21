@@ -53,5 +53,12 @@ namespace Recipes.WebApi.Controllers
         {
             return await _recipesService.GetRecipesPage(pageSize, page, authorClaims: HttpContext.User.GetClaims());
         }
+
+        [ProducesResponseType(typeof(RecipePreviewDto), StatusCodes.Status200OK)]
+        [HttpGet("recipeOfDay")]
+        public async Task<ActionResult<RecipePreviewDto>> GetRecipeOfTheDay()
+        {
+            return await _recipesService.GetRecipeOfTheDay();
+        }
     }
 }

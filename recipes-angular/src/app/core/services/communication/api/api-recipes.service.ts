@@ -5,6 +5,7 @@ import {environment} from "../../../../../environments/environment";
 import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
 import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
+import {RecipePreview} from "../../../dto/recipe/recipe-preview";
 
 const basePath: string = "/api/recipes"
 
@@ -33,6 +34,10 @@ export class ApiRecipesService extends RecipesService {
 
     return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/myList",
       {...this.paramsBuilder.authOptions, params: params});
+  }
+
+  getRecipeOfTheDay(): Observable<RecipePreview> {
+    return this.http.get<RecipePreview>(environment.backendUrl + basePath + "/recipeOfDay");
   }
 
 }

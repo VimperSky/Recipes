@@ -9,37 +9,31 @@ const defaultImagePath: string = "../../../assets/images/default_recipe.jpg"
   templateUrl: './recipe-preview.component.html',
   styleUrls: ['./recipe-preview.component.scss']
 })
-export class RecipePreviewComponent implements OnInit {
+export class RecipePreviewComponent {
 
   @Input()
-  recipe!: RecipePreview;
+  public recipe!: RecipePreview;
 
   @Input()
-  isClickable: boolean = true;
+  public isClickable: boolean = true;
 
-  get login(): string {
+  public get login(): string {
     if (this.recipe.author != null)
       return "@" + this.recipe.author.login;
 
     return "@admin";
   }
 
-  private static isLocalImagePath(imagePath: string): boolean {
-    return imagePath.startsWith("..");
-  }
-
-  getImagePath(recipe: RecipePreview): string {
-    if (recipe.imagePath) {
-      return RecipePreviewComponent.isLocalImagePath(recipe.imagePath)
-        ? recipe.imagePath
-        : environment.backendUrl + "/" + recipe.imagePath;
+  public getImagePath(): string {
+    if (this.recipe.imagePath) {
+      return RecipePreviewComponent.isLocalImagePath(this.recipe.imagePath)
+        ? this.recipe.imagePath
+        : environment.backendUrl + "/" + this.recipe.imagePath;
     }
     return defaultImagePath;
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  private static isLocalImagePath(imagePath: string): boolean {
+    return imagePath.startsWith("..");
   }
-
 }

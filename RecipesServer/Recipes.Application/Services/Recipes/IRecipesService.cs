@@ -64,5 +64,7 @@ namespace Recipes.Application.Services.Recipes
         /// <exception cref="PermissionException"></exception>
         /// <exception cref="ElementNotFoundException"></exception>
         Task DeleteRecipe(int recipeId, UserClaims userClaims);
+
+        Task<RecipePreviewDto> GetRecipeOfTheDay();
     }
 }
