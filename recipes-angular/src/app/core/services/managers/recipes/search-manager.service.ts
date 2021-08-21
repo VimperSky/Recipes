@@ -5,19 +5,19 @@ import {FormControl} from "@angular/forms";
 
 @Injectable()
 export class SearchManagerService {
-  public searchString = new FormControl('', []);
-
-  public setString(value: string) {
-    this.searchString.setValue(value);
-  }
-
   private recipesManager: AllRecipesManagerService;
 
   constructor(recipesManager: BaseRecipesManagerService) {
     this.recipesManager = recipesManager as AllRecipesManagerService;
   }
 
-  search() {
+  public searchString = new FormControl('', []);
+
+  public setString(value: string) {
+    this.searchString.setValue(value);
+  }
+
+  public search() {
     this.recipesManager.search(this.searchString.value);
   }
 }

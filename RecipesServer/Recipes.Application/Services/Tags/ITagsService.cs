@@ -12,7 +12,7 @@ namespace Recipes.Application.Services.Tags
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
-        public Task<List<Tag>> VerifyTags(string[] tags);
+        public Task<List<Tag>> GetOrCreateTags(string[] tags);
 
         public Task<SuggestedTagsDto> GetSuggestedSearchTags();
 

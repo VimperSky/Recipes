@@ -11,7 +11,7 @@ import {DialogDisplayService} from "./dialog-display.service";
 export class ErrorHandlingService {
   constructor(private dialogDisplayService: DialogDisplayService) {}
 
-  setValidationErrors(error: HttpErrorResponse, formControlsMap: Map<string, AbstractControl>) {
+  public setValidationErrors(error: HttpErrorResponse, formControlsMap: Map<string, AbstractControl>) {
     let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
     for (let err of Object.keys(problemDetails.errors)) {
       let val = formControlsMap.get(err);
@@ -21,7 +21,7 @@ export class ErrorHandlingService {
     }
   }
 
-  openErrorDialog(error: HttpErrorResponse, elseErrorText: string) {
+  public openErrorDialog(error: HttpErrorResponse, elseErrorText: string) {
     if (error.status == 401) {
       this.dialogDisplayService.openAuthDialog();
     } else if (error.error) {

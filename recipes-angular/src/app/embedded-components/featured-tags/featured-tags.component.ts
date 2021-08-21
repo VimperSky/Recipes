@@ -12,24 +12,24 @@ import {SearchManagerService} from "../../core/services/managers/recipes/search-
 })
 export class FeaturedTagsComponent implements OnInit {
 
+  constructor(private tagsService: TagsService, private searchService: SearchManagerService) {}
+
   @Input()
-  isFull: boolean = false;
+  public isFull: boolean = false;
 
-  tags: TagDto[] | undefined;
+  public tags: TagDto[] | undefined;
 
-  getImagePath(tag: TagDto): string {
+  public getImagePath(tag: TagDto): string {
     return environment.backendUrl + "/" + tag.icon;
   }
 
-  constructor(private tagsService: TagsService, private searchService: SearchManagerService) {}
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.tagsService.getFeaturedTags().subscribe((dto: FeaturedTagsDto) => {
       this.tags = dto.tags;
     })
   }
 
-  searchForTag(tag: TagDto) {
+  public searchForTag(tag: TagDto) {
     this.searchService.setString(tag.value);
     this.searchService.search();
   }

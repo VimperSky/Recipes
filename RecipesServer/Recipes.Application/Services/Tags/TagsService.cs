@@ -19,7 +19,7 @@ namespace Recipes.Application.Services.Tags
             _mapper = mapper;
         }
         
-        public async Task<List<Tag>> VerifyTags(string[] tags)
+        public async Task<List<Tag>> GetOrCreateTags(string[] tags)
         {
             if (tags.Length == 0)
                 return new List<Tag>();

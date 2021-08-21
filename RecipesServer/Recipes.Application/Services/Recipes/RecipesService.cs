@@ -62,7 +62,7 @@ namespace Recipes.Application.Services.Recipes
 
         public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto, UserClaims userClaims)
         {
-            var tags = await _tagsService.VerifyTags(recipeCreateDto.Tags);
+            var tags = await _tagsService.GetOrCreateTags(recipeCreateDto.Tags);
 
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
             recipeModel.AuthorId = userClaims.UserId;
@@ -83,7 +83,7 @@ namespace Recipes.Application.Services.Recipes
             if (recipeDb.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
             
-            var tags = await _tagsService.VerifyTags(recipeEditDto.Tags);
+            var tags = await _tagsService.GetOrCreateTags(recipeEditDto.Tags);
             
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
             recipeModel.Tags = tags;
