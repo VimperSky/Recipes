@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../auth/login/login.component";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
+import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 
 @Component({
   selector: 'app-auth-header',
@@ -10,7 +11,7 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 })
 export class AuthHeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private authManager: AuthTokenManagerService) {
+  constructor(private dialogDisplay: DialogDisplayService, private authManager: AuthTokenManagerService) {
     this.name = authManager.name;
 
     authManager.authChanged.subscribe(_ => {
@@ -24,11 +25,7 @@ export class AuthHeaderComponent implements OnInit {
   public ngOnInit(): void {}
 
   public logIn() {
-    if (this.dialog.openDialogs.length == 0) {
-      this.dialog.open(LoginComponent, {
-        panelClass: 'login-dialog-container'
-      });
-    }
+    this.dialogDisplay.openLoginDialog();
   }
 
   public logOut() {
