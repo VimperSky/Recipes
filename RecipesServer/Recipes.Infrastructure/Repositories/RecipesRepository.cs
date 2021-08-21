@@ -15,8 +15,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-
-
+        
         public async Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default,
             int authorId = default)
         {
@@ -25,7 +24,8 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
-                .Include(x => x.Ingredients)
+                .Include(x => x.Tags)
+                .Include(x => x.Author)
                 .ToListAsync();
         }
 
@@ -33,14 +33,23 @@ namespace Recipes.Infrastructure.Repositories
         {
             return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
                 .SortBySearchString(searchString)
+                .Include(x => x.Tags)
                 .CountAsync();
+        }
+        
+        public async Task<Recipe> GetById(int id)
+        {
+            return await _recipesDbContext.Recipes
+                .Include(x => x.Tags)
+                .Include(x => x.Author)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Recipe> AddRecipe(Recipe recipe)
         {
             if (recipe.Id != default)
                 recipe.Id = default;
-
+            
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
             return addedRecipe.Entity;
         }
@@ -50,11 +59,6 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext.Recipes.Remove(recipe);
             return Task.CompletedTask;
-        }
-
-        public async Task<Recipe> GetById(int id)
-        {
-            return await _recipesDbContext.Recipes.FindAsync(id);
         }
     }
 }

@@ -17,6 +17,13 @@ export class RecipePreviewComponent implements OnInit {
   @Input()
   isClickable: boolean = true;
 
+  get login(): string {
+    if (this.recipe.author != null)
+      return "@" + this.recipe.author.login;
+
+    return "@admin";
+  }
+
   private static isLocalImagePath(imagePath: string): boolean {
     return imagePath.startsWith("..");
   }

@@ -39,6 +39,11 @@ import { ErrorComponent } from './embedded-components/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
 import {MainComponent} from "./pages/main/main.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {TagsService} from "./core/services/communication/abstract/tags.service";
+import {ApiTagsService} from "./core/services/communication/api/api-tags";
+import { FeaturedTagsComponent } from './embedded-components/featured-tags/featured-tags.component';
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -60,30 +65,33 @@ import {MainComponent} from "./pages/main/main.component";
     ErrorComponent,
     ProfileComponent,
     ActivityOverviewComponent,
-    MainComponent
+    MainComponent,
+    FeaturedTagsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    AutosizeModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        throwNoTokenError: true,
-      },
-    })
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        AutosizeModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                throwNoTokenError: true,
+            },
+        }),
+        MatChipsModule,
+        MatRippleModule
+    ],
   providers: [
     {
       provide: RecipesService,
@@ -96,6 +104,10 @@ import {MainComponent} from "./pages/main/main.component";
     {
       provide: UserService,
       useClass: ApiUserService
+    },
+    {
+      provide: TagsService,
+      useClass: ApiTagsService
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,

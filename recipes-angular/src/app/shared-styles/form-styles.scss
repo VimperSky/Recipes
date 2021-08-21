@@ -15,6 +15,14 @@ textarea {
   resize: none !important;
 }
 
+.wide-mat-form-field {
+  width: 100%;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+  padding: 0;
+}
+
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0 !important;}
 ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
 

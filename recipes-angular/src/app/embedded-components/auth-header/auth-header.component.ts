@@ -10,24 +10,20 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 })
 export class AuthHeaderComponent implements OnInit {
 
-  @Input()
-  public name: string | null = null;
-
   constructor(public dialog: MatDialog, private authManager: AuthTokenManagerService) {
     this.name = authManager.name;
 
     authManager.authChanged.subscribe(_ => {
       this.name = authManager.name;
     })
-
   }
 
-  ngOnInit(): void {
+  @Input()
+  public name: string | null = null;
 
-  }
+  public ngOnInit(): void {}
 
-
-  logIn() {
+  public logIn() {
     if (this.dialog.openDialogs.length == 0) {
       this.dialog.open(LoginComponent, {
         panelClass: 'login-dialog-container'
@@ -35,7 +31,7 @@ export class AuthHeaderComponent implements OnInit {
     }
   }
 
-  logOut() {
+  public logOut() {
     this.authManager.removeToken();
   }
 

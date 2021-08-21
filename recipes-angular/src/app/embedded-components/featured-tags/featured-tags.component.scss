@@ -1,0 +1,50 @@
+@use '../../shared-styles/constants';
+
+#featured-tags-block {
+  display: flex;
+  max-height: 275px;
+
+  .featured-tag {
+    width: 280px;
+    background: #FFFFFF;
+    box-shadow: 0 16px 72px rgba(34, 39, 47, 0.05);
+    border-radius: 24px;
+    padding: 25px;
+    -webkit-user-select: none;
+    user-select: none;
+
+    .tag-icon-block {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      background: #FFEFCC;
+      border-radius: 12px;
+      text-align: center;
+      padding: 0;
+
+      .tag-icon {
+        vertical-align: middle;
+        color: constants.$accent-color;
+      }
+    }
+
+    h2 {
+      margin-top: 22px;
+      @include constants.default-header;
+      font-size: 24px;
+      line-height: 30px;
+    }
+
+    p {
+      margin-top: 12px;
+      height: 90px;
+      @include constants.default-text;
+      line-height: 30px;
+      color: constants.$light-black-color;
+    }
+  }
+
+  .featured-tag-margined {
+    margin-left: 30px;
+  }
+}

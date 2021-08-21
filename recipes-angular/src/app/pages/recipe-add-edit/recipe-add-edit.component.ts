@@ -11,6 +11,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {RecipeEdit} from "../../core/dto/recipe/recipe-edit";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
+import {MatChipInputEvent} from "@angular/material/chips";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -45,6 +47,9 @@ export class RecipeAddEditComponent implements OnInit {
 
   id: number | undefined;
 
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: string[] = [];
+
   get isEdit(): boolean {
     return this.id != null;
   }
@@ -68,7 +73,9 @@ export class RecipeAddEditComponent implements OnInit {
         this.recipeDescription.setValue(result.description);
         this.cookingTime.setValue(result.cookingTimeMin);
         this.portions.setValue(result.portions);
-        this.image = environment.backendUrl + "/" + result.imagePath;
+
+        if (result.imagePath)
+          this.image = environment.backendUrl + "/" + result.imagePath;
 
         for (const ingredient of result.ingredients) {
           this.addIngredient(ingredient.header, ingredient.value)
@@ -77,6 +84,8 @@ export class RecipeAddEditComponent implements OnInit {
         for (const step of result.steps) {
           this.addStep(step)
         }
+
+        this.tags = result.tags;
       })
     }
     else {
@@ -134,6 +143,7 @@ export class RecipeAddEditComponent implements OnInit {
       ingredients.push(ingredientDto);
     }
 
+
     if (this.isEdit) {
       const dto: RecipeEdit = {
         id: this.id as number,
@@ -142,8 +152,10 @@ export class RecipeAddEditComponent implements OnInit {
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value
+        portions: this.portions.value == "" ? 0: this.portions.value,
+        tags: this.tags
       };
+
 
       this.recipeService.edit(dto).subscribe(() => {
         if (this.file) {
@@ -168,7 +180,8 @@ export class RecipeAddEditComponent implements OnInit {
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value
+        portions: this.portions.value == "" ? 0: this.portions.value,
+        tags: this.tags
       };
 
       this.recipeService.create(dto).subscribe((id: number) => {
@@ -211,5 +224,24 @@ export class RecipeAddEditComponent implements OnInit {
 
   deleteStep(id: number) {
     this.steps.removeAt(id);
+  }
+
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      if (!this.tags.includes(value))
+        this.tags.push(event.value);
+    }
+
+    event.chipInput!.clear();
+  }
+
+  removeTag(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 }

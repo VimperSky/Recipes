@@ -3,4 +3,5 @@ export interface RecipeBase {
   description: string;
   cookingTimeMin: number | undefined;
   portions: number | undefined;
+  tags: string[];
 }

@@ -19,6 +19,25 @@ namespace Recipes.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("RecipeTag", b =>
+                {
+                    b.Property<int>("RecipesId")
+                        .HasColumnType("integer")
+                        .HasColumnName("recipes_id");
+
+                    b.Property<string>("TagsValue")
+                        .HasColumnType("text")
+                        .HasColumnName("tags_value");
+
+                    b.HasKey("RecipesId", "TagsValue")
+                        .HasName("pk_recipe_tag");
+
+                    b.HasIndex("TagsValue")
+                        .HasDatabaseName("ix_recipe_tag_tags_value");
+
+                    b.ToTable("recipe_tag");
+                });
+
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -65,6 +84,34 @@ namespace Recipes.Infrastructure.Migrations
                     b.ToTable("recipe");
                 });
 
+            modelBuilder.Entity("Recipes.Domain.Models.Tag", b =>
+                {
+                    b.Property<string>("Value")
+                        .HasColumnType("text")
+                        .HasColumnName("value");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text")
+                        .HasColumnName("icon");
+
+                    b.Property<int>("TagLevel")
+                        .HasColumnType("integer")
+                        .HasColumnName("tag_level");
+
+                    b.HasKey("Value")
+                        .HasName("pk_tag");
+
+                    b.HasIndex("Value")
+                        .IsUnique()
+                        .HasDatabaseName("ix_tag_value");
+
+                    b.ToTable("tag");
+                });
+
             modelBuilder.Entity("Recipes.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -105,6 +152,23 @@ namespace Recipes.Infrastructure.Migrations
                         .HasDatabaseName("ix_user_login");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("RecipeTag", b =>
+                {
+                    b.HasOne("Recipes.Domain.Models.Recipe", null)
+                        .WithMany()
+                        .HasForeignKey("RecipesId")
+                        .HasConstraintName("fk_recipe_tag_recipes_recipes_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Recipes.Domain.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsValue")
+                        .HasConstraintName("fk_recipe_tag_tag_tags_value")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>

@@ -9,7 +9,7 @@ import {AuthComponent} from "../../../embedded-components/auth/auth/auth.compone
 export class DialogDisplayService {
   constructor(private dialog: MatDialog) {}
 
-  openErrorDialog(text: string) {
+  public openErrorDialog(text: string) {
     this.dialog.open(ErrorComponent, {
       hasBackdrop: true,
       data: {
@@ -18,7 +18,7 @@ export class DialogDisplayService {
     });
   }
 
-  openAuthDialog(text: string | undefined = undefined) {
+  public openAuthDialog(text: string | undefined = undefined) {
     this.dialog.open(AuthComponent, {
       panelClass: 'auth-dialog-container',
       data: {

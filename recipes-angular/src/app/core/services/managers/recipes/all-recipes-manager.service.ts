@@ -11,18 +11,6 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
   private currentPage: number = 1;
   private searchString: string | null = null;
 
-  private updateRecipeList(recipePage: RecipesPage, clear: boolean = false) {
-    if (clear) {
-      this.recipeList = recipePage.recipes;
-      this.currentPage = 1;
-    }
-    else {
-      this.recipeList = this.recipeList.concat(recipePage.recipes);
-    }
-
-    this.pageCount = recipePage.pageCount;
-  }
-
   constructor(private recipesService: RecipesService) {
     super();
   }
@@ -53,5 +41,17 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
       this.updateRecipeList(result, true);
       this.searchString = searchString;
     });
+  }
+
+  private updateRecipeList(recipePage: RecipesPage, clear: boolean = false) {
+    if (clear) {
+      this.recipeList = recipePage.recipes;
+      this.currentPage = 1;
+    }
+    else {
+      this.recipeList = this.recipeList.concat(recipePage.recipes);
+    }
+
+    this.pageCount = recipePage.pageCount;
   }
 }

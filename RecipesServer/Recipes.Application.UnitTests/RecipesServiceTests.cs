@@ -4,6 +4,7 @@ using Moq;
 using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions.Models;
 using Recipes.Application.Services.Recipes;
+using Recipes.Application.Services.Tags;
 using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
@@ -16,6 +17,7 @@ namespace Recipes.Application.UnitTests
     {
         private readonly Mock<IRecipesRepository> _recipesRepoMock;
         private readonly Mock<IImageFileSaver> _imageFileSaverMock;
+        private readonly Mock<ITagsService> _tagsServiceMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         
         private readonly UserClaims _mainUserClaims;
@@ -24,8 +26,9 @@ namespace Recipes.Application.UnitTests
         public RecipesServiceTests()
         {
             _mainUserClaims = new UserClaims(Name, MainUserId);
-;
-            
+
+            _tagsServiceMock = new Mock<ITagsService>();
+
             _recipesRepoMock = new Mock<IRecipesRepository>();
             _recipesRepoMock.Setup(x => x.AddRecipe(It.IsAny<Recipe>()))
                 .Returns((Recipe recipe) =>
@@ -36,7 +39,7 @@ namespace Recipes.Application.UnitTests
             _imageFileSaverMock = new Mock<IImageFileSaver>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _recipesService = new RecipesService(_recipesRepoMock.Object, _unitOfWorkMock.Object,
+            _recipesService = new RecipesService(_recipesRepoMock.Object, _tagsServiceMock.Object, _unitOfWorkMock.Object,
                 MapperInst, _imageFileSaverMock.Object);
         }
         

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions.Models;
+using Recipes.Application.Services.Tags;
 using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
@@ -16,12 +17,14 @@ namespace Recipes.Application.Services.Recipes
         private readonly IImageFileSaver _imageFileSaver;
         private readonly IMapper _mapper;
         private readonly IRecipesRepository _recipesRepository;
+        private readonly ITagsService _tagsService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RecipesService(IRecipesRepository recipesRepository, IUnitOfWork unitOfWork, IMapper mapper,
+        public RecipesService(IRecipesRepository recipesRepository, ITagsService tagsService, IUnitOfWork unitOfWork, IMapper mapper,
             IImageFileSaver imageFileSaver)
         {
             _recipesRepository = recipesRepository;
+            _tagsService = tagsService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _imageFileSaver = imageFileSaver;
@@ -59,9 +62,12 @@ namespace Recipes.Application.Services.Recipes
 
         public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto, UserClaims userClaims)
         {
+            var tags = await _tagsService.GetOrCreateTags(recipeCreateDto.Tags);
+
             var recipeModel = _mapper.Map<Recipe>(recipeCreateDto);
             recipeModel.AuthorId = userClaims.UserId;
-
+            recipeModel.Tags = tags;
+            
             var addedRecipe = await _recipesRepository.AddRecipe(recipeModel);
 
             _unitOfWork.Commit();
@@ -76,8 +82,12 @@ namespace Recipes.Application.Services.Recipes
 
             if (recipeDb.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
-
+            
+            var tags = await _tagsService.GetOrCreateTags(recipeEditDto.Tags);
+            
             var recipeModel = _mapper.Map<Recipe>(recipeEditDto);
+            recipeModel.Tags = tags;
+            
             foreach (var toProp in typeof(Recipe).GetProperties())
             {
                 var value = toProp.GetValue(recipeModel, null);

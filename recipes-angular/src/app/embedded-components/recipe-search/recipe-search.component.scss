@@ -1,16 +1,15 @@
 @use '../../shared-styles/constants';
 
 #search-form {
-  height: 70px;
+  height: 80px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
 
   h2 {
     @include constants.default-header;
     font-size: 24px;
     line-height: 30px;
-    height: 100%;
+    height: 70px;
     flex: 0 0.2 200px;
     margin: 0;
     padding: 0;
@@ -18,24 +17,43 @@
     align-items: center;
   }
 
-  #search-input {
-    @include constants.default-text;
-    line-height: 22px;
-    font-weight: 500;
-    height: 66px;
-    padding: 0 0 0 15px;
-    margin: 0 0 0 5px;
+  #search-block {
     flex: 1 1 200px;
-    border-radius: 16px;
-    border-color: transparent;
-    background: white;
-    box-shadow: 0 8px 42px rgba(34, 39, 47, 0.04);
+    margin: 0 0 0 5px;
+
+    #search-input {
+      @include constants.default-text;
+      padding: 0 0 0 15px;
+
+      height: 68px;
+      line-height: 22px;
+      font-weight: 500;
+      width: 100%;
+
+      border-radius: 16px;
+      border-color: transparent;
+      background: white;
+      box-shadow: 0 8px 42px rgba(34, 39, 47, 0.04);
+    }
+
+    #selected-tags-line {
+      display: flex;
+      margin-top: 10px;
+
+      .tag {
+        @include constants.default-text;
+        font-size: 16px;
+        color: #808080;
+        margin-left: 20px;
+      }
+    }
   }
+
 
   #search-button {
     @include constants.default-text;
-    height: 100%;
-    margin-left: 16px;
+    height: 70px;
+    margin-left: 30px;
     flex: 0 0 150px;
     border-radius: 16px;
   }

@@ -18,15 +18,65 @@
     height: 430px;
     display: flex;
 
-    #recipe-image {
-      border-radius: 72px 0;
+    #recipe-image-block {
+      position: relative;
+
+      #recipe-image {
+        border-radius: 72px 0;
+      }
+
+      #recipe-author-block {
+        position: absolute;
+        padding: 0 20px;
+        background: white;
+        bottom: 40px;
+        height: 30px;
+
+        p {
+          @include constants.default-text;
+          line-height: 30px;
+          font-size: 16px;
+          font-weight: 600;
+          color: #FDB100;
+        }
+      }
+
+
     }
 
+
     #recipe-info {
+      margin-top: 50px;
       margin-left: 50px;
 
+      #tags-block {
+        display: flex;
+        height: 20px;
+
+        .chip {
+          display: inline-block;
+          height: 25px;
+          padding-left: 15px;
+          padding-right: 15px;
+          background: rgba(253, 177, 0, 0.2);
+          border-radius: 5px;
+          text-align: center;
+
+          p {
+            @include constants.default-text;
+            font-size: 14px;
+            color: #F29E1F;
+            height: 20px;
+          }
+        }
+
+        .margined-chip {
+          margin-left: 5px;
+        }
+      }
+
       #text-block {
-        margin-top: 100px;
+        margin-top: 45px;
         width: 600px;
 
         #recipe-header {

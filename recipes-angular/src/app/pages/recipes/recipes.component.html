@@ -1,10 +1,14 @@
 <div id="recipes-header">
   <h1>Рецепты</h1>
+
   <button mat-flat-button color="accent" id="add-recipe-button" (click)="addNewRecipe()" type='button'>
     <mat-icon>add</mat-icon>
     <span>Добавить рецепт</span>
   </button>
 </div>
+
+
+<app-featured-tags id="featured-tags"></app-featured-tags>
 
 <app-recipe-search id="recipe-search"></app-recipe-search>
 

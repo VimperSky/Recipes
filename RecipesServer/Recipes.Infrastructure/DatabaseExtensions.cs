@@ -16,7 +16,9 @@ namespace Recipes.Infrastructure
         {
             return searchString == null
                 ? recipes
-                : recipes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+                : recipes.Where(rec =>
+                        rec.Name.ToLower().Contains(searchString.ToLower()) ||
+                        rec.Tags.Select(tag => tag.Value).Contains(searchString));
         }
     }
 }

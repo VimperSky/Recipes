@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.DTOs.Tags;
+using Recipes.Application.DTOs.User;
 using Recipes.Domain.Models;
 
 namespace Recipes.Application.MappingProfiles
@@ -8,14 +10,19 @@ namespace Recipes.Application.MappingProfiles
     {
         public RecipeMappingProfile()
         {
+            CreateMap<Tag, string>().ConvertUsing(x => x.Value);
+            CreateMap<string, Tag>().ConvertUsing(x => new Tag {Value = x});
+            
+            CreateMap<Tag, TagDto>();
+            
+            CreateMap<User, AuthorDto>();
+
             CreateMap<RecipeIngredientsBlock, IngredientDto>();
             CreateMap<Recipe, RecipePreviewDto>();
             CreateMap<Recipe, RecipeDetailDto>();
             
-            // Нужны для тестов, как минимум
             CreateMap<Recipe, RecipeCreateDto>();
             CreateMap<Recipe, RecipeEditDto>();
-            // Конец
 
             CreateMap<IngredientDto, RecipeIngredientsBlock>();
             CreateMap<RecipeCreateDto, Recipe>();

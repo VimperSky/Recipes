@@ -44,7 +44,25 @@
           </mat-form-field>
         </div>
 
-        <div id="cooking-portions-line">
+        <div class="input-block-with-margin">
+          <mat-form-field class="wide-mat-form-field">
+            <mat-label>Теги</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let tag of tags" [selectable]="true"
+                        [removable]="true" (removed)="removeTag(tag)">
+                {{tag}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Добавить тег..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="true"
+                     (matChipInputTokenEnd)="addTag($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
+
+        <div id="cooking-portions-line" class="input-block-with-margin">
           <mat-form-field class="line-form-field">
             <mat-label>Время готовки</mat-label>
             <input type="number" matInput [formControl]="cookingTime">

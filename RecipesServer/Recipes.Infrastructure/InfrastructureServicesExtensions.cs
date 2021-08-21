@@ -10,6 +10,7 @@ namespace Recipes.Infrastructure
     {
         public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
+            services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecipesRepository, RecipesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -26,7 +27,10 @@ namespace Recipes.Infrastructure
         public static void ConfigureDatabase(this DbContextOptionsBuilder dbOptions, string connectionString)
         {
             dbOptions.UseNpgsql(connectionString, b =>
-                b.MigrationsAssembly("Recipes.Migrations")).UseSnakeCaseNamingConvention();
+            {
+                b.MigrationsAssembly("Recipes.Migrations");
+                b.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
+            }).UseSnakeCaseNamingConvention();
         }
     }
 }
