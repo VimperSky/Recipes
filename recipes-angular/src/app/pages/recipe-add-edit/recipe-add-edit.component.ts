@@ -21,22 +21,26 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 })
 export class RecipeAddEditComponent implements OnInit {
 
-  image: string | SafeResourceUrl | undefined;
   private file: File | undefined;
-  readonly acceptImageTypes: string = "image/png, image/jpeg";
 
-  recipeName = this.fb.control('', [
+  public image: string | SafeResourceUrl | undefined;
+  public readonly acceptImageTypes: string = "image/png, image/jpeg";
+  public id: number | undefined;
+  public readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  public tags: string[] = [];
+
+  public recipeName = this.fb.control('', [
     Validators.required,
     Validators.pattern('.*[a-zA-Zа-яА-Я].*') // хотя бы один символ из алфавита (рус англ)
   ]);
 
-  recipeDescription = this.fb.control('', [Validators.maxLength(150)])
-  cookingTime = this.fb.control('', [Validators.max(999)]);
-  portions = this.fb.control('', [Validators.max(999)]);
-  ingredients: FormArray = this.fb.array([]);
-  steps = this.fb.array([]);
+  public recipeDescription = this.fb.control('', [Validators.maxLength(150)])
+  public cookingTime = this.fb.control('', [Validators.max(999)]);
+  public portions = this.fb.control('', [Validators.max(999)]);
+  public ingredients: FormArray = this.fb.array([]);
+  public steps = this.fb.array([]);
 
-  recipeForm = this.fb.group({
+  public recipeForm = this.fb.group({
     recipeName: this.recipeName,
     recipeDescription: this.recipeDescription,
     cookingTime: this.cookingTime,
@@ -44,16 +48,6 @@ export class RecipeAddEditComponent implements OnInit {
     ingredients: this.ingredients,
     steps: this.steps
   })
-
-  id: number | undefined;
-
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  tags: string[] = [];
-
-  get isEdit(): boolean {
-    return this.id != null;
-  }
-
 
   constructor(private sanitizer: DomSanitizer,
               private fb: FormBuilder,
@@ -65,7 +59,11 @@ export class RecipeAddEditComponent implements OnInit {
     this.id = activatedRoute.snapshot.params['id'];
   }
 
-  ngOnInit(): void {
+  public get isEdit(): boolean {
+    return this.id != null;
+  }
+
+  public ngOnInit(): void {
     if (this.isEdit) {
       this.recipeService.detail(this.id!).subscribe((result: RecipeDetail) => {
 
@@ -94,7 +92,7 @@ export class RecipeAddEditComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: Event) {
+  public onFileSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (!files)
       return;
@@ -108,23 +106,14 @@ export class RecipeAddEditComponent implements OnInit {
     this.image = this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
   }
 
-  deleteImage() {
+  public deleteImage() {
     if (this.image)
     {
       this.image = undefined;
     }
   }
 
-  private finalizeRecipeProcessing(recipeId: number | undefined = undefined) {
-    this.snackBar.open(!recipeId ? 'Рецепт был успешно отредактирован!' : 'Рецепт был успешно создан!',
-      'ОК', {duration: 5000
-    });
-    if (!recipeId)
-      recipeId = this.id;
-    this.router.navigate([`/recipe/detail/${recipeId}`])
-  }
-
-  publish() {
+  public publish() {
     this.recipeForm.markAllAsTouched();
     if (this.recipeForm.invalid)
       return;
@@ -201,7 +190,7 @@ export class RecipeAddEditComponent implements OnInit {
     }
   }
 
-  addIngredient(header: string = "", value: string = "") {
+  public addIngredient(header: string = "", value: string = "") {
     const ingredientBlock = this.fb.group({
       header: this.fb.control(header, [Validators.maxLength(24)]),
       value: this.fb.control(value, [Validators.required, Validators.maxLength(500)]),
@@ -210,7 +199,7 @@ export class RecipeAddEditComponent implements OnInit {
   }
 
 
-  addStep(value: string = "") {
+  public addStep(value: string = "") {
     const step = this.fb.group({
       value: [value, [Validators.required, Validators.maxLength(500)]]
     })
@@ -218,15 +207,15 @@ export class RecipeAddEditComponent implements OnInit {
   }
 
 
-  deleteIngredient(id: number) {
+  public deleteIngredient(id: number) {
     this.ingredients.removeAt(id);
   }
 
-  deleteStep(id: number) {
+  public deleteStep(id: number) {
     this.steps.removeAt(id);
   }
 
-  addTag(event: MatChipInputEvent): void {
+  public addTag(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     if (value) {
@@ -237,11 +226,20 @@ export class RecipeAddEditComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-  removeTag(tag: string): void {
+  public removeTag(tag: string): void {
     const index = this.tags.indexOf(tag);
 
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
+  }
+
+  private finalizeRecipeProcessing(recipeId: number | undefined = undefined) {
+    this.snackBar.open(!recipeId ? 'Рецепт был успешно отредактирован!' : 'Рецепт был успешно создан!',
+      'ОК', {duration: 5000
+      });
+    if (!recipeId)
+      recipeId = this.id;
+    this.router.navigate([`/recipe/detail/${recipeId}`])
   }
 }

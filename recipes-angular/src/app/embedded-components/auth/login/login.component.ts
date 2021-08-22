@@ -19,28 +19,17 @@ const serverErrors: Record<string, string> = {
   templateUrl: './login.component.html',
   styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
 
-  login = new FormControl('', [
+  public login = new FormControl('', [
     Validators.required,
   ]);
-  password = new FormControl('', [
+  public password = new FormControl('', [
     Validators.required
   ]);
 
-  get hasError(): boolean {
-    return this.loginForm.errors != null;
-  }
-
-  getErrorText(): string {
-    for (const key of Object.keys(serverErrors))
-      if (this.loginForm.hasError(key))
-        return serverErrors[key];
-
-    return serverErrors['default'];
-  }
 
   constructor(private dialog: MatDialog,
               private dialogRef: MatDialogRef<LoginComponent>,
@@ -55,11 +44,20 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+
+  public get hasError(): boolean {
+    return this.loginForm.errors != null;
   }
 
+  public getErrorText(): string {
+    for (const key of Object.keys(serverErrors))
+      if (this.loginForm.hasError(key))
+        return serverErrors[key];
 
-  logIn() {
+    return serverErrors['default'];
+  }
+
+  public logIn() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
       let loginDto: Login = {login: this.login.value, password: this.password.value }
@@ -85,12 +83,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
-  register() {
+  public register() {
     this.dialogRef.close();
     this.dialog.open(RegisterComponent, {
       panelClass: 'register-dialog-container'
     });
    }
-
 }

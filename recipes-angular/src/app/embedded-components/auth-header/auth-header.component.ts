@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {LoginComponent} from "../auth/login/login.component";
+import {Component, Input} from '@angular/core';
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 
@@ -9,7 +7,9 @@ import {DialogDisplayService} from "../../core/services/tools/dialog-display.ser
   templateUrl: './auth-header.component.html',
   styleUrls: ['./auth-header.component.scss']
 })
-export class AuthHeaderComponent implements OnInit {
+export class AuthHeaderComponent {
+  @Input()
+  public name: string | null = null;
 
   constructor(private dialogDisplay: DialogDisplayService, private authManager: AuthTokenManagerService) {
     this.name = authManager.name;
@@ -18,11 +18,6 @@ export class AuthHeaderComponent implements OnInit {
       this.name = authManager.name;
     })
   }
-
-  @Input()
-  public name: string | null = null;
-
-  public ngOnInit(): void {}
 
   public logIn() {
     this.dialogDisplay.openLoginDialog();
