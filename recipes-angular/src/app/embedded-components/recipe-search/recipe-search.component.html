@@ -1,19 +1,20 @@
 <div id="search-form">
-  <div id="search-top-block" *ngIf="isExtended">
+  <div *ngIf="isExtended" id="search-top-block">
     <h2>Поиск рецептов</h2>
     <p>Введите примерное название блюда, а мы по тегам найдем его</p>
   </div>
   <div id="search-form-content">
     <h3 *ngIf="!isExtended">Поиск рецепта</h3>
     <div id="search-block">
-      <input matInput placeholder="Название блюда .." id="search-input" [formControl]="searchService.searchString" (keyup.enter)="search()">
+      <input (keyup.enter)="search()" [formControl]="searchService.searchString" id="search-input" matInput
+             placeholder="Название блюда ..">
       <div *ngIf="tags" id="selected-tags-line">
-        <button mat-button *ngFor="let tag of tags" class="tag" (click)="selectTag(tag)">
+        <button (click)="selectTag(tag)" *ngFor="let tag of tags" class="tag" mat-button>
           {{tag}}
         </button>
       </div>
     </div>
-    <button mat-flat-button color="accent" id="search-button" (click)="search()" type='button'>Поиск</button>
+    <button (click)="search()" color="accent" id="search-button" mat-flat-button type='button'>Поиск</button>
   </div>
 
 </div>

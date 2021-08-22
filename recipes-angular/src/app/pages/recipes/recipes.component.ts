@@ -29,8 +29,7 @@ export class RecipesComponent implements OnInit {
   addNewRecipe() {
     if (this.tokenManager.isAuthorized) {
       this.router.navigate(["/recipe/new"]);
-    }
-    else {
+    } else {
       this.dialogDisplayService.openAuthDialog();
     }
   }

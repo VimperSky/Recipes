@@ -3,17 +3,18 @@
   <div id="recipes-header">
     <h1>{{recipeDetail.name}}</h1>
     <div id="right-buttons-block">
-      <button *ngIf="isAvailableToModify" mat-icon-button id="delete-recipe-button" (click)="delete()">
+      <button (click)="delete()" *ngIf="isAvailableToModify" id="delete-recipe-button" mat-icon-button>
         <mat-icon>delete_outline</mat-icon>
       </button>
-      <button *ngIf="isAvailableToModify" mat-flat-button color="accent" id="publish-recipe-button" [routerLink]="['/recipe/edit', recipeDetail.id]"
+      <button *ngIf="isAvailableToModify" [routerLink]="['/recipe/edit', recipeDetail.id]" color="accent" id="publish-recipe-button"
+              mat-flat-button
               type="button">
         <mat-icon>edit</mat-icon>
         <span>Редактировать</span>
       </button>
     </div>
   </div>
-  <app-recipe-preview [recipe]="recipeDetail" [isClickable]="false"></app-recipe-preview>
+  <app-recipe-preview [isClickable]="false" [recipe]="recipeDetail"></app-recipe-preview>
 
   <div id="bottom-blocks">
     <div id="first-bottom-block">

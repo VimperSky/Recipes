@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeDetail} from "../../core/dto/recipe/recipe-detail";
 import {RecipeService} from "../../core/services/communication/abstract/recipe.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Location} from "@angular/common";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
@@ -42,7 +41,8 @@ export class RecipeDetailComponent implements OnInit {
     if (this.recipeDetail) {
       this.recipeService.delete(this.recipeDetail.id).subscribe(() => {
         this.snackBar.open('Рецепт был успешно удален!',
-          'ОК', {duration: 5000
+          'ОК', {
+            duration: 5000
           });
         this.router.navigate(['recipes'])
       }, (error: HttpErrorResponse) => {

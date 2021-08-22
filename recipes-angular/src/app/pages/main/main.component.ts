@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
@@ -31,8 +31,7 @@ export class MainComponent {
 
       this.dialogDisplay.openAuthDialog("Доступ к этой странице имеют только зарегистрированные пользователи.");
       authTokenManager.authChanged.subscribe(() => {
-        if (authTokenManager.isAuthorized)
-        {
+        if (authTokenManager.isAuthorized) {
           router.navigate([returnUrl])
         }
       })

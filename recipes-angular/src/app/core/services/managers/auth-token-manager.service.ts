@@ -9,6 +9,8 @@ import {Token} from "../../dto/auth/token";
 })
 export class AuthTokenManagerService {
   private authChangeSub = new Subject<void>()
+  // public methods
+  public authChanged = this.authChangeSub.asObservable();
   private token: Token | null = null;
 
   constructor(private jwtHelper: JwtHelperService) {
@@ -19,13 +21,6 @@ export class AuthTokenManagerService {
     this.token = this.jwtHelper.decodeToken<Token>(token);
     this.token.raw = token;
   }
-
-  private raiseTokenChange () {
-    this.authChangeSub.next();
-  }
-
-  // public methods
-  public authChanged = this.authChangeSub.asObservable();
 
   public get isAuthorized(): boolean {
     return this.token != null;
@@ -40,7 +35,7 @@ export class AuthTokenManagerService {
   }
 
   public get userId(): number | null {
-    return this.token? parseInt(this.token.userId) : null;
+    return this.token ? parseInt(this.token.userId) : null;
   }
 
   public removeToken() {
@@ -56,6 +51,10 @@ export class AuthTokenManagerService {
     this.token.raw = token;
 
     this.raiseTokenChange();
+  }
+
+  private raiseTokenChange() {
+    this.authChangeSub.next();
   }
 
 }

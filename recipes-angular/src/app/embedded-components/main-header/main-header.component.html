@@ -2,13 +2,14 @@
   <h1>Готовь и делись рецептами</h1>
   <p>Никаких кулинарных книг и блокнотов! Храни все любимые рецепты в одном месте.</p>
   <div id="action-buttons">
-    <button mat-stroked-button class="action-button add-recipe-button" (click)="addRecipe()">
+    <button (click)="addRecipe()" class="action-button add-recipe-button" mat-stroked-button>
       <mat-icon>add</mat-icon>
       <span>Добавить рецепт</span>
     </button>
-    <button *ngIf="!authTokenManager.isAuthorized"
-            mat-stroked-button class="action-button login-button" (click)="logIn()">Войти</button>
+    <button (click)="logIn()"
+            *ngIf="!authTokenManager.isAuthorized" class="action-button login-button" mat-stroked-button>Войти
+    </button>
   </div>
 
-  <img id="right-image" src="../../../assets/images/main_header.png" height="800" width="602" alt="main_header"/>
+  <img alt="main_header" height="800" id="right-image" src="../../../assets/images/main_header.png" width="602"/>
 </div>

@@ -6,7 +6,8 @@ import {HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class HttpParamsBuilderService {
-  constructor(private tokenManager: AuthTokenManagerService) { }
+  constructor(private tokenManager: AuthTokenManagerService) {
+  }
 
   public get authOptions() {
     let newOptions = {headers: new HttpHeaders()};

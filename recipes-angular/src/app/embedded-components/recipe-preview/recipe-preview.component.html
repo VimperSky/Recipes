@@ -1,14 +1,14 @@
 <ng-template #recipeBlock>
   <div id="recipe-block">
     <div id="recipe-image-block">
-      <img src="{{getImagePath()}}" width="430" height="430" alt="{{getImagePath()}}" id="recipe-image">
-      <div id="recipe-author-block" >
+      <img alt="{{getImagePath()}}" height="430" id="recipe-image" src="{{getImagePath()}}" width="430">
+      <div id="recipe-author-block">
         <p>{{login}}</p>
       </div>
     </div>
     <div id="recipe-info">
       <div id="tags-block">
-        <div *ngFor="let tag of recipe.tags; first as isFirst" class="chip" [class.margined-chip]="!isFirst">
+        <div *ngFor="let tag of recipe.tags; first as isFirst" [class.margined-chip]="!isFirst" class="chip">
           <p>{{tag}}</p>
         </div>
       </div>
@@ -40,7 +40,8 @@
 </ng-template>
 
 
-<a mat-button *ngIf="isClickable; else decorativeInfo" id="clickable-wrapper" class="wrapper" [routerLink]="['/recipe/detail', recipe.id]">
+<a *ngIf="isClickable; else decorativeInfo" [routerLink]="['/recipe/detail', recipe.id]" class="wrapper" id="clickable-wrapper"
+   mat-button>
   <ng-template [ngTemplateOutlet]="recipeBlock"></ng-template>
 </a>
 

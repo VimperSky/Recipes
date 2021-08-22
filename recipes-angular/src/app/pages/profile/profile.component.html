@@ -5,19 +5,19 @@
     <h1>Мой профиль</h1>
   </div>
 
-  <div id="profile-info" [formGroup]="profileForm">
+  <div [formGroup]="profileForm" id="profile-info">
     <div id="left-profile-block">
       <div>
         <mat-form-field class="wide-mat-form-field">
           <mat-label>Имя</mat-label>
-          <input required type="text" matInput [formControl]="name">
+          <input [formControl]="name" matInput required type="text">
         </mat-form-field>
       </div>
 
       <div class="input-block-with-margin">
         <mat-form-field class="wide-mat-form-field">
           <mat-label>Логин</mat-label>
-          <input required type="text" matInput [formControl]="login">
+          <input [formControl]="login" matInput required type="text">
           <mat-error *ngIf="loginHasError">{{getLoginErrorText()}}</mat-error>
         </mat-form-field>
       </div>
@@ -25,7 +25,7 @@
       <div class="input-block-with-margin">
         <mat-form-field class="wide-mat-form-field">
           <mat-label>Пароль</mat-label>
-          <input required type="password" matInput [placeholder]="passwordPlaceHolder" [formControl]="password">
+          <input [formControl]="password" [placeholder]="passwordPlaceHolder" matInput required type="password">
           <mat-hint>Минимум 8 символов</mat-hint>
         </mat-form-field>
       </div>
@@ -33,19 +33,19 @@
 
     <div id="right-profile-block">
       <div>
-        <mat-form-field id="bio" disabled="true">
+        <mat-form-field disabled="true" id="bio">
           <mat-label>Напишите немного о себе</mat-label>
-          <textarea autosize [rows]="6" [maxRows]="6" matInput [formControl]="bio"></textarea>
+          <textarea [formControl]="bio" [maxRows]="6" [rows]="6" autosize matInput></textarea>
         </mat-form-field>
       </div>
     </div>
 
-    <button *ngIf="!isEditMode else applyChangesButton" mat-icon-button class="edit-icon" (click)="editProfile()">
+    <button (click)="editProfile()" *ngIf="!isEditMode else applyChangesButton" class="edit-icon" mat-icon-button>
       <mat-icon>edit</mat-icon>
     </button>
 
     <ng-template #applyChangesButton>
-      <button mat-icon-button class="edit-icon edit-icon-approve" (click)="applyChanges()">
+      <button (click)="applyChanges()" class="edit-icon edit-icon-approve" mat-icon-button>
         <mat-icon>done</mat-icon>
       </button>
     </ng-template>

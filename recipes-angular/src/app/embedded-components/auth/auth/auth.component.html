@@ -1,4 +1,4 @@
-<button mat-icon-button class="close-icon" mat-dialog-close>
+<button class="close-icon" mat-dialog-close mat-icon-button>
   <mat-icon>close</mat-icon>
 </button>
 
@@ -11,8 +11,8 @@
 
     <div mat-dialog-actions>
       <div class="main-buttons-block">
-        <button mat-stroked-button class="action-button submit-button" (click)="logIn()">Войти</button>
-        <button mat-stroked-button class="action-button cancel-button" (click)="register()">Регистрация</button>
+        <button (click)="logIn()" class="action-button submit-button" mat-stroked-button>Войти</button>
+        <button (click)="register()" class="action-button cancel-button" mat-stroked-button>Регистрация</button>
       </div>
     </div>
   </div>

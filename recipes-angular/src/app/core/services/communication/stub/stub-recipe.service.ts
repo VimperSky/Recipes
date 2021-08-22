@@ -5,7 +5,7 @@ import {Observable, of} from "rxjs";
 import {RecipeCreate} from "../../../dto/recipe/recipe-create";
 import {RecipeEdit} from "../../../dto/recipe/recipe-edit";
 
-const testImagesPath =  "../../../assets/images/test/";
+const testImagesPath = "../../../assets/images/test/";
 const recipeDetail: RecipeDetail = {
   id: 1,
   authorId: 1,
@@ -15,11 +15,11 @@ const recipeDetail: RecipeDetail = {
     "Советую подавать его порционно в красивых бокалах, украсив взбитыми сливками, свежими ягодами и мятой.",
   cookingTimeMin: 35,
   portions: 5,
-    steps: ['Приготовим панна котту: Зальем желатин молоком и поставим на 30 минут для набухания. ' +
-      'В сливки добавим сахар и ванильный сахар. Доводим до кипения (не кипятим!).',
+  steps: ['Приготовим панна котту: Зальем желатин молоком и поставим на 30 минут для набухания. ' +
+  'В сливки добавим сахар и ванильный сахар. Доводим до кипения (не кипятим!).',
 
-      'Добавим в сливки набухший в молоке желатин. Перемешаем до полного растворения. Огонь отключаем. ' +
-      'Охладим до комнатной температуры.',
+    'Добавим в сливки набухший в молоке желатин. Перемешаем до полного растворения. Огонь отключаем. ' +
+    'Охладим до комнатной температуры.',
 
     'Разольем охлажденные сливки по креманкам и поставим в холодильник до полного застывания. Это около 3-5 часов.',
 
@@ -33,7 +33,7 @@ const recipeDetail: RecipeDetail = {
     'Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник ' +
     'до полного застывания клубничного желе. Готовую панна коту подаем с фруктами.'
   ],
-   ingredients: [
+  ingredients: [
     {
       header: 'Для панна котты',
       value: 'Сливки-20-30% - 500мл.\n' +
@@ -58,7 +58,8 @@ const recipeDetail: RecipeDetail = {
   providedIn: 'root'
 })
 export class StubRecipeService implements RecipeService {
-  constructor() { }
+  constructor() {
+  }
 
   detail(id: number): Observable<RecipeDetail> {
     return of(recipeDetail);

@@ -11,7 +11,8 @@ import {RecipesService} from "../../core/services/communication/abstract/recipes
 export class RecipeOfTheDayComponent implements OnInit {
   public recipe: RecipePreview | undefined;
 
-  public constructor(private recipesService: RecipesService) { }
+  public constructor(private recipesService: RecipesService) {
+  }
 
   public get login(): string {
     if (!this.recipe)

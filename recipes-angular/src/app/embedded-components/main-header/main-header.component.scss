@@ -3,6 +3,7 @@
 #header-block {
   margin-top: 140px;
   width: 600px;
+
   h1 {
     @include constants.default-header;
     font-size: 72px;

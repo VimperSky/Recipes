@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable()
 export class SearchManagerService extends BaseSearchManagerService {
+  public searchString = new FormControl('', []);
   private recipesManager: AllRecipesManagerService;
 
   constructor(recipesManager: BaseRecipesManagerService,
@@ -15,8 +16,6 @@ export class SearchManagerService extends BaseSearchManagerService {
     super();
     this.recipesManager = recipesManager as AllRecipesManagerService;
   }
-
-  public searchString = new FormControl('', []);
 
   public setString(value: string) {
     this.searchString.setValue(value);

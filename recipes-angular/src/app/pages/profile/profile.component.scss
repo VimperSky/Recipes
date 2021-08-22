@@ -7,6 +7,7 @@ app-back-nav {
 
 #recipes-header {
   margin-top: 10px;
+
   h1 {
     @include constants.default-header;
     color: constants.$dark-black-color;

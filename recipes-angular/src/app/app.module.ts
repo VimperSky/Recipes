@@ -31,77 +31,77 @@ import {RegisterComponent} from './embedded-components/auth/register/register.co
 import {UserService} from "./core/services/communication/abstract/user.service";
 import {ApiUserService} from "./core/services/communication/api/api-user.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { RecipeAddEditComponent } from './pages/recipe-add-edit/recipe-add-edit.component';
+import {RecipeAddEditComponent} from './pages/recipe-add-edit/recipe-add-edit.component';
 import {AutosizeModule} from "ngx-autosize";
 import {JwtModule} from "@auth0/angular-jwt";
-import { AuthComponent } from './embedded-components/auth/auth/auth.component';
-import { ErrorComponent } from './embedded-components/error/error.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { ActivityOverviewComponent } from './embedded-components/activity-overview/activity-overview.component';
+import {AuthComponent} from './embedded-components/auth/auth/auth.component';
+import {ErrorComponent} from './embedded-components/error/error.component';
+import {ProfileComponent} from './pages/profile/profile.component';
+import {ActivityOverviewComponent} from './embedded-components/activity-overview/activity-overview.component';
 import {MainComponent} from "./pages/main/main.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {TagsService} from "./core/services/communication/abstract/tags.service";
 import {ApiTagsService} from "./core/services/communication/api/api-tags";
-import { FeaturedTagsComponent } from './embedded-components/featured-tags/featured-tags.component';
+import {FeaturedTagsComponent} from './embedded-components/featured-tags/featured-tags.component';
 import {MatRippleModule} from "@angular/material/core";
-import { MainHeaderComponent } from './embedded-components/main-header/main-header.component';
+import {MainHeaderComponent} from './embedded-components/main-header/main-header.component';
 import {BaseSearchManagerService} from "./core/services/managers/search/base-search-manager.service";
 import {SearchManagerService} from "./core/services/managers/search/search-manager.service";
 import {BaseRecipesManagerService} from "./core/services/managers/recipes/base-recipes-manager.service";
 import {AllRecipesManagerService} from "./core/services/managers/recipes/all-recipes-manager.service";
-import { RecipeOfTheDayComponent } from './embedded-components/recipe-of-the-day/recipe-of-the-day.component';
+import {RecipeOfTheDayComponent} from './embedded-components/recipe-of-the-day/recipe-of-the-day.component';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        RecipeSearchComponent,
-        RecipesComponent,
-        RecipeListComponent,
-        FooterComponent,
-        RecipeDetailComponent,
-        RecipePreviewComponent,
-        BackNavComponent,
-        AuthHeaderComponent,
-        LoginComponent,
-        RegisterComponent,
-        RecipeAddEditComponent,
-        AuthComponent,
-        ErrorComponent,
-        ProfileComponent,
-        ActivityOverviewComponent,
-        MainComponent,
-        FeaturedTagsComponent,
-        MainHeaderComponent,
-        RecipeOfTheDayComponent,
-        ActivityOverviewComponent,
-        ErrorComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatDividerModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        AutosizeModule,
-        HttpClientModule,
-        JwtModule.forRoot({
-            config: {
-                throwNoTokenError: true,
-            },
-        }),
-        MatChipsModule,
-        MatRippleModule
-    ],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    RecipeSearchComponent,
+    RecipesComponent,
+    RecipeListComponent,
+    FooterComponent,
+    RecipeDetailComponent,
+    RecipePreviewComponent,
+    BackNavComponent,
+    AuthHeaderComponent,
+    LoginComponent,
+    RegisterComponent,
+    RecipeAddEditComponent,
+    AuthComponent,
+    ErrorComponent,
+    ProfileComponent,
+    ActivityOverviewComponent,
+    MainComponent,
+    FeaturedTagsComponent,
+    MainHeaderComponent,
+    RecipeOfTheDayComponent,
+    ActivityOverviewComponent,
+    ErrorComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatDividerModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    AutosizeModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        throwNoTokenError: true,
+      },
+    }),
+    MatChipsModule,
+    MatRippleModule
+  ],
   providers: [
     {
       provide: RecipesService,
@@ -139,4 +139,5 @@ import { RecipeOfTheDayComponent } from './embedded-components/recipe-of-the-day
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

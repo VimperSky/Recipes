@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../core/services/communication/abstract/user.service";
 import {UserProfileInfoDto} from "../../core/dto/user/user-profile-info-dto";
@@ -15,15 +15,16 @@ export const loginErrors: Record<string, string> = {
 }
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['../../shared-styles/form-styles.scss', './profile.component.scss'],
-  providers: [
-    {
-      provide: BaseRecipesManagerService,
-      useClass: OwnRecipesManagerService
-    },
-  ]}
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['../../shared-styles/form-styles.scss', './profile.component.scss'],
+    providers: [
+      {
+        provide: BaseRecipesManagerService,
+        useClass: OwnRecipesManagerService
+      },
+    ]
+  }
 )
 export class ProfileComponent implements OnInit {
   name = this.fb.control('', [Validators.required])
@@ -52,6 +53,10 @@ export class ProfileComponent implements OnInit {
     return this.login.errors?.takenLogin;
   }
 
+  get isEditMode(): boolean {
+    return !this.profileForm.disabled;
+  }
+
   getLoginErrorText(): string {
     for (const key of Object.keys(loginErrors))
       if (this.login.hasError(key))
@@ -66,10 +71,6 @@ export class ProfileComponent implements OnInit {
       this.login.setValue(userProfile.login);
       this.bio.setValue(userProfile.bio);
     });
-  }
-
-  get isEditMode(): boolean {
-    return !this.profileForm.disabled;
   }
 
   editProfile() {
@@ -99,8 +100,7 @@ export class ProfileComponent implements OnInit {
           ['Bio', this.bio]
         ]);
         this.errorHandlingService.setValidationErrors(error, formControlsMap);
-      }
-      else if (error.status == 409) {
+      } else if (error.status == 409) {
         this.login.setErrors({takenLogin: true})
       }
     }))

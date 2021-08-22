@@ -15,7 +15,8 @@ export class RecipeSearchComponent implements OnInit {
 
   public tags: string[] | undefined;
 
-  constructor(public searchService: BaseSearchManagerService, private tagsService: TagsService) {}
+  constructor(public searchService: BaseSearchManagerService, private tagsService: TagsService) {
+  }
 
   ngOnInit(): void {
     this.tagsService.getSuggestedSearchTags().subscribe((result: SuggestedTagsDto) => {

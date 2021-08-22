@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorComponent} from "../../../embedded-components/error/error.component";
 import {AuthComponent} from "../../../embedded-components/auth/auth/auth.component";
@@ -8,7 +8,8 @@ import {LoginComponent} from "../../../embedded-components/auth/login/login.comp
   providedIn: 'root'
 })
 export class DialogDisplayService {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   public openErrorDialog(text: string) {
     this.dialog.open(ErrorComponent, {

@@ -4,10 +4,10 @@
 </div>
 
 <div *ngIf="tags" id="featured-tags-content-block">
-  <a mat-button *ngFor="let tag of tags; first as isFirst" class="featured-tag" [class.featured-tag-margined]="!isFirst"
-       (click)="searchForTag(tag)">
+  <a (click)="searchForTag(tag)" *ngFor="let tag of tags; first as isFirst" [class.featured-tag-margined]="!isFirst" class="featured-tag"
+     mat-button>
     <div class="tag-icon-block">
-      <img src="{{getImagePath(tag)}}" width="24" height="24" alt="{{getImagePath(tag)}}" class="tag-icon">
+      <img alt="{{getImagePath(tag)}}" class="tag-icon" height="24" src="{{getImagePath(tag)}}" width="24">
     </div>
     <h2>{{tag.value}}</h2>
     <p *ngIf="isExtended">{{tag.description}}</p>

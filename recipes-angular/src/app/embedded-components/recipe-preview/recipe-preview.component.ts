@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
 import {environment} from "../../../environments/environment";
 
@@ -24,6 +24,10 @@ export class RecipePreviewComponent {
     return "@admin";
   }
 
+  private static isLocalImagePath(imagePath: string): boolean {
+    return imagePath.startsWith("..");
+  }
+
   public getImagePath(): string {
     if (this.recipe.imagePath) {
       return RecipePreviewComponent.isLocalImagePath(this.recipe.imagePath)
@@ -31,9 +35,5 @@ export class RecipePreviewComponent {
         : environment.backendUrl + "/" + this.recipe.imagePath;
     }
     return defaultImagePath;
-  }
-
-  private static isLocalImagePath(imagePath: string): boolean {
-    return imagePath.startsWith("..");
   }
 }

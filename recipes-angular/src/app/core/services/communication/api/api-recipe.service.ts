@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {RecipeService} from "../abstract/recipe.service";
 import {RecipeDetail} from "../../../dto/recipe/recipe-detail";
 import {environment} from "../../../../../environments/environment";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {RecipeCreate} from "../../../dto/recipe/recipe-create";
 import {RecipeEdit} from "../../../dto/recipe/recipe-edit";
 import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";

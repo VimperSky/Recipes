@@ -7,7 +7,8 @@ import {BaseRecipesManagerService} from "../../core/services/managers/recipes/ba
   styleUrls: ['./recipe-list.component.scss']
 })
 export class RecipeListComponent implements OnInit {
-  constructor(public recipesManager: BaseRecipesManagerService) {}
+  constructor(public recipesManager: BaseRecipesManagerService) {
+  }
 
   ngOnInit(): void {
     this.recipesManager.loadInitial();

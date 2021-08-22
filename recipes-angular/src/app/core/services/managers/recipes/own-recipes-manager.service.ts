@@ -7,10 +7,9 @@ import {BaseRecipesManagerService} from "./base-recipes-manager.service";
 
 @Injectable()
 export class OwnRecipesManagerService extends BaseRecipesManagerService {
+  public recipeList: RecipePreview[] = [];
   private pageCount: number = 0;
   private currentPage: number = 1;
-
-  public recipeList: RecipePreview[] = [];
 
   constructor(private recipesService: RecipesService) {
     super();
@@ -37,8 +36,7 @@ export class OwnRecipesManagerService extends BaseRecipesManagerService {
     if (clear) {
       this.recipeList = recipePage.recipes;
       this.currentPage = 1;
-    }
-    else {
+    } else {
       this.recipeList = this.recipeList.concat(recipePage.recipes);
     }
 

@@ -7,10 +7,11 @@ import {Component} from '@angular/core';
 })
 export class ActivityOverviewComponent {
 
-  constructor() { }
-
   // Пока что делать смысла нет, без ActivityController это работать не будет
   public ownRecipes: number = 0;
   public likedRecipes: number = 0;
   public starredRecipes: number = 0;
+
+  constructor() {
+  }
 }

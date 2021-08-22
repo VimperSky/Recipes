@@ -4,7 +4,7 @@ import {RecipePreview} from "../../../dto/recipe/recipe-preview";
 import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable, of, throwError} from "rxjs";
 
-const testImagesPath =  "../../../assets/images/test/";
+const testImagesPath = "../../../assets/images/test/";
 
 export const recipes: RecipePreview[] = [
   {
@@ -54,7 +54,7 @@ export const recipes: RecipePreview[] = [
 ]
 
 @Injectable()
-export class StubRecipesService extends RecipesService{
+export class StubRecipesService extends RecipesService {
 
   constructor() {
     super();
