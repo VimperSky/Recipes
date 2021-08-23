@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AllRecipesManagerService} from "../recipes/all-recipes-manager.service";
-import {BaseRecipesManagerService} from "../recipes/base-recipes-manager.service";
+import {RecipesManager} from "../recipes/recipes-manager.service";
 import {FormControl} from "@angular/forms";
 import {BaseSearchManagerService} from "./base-search-manager.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,7 +10,7 @@ export class SearchManagerService extends BaseSearchManagerService {
   public searchString = new FormControl('', []);
   private recipesManager: AllRecipesManagerService;
 
-  constructor(recipesManager: BaseRecipesManagerService,
+  constructor(recipesManager: RecipesManager,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
     super();

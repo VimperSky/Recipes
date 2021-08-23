@@ -10,5 +10,7 @@ namespace Recipes.Domain.Repositories
         Task<User> GetUserByLogin(string login);
 
         Task<User> GetUserById(int id);
+
+        Task<UserStats> GetUserStats(int userId);
     }
 }

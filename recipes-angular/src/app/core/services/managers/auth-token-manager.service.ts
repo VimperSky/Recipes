@@ -8,7 +8,7 @@ import {Token} from "../../dto/auth/token";
   providedIn: 'root'
 })
 export class AuthTokenManagerService {
-  private authChangeSub = new Subject<void>()
+  private authChangeSub = new Subject<boolean>()
   // public methods
   public authChanged = this.authChangeSub.asObservable();
   private token: Token | null = null;
@@ -54,7 +54,7 @@ export class AuthTokenManagerService {
   }
 
   private raiseTokenChange() {
-    this.authChangeSub.next();
+    this.authChangeSub.next(this.isAuthorized);
   }
 
 }

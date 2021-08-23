@@ -29,7 +29,7 @@ export class MainComponent {
         return;
       }
 
-      this.dialogDisplay.openAuthDialog("Доступ к этой странице имеют только зарегистрированные пользователи.");
+      this.dialogDisplay.openAuthDialog();
       authTokenManager.authChanged.subscribe(() => {
         if (authTokenManager.isAuthorized) {
           router.navigate([returnUrl])

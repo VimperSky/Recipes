@@ -7,6 +7,9 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
+import {UserActivity} from "../../core/dto/user/user-activity";
+import {UserActivityManagerService} from "../../core/services/managers/user-activity-manager.service";
+import {ActivityService} from "../../core/services/communication/abstract/activity.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,6 +26,7 @@ export class RecipeDetailComponent implements OnInit {
               private dialogDisplayService: DialogDisplayService,
               private router: Router,
               private tokenService: AuthTokenManagerService,
+              private activityService: ActivityService,
               private errorHandlingService: ErrorHandlingService) {
   }
 
@@ -35,6 +39,29 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.detail(id).subscribe(result => {
       this.recipeDetail = result;
     });
+
+    this.tokenService.authChanged.subscribe((value: boolean) => {
+      if (!this.recipeDetail) return;
+
+      if (value) {
+        this.activityService.getUserActivity().subscribe((activity: UserActivity) => {
+          if (!this.recipeDetail) return;
+
+          if (activity.likedRecipes.includes(this.recipeDetail.id)) {
+            this.recipeDetail.isLiked = true;
+          }
+          if (activity.starredRecipes.includes(this.recipeDetail.id)) {
+            this.recipeDetail.isStarred = true;
+          }
+
+        });
+      }
+      else {
+        this.recipeDetail.isLiked = false;
+        this.recipeDetail.isStarred = false;
+      }
+    })
+
   }
 
   public delete() {

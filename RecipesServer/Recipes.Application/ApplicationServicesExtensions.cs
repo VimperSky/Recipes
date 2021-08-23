@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.Application.MappingProfiles;
+using Recipes.Application.Services.Activity;
 using Recipes.Application.Services.Recipes;
 using Recipes.Application.Services.Tags;
 using Recipes.Application.Services.User;
@@ -46,14 +47,14 @@ namespace Recipes.Application
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipesService, RecipesService>();
+            services.AddScoped<IActivityService, ActivityService>();
         }
 
         public static IMapper CreateMapper()
         {
             var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<UserMappingProfile>();
-                cfg.AddProfile<RecipeMappingProfile>();
+                cfg.AddProfile<MainMappingProfile>();
             });
             return configuration.CreateMapper();
         }

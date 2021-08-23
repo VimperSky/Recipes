@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions.Models;
+using Recipes.Domain.Models;
 
 namespace Recipes.Application.Services.Recipes
 {
@@ -12,19 +13,15 @@ namespace Recipes.Application.Services.Recipes
         /// <summary>
         ///     Get page of recipes
         /// </summary>
-        /// <param name="searchString"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="page"></param>
-        /// <param name="authorClaims"></param>
         /// <exception cref="ElementNotFoundException"></exception>
-        Task<RecipesPageDto> GetRecipesPage(int pageSize, int page, string searchString = null, UserClaims authorClaims = null);
+        Task<RecipesPageDto> GetRecipesPage(int pageSize, int page,
+            RecipesPageType recipesPageType, UserClaims authorClaims, string searchString = null);
 
         /// <summary>
         ///     Get detail of recipe with the given id
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task<RecipeDetailDto> GetRecipeDetail(int id);
+        Task<RecipeDetailDto> GetRecipeDetail(int id, UserClaims authorClaims);
 
         /// <summary>
         ///     Create a new recipe

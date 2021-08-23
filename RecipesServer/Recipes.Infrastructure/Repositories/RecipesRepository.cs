@@ -16,33 +16,54 @@ namespace Recipes.Infrastructure.Repositories
             _recipesDbContext = recipesDbContext;
         }
         
-        public async Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default,
-            int authorId = default)
+        public async Task<Recipe> GetById(int id)
         {
-            return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
+            return await _recipesDbContext.Recipes
+                .Include(x => x.Tags)
+                .Include(x => x.Author)
+                .Include(x => x.Activities)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Recipe> GetRecipeOfTheDay()
+        {
+            var recipeId = await _recipesDbContext.Activities
+                .AsNoTracking()
+                .Where(x => x.IsLiked)
+                .GroupBy(x => x.RecipeId)
+                .Select(x => new {x.Key, Count = x.Count()})
+                .OrderBy(x => x.Count)
+                .FirstOrDefaultAsync();
+
+            var recipe = await _recipesDbContext.Recipes.FindAsync(recipeId.Key);
+            await _recipesDbContext.Entry(recipe).Collection(x => x.Activities).LoadAsync();
+            return recipe;
+        }
+
+        public async Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
+            RecipesPageType recipesPageType, int authorId)
+        {
+            return await _recipesDbContext.Recipes
+                .AsNoTracking()
+                .SortByType(recipesPageType, authorId)
                 .SortBySearchString(searchString)
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
                 .Include(x => x.Tags)
                 .Include(x => x.Author)
+                .Include(x => x.Activities)
                 .ToListAsync();
         }
 
-        public async Task<int> GetRecipesCount(string searchString, int authorId)
+        public async Task<int> GetRecipesCount(string searchString, RecipesPageType recipesPageType, int authorId)
         {
-            return await _recipesDbContext.Recipes.SortByAuthorId(authorId)
+            return await _recipesDbContext.Recipes
+                .AsNoTracking()
+                .SortByType(recipesPageType, authorId)
                 .SortBySearchString(searchString)
                 .Include(x => x.Tags)
                 .CountAsync();
-        }
-        
-        public async Task<Recipe> GetById(int id)
-        {
-            return await _recipesDbContext.Recipes
-                .Include(x => x.Tags)
-                .Include(x => x.Author)
-                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Recipe> AddRecipe(Recipe recipe)

@@ -6,14 +6,18 @@ namespace Recipes.Domain.Repositories
 {
     public interface IRecipesRepository
     {
-        Task<IEnumerable<Recipe>> GetList(int skipItems, int takeItems, string searchString = default, int authorId = default);
+        Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
+            RecipesPageType recipesPageType, int authorId);
  
-        Task<int> GetRecipesCount(string searchString, int authorId = default);
+        Task<int> GetRecipesCount(string searchString, 
+            RecipesPageType recipesPageType, int authorId);
 
         Task<Recipe> AddRecipe(Recipe recipe);
 
         Task DeleteRecipe(Recipe recipe);
 
         Task<Recipe> GetById(int id);
+
+        Task<Recipe> GetRecipeOfTheDay();
     }
 }

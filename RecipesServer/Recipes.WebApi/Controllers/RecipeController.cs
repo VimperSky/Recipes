@@ -38,7 +38,7 @@ namespace Recipes.WebApi.Controllers
         public async Task<ActionResult<RecipeDetailDto>> GetRecipeDetail(
             [FromQuery] [Required] [Range(1, int.MaxValue)] int id)
         {
-            var detail = await _recipesService.GetRecipeDetail(id);
+            var detail = await _recipesService.GetRecipeDetail(id, HttpContext.User.GetClaims());
             if (detail == null)
                 return NotFound();
 

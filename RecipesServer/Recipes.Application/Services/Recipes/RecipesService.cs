@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -20,8 +21,8 @@ namespace Recipes.Application.Services.Recipes
         private readonly ITagsService _tagsService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RecipesService(IRecipesRepository recipesRepository, ITagsService tagsService, IUnitOfWork unitOfWork, IMapper mapper,
-            IImageFileSaver imageFileSaver)
+        public RecipesService(IRecipesRepository recipesRepository,
+            ITagsService tagsService, IUnitOfWork unitOfWork, IMapper mapper, IImageFileSaver imageFileSaver)
         {
             _recipesRepository = recipesRepository;
             _tagsService = tagsService;
@@ -31,33 +32,50 @@ namespace Recipes.Application.Services.Recipes
         }
 
         public async Task<RecipesPageDto> GetRecipesPage(int pageSize, int page,
-            string searchString = null, UserClaims authorClaims = null)
+            RecipesPageType recipesPageType, UserClaims authorClaims, string searchString = null)
         {
-            var authorId = authorClaims?.UserId ?? 0;
-            
-            var count = await _recipesRepository.GetRecipesCount(searchString, authorId);
+            var count = await _recipesRepository.GetRecipesCount(searchString, recipesPageType, authorClaims.UserId);
             var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
             if (page > 1 && page > pageCount)
                 throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
 
             var recipes = await _recipesRepository.GetList((page - 1) * pageSize, pageSize, 
-                searchString, authorId);
-            var recipesPage = new RecipesPageDto
+                searchString, recipesPageType, authorClaims.UserId);
+
+            var dtoRecipes = _mapper.Map<RecipePreviewDto[]>(recipes);
+            if (authorClaims.IsAuthorized)
             {
-                Recipes = _mapper.Map<RecipePreviewDto[]>(recipes),
+                for (var i = 0; i < dtoRecipes.Length; i++)
+                {
+                    dtoRecipes[i].IsLiked =
+                        recipes[i].Activities.Any(x => x.IsLiked && x.UserId == authorClaims.UserId);
+                    dtoRecipes[i].IsStarred =
+                        recipes[i].Activities.Any(x => x.IsStarred && x.UserId == authorClaims.UserId);
+                }
+            }
+            
+            return new RecipesPageDto
+            {
+                Recipes = dtoRecipes,
                 PageCount = pageCount
             };
-            return recipesPage;
         }
-
-        public async Task<RecipeDetailDto> GetRecipeDetail(int id)
+        
+        public async Task<RecipeDetailDto> GetRecipeDetail(int id, UserClaims authorClaims)
         {
             var recipe = await _recipesRepository.GetById(id);
             if (recipe == null)
                 return null;
 
-            return _mapper.Map<RecipeDetailDto>(recipe);
+            var dto = _mapper.Map<RecipeDetailDto>(recipe);
+            if (authorClaims.IsAuthorized)
+            {
+                dto.IsLiked = recipe.Activities.Any(x => x.IsLiked && x.UserId == authorClaims.UserId);
+                dto.IsStarred = recipe.Activities.Any(x => x.IsStarred && x.UserId == authorClaims.UserId);
+            }
+
+            return dto;
         }
 
         public async Task<int> CreateRecipe(RecipeCreateDto recipeCreateDto, UserClaims userClaims)
@@ -128,8 +146,7 @@ namespace Recipes.Application.Services.Recipes
 
         public async Task<RecipePreviewDto> GetRecipeOfTheDay()
         {
-            // ToDo какую-нибудь логику умную добавить
-            var recipe = await _recipesRepository.GetById(1);
+            var recipe = await _recipesRepository.GetRecipeOfTheDay();
             return _mapper.Map<RecipePreviewDto>(recipe);
         }
     }

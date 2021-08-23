@@ -40,43 +40,76 @@
           color: #FDB100;
         }
       }
-
-
     }
 
 
     #recipe-info {
-      margin-top: 50px;
-      margin-left: 50px;
+      margin: 30px 30px 30px 50px;
+      width: 100%;
 
-      #tags-block {
+      #recipe-top-info-block {
+        width: 100%;
+
         display: flex;
-        height: 20px;
+        justify-content: space-between;
+        align-items: center;
 
-        .chip {
-          display: inline-block;
-          height: 25px;
-          padding-left: 15px;
-          padding-right: 15px;
-          background: rgba(253, 177, 0, 0.2);
-          border-radius: 5px;
-          text-align: center;
+        #tags-block {
+          display: flex;
+          height: 20px;
 
-          p {
-            @include constants.default-text;
-            font-size: 14px;
-            color: #F29E1F;
-            height: 20px;
+          .chip {
+            display: inline-block;
+            height: 25px;
+            padding-left: 15px;
+            padding-right: 15px;
+            background: rgba(253, 177, 0, 0.2);
+            border-radius: 5px;
+            text-align: center;
+
+            p {
+              @include constants.default-text;
+              font-size: 14px;
+              color: #F29E1F;
+              height: 20px;
+            }
+          }
+
+          .margined-chip {
+            margin-left: 5px;
           }
         }
 
-        .margined-chip {
-          margin-left: 5px;
+        #activities-block {
+          display: flex;
+
+          .activity {
+            @include constants.default-text;
+            height: 50px;
+            width: 105px;
+            border: 1px solid constants.$accent-color;
+            border-radius: 16px;
+            text-align: center;
+            background: transparent;
+            color: constants.$accent-color;
+
+            mat-icon {
+              font-size: 24px;
+            }
+
+            span {
+              margin-left: 10px;
+            }
+          }
+
+          .first-activity {
+            margin-right: 15px;
+          }
         }
       }
 
       #text-block {
-        margin-top: 45px;
+        margin-top: 40px;
         width: 600px;
 
         #recipe-header {

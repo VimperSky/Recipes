@@ -17,7 +17,7 @@ export class ApiRecipeService extends RecipeService {
   }
 
   detail(id: number): Observable<RecipeDetail> {
-    return this.http.get<RecipeDetail>(environment.backendUrl + basePath + `/detail?id=${id}`);
+    return this.http.get<RecipeDetail>(environment.backendUrl + basePath + `/detail?id=${id}`, this.paramsBuilder.authOptions);
   }
 
   create(recipeCreate: RecipeCreate): Observable<number> {

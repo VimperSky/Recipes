@@ -14,7 +14,7 @@ export interface AuthDialogData {
 })
 export class AuthComponent {
 
-  public text: string = "Добавлять рецепты могут только зарегистрированные пользователи.";
+  public text: string = "Доступ к этой странице имеют только зарегистрированные пользователи.";
 
   public constructor(@Inject(MAT_DIALOG_DATA) public data: AuthDialogData,
                      private dialog: MatDialog,

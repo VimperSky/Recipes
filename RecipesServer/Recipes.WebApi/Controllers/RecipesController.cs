@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.Recipes;
+using Recipes.Domain.Models;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class RecipesController : ControllerBase
@@ -30,6 +32,7 @@ namespace Recipes.WebApi.Controllers
         /// <response code="400">Invalid input data</response>
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -37,12 +40,12 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize,
             [FromQuery] [Range(1, int.MaxValue)] int page = 1, [FromQuery] string searchString = null)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, searchString);
+            return await _recipesService.GetRecipesPage(pageSize, page, 
+                RecipesPageType.All, HttpContext.User.GetClaims(), searchString);
         }
         
         
         [HttpGet("myList")]
-        [Authorize]
         [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
@@ -51,10 +54,12 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, authorClaims: HttpContext.User.GetClaims());
+            return await _recipesService.GetRecipesPage(pageSize, page, RecipesPageType.Own, 
+                HttpContext.User.GetClaims());
         }
 
         [ProducesResponseType(typeof(RecipePreviewDto), StatusCodes.Status200OK)]
+        [AllowAnonymous]
         [HttpGet("recipeOfDay")]
         public async Task<ActionResult<RecipePreviewDto>> GetRecipeOfTheDay()
         {

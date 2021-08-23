@@ -19,7 +19,7 @@ export class MainHeaderComponent {
     if (this.authTokenManager.isAuthorized) {
       this.router.navigate(["/recipe/new"]);
     } else {
-      this.dialogDisplayService.openAuthDialog();
+      this.dialogDisplayService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
     }
   }
 

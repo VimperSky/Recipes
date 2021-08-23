@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Recipes.Application.DTOs.User;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.User;
+using Recipes.Domain.Models;
 using Recipes.WebApi.DTO.User;
 using Recipes.WebApi.ExceptionHandling;
 
@@ -63,7 +64,7 @@ namespace Recipes.WebApi.Controllers
         ///     Get profile info of user
         /// </summary>
         [HttpGet("profile")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProfileInfo), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ProfileInfo>> GetProfileInfo()
         {
@@ -83,5 +84,17 @@ namespace Recipes.WebApi.Controllers
             return await _userService.SetProfileInfo(dto.Login, dto.Password, dto.Name, dto.Bio,
                 HttpContext.User.GetClaims());
         }
+        
+        /// <summary>
+        ///     Get user stats
+        /// </summary>
+        [HttpGet("stats")]
+        [ProducesResponseType(typeof(UserStats), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<UserStats>> GetUserStats()
+        {
+            return await _userService.GetUserStats(HttpContext.User.GetClaims());
+        }
+
     }
 }

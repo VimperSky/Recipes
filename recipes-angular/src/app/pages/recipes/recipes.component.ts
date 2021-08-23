@@ -30,7 +30,7 @@ export class RecipesComponent implements OnInit {
     if (this.tokenManager.isAuthorized) {
       this.router.navigate(["/recipe/new"]);
     } else {
-      this.dialogDisplayService.openAuthDialog();
+      this.dialogDisplayService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
     }
   }
 }

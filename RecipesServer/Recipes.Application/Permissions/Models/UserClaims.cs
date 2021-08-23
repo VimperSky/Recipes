@@ -10,5 +10,7 @@
 
         public string Name { get; }
         public int UserId { get; }
+
+        public bool IsAuthorized => UserId != default;
     }
 }

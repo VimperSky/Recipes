@@ -8,6 +8,7 @@ import {Login} from "../../../dto/auth/login";
 import {UserProfileInfoDto} from "../../../dto/user/user-profile-info-dto";
 import {SetUserProfileInfoDto} from "../../../dto/user/set-user-profile-info-dto";
 import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
+import {UserStats} from "../../../dto/user/user-stats";
 
 const basePath: string = "/api/user"
 
@@ -31,5 +32,9 @@ export class ApiUserService extends UserService {
 
   setProfileInfo(dto: SetUserProfileInfoDto): Observable<string> {
     return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto, this.paramsBuilder.authOptions);
+  }
+
+  getUserStats(): Observable<UserStats> {
+    return this.http.get<UserStats>(environment.backendUrl + basePath + "/stats", this.paramsBuilder.authOptions);
   }
 }

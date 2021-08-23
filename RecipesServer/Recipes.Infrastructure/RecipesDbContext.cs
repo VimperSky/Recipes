@@ -12,15 +12,16 @@ namespace Recipes.Infrastructure
 
         public DbSet<Recipe> Recipes { get; init; }
         public DbSet<User> Users { get; init; }
-        
         public DbSet<Tag> Tags { get; init; }
 
-
+        public DbSet<Activity> Activities { get; init; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TagConfiguration());
             modelBuilder.ApplyConfiguration(new RecipeConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ActivityConfiguration());
         }
     }
 }

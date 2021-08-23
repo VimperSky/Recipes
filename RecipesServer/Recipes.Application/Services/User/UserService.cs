@@ -5,6 +5,7 @@ using Recipes.Application.DTOs.User;
 using Recipes.Application.Exceptions;
 using Recipes.Application.Permissions.Models;
 using Recipes.Domain;
+using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 
 namespace Recipes.Application.Services.User
@@ -93,6 +94,11 @@ namespace Recipes.Application.Services.User
             _unitOfWork.Commit();
 
             return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
+        }
+
+        public async Task<UserStats> GetUserStats(UserClaims userClaims)
+        {
+           return await _userRepository.GetUserStats(userClaims.UserId);
         }
     }
 }

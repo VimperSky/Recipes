@@ -47,9 +47,11 @@ import {MatRippleModule} from "@angular/material/core";
 import {MainHeaderComponent} from './embedded-components/main-header/main-header.component';
 import {BaseSearchManagerService} from "./core/services/managers/search/base-search-manager.service";
 import {SearchManagerService} from "./core/services/managers/search/search-manager.service";
-import {BaseRecipesManagerService} from "./core/services/managers/recipes/base-recipes-manager.service";
+import {RecipesManager} from "./core/services/managers/recipes/recipes-manager.service";
 import {AllRecipesManagerService} from "./core/services/managers/recipes/all-recipes-manager.service";
 import {RecipeOfTheDayComponent} from './embedded-components/recipe-of-the-day/recipe-of-the-day.component';
+import {ActivityService} from "./core/services/communication/abstract/activity.service";
+import {ApiActivityService} from "./core/services/communication/api/api-activity.service";
 
 
 @NgModule({
@@ -120,11 +122,15 @@ import {RecipeOfTheDayComponent} from './embedded-components/recipe-of-the-day/r
       useClass: ApiTagsService
     },
     {
+      provide: ActivityService,
+      useClass: ApiActivityService
+    },
+    {
       provide: BaseSearchManagerService,
       useClass: SearchManagerService
     },
     {
-      provide: BaseRecipesManagerService,
+      provide: RecipesManager,
       useClass: AllRecipesManagerService
     },
     {

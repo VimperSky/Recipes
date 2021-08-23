@@ -7,11 +7,26 @@
       </div>
     </div>
     <div id="recipe-info">
-      <div id="tags-block">
-        <div *ngFor="let tag of recipe.tags; first as isFirst" [class.margined-chip]="!isFirst" class="chip">
-          <p>{{tag}}</p>
+      <div id="recipe-top-info-block">
+        <div id="tags-block">
+          <div *ngFor="let tag of recipe.tags; first as isFirst" [class.margined-chip]="!isFirst" class="chip">
+            <p>{{tag}}</p>
+          </div>
+        </div>
+
+        <div id="activities-block">
+          <button mat-button class="activity first-activity" (click)="doStar($event)">
+            <mat-icon>{{starIcon}}</mat-icon>
+            <span>{{recipe.starsCount}}</span>
+          </button>
+
+          <button mat-button class="activity" (click)="doLike($event)">
+            <mat-icon>{{likeIcon}}</mat-icon>
+            <span>{{recipe.likesCount}}</span>
+          </button>
         </div>
       </div>
+
 
       <div id="text-block">
         <h3 *ngIf="isClickable" id="recipe-header">{{recipe.name}}</h3>

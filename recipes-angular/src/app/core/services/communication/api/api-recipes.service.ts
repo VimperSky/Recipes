@@ -23,7 +23,7 @@ export class ApiRecipesService extends RecipesService {
     if (page) params = params.append("page", page);
     if (searchString) params = params.append('searchString', searchString);
 
-    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {params: params});
+    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {...this.paramsBuilder.authOptions, params: params});
   }
 
   getMyRecipes(pageSize: number, page: number | null): Observable<RecipesPage> {
