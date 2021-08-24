@@ -35,6 +35,9 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderBy(x => x.Count)
                 .FirstOrDefaultAsync();
 
+            if (recipeId == null)
+                return null;
+            
             var recipe = await _recipesDbContext.Recipes.FindAsync(recipeId.Key);
             await _recipesDbContext.Entry(recipe).Collection(x => x.Activities).LoadAsync();
             return recipe;

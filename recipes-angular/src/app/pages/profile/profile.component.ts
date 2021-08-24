@@ -6,8 +6,8 @@ import {SetUserProfileInfoDto} from "../../core/dto/user/set-user-profile-info-d
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
-import {RecipesManager} from "../../core/services/managers/recipes/recipes-manager.service";
-import {OwnRecipesManager} from "../../core/services/managers/recipes/own-recipes-manager";
+import {RecipesManagerService} from "../../core/services/managers/recipes/recipes-manager.service";
+import {OwnRecipesManagerService} from "../../core/services/managers/recipes/own-recipes-manager.service";
 
 export const loginErrors: Record<string, string> = {
   'takenLogin': "Логин занят. Выберите другой",
@@ -20,8 +20,8 @@ export const loginErrors: Record<string, string> = {
     styleUrls: ['../../shared-styles/form-styles.scss', './profile.component.scss'],
     providers: [
       {
-        provide: RecipesManager,
-        useClass: OwnRecipesManager
+        provide: RecipesManagerService,
+        useClass: OwnRecipesManagerService
       },
     ]
   }

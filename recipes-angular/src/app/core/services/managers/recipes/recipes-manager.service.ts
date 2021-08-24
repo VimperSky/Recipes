@@ -9,7 +9,7 @@ import {AuthTokenManagerService} from "../auth-token-manager.service";
 import {ActivityService} from "../../communication/abstract/activity.service";
 
 @Injectable()
-export abstract class RecipesManager {
+export abstract class RecipesManagerService {
   private pageCount: number = 0;
   private currentPage: number = 1;
 

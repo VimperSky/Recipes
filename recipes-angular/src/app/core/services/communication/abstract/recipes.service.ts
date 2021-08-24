@@ -9,5 +9,7 @@ export abstract class RecipesService {
 
   abstract getMyRecipes(pageSize: number, page: number | null): Observable<RecipesPage>;
 
+  abstract getFavoriteRecipes(pageSize: number, page: number | null): Observable<RecipesPage>;
+
   abstract getRecipeOfTheDay(): Observable<RecipePreview>;
 }

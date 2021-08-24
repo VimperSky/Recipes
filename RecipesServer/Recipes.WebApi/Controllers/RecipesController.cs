@@ -58,6 +58,19 @@ namespace Recipes.WebApi.Controllers
                 HttpContext.User.GetClaims());
         }
 
+        [HttpGet("favoriteList")]
+        [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<RecipesPageDto>> GetFavoriteRecipes(
+            [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
+            [FromQuery] [Range(1, int.MaxValue)] int page = 1)
+        {
+            return await _recipesService.GetRecipesPage(pageSize, page, RecipesPageType.Starred, 
+                HttpContext.User.GetClaims());
+        }
+        
         [ProducesResponseType(typeof(RecipePreviewDto), StatusCodes.Status200OK)]
         [AllowAnonymous]
         [HttpGet("recipeOfDay")]

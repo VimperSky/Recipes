@@ -22,7 +22,7 @@ import {RecipePreviewComponent} from './embedded-components/recipe-preview/recip
 import {BackNavComponent} from './embedded-components/back-nav/back-nav.component';
 import {ApiRecipeService} from "./core/services/communication/api/api-recipe.service";
 import {ApiRecipesService} from "./core/services/communication/api/api-recipes.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthHeaderComponent} from './embedded-components/auth-header/auth-header.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
@@ -47,11 +47,13 @@ import {MatRippleModule} from "@angular/material/core";
 import {MainHeaderComponent} from './embedded-components/main-header/main-header.component';
 import {BaseSearchManagerService} from "./core/services/managers/search/base-search-manager.service";
 import {SearchManagerService} from "./core/services/managers/search/search-manager.service";
-import {RecipesManager} from "./core/services/managers/recipes/recipes-manager.service";
+import {RecipesManagerService} from "./core/services/managers/recipes/recipes-manager.service";
 import {AllRecipesManagerService} from "./core/services/managers/recipes/all-recipes-manager.service";
 import {RecipeOfTheDayComponent} from './embedded-components/recipe-of-the-day/recipe-of-the-day.component';
 import {ActivityService} from "./core/services/communication/abstract/activity.service";
 import {ApiActivityService} from "./core/services/communication/api/api-activity.service";
+import { FavoriteRecipesComponent } from './pages/favorite-recipes/favorite-recipes.component';
+import {ApiInterceptor} from "./core/interceptors/api.interceptor";
 
 
 @NgModule({
@@ -78,7 +80,8 @@ import {ApiActivityService} from "./core/services/communication/api/api-activity
     MainHeaderComponent,
     RecipeOfTheDayComponent,
     ActivityOverviewComponent,
-    ErrorComponent
+    ErrorComponent,
+    FavoriteRecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +133,7 @@ import {ApiActivityService} from "./core/services/communication/api/api-activity
       useClass: SearchManagerService
     },
     {
-      provide: RecipesManager,
+      provide: RecipesManagerService,
       useClass: AllRecipesManagerService
     },
     {
@@ -140,7 +143,8 @@ import {ApiActivityService} from "./core/services/communication/api/api-activity
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {appearance: 'outline'}
-    }
+    },
+
 
   ],
   bootstrap: [AppComponent]

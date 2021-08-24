@@ -1,0 +1,11 @@
+@use '../../shared-styles/constants';
+
+h1 {
+  margin-top: 80px;
+  @include constants.default-header;
+  color: constants.$dark-black-color;
+}
+
+#recipe-list {
+  margin-top: 40px;
+}

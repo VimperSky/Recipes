@@ -17,27 +17,30 @@ export class ApiRecipesService extends RecipesService {
   }
 
   public getRecipeList(pageSize: number, page: number | null, searchString: string | null): Observable<RecipesPage> {
+    return this.processListRequest("/list", pageSize, page, searchString);
+  }
+
+  public getMyRecipes(pageSize: number, page: number | null): Observable<RecipesPage> {
+    return this.processListRequest("/myList", pageSize, page);
+  }
+
+  public getFavoriteRecipes(pageSize: number, page: number | null): Observable<RecipesPage> {
+    return this.processListRequest("/favoriteList", pageSize, page);
+  }
+
+  public getRecipeOfTheDay(): Observable<RecipePreview> {
+    return this.http.get<RecipePreview>(environment.backendUrl + basePath + "/recipeOfDay");
+  }
+
+  private processListRequest(path: string, pageSize: number, page: number | null, searchString: string | null = null) {
     let params = new HttpParams();
 
     params = params.append("pageSize", pageSize)
     if (page) params = params.append("page", page);
     if (searchString) params = params.append('searchString', searchString);
 
-    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/list", {...this.paramsBuilder.authOptions, params: params});
-  }
-
-  getMyRecipes(pageSize: number, page: number | null): Observable<RecipesPage> {
-    let params = new HttpParams();
-
-    params = params.append("pageSize", pageSize)
-    if (page) params = params.append("page", page);
-
-    return this.http.get<RecipesPage>(environment.backendUrl + basePath + "/myList",
+    return this.http.get<RecipesPage>(environment.backendUrl + basePath + path,
       {...this.paramsBuilder.authOptions, params: params});
-  }
-
-  getRecipeOfTheDay(): Observable<RecipePreview> {
-    return this.http.get<RecipePreview>(environment.backendUrl + basePath + "/recipeOfDay");
   }
 
 }

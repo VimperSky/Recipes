@@ -21,7 +21,7 @@
           </button>
 
           <button mat-button class="activity" (click)="doLike($event)">
-            <mat-icon>{{likeIcon}}</mat-icon>
+            <mat-icon [class.red-like-icon] = "this.recipe.isLiked">{{likeIcon}}</mat-icon>
             <span>{{recipe.likesCount}}</span>
           </button>
         </div>

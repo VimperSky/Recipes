@@ -39,14 +39,6 @@ namespace Recipes.Infrastructure.Repositories
                 StarredRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
                 LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
             };
-            // return await _recipesDbContext.Activities
-            //     .GroupBy(x => x.UserId)
-            //     .Where(x => x.Key == userId)
-            //     .Select(g => new UserActivity
-            //     {
-            //         StarredRecipes = _recipesDbContext.Activities.Where(a => a.IsStarred).Select(a => a.RecipeId).ToList(),
-            //         LikesRecipes = _recipesDbContext.Activities.Where(a => a.IsLiked).Select(a => a.RecipeId).ToList()
-            //     }).SingleAsync();
         }
     }
 }
