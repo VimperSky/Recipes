@@ -13,9 +13,7 @@ export class CredentialsValidatorService {
   public validate() {
     if (!this.authTokenManager.isAuthorized)
       return;
-
-    console.log(this.authTokenManager.tokenValue);
-
+    
     this.userService.validateCredentials().subscribe(() => {
     }, () => {
       this.authTokenManager.removeToken()
