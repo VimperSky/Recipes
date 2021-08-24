@@ -4,7 +4,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {RecipesPage} from "../../../dto/recipe/recipes-page";
 import {Observable} from "rxjs";
-import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
 import {RecipePreview} from "../../../dto/recipe/recipe-preview";
 
 const basePath: string = "/api/recipes"
@@ -12,7 +11,7 @@ const basePath: string = "/api/recipes"
 @Injectable()
 export class ApiRecipesService extends RecipesService {
 
-  constructor(private http: HttpClient, private paramsBuilder: HttpParamsBuilderService) {
+  constructor(private http: HttpClient) {
     super();
   }
 
@@ -40,7 +39,7 @@ export class ApiRecipesService extends RecipesService {
     if (searchString) params = params.append('searchString', searchString);
 
     return this.http.get<RecipesPage>(environment.backendUrl + basePath + path,
-      {...this.paramsBuilder.authOptions, params: params});
+      {params: params});
   }
 
 }

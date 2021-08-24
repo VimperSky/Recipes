@@ -144,7 +144,11 @@ import {ApiInterceptor} from "./core/interceptors/api.interceptor";
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {appearance: 'outline'}
     },
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true
+    }
 
   ],
   bootstrap: [AppComponent]

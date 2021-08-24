@@ -42,5 +42,7 @@ namespace Recipes.Application.Services.User
         Task<string> SetProfileInfo(string login, string password, string name, string bio, UserClaims userClaims);
 
         Task<UserStats> GetUserStats(UserClaims userClaims);
+
+        Task ValidateUser(UserClaims userClaims);
     }
 }

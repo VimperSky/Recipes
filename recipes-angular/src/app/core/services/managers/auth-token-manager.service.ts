@@ -1,23 +1,23 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Subject} from "rxjs";
 import {Token} from "../../dto/auth/token";
+import {UserService} from "../communication/abstract/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthTokenManagerService {
   private authChangeSub = new Subject<boolean>()
-  // public methods
-  public authChanged = this.authChangeSub.asObservable();
   private token: Token | null = null;
 
-  constructor(private jwtHelper: JwtHelperService) {
-    let token = localStorage.getItem(environment.jwtToken)
-    if (token == null || jwtHelper.isTokenExpired(token))
-      return;
+  public authChanged = this.authChangeSub.asObservable();
 
+  constructor(private jwtHelper: JwtHelperService) {
+    const token = localStorage.getItem(environment.jwtToken)
+    if (token == null || this.jwtHelper.isTokenExpired(token))
+      return;
     this.token = this.jwtHelper.decodeToken<Token>(token);
     this.token.raw = token;
   }

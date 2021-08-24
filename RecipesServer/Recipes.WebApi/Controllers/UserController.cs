@@ -59,6 +59,15 @@ namespace Recipes.WebApi.Controllers
         {
             return await _userService.Login(loginDto.Login, loginDto.Password);
         }
+        
+        [HttpGet("validateCredentials")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> Validate()
+        {
+            await _userService.ValidateUser(HttpContext.User.GetClaims());
+            return Ok();
+        }
 
         /// <summary>
         ///     Get profile info of user
@@ -70,6 +79,8 @@ namespace Recipes.WebApi.Controllers
         {
             return await _userService.GetProfileInfo(HttpContext.User.GetClaims());
         }
+        
+        
 
         /// <summary>
         ///     Set profile info for user

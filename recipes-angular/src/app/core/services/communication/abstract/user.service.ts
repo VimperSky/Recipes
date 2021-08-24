@@ -17,4 +17,6 @@ export abstract class UserService {
   abstract setProfileInfo(setProfileInfo: SetUserProfileInfoDto): Observable<string>
 
   abstract getUserStats(): Observable<UserStats>
+
+  abstract validateCredentials(): Observable<void>;
 }

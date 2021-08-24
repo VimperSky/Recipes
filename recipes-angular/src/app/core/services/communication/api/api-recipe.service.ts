@@ -6,33 +6,32 @@ import {environment} from "../../../../../environments/environment";
 import {Observable} from "rxjs";
 import {RecipeCreate} from "../../../dto/recipe/recipe-create";
 import {RecipeEdit} from "../../../dto/recipe/recipe-edit";
-import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
 
 const basePath: string = "/api/recipe"
 
 @Injectable()
 export class ApiRecipeService extends RecipeService {
-  constructor(private http: HttpClient, private paramsBuilder: HttpParamsBuilderService) {
+  constructor(private http: HttpClient) {
     super();
   }
 
   detail(id: number): Observable<RecipeDetail> {
-    return this.http.get<RecipeDetail>(environment.backendUrl + basePath + `/detail?id=${id}`, this.paramsBuilder.authOptions);
+    return this.http.get<RecipeDetail>(environment.backendUrl + basePath + `/detail?id=${id}`);
   }
 
   create(recipeCreate: RecipeCreate): Observable<number> {
-    return this.http.post<number>(environment.backendUrl + basePath + `/create`, recipeCreate, this.paramsBuilder.authOptions);
+    return this.http.post<number>(environment.backendUrl + basePath + `/create`, recipeCreate);
   }
 
   delete(id: number): Observable<void> {
     let params = new HttpParams();
     params = params.append("id", id)
     return this.http.delete<void>(environment.backendUrl + basePath + `/delete`,
-      {...this.paramsBuilder.authOptions, params: params})
+      {params: params})
   }
 
   edit(recipeEdit: RecipeEdit): Observable<void> {
-    return this.http.patch<void>(environment.backendUrl + basePath + `/edit`, recipeEdit, this.paramsBuilder.authOptions)
+    return this.http.patch<void>(environment.backendUrl + basePath + `/edit`, recipeEdit)
   }
 
   uploadImage(recipeId: number, file: File): Observable<void> {
@@ -40,6 +39,6 @@ export class ApiRecipeService extends RecipeService {
     formData.set("recipeId", recipeId.toString());
     formData.set("file", file, file.name);
 
-    return this.http.put<void>(environment.backendUrl + basePath + `/uploadImage`, formData, this.paramsBuilder.authOptions)
+    return this.http.put<void>(environment.backendUrl + basePath + `/uploadImage`, formData)
   }
 }

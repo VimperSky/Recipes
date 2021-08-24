@@ -100,5 +100,15 @@ namespace Recipes.Application.Services.User
         {
            return await _userRepository.GetUserStats(userClaims.UserId);
         }
+
+        public async Task ValidateUser(UserClaims userClaims)
+        {
+            if (!userClaims.IsAuthorized)
+                throw new UserAuthenticationException(UserAuthenticationException.UserIsInvalid);
+            
+            var dbUser = await _userRepository.GetUserById(userClaims.UserId);
+            if (dbUser == null || dbUser.Name != userClaims.Name)
+                throw new UserAuthenticationException(UserAuthenticationException.UserIsInvalid);
+        }
     }
 }
