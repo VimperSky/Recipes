@@ -58,7 +58,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
                 "Еще что-то делаем",
                 "Готово!"
             },
-            Tags = new[] {"Фрукты", "Овощи", "Огурец"},
+            Tags = new[] {"Ягоды", "Клубника", "Лето"},
             CookingTimeMin = 60,
             Portions = 5
         };

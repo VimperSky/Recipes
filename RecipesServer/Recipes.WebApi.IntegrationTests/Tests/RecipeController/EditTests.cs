@@ -78,6 +78,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());
 
+            
             _client.SetAuthToken(true);
             var copyRecipe = TestRecipeEditDto;
             copyRecipe.Id = recipeId;
