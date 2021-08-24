@@ -10,11 +10,11 @@ export class OwnRecipesManagerService extends BaseRecipesManagerService {
   private pageCount: number = 0;
   private currentPage: number = 1;
 
+  public recipeList: RecipePreview[] = [];
+
   constructor(private recipesService: RecipesService) {
     super();
   }
-
-  public recipeList: RecipePreview[] = [];
 
   public get hasMore(): boolean {
     return this.pageCount > this.currentPage;

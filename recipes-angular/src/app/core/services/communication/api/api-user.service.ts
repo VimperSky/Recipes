@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {UserService} from "../abstract/user.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {Observable} from "rxjs";
 import {Register} from "../../../dto/auth/register";
@@ -8,13 +8,6 @@ import {Login} from "../../../dto/auth/login";
 import {UserProfileInfoDto} from "../../../dto/user/user-profile-info-dto";
 import {SetUserProfileInfoDto} from "../../../dto/user/set-user-profile-info-dto";
 import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': "*"
-  })
-};
 
 const basePath: string = "/api/user"
 

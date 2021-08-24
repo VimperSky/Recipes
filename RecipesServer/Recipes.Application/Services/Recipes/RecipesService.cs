@@ -125,5 +125,12 @@ namespace Recipes.Application.Services.Recipes
             await _recipesRepository.DeleteRecipe(recipe);
             _unitOfWork.Commit();
         }
+
+        public async Task<RecipePreviewDto> GetRecipeOfTheDay()
+        {
+            // ToDo какую-нибудь логику умную добавить
+            var recipe = await _recipesRepository.GetById(1);
+            return _mapper.Map<RecipePreviewDto>(recipe);
+        }
     }
 }

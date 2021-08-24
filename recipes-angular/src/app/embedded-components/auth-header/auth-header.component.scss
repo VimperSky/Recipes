@@ -5,6 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  z-index: 1;
+  position: relative;
 
   .hello-btn {
     height: 38px;

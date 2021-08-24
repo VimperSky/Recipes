@@ -10,6 +10,7 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
   private pageCount: number = 0;
   private currentPage: number = 1;
   private searchString: string | null = null;
+  private isPendingAction: boolean = false;
 
   constructor(private recipesService: RecipesService) {
     super();
@@ -22,12 +23,20 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
   }
 
   public loadInitial() {
+    if (this.isPendingAction)
+      return;
+
+    this.isPendingAction = true;
     this.recipesService.getRecipeList(environment.pageSize, 1, null).subscribe(result => {
       this.updateRecipeList(result, true);
     });
   }
 
   public loadMore() {
+    if (this.isPendingAction)
+      return;
+
+    this.isPendingAction = true;
     this.recipesService.getRecipeList(environment.pageSize, this.currentPage + 1, this.searchString).subscribe(result => {
       this.updateRecipeList(result);
       this.currentPage += 1;
@@ -35,8 +44,12 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
   }
 
   public search(searchString: string | null) {
+    if (this.isPendingAction)
+      return;
     if (searchString == "")
       searchString = null;
+
+    this.isPendingAction = true;
     this.recipesService.getRecipeList(environment.pageSize, 1, searchString).subscribe(result => {
       this.updateRecipeList(result, true);
       this.searchString = searchString;
@@ -53,5 +66,6 @@ export class AllRecipesManagerService extends BaseRecipesManagerService {
     }
 
     this.pageCount = recipePage.pageCount;
+    this.isPendingAction = false;
   }
 }

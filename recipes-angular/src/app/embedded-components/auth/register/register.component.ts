@@ -47,22 +47,22 @@ const minLengthValidator: ValidatorFn = (control: AbstractControl):  ValidationE
   templateUrl: './register.component.html',
   styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
+export class RegisterComponent {
+  public registerForm: FormGroup;
 
-  name = new FormControl('', [
+  public name = new FormControl('', [
     Validators.required,
   ]);
-  login = new FormControl('', [
+  public login = new FormControl('', [
     Validators.required,
   ]);
 
-  passwordForm: FormGroup;
-  password = new FormControl('', [
+  public passwordForm: FormGroup;
+  public password = new FormControl('', [
     Validators.required,
     Validators.minLength(8)
   ]);
-  confirmPassword = new FormControl('', [
+  public confirmPassword = new FormControl('', [
     Validators.required,
   ]);
 
@@ -85,11 +85,11 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  get passwordHasError(): boolean {
+  public get passwordHasError(): boolean {
     return this.passwordForm.errors != null;
   }
 
-  getPasswordErrorText(): string {
+  public getPasswordErrorText(): string {
     for (const key of Object.keys(passwordErrors))
       if (this.passwordForm.hasError(key))
         return passwordErrors[key];
@@ -97,11 +97,11 @@ export class RegisterComponent implements OnInit {
     return passwordErrors['default'];
   }
 
-  get loginHasError(): boolean {
+  public get loginHasError(): boolean {
     return this.login.errors?.takenLogin;
   }
 
-  getLoginErrorText(): string {
+  public getLoginErrorText(): string {
     for (const key of Object.keys(loginErrors))
       if (this.login.hasError(key))
         return loginErrors[key];
@@ -109,19 +109,14 @@ export class RegisterComponent implements OnInit {
     return loginErrors['default'];
   }
 
-
-
-  ngOnInit(): void {
-  }
-
-  logIn() {
+  public logIn() {
     this.dialogRef.close();
     this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
   }
 
-  register() {
+  public register() {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
       let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }

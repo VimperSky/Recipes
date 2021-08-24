@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-activity-overview',
   templateUrl: './activity-overview.component.html',
   styleUrls: ['./activity-overview.component.scss']
 })
-export class ActivityOverviewComponent implements OnInit {
+export class ActivityOverviewComponent {
 
   constructor() { }
 
@@ -13,8 +13,4 @@ export class ActivityOverviewComponent implements OnInit {
   public ownRecipes: number = 0;
   public likedRecipes: number = 0;
   public starredRecipes: number = 0;
-
-  ngOnInit(): void {
-  }
-
 }

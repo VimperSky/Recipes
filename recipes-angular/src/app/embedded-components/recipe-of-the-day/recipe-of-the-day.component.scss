@@ -1,0 +1,97 @@
+@use '../../shared-styles/constants';
+
+#wrapper {
+  padding: 0;
+  white-space: normal;
+  text-align: left;
+  display: block;
+  border-radius: 72px 24px 24px 0;
+  width: 100%;
+  margin: 40px 0 0;
+
+  #recipe-block {
+    height: 540px;
+    display: flex;
+
+    #recipe-image-block {
+      position: relative;
+
+      #recipe-image {
+        border-radius: 72px 0;
+      }
+
+      #recipe-author-block {
+        position: absolute;
+        padding: 0 20px;
+        background: white;
+        bottom: 40px;
+        height: 30px;
+
+        p {
+          @include constants.default-text;
+          line-height: 30px;
+          font-size: 16px;
+          font-weight: 600;
+          color: #FDB100;
+        }
+      }
+    }
+
+    #recipe-info {
+      margin-left: 50px;
+
+      #top-recipe-info {
+        opacity: 0.75;
+        position: absolute;
+        right: 15px;
+        top: 5px;
+        display: flex;
+        align-items: center;
+
+        #top-likes {
+          display: flex;
+          align-items: center;
+        }
+
+        #top-timer {
+          display: flex;
+          align-items: center;
+          margin-left: 30px;
+        }
+
+        span {
+          margin-left: 5px;
+          @include constants.default-text;
+          font-size: 16px;
+          line-height: 28px;
+        }
+
+        mat-icon {
+          font-size: 24px;
+        }
+      }
+
+      #recipe-of-the-day-image {
+        margin-top: 100px;
+      }
+
+      #text-block {
+        margin-top: 30px;
+        width: 600px;
+
+        #recipe-header {
+          @include constants.default-header;
+        }
+
+        #recipe-description {
+          @include constants.default-text;
+          color: constants.$light-black-color;
+          line-height: 32px;
+          height: 90px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+}

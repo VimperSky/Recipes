@@ -1,7 +1,8 @@
 <div id="wrapper">
   <mat-toolbar id="navbar">
-    <span id="logo">Recipes</span>
+    <a id="logo" routerLink="/">Recipes</a>
     <div id="menu-list">
+      <a class="nav-btn" mat-button routerLink="/" routerLinkActive="nav-btn-active" [routerLinkActiveOptions]="{exact: true}">Главная</a>
       <a class="nav-btn" mat-button routerLink="/recipes" routerLinkActive="nav-btn-active">Рецепты</a>
     </div>
   </mat-toolbar>

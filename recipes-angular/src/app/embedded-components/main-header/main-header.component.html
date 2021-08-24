@@ -1,0 +1,14 @@
+<div id="header-block">
+  <h1>Готовь и делись рецептами</h1>
+  <p>Никаких кулинарных книг и блокнотов! Храни все любимые рецепты в одном месте.</p>
+  <div id="action-buttons">
+    <button mat-stroked-button class="action-button add-recipe-button" (click)="addRecipe()">
+      <mat-icon>add</mat-icon>
+      <span>Добавить рецепт</span>
+    </button>
+    <button *ngIf="!authTokenManager.isAuthorized"
+            mat-stroked-button class="action-button login-button" (click)="logIn()">Войти</button>
+  </div>
+
+  <img id="right-image" src="../../../assets/images/main_header.png" height="800" width="602" alt="main_header"/>
+</div>

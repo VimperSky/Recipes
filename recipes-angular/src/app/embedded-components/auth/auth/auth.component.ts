@@ -12,11 +12,11 @@ export interface AuthDialogData {
   templateUrl: './auth.component.html',
   styleUrls: ['../../../shared-styles/form-styles.scss', '../../../shared-styles/dialog-styles.scss', './auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
 
-  text: string = "Добавлять рецепты могут только зарегистрированные пользователи.";
+  public text: string = "Добавлять рецепты могут только зарегистрированные пользователи.";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: AuthDialogData,
+  public constructor(@Inject(MAT_DIALOG_DATA) public data: AuthDialogData,
               private dialog: MatDialog,
               private dialogRef: MatDialogRef<AuthComponent>) {
     if (data == null ) {
@@ -27,19 +27,15 @@ export class AuthComponent implements OnInit {
       this.text = data.text;
   }
 
-  ngOnInit(): void {
 
-  }
-
-
-  logIn() {
+  public logIn() {
     this.dialogRef.close();
     this.dialog.open(LoginComponent, {
       panelClass: 'login-dialog-container'
     });
   }
 
-  register() {
+  public register() {
     this.dialogRef.close();
     this.dialog.open(RegisterComponent, {
       panelClass: 'register-dialog-container'
