@@ -1,4 +1,4 @@
-export interface UserActivity {
+export interface UserActivityDto {
   likedRecipes: number[];
   starredRecipes: number[];
 }

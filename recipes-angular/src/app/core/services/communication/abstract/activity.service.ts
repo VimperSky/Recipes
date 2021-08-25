@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {UserActivity} from "../../../dto/user/user-activity";
+import {UserActivityDto} from "../../../dto/activity/user-activity-dto";
+import {MyRecipesActivityDto} from "../../../dto/activity/my-recipes-activity-dto";
 
 @Injectable()
 export abstract class ActivityService {
@@ -13,5 +14,5 @@ export abstract class ActivityService {
 
   abstract deleteStar(recipeId: number): Observable<void>;
 
-  abstract getUserActivity(): Observable<UserActivity>;
+  abstract getUserActivity(dto: MyRecipesActivityDto): Observable<UserActivityDto>;
 }

@@ -3,7 +3,8 @@ import {ActivityService} from "../abstract/activity.service";
 import {Observable} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {UserActivity} from "../../../dto/user/user-activity";
+import {UserActivityDto} from "../../../dto/activity/user-activity-dto";
+import {MyRecipesActivityDto} from "../../../dto/activity/my-recipes-activity-dto";
 
 const basePath: string = "/api/activity"
 
@@ -29,7 +30,7 @@ export class ApiActivityService extends ActivityService {
     return this.http.delete<void>(environment.backendUrl + basePath + `/star?recipeId=${recipeId}`);
   }
 
-  getUserActivity(): Observable<UserActivity> {
-    return this.http.get<UserActivity>(environment.backendUrl + basePath + '/userActivity');
+  getUserActivity(dto: MyRecipesActivityDto): Observable<UserActivityDto> {
+    return this.http.post<UserActivityDto>(environment.backendUrl + basePath + '/myRecipesActivity', dto);
   }
 }

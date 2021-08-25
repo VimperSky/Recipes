@@ -3,10 +3,11 @@ import {RecipePreview} from "../../../dto/recipe/recipe-preview";
 import {environment} from "../../../../../environments/environment";
 import {RecipesService} from "../../communication/abstract/recipes.service";
 import {RecipesPage} from "../../../dto/recipe/recipes-page";
-import {UserActivity} from "../../../dto/user/user-activity";
+import {UserActivityDto} from "../../../dto/activity/user-activity-dto";
 import {Observable} from "rxjs";
 import {AuthTokenManagerService} from "../auth-token-manager.service";
 import {ActivityService} from "../../communication/abstract/activity.service";
+import {MyRecipesActivityDto} from "../../../dto/activity/my-recipes-activity-dto";
 
 @Injectable()
 export abstract class RecipesManagerService {
@@ -37,7 +38,10 @@ export abstract class RecipesManagerService {
 
       this.authTokenManagerService.authChanged.subscribe((value: boolean) => {
         if (value) {
-          this.activityService.getUserActivity().subscribe((activity: UserActivity) => {
+          const dto: MyRecipesActivityDto = {
+            recipeIds: this.recipeList.map(x => x.id)
+          }
+          this.activityService.getUserActivity(dto).subscribe((activity: UserActivityDto) => {
             for (const recipe of this.recipeList) {
               if (activity.likedRecipes.includes(recipe.id)) {
                 recipe.isLiked = true;

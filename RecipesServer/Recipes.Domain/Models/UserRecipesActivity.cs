@@ -2,7 +2,7 @@
 
 namespace Recipes.Domain.Models
 {
-    public class UserActivity
+    public class UserRecipesActivity
     {
         public ICollection<int> LikedRecipes { get; set; }
         public ICollection<int> StarredRecipes { get; set; }

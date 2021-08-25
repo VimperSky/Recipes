@@ -27,11 +27,11 @@ namespace Recipes.Application.Services.Activity
             await ProcessActivity(recipeId, userClaims.UserId, activityType, false);
         }
 
-        public async Task<UserActivity> GetUserActivity(UserClaims userClaims)
+        public async Task<UserRecipesActivity> GetUserRecipesActivity(int[] recipesIds, UserClaims userClaims)
         {
-            return await _activityRepository.GetUserActivity(userClaims.UserId);
+            return await _activityRepository.GetUserRecipesActivity(userClaims.UserId, recipesIds);
         }
-
+        
         public async Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims)
         {
             return await _activityRepository.GetUserActivitySummary(userClaims.UserId);

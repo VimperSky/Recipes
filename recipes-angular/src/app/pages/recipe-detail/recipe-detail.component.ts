@@ -7,9 +7,9 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
-import {UserActivity} from "../../core/dto/user/user-activity";
-import {UserActivityManagerService} from "../../core/services/managers/user-activity-manager.service";
+import {UserActivityDto} from "../../core/dto/activity/user-activity-dto";
 import {ActivityService} from "../../core/services/communication/abstract/activity.service";
+import {MyRecipesActivityDto} from "../../core/dto/activity/my-recipes-activity-dto";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -44,8 +44,12 @@ export class RecipeDetailComponent implements OnInit {
       if (!this.recipeDetail) return;
 
       if (value) {
-        this.activityService.getUserActivity().subscribe((activity: UserActivity) => {
+        const dto: MyRecipesActivityDto = {
+          recipeIds: [this.recipeDetail.id]
+        }
+        this.activityService.getUserActivity(dto).subscribe((activity: UserActivityDto) => {
           if (!this.recipeDetail) return;
+          console.log(activity);
 
           if (activity.likedRecipes.includes(this.recipeDetail.id)) {
             this.recipeDetail.isLiked = true;
@@ -53,7 +57,6 @@ export class RecipeDetailComponent implements OnInit {
           if (activity.starredRecipes.includes(this.recipeDetail.id)) {
             this.recipeDetail.isStarred = true;
           }
-
         });
       }
       else {

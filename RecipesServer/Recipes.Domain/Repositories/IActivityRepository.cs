@@ -7,7 +7,7 @@ namespace Recipes.Domain.Repositories
     {
         Task<Activity> GetOrCreateActivity(int recipeId, int userId);
 
-        Task<UserActivity> GetUserActivity(int userId);
+        Task<UserRecipesActivity> GetUserRecipesActivity(int userId, int[] recipeIds);
 
         Task<UserActivitySummary> GetUserActivitySummary(int userId);
     }

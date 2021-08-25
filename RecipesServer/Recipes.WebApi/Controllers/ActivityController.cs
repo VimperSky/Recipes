@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.Activity;
 using Recipes.Domain.Models;
+using Recipes.WebApi.DTO.Activity;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
@@ -59,12 +60,12 @@ namespace Recipes.WebApi.Controllers
             return Ok();
         }
         
-        [HttpGet("userActivity")]
-        [ProducesResponseType(typeof(UserActivity), StatusCodes.Status200OK)]
+        [HttpPost("myRecipesActivity")]
+        [ProducesResponseType(typeof(UserRecipesActivity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserActivity>> GetUserActivity()
+        public async Task<ActionResult<UserRecipesActivity>> GetUserRecipesActivity([FromBody]MyRecipesActivityDto myRecipesActivityDto)
         {
-            return await _activityService.GetUserActivity(HttpContext.User.GetClaims());
+            return await _activityService.GetUserRecipesActivity(myRecipesActivityDto.RecipeIds, HttpContext.User.GetClaims());
         }
     }
 }

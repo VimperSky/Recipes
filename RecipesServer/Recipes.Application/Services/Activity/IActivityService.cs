@@ -8,8 +8,7 @@ namespace Recipes.Application.Services.Activity
     {
         Task AddActivity(int recipeId, UserClaims userClaims, ActivityType activityType);
         Task RemoveActivity(int recipeId, UserClaims userClaims, ActivityType activityType);
-        Task<UserActivity> GetUserActivity(UserClaims userClaims);
-
+        Task<UserRecipesActivity> GetUserRecipesActivity(int[] recipesIds, UserClaims userClaims);
         Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims);
     }
 }

@@ -30,13 +30,14 @@ namespace Recipes.Infrastructure.Repositories
             await _recipesDbContext.Activities.AddAsync(newActivity);
             return newActivity;
         }
-
-        public async Task<UserActivity> GetUserActivity(int userId)
+        
+        public async Task<UserRecipesActivity> GetUserRecipesActivity(int userId, int[] recipeIds)
         {
-            var query = _recipesDbContext.Activities.Where(x => x.UserId == userId);
-            return new UserActivity
+            var query = _recipesDbContext.Activities.Where(x => x.UserId == userId
+                                                                && recipeIds.Contains(x.RecipeId));
+            return new UserRecipesActivity
             {
-                StarredRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
+                StarredRecipes = await query.Where(x => x.IsStarred).Select(x => x.RecipeId).ToListAsync(),
                 LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
             };
         }
