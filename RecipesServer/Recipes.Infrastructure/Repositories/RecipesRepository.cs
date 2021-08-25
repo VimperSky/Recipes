@@ -27,14 +27,6 @@ namespace Recipes.Infrastructure.Repositories
 
         public async Task<Recipe> GetRecipeOfTheDay()
         {
-            // var recipeId = await _recipesDbContext.Activities
-            //     .AsNoTracking()
-            //     .Where(x => x.IsLiked)
-            //     .GroupBy(x => x.RecipeId)
-            //     .Select(x => new {x.Key, Count = x.Count()})
-            //     .OrderBy(x => x.Count)
-            //     .FirstOrDefaultAsync();
-
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
                 .Include(x => x.Activities)
@@ -47,8 +39,8 @@ namespace Recipes.Infrastructure.Repositories
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .SortByType(recipesType, authorId)
-                .SortBySearchString(searchString)
+                .FilterByType(recipesType, authorId)
+                .FilterBySearchString(searchString)
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
                 .Take(takeItems)
@@ -62,8 +54,8 @@ namespace Recipes.Infrastructure.Repositories
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .SortByType(recipesType, authorId)
-                .SortBySearchString(searchString)
+                .FilterByType(recipesType, authorId)
+                .FilterBySearchString(searchString)
                 .CountAsync();
         }
         

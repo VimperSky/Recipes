@@ -3,9 +3,9 @@ using Recipes.Domain.Models;
 
 namespace Recipes.Infrastructure
 {
-    public static class DatabaseExtensions
+    public static class QueryableRecipesExtensions
     {
-        public static IQueryable<Recipe> SortByType(this IQueryable<Recipe> recipes, RecipesType recipesType,
+        public static IQueryable<Recipe> FilterByType(this IQueryable<Recipe> recipes, RecipesType recipesType,
             int authorId)
         {
             return recipesType switch
@@ -19,7 +19,7 @@ namespace Recipes.Infrastructure
             };
         }
 
-        public static IQueryable<Recipe> SortBySearchString(this IQueryable<Recipe> recipes, string searchString)
+        public static IQueryable<Recipe> FilterBySearchString(this IQueryable<Recipe> recipes, string searchString)
         {
             return searchString == null
                 ? recipes

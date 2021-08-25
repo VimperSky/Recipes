@@ -27,14 +27,14 @@ export const loginErrors: Record<string, string> = {
   }
 )
 export class ProfileComponent implements OnInit {
-  name = this.fb.control('', [Validators.required])
-  login = this.fb.control('', [Validators.required]);
-  password = this.fb.control('', [Validators.required, Validators.minLength(8)]);
-  passwordPlaceHolder: string = "Введите ваш старый пароль или придумайте новый";
+  public name = this.fb.control('', [Validators.required])
+  public login = this.fb.control('', [Validators.required]);
+  public password = this.fb.control('', [Validators.required, Validators.minLength(8)]);
+  public passwordPlaceHolder: string = "Введите ваш старый пароль или придумайте новый";
 
-  bio = this.fb.control('', []);
+  public bio = this.fb.control('', []);
 
-  profileForm = this.fb.group({
+  public profileForm = this.fb.group({
     name: this.name,
     login: this.login,
     password: this.password,
@@ -42,22 +42,22 @@ export class ProfileComponent implements OnInit {
   })
 
 
-  constructor(private fb: FormBuilder,
+  public constructor(private fb: FormBuilder,
               private userService: UserService,
               private errorHandlingService: ErrorHandlingService,
               private tokenManagerService: AuthTokenManagerService) {
     this.profileForm.disable();
   }
 
-  get loginHasError(): boolean {
+  public get loginHasError(): boolean {
     return this.login.errors?.takenLogin;
   }
 
-  get isEditMode(): boolean {
+  public get isEditMode(): boolean {
     return !this.profileForm.disabled;
   }
 
-  getLoginErrorText(): string {
+  public getLoginErrorText(): string {
     for (const key of Object.keys(loginErrors))
       if (this.login.hasError(key))
         return loginErrors[key];
@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
     return loginErrors['default'];
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.userService.getProfileInfo().subscribe((userProfile: UserProfileInfoDto) => {
       this.name.setValue(userProfile.name);
       this.login.setValue(userProfile.login);
@@ -73,11 +73,11 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  editProfile() {
+  public editProfile() {
     this.profileForm.enable();
   }
 
-  applyChanges() {
+  public applyChanges() {
     this.profileForm.markAllAsTouched();
     if (!this.profileForm.valid)
       return;
@@ -105,6 +105,4 @@ export class ProfileComponent implements OnInit {
       }
     }))
   }
-
-
 }

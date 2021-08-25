@@ -39,15 +39,9 @@ export class RecipePreviewComponent {
     return "@admin";
   }
 
-  private static isLocalImagePath(imagePath: string): boolean {
-    return imagePath.startsWith("..");
-  }
-
   public getImagePath(): string {
     if (this.recipe.imagePath) {
-      return RecipePreviewComponent.isLocalImagePath(this.recipe.imagePath)
-        ? this.recipe.imagePath
-        : environment.backendUrl + "/" + this.recipe.imagePath;
+      return environment.backendUrl + "/" + this.recipe.imagePath;
     }
     return defaultImagePath;
   }
