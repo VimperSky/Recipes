@@ -1,6 +1,6 @@
-﻿namespace Recipes.Domain.Models
+﻿namespace Recipes.WebApi.DTO.User
 {
-    public class UserStats
+    public class UserStatsDto
     {
         public int RecipesCount { get; set; }
         

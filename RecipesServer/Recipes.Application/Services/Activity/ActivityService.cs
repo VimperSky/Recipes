@@ -16,6 +16,26 @@ namespace Recipes.Application.Services.Activity
             _activityRepository = activityRepository;
             _unitOfWork = unitOfWork;
         }
+        
+        public async Task AddActivity(int recipeId, UserClaims userClaims, ActivityType activityType)
+        {
+            await ProcessActivity(recipeId, userClaims.UserId, activityType, true);
+        }
+
+        public async Task RemoveActivity(int recipeId, UserClaims userClaims, ActivityType activityType)
+        {
+            await ProcessActivity(recipeId, userClaims.UserId, activityType, false);
+        }
+
+        public async Task<UserActivity> GetUserActivity(UserClaims userClaims)
+        {
+            return await _activityRepository.GetUserActivity(userClaims.UserId);
+        }
+
+        public async Task<UserActivityOverview> GetUserActivityOverview(UserClaims userClaims)
+        {
+            return await _activityRepository.GetUserActivityOverview(userClaims.UserId);
+        }
 
         private async Task ProcessActivity(int recipeId, int userId, ActivityType activityType, bool action)
         {
@@ -32,20 +52,6 @@ namespace Recipes.Application.Services.Activity
             
             _unitOfWork.Commit();
         }
-        
-        public async Task SetActivity(int recipeId, UserClaims userClaims, ActivityType activityType)
-        {
-            await ProcessActivity(recipeId, userClaims.UserId, activityType, true);
-        }
 
-        public async Task TakeActivity(int recipeId, UserClaims userClaims, ActivityType activityType)
-        {
-            await ProcessActivity(recipeId, userClaims.UserId, activityType, false);
-        }
-
-        public async Task<UserActivity> GetUserActivity(UserClaims userClaims)
-        {
-            return await _activityRepository.GetUserActivity(userClaims.UserId);
-        }
     }
 }

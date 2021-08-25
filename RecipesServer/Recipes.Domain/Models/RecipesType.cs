@@ -1,6 +1,6 @@
 ﻿namespace Recipes.Domain.Models
 {
-    public enum RecipesPageType
+    public enum RecipesType
     {
         All,
         Own,

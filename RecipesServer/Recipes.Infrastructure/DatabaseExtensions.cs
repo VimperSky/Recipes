@@ -5,14 +5,14 @@ namespace Recipes.Infrastructure
 {
     public static class DatabaseExtensions
     {
-        public static IQueryable<Recipe> SortByType(this IQueryable<Recipe> recipes, RecipesPageType recipesPageType,
+        public static IQueryable<Recipe> SortByType(this IQueryable<Recipe> recipes, RecipesType recipesType,
             int authorId)
         {
-            return recipesPageType switch
+            return recipesType switch
             {
-                RecipesPageType.Own when authorId != default => recipes.Where(x => x.AuthorId == authorId),
+                RecipesType.Own when authorId != default => recipes.Where(x => x.AuthorId == authorId),
                 
-                RecipesPageType.Starred when authorId != default => 
+                RecipesType.Starred when authorId != default => 
                     recipes.Where(r => r.Activities.Any(a => a.IsStarred && a.UserId == authorId)),
                 
                 _ => recipes

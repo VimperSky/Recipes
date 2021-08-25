@@ -7,10 +7,10 @@ namespace Recipes.Domain.Repositories
     public interface IRecipesRepository
     {
         Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
-            RecipesPageType recipesPageType, int authorId);
+            RecipesType recipesType, int authorId);
  
         Task<int> GetRecipesCount(string searchString, 
-            RecipesPageType recipesPageType, int authorId);
+            RecipesType recipesType, int authorId);
 
         Task<Recipe> AddRecipe(Recipe recipe);
 

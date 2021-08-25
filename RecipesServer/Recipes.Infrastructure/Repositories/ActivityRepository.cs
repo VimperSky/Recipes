@@ -40,5 +40,17 @@ namespace Recipes.Infrastructure.Repositories
                 LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
             };
         }
+
+        public async Task<UserActivityOverview> GetUserActivityOverview(int userId)
+        {
+            return await _recipesDbContext.Activities
+                .Where(a => a.UserId == userId)
+                .GroupBy(a => a.UserId)
+                .Select(g => new UserActivityOverview
+                {
+                    StarsCount = g.Count(x => x.IsStarred),
+                    LikesCount = g.Count(x => x.IsLiked)
+                }).SingleAsync();
+        }
     }
 }

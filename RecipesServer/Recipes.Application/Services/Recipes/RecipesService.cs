@@ -32,16 +32,16 @@ namespace Recipes.Application.Services.Recipes
         }
 
         public async Task<RecipesPageDto> GetRecipesPage(int pageSize, int page,
-            RecipesPageType recipesPageType, UserClaims authorClaims, string searchString = null)
+            RecipesType recipesType, UserClaims authorClaims, string searchString = null)
         {
-            var count = await _recipesRepository.GetRecipesCount(searchString, recipesPageType, authorClaims.UserId);
+            var count = await _recipesRepository.GetRecipesCount(searchString, recipesType, authorClaims.UserId);
             var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
             if (page > 1 && page > pageCount)
                 throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
 
             var recipes = await _recipesRepository.GetList((page - 1) * pageSize, pageSize, 
-                searchString, recipesPageType, authorClaims.UserId);
+                searchString, recipesType, authorClaims.UserId);
 
             var dtoRecipes = _mapper.Map<RecipePreviewDto[]>(recipes);
             if (authorClaims.IsAuthorized)
@@ -148,6 +148,11 @@ namespace Recipes.Application.Services.Recipes
         {
             var recipe = await _recipesRepository.GetRecipeOfTheDay();
             return _mapper.Map<RecipePreviewDto>(recipe);
+        }
+
+        public async Task<int> GetAuthorRecipesCount(UserClaims userClaims)
+        {
+            return await _recipesRepository.GetRecipesCount(null, RecipesType.Own, userClaims.UserId);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> SetLike([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
         {
-            await _activityService.SetActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
+            await _activityService.AddActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
             return Ok();
         }
 
@@ -37,7 +37,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> DeleteLike([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
         {
-            await _activityService.TakeActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
+            await _activityService.RemoveActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
             return Ok();
         }
         
@@ -46,7 +46,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> SetStar([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
         {
-            await _activityService.SetActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
+            await _activityService.AddActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
             return Ok();
         }
 
@@ -55,7 +55,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteStar([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
         {
-            await _activityService.TakeActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
+            await _activityService.RemoveActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
             return Ok();
         }
         

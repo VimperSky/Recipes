@@ -44,11 +44,11 @@ namespace Recipes.Infrastructure.Repositories
         }
 
         public async Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
-            RecipesPageType recipesPageType, int authorId)
+            RecipesType recipesType, int authorId)
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .SortByType(recipesPageType, authorId)
+                .SortByType(recipesType, authorId)
                 .SortBySearchString(searchString)
                 .OrderBy(x => x.Id)
                 .Skip(skipItems)
@@ -59,15 +59,16 @@ namespace Recipes.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> GetRecipesCount(string searchString, RecipesPageType recipesPageType, int authorId)
+        public async Task<int> GetRecipesCount(string searchString, RecipesType recipesType, int authorId)
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .SortByType(recipesPageType, authorId)
+                .SortByType(recipesType, authorId)
                 .SortBySearchString(searchString)
-                .Include(x => x.Tags)
                 .CountAsync();
         }
+        
+        
 
         public async Task<Recipe> AddRecipe(Recipe recipe)
         {

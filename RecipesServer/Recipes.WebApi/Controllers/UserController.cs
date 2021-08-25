@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Application.DTOs.User;
 using Recipes.Application.Permissions;
+using Recipes.Application.Services.Activity;
+using Recipes.Application.Services.Recipes;
 using Recipes.Application.Services.User;
-using Recipes.Domain.Models;
 using Recipes.WebApi.DTO.User;
 using Recipes.WebApi.ExceptionHandling;
 
@@ -18,10 +19,14 @@ namespace Recipes.WebApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IActivityService _activityService;
+        private readonly IRecipesService _recipesService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IActivityService activityService, IRecipesService recipesService)
         {
             _userService = userService;
+            _activityService = activityService;
+            _recipesService = recipesService;
         }
 
         /// <summary>
@@ -79,8 +84,7 @@ namespace Recipes.WebApi.Controllers
         {
             return await _userService.GetProfileInfo(HttpContext.User.GetClaims());
         }
-        
-        
+
 
         /// <summary>
         ///     Set profile info for user
@@ -100,11 +104,19 @@ namespace Recipes.WebApi.Controllers
         ///     Get user stats
         /// </summary>
         [HttpGet("stats")]
-        [ProducesResponseType(typeof(UserStats), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserStatsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserStats>> GetUserStats()
+        public async Task<ActionResult<UserStatsDto>> GetUserStats()
         {
-            return await _userService.GetUserStats(HttpContext.User.GetClaims());
+            var authorClaims = HttpContext.User.GetClaims();
+            var activity = await _activityService.GetUserActivityOverview(authorClaims);
+            var recipesCount = await _recipesService.GetAuthorRecipesCount(authorClaims);
+            return new UserStatsDto
+            {
+                StarsCount = activity.StarsCount,
+                LikesCount = activity.LikesCount,
+                RecipesCount = recipesCount
+            };
         }
 
     }

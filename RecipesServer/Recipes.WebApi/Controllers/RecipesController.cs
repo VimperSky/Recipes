@@ -41,7 +41,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Range(1, int.MaxValue)] int page = 1, [FromQuery] string searchString = null)
         {
             return await _recipesService.GetRecipesPage(pageSize, page, 
-                RecipesPageType.All, HttpContext.User.GetClaims(), searchString);
+                RecipesType.All, HttpContext.User.GetClaims(), searchString);
         }
         
         
@@ -54,7 +54,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, RecipesPageType.Own, 
+            return await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Own, 
                 HttpContext.User.GetClaims());
         }
 
@@ -67,7 +67,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, RecipesPageType.Starred, 
+            return await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Starred, 
                 HttpContext.User.GetClaims());
         }
         

@@ -15,7 +15,7 @@ namespace Recipes.Application.Services.Recipes
         /// </summary>
         /// <exception cref="ElementNotFoundException"></exception>
         Task<RecipesPageDto> GetRecipesPage(int pageSize, int page,
-            RecipesPageType recipesPageType, UserClaims authorClaims, string searchString = null);
+            RecipesType recipesType, UserClaims authorClaims, string searchString = null);
 
         /// <summary>
         ///     Get detail of recipe with the given id
@@ -63,5 +63,7 @@ namespace Recipes.Application.Services.Recipes
         Task DeleteRecipe(int recipeId, UserClaims userClaims);
 
         Task<RecipePreviewDto> GetRecipeOfTheDay();
+
+        Task<int> GetAuthorRecipesCount(UserClaims userClaims);
     }
 }

@@ -41,7 +41,10 @@ namespace Recipes.Application.UnitTests
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
             _recipesService = new RecipesService(_recipesRepoMock.Object,
-                _tagsServiceMock.Object, _unitOfWorkMock.Object, MapperInst, _imageFileSaverMock.Object);
+                _tagsServiceMock.Object, 
+                _unitOfWorkMock.Object,
+                MapperInst, 
+                _imageFileSaverMock.Object);
         }
         
         [Fact]

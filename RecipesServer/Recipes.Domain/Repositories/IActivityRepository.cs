@@ -8,5 +8,7 @@ namespace Recipes.Domain.Repositories
         Task<Activity> GetOrCreateActivity(int recipeId, int userId);
 
         Task<UserActivity> GetUserActivity(int userId);
+
+        Task<UserActivityOverview> GetUserActivityOverview(int userId);
     }
 }
