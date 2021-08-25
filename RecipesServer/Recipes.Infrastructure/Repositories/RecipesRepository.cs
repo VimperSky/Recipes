@@ -27,20 +27,19 @@ namespace Recipes.Infrastructure.Repositories
 
         public async Task<Recipe> GetRecipeOfTheDay()
         {
-            var recipeId = await _recipesDbContext.Activities
-                .AsNoTracking()
-                .Where(x => x.IsLiked)
-                .GroupBy(x => x.RecipeId)
-                .Select(x => new {x.Key, Count = x.Count()})
-                .OrderBy(x => x.Count)
-                .FirstOrDefaultAsync();
+            // var recipeId = await _recipesDbContext.Activities
+            //     .AsNoTracking()
+            //     .Where(x => x.IsLiked)
+            //     .GroupBy(x => x.RecipeId)
+            //     .Select(x => new {x.Key, Count = x.Count()})
+            //     .OrderBy(x => x.Count)
+            //     .FirstOrDefaultAsync();
 
-            if (recipeId == null)
-                return null;
-            
-            var recipe = await _recipesDbContext.Recipes.FindAsync(recipeId.Key);
-            await _recipesDbContext.Entry(recipe).Collection(x => x.Activities).LoadAsync();
-            return recipe;
+            return await _recipesDbContext.Recipes
+                .AsNoTracking()
+                .Include(x => x.Activities)
+                .OrderByDescending(x => x.Activities.Count(a => a.IsLiked))
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
