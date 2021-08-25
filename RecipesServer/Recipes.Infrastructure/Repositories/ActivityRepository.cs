@@ -41,12 +41,12 @@ namespace Recipes.Infrastructure.Repositories
             };
         }
 
-        public async Task<UserActivityOverview> GetUserActivityOverview(int userId)
+        public async Task<UserActivitySummary> GetUserActivitySummary(int userId)
         {
             return await _recipesDbContext.Activities
                 .Where(a => a.UserId == userId)
                 .GroupBy(a => a.UserId)
-                .Select(g => new UserActivityOverview
+                .Select(g => new UserActivitySummary
                 {
                     StarsCount = g.Count(x => x.IsStarred),
                     LikesCount = g.Count(x => x.IsLiked)

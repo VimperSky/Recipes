@@ -109,7 +109,7 @@ namespace Recipes.WebApi.Controllers
         public async Task<ActionResult<UserStatsDto>> GetUserStats()
         {
             var authorClaims = HttpContext.User.GetClaims();
-            var activity = await _activityService.GetUserActivityOverview(authorClaims);
+            var activity = await _activityService.GetUserActivitySummary(authorClaims);
             var recipesCount = await _recipesService.GetAuthorRecipesCount(authorClaims);
             return new UserStatsDto
             {

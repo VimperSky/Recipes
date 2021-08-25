@@ -3,11 +3,11 @@ import {UserService} from "../../core/services/communication/abstract/user.servi
 import {UserStats} from "../../core/dto/user/user-stats";
 
 @Component({
-  selector: 'app-activity-overview',
-  templateUrl: './activity-overview.component.html',
-  styleUrls: ['./activity-overview.component.scss']
+  selector: 'app-user-stats',
+  templateUrl: './user-stats.component.html',
+  styleUrls: ['./user-stats.component.scss']
 })
-export class ActivityOverviewComponent implements OnInit {
+export class UserStatsComponent implements OnInit {
 
   public ownRecipes: number = 0;
   public likedRecipes: number = 0;

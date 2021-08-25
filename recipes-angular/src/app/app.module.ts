@@ -37,7 +37,7 @@ import {JwtModule} from "@auth0/angular-jwt";
 import {AuthComponent} from './embedded-components/auth/auth/auth.component';
 import {ErrorComponent} from './embedded-components/error/error.component';
 import {ProfileComponent} from './pages/profile/profile.component';
-import {ActivityOverviewComponent} from './embedded-components/activity-overview/activity-overview.component';
+import {UserStatsComponent} from './embedded-components/user-stats/user-stats.component';
 import {MainComponent} from "./pages/main/main.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {TagsService} from "./core/services/communication/abstract/tags.service";
@@ -74,12 +74,12 @@ import {ApiInterceptor} from "./core/interceptors/api.interceptor";
     AuthComponent,
     ErrorComponent,
     ProfileComponent,
-    ActivityOverviewComponent,
+    UserStatsComponent,
     MainComponent,
     FeaturedTagsComponent,
     MainHeaderComponent,
     RecipeOfTheDayComponent,
-    ActivityOverviewComponent,
+    UserStatsComponent,
     ErrorComponent,
     FavoriteRecipesComponent
   ],

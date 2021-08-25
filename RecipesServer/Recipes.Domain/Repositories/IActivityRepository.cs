@@ -9,6 +9,6 @@ namespace Recipes.Domain.Repositories
 
         Task<UserActivity> GetUserActivity(int userId);
 
-        Task<UserActivityOverview> GetUserActivityOverview(int userId);
+        Task<UserActivitySummary> GetUserActivitySummary(int userId);
     }
 }

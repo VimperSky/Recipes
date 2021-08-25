@@ -32,9 +32,9 @@ namespace Recipes.Application.Services.Activity
             return await _activityRepository.GetUserActivity(userClaims.UserId);
         }
 
-        public async Task<UserActivityOverview> GetUserActivityOverview(UserClaims userClaims)
+        public async Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims)
         {
-            return await _activityRepository.GetUserActivityOverview(userClaims.UserId);
+            return await _activityRepository.GetUserActivitySummary(userClaims.UserId);
         }
 
         private async Task ProcessActivity(int recipeId, int userId, ActivityType activityType, bool action)

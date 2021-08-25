@@ -10,6 +10,6 @@ namespace Recipes.Application.Services.Activity
         Task RemoveActivity(int recipeId, UserClaims userClaims, ActivityType activityType);
         Task<UserActivity> GetUserActivity(UserClaims userClaims);
 
-        Task<UserActivityOverview> GetUserActivityOverview(UserClaims userClaims);
+        Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims);
     }
 }
