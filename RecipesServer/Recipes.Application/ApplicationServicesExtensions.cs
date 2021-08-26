@@ -41,7 +41,6 @@ namespace Recipes.Application
 
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
-            services.AddSingleton(CreateMapper());
             services.AddScoped<JwtHandler>();
             services.AddScoped<IImageFileSaver, ImageFileSaver>();
             services.AddScoped<ITagsService, TagsService>();
@@ -50,11 +49,11 @@ namespace Recipes.Application
             services.AddScoped<IActivityService, ActivityService>();
         }
 
-        public static IMapper CreateMapper()
+        public static IMapper CreateApplicationOnlyMapper()
         {
             var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<MainMappingProfile>();
+                cfg.AddProfile<ApplicationMappingProfile>();
             });
             return configuration.CreateMapper();
         }

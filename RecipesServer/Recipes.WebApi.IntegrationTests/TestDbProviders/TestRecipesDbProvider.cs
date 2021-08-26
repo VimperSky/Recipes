@@ -1,27 +1,24 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using Recipes.Application;
-using Recipes.Application.DTOs.Recipe;
-using Recipes.Domain.Models;
-using Recipes.Infrastructure;
+﻿using Recipes.Infrastructure;
+using Recipes.WebApi.AutoMapper;
+using Recipes.WebApi.DTOs.Recipe;
 
 namespace Recipes.WebApi.IntegrationTests.TestDbProviders
 {
     public class TestRecipesDbProvider
     {
-        private readonly RecipeDetailDto[] _detailedList;
+        private readonly RecipeDetailResultResultDTO[] _detailedList;
 
-        public readonly RecipePreviewDto[] List;
+        public readonly RecipePreviewResultDTO[] List;
 
         public TestRecipesDbProvider()
         {
-            var mapper = ApplicationServicesExtensions.CreateMapper();
+            var mapper = MapperConfig.CreateMapper();
 
-            _detailedList = mapper.Map<RecipeDetailDto[]>(StartDataDbInitializer.Recipes);
-            List = mapper.Map<RecipePreviewDto[]>(StartDataDbInitializer.Recipes);
+            _detailedList = mapper.Map<RecipeDetailResultResultDTO[]>(StartDataDbInitializer.Recipes);
+            List = mapper.Map<RecipePreviewResultDTO[]>(StartDataDbInitializer.Recipes);
         }
 
-        public RecipeDetailDto Detail(int id)
+        public RecipeDetailResultResultDTO Detail(int id)
         {
             return _detailedList[id - 1];
         }

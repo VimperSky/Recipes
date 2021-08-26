@@ -22,7 +22,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         
         static TestRecipeDataProvider()
         {
-            MapperInst = ApplicationServicesExtensions.CreateMapper();
+            MapperInst = ApplicationServicesExtensions.CreateApplicationOnlyMapper();
         }
         
         public static Recipe MainRecipe => new()

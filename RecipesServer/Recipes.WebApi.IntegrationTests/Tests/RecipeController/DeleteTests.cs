@@ -72,7 +72,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         {
             // Arrange
             _client.SetAuthToken();
-            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateRequestDTO);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());
 

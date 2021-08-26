@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using Recipes.Application;
 using Recipes.Application.Services.User;
 using Recipes.Infrastructure;
+using Recipes.WebApi.AutoMapper;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi
@@ -41,6 +42,7 @@ namespace Recipes.WebApi
             services.AddInfrastructureDependencies();
 
             // Web Api
+            services.AddSingleton(MapperConfig.CreateMapper());
             services.AddLogging();
             services.AddSpaFallback();
             services.AddControllers();

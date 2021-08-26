@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Recipes.Application.DTOs.User;
 using Recipes.Application.Exceptions;
+using Recipes.Application.Models.User;
 using Recipes.Application.Permissions.Models;
-using Recipes.Domain.Models;
 
 namespace Recipes.Application.Services.User
 {
@@ -26,7 +25,7 @@ namespace Recipes.Application.Services.User
         /// <exception cref="UserAuthenticationException"></exception>
         Task<string> Login(string login, string password);
 
-        Task<ProfileInfo> GetProfileInfo(UserClaims userClaims);
+        Task<ProfileInfoResult> GetProfileInfo(UserClaims userClaims);
 
         /// <summary>
         ///     Set new profile info for a user

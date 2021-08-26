@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using AutoMapper;
-using Recipes.Application.DTOs.User;
 using Recipes.Application.Exceptions;
+using Recipes.Application.Models.User;
 using Recipes.Application.Permissions.Models;
 using Recipes.Domain;
 using Recipes.Domain.Repositories;
@@ -65,13 +65,13 @@ namespace Recipes.Application.Services.User
             return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
         }
 
-        public async Task<ProfileInfo> GetProfileInfo(UserClaims userClaims)
+        public async Task<ProfileInfoResult> GetProfileInfo(UserClaims userClaims)
         {
             var user = await _userRepository.GetUserById(userClaims.UserId);
             if (user == null)
                 throw new ElementNotFoundException(ElementNotFoundException.AccountDoesNotExist);
 
-            return _mapper.Map<ProfileInfo>(user);
+            return _mapper.Map<ProfileInfoResult>(user);
         }
 
         public async Task<string> SetProfileInfo(string login, string password, string name, string bio,

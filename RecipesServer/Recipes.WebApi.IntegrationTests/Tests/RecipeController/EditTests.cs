@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 using Xunit;
 using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders.RecipeDataProvider;
 
@@ -27,7 +27,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         public async Task Patch_Edit_NoAuthorization_ReturnsUnauthorized()
         {
             // Act
-            var response = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", TestRecipeEditDto);
+            var response = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", TestRecipeEditRequestDTO);
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -37,7 +37,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         public async Task Patch_Edit_InvalidArguments_ReturnsBadRequest()
         {
             // Arrange
-            var copyDto = TestRecipeEditDto;
+            var copyDto = TestRecipeEditRequestDTO;
             copyDto.Name = null;
             _client.SetAuthToken();
 
@@ -53,18 +53,18 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         {
             // Arrange
             _client.SetAuthToken();
-            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateRequestDTO);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());
 
-            var copyRecipe = TestRecipeEditDto;
+            var copyRecipe = TestRecipeEditRequestDTO;
             copyRecipe.Id = recipeId;
 
             // Act && Assert
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
+            var detail = await _client.GetFromJsonAsync<RecipeDetailResultResultDTO>($"{BaseAddress}/detail?id={recipeId}");
 
             detail.Should().BeEquivalentTo(copyRecipe);
         }
@@ -74,20 +74,20 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         {
             // Arrange
             _client.SetAuthToken();
-            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateRequestDTO);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());
 
             
             _client.SetAuthToken(true);
-            var copyRecipe = TestRecipeEditDto;
+            var copyRecipe = TestRecipeEditRequestDTO;
             copyRecipe.Id = recipeId;
 
             // Act && Assert
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
 
-            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id={recipeId}");
+            var detail = await _client.GetFromJsonAsync<RecipeDetailResultResultDTO>($"{BaseAddress}/detail?id={recipeId}");
 
             detail.Should().BeEquivalentTo(copyRecipe);
         }

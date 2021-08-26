@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Recipes.Application.DTOs.Tags;
+using Recipes.Application.Models.Tags;
 using Recipes.Domain.Models;
 
 namespace Recipes.Application.Services.Tags
@@ -14,9 +14,9 @@ namespace Recipes.Application.Services.Tags
         /// <returns></returns>
         public Task<List<Tag>> GetOrCreateTags(string[] tags);
 
-        public Task<SuggestedTagsDto> GetSuggestedSearchTags();
+        public Task<SuggestedTagsResult> GetSuggestedSearchTags();
 
-        public Task<FeaturedTagsDto> GetFeaturedTags();
+        public Task<FeaturedTagsResult> GetFeaturedTags();
 
     }
 }
