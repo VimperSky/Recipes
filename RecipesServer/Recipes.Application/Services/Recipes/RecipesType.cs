@@ -1,4 +1,4 @@
-﻿namespace Recipes.Domain.Models
+﻿namespace Recipes.Application.Services.Recipes
 {
     public enum RecipesType
     {

@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
+using Recipes.Domain.Specifications;
 
 namespace Recipes.Infrastructure.Repositories
 {
@@ -33,32 +35,30 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderByDescending(x => x.Activities.Count(a => a.IsLiked))
                 .FirstOrDefaultAsync();
         }
+        
 
-        public async Task<List<Recipe>> GetList(int skipItems, int takeItems, string searchString,
-            RecipesType recipesType, int authorId)
+        public async Task<List<Recipe>> GetList(FilterSpecification<Recipe> filterSpecification,
+            PagingSpecification<Recipe> pagingSpecification)
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .FilterByType(recipesType, authorId)
-                .FilterBySearchString(searchString)
+                .Where(filterSpecification.SpecificationExpression)
                 .OrderBy(x => x.Id)
-                .Skip(skipItems)
-                .Take(takeItems)
+                .Skip(pagingSpecification.Skip)
+                .Take(pagingSpecification.Take)
                 .Include(x => x.Tags)
                 .Include(x => x.Author)
                 .Include(x => x.Activities)
                 .ToListAsync();
         }
 
-        public async Task<int> GetRecipesCount(string searchString, RecipesType recipesType, int authorId)
+        public async Task<int> GetRecipesCount(FilterSpecification<Recipe> filterSpecification)
         {
             return await _recipesDbContext.Recipes
                 .AsNoTracking()
-                .FilterByType(recipesType, authorId)
-                .FilterBySearchString(searchString)
+                .Where(filterSpecification.SpecificationExpression)
                 .CountAsync();
         }
-        
         
 
         public async Task<Recipe> AddRecipe(Recipe recipe)
