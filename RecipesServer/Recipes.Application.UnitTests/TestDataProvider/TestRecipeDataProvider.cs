@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Http;
 using AutoMapper;
+using Recipes.Application.MappingProfiles;
 using Recipes.Application.Models.Recipe;
 using Recipes.Domain.Models;
 
@@ -22,7 +23,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         
         static TestRecipeDataProvider()
         {
-            MapperInst = ApplicationServicesExtensions.CreateApplicationOnlyMapper();
+            MapperInst = ApplicationMappingConfig.CreateApplicationMapper();
         }
         
         public static Recipe MainRecipe => new()

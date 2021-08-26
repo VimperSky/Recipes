@@ -48,14 +48,5 @@ namespace Recipes.Application
             services.AddScoped<IRecipesService, RecipesService>();
             services.AddScoped<IActivityService, ActivityService>();
         }
-
-        public static IMapper CreateApplicationOnlyMapper()
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<ApplicationMappingProfile>();
-            });
-            return configuration.CreateMapper();
-        }
     }
 }

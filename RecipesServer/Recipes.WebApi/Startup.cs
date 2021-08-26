@@ -42,7 +42,7 @@ namespace Recipes.WebApi
             services.AddInfrastructureDependencies();
 
             // Web Api
-            services.AddSingleton(MapperConfig.CreateMapper());
+            services.AddSingleton(WebApiMappingConfig.CreateWebApiMapper());
             services.AddLogging();
             services.AddSpaFallback();
             services.AddControllers();

@@ -3,9 +3,9 @@ using Recipes.Application.MappingProfiles;
 
 namespace Recipes.WebApi.AutoMapper
 {
-    public static class MapperConfig
+    internal static class WebApiMappingConfig
     {
-        public static IMapper CreateMapper()
+        public static IMapper CreateWebApiMapper()
         {
             var mappingConfig = new MapperConfiguration(cfg =>
             {

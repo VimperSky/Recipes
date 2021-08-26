@@ -1,6 +1,7 @@
 ﻿using Recipes.Infrastructure;
 using Recipes.WebApi.AutoMapper;
 using Recipes.WebApi.DTOs.Recipe;
+using Recipes.WebApi.IntegrationTests.AutoMapper;
 
 namespace Recipes.WebApi.IntegrationTests.TestDbProviders
 {
@@ -12,7 +13,7 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
 
         public TestRecipesDbProvider()
         {
-            var mapper = MapperConfig.CreateMapper();
+            var mapper = TestsMappingConfig.CreateTestMapper();
 
             _detailedList = mapper.Map<RecipeDetailResultResultDTO[]>(StartDataDbInitializer.Recipes);
             List = mapper.Map<RecipePreviewResultDTO[]>(StartDataDbInitializer.Recipes);
