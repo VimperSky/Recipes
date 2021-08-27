@@ -27,7 +27,7 @@ namespace Recipes.Application.Services.Activity
             await ProcessActivity(recipeId, userClaims.UserId, activityType, false);
         }
 
-        public async Task<UserRecipesActivity> GetUserRecipesActivity(int[] recipesIds, UserClaims userClaims)
+        public async Task<UserRecipesActivityResult> GetUserRecipesActivity(int[] recipesIds, UserClaims userClaims)
         {
             return await _activityRepository.GetUserRecipesActivity(userClaims.UserId, recipesIds);
         }

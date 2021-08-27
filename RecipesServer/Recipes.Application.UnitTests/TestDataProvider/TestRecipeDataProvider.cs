@@ -2,7 +2,8 @@
 using System.IO;
 using System.Net.Http;
 using AutoMapper;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.MappingProfiles;
+using Recipes.Application.Models.Recipe;
 using Recipes.Domain.Models;
 
 namespace Recipes.Application.UnitTests.TestDataProvider
@@ -22,7 +23,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         
         static TestRecipeDataProvider()
         {
-            MapperInst = ApplicationServicesExtensions.CreateMapper();
+            MapperInst = ApplicationMappingConfig.CreateApplicationMapper();
         }
         
         public static Recipe MainRecipe => new()
@@ -76,10 +77,9 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             Tags = new List<Tag>()
         };
 
-        public static RecipeCreateDto RecipeCreateDto => MapperInst.Map<RecipeCreateDto>(MainRecipe);
-
-        public static RecipeEditDto MainRecipeEditDto => MapperInst.Map<RecipeEditDto>(MainRecipe);
-        public static RecipeEditDto OtherRecipeEditDto => MapperInst.Map<RecipeEditDto>(OtherRecipe);
+        public static RecipeCreateCommand RecipeCreateCommand => MapperInst.Map<RecipeCreateCommand>(MainRecipe);
+        public static RecipeEditCommand MainRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(MainRecipe);
+        public static RecipeEditCommand OtherRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(OtherRecipe);
 
 
         public static StreamContent ImageStream

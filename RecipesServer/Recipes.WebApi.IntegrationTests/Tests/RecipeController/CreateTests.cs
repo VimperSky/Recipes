@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 using Xunit;
 using static Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders.RecipeDataProvider;
 
@@ -26,7 +26,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         public async Task Post_Create_NoAuthorization_ReturnsUnauthorized()
         {
             // Act
-            var response = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var response = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateRequestDTO);
 
             // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -36,7 +36,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
         public async Task Post_Create_InvalidArguments_ReturnsBadRequest()
         {
             // Arrange
-            var copyDto = TestRecipeCreateDto;
+            var copyDto = TestRecipeCreateRequestDTO;
             copyDto.Name = null;
             _client.SetAuthToken();
 
@@ -55,15 +55,15 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             _client.SetAuthToken();
 
             // Act && Assert
-            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateDto);
+            var createdRecipe = await _client.PostAsJsonAsync($"{BaseAddress}/create", TestRecipeCreateRequestDTO);
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
 
-            var detail = await _client.GetFromJsonAsync<RecipeDetailDto>($"{BaseAddress}/detail?id=" +
+            var detail = await _client.GetFromJsonAsync<RecipeDetailResultDTO>($"{BaseAddress}/detail?id=" +
                                                                          JsonConvert.DeserializeObject<int>(
                                                                              await createdRecipe.Content
                                                                                  .ReadAsStringAsync()));
 
-            detail.Should().BeEquivalentTo(TestRecipeCreateDto);
+            detail.Should().BeEquivalentTo(TestRecipeCreateRequestDTO);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Recipes.Application.UnitTests
             expectedRecipeModel.AuthorId = _mainUserClaims.UserId;
 
             // Act
-            var createdRecipeId = await _recipesService.CreateRecipe(RecipeCreateDto, _mainUserClaims);
+            var createdRecipeId = await _recipesService.CreateRecipe(RecipeCreateCommand, _mainUserClaims);
             
             // Assert
             _recipesRepoMock.Verify(x => x.
@@ -68,7 +68,7 @@ namespace Recipes.Application.UnitTests
         public async Task EditRecipe_NonExistingRecipe_ThrowsElementNotFoundException()
         {
             // Arrange
-            var dto = MainRecipeEditDto;
+            var dto = MainRecipeEditCommand;
             dto.Id = 999;
 
             // Act && Assert
@@ -83,7 +83,7 @@ namespace Recipes.Application.UnitTests
                 .Returns(() => Task.FromResult(OtherRecipe));
             
             // Act && Assert
-            await Assert.ThrowsAsync<PermissionException>(() => _recipesService.EditRecipe(OtherRecipeEditDto, _mainUserClaims));
+            await Assert.ThrowsAsync<PermissionException>(() => _recipesService.EditRecipe(OtherRecipeEditCommand, _mainUserClaims));
             _recipesRepoMock.Verify(x => x.GetById(OtherRecipeId), Times.Once);
         }
         
@@ -99,7 +99,7 @@ namespace Recipes.Application.UnitTests
                 .Returns(() => Task.FromResult(returnedObject));
             
             // Act
-            await _recipesService.EditRecipe(MainRecipeEditDto, _mainUserClaims);
+            await _recipesService.EditRecipe(MainRecipeEditCommand, _mainUserClaims);
             
             // Assert
             returnedObject.Should().BeEquivalentTo(MainRecipe);

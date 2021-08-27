@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 using Recipes.WebApi.IntegrationTests.TestDbProviders;
 using Xunit;
 
@@ -79,7 +79,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
 
             // Assert
@@ -98,7 +98,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -116,7 +116,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -135,7 +135,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageDto>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

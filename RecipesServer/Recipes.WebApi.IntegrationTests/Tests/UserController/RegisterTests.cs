@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Recipes.Application.Exceptions;
-using Recipes.WebApi.DTO.User;
+using Recipes.WebApi.DTOs.User;
 using Xunit;
 using static Recipes.WebApi.IntegrationTests.Tests.UserController.DataProviders.UserDataProvider;
 
