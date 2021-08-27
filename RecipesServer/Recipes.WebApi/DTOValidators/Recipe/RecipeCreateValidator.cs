@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 
 namespace Recipes.WebApi.DTOValidators.Recipe
 {
-    public class RecipeCreateValidator : AbstractValidator<RecipeCreateDto>
+    public class RecipeCreateValidator : AbstractValidator<RecipeCreateRequestDTO>
     {
         public RecipeCreateValidator()
         {

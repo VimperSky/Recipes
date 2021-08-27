@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Application.DTOs.User;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.Activity;
 using Recipes.Application.Services.Recipes;
 using Recipes.Application.Services.User;
-using Recipes.WebApi.DTO.User;
+using Recipes.WebApi.DTOs.User;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
@@ -21,12 +21,17 @@ namespace Recipes.WebApi.Controllers
         private readonly IUserService _userService;
         private readonly IActivityService _activityService;
         private readonly IRecipesService _recipesService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IActivityService activityService, IRecipesService recipesService)
+        public UserController(IUserService userService, 
+            IActivityService activityService,
+            IRecipesService recipesService,
+            IMapper mapper)
         {
             _userService = userService;
             _activityService = activityService;
             _recipesService = recipesService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -78,11 +83,12 @@ namespace Recipes.WebApi.Controllers
         ///     Get profile info of user
         /// </summary>
         [HttpGet("profile")]
-        [ProducesResponseType(typeof(ProfileInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProfileInfoResultDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ProfileInfo>> GetProfileInfo()
+        public async Task<ActionResult<ProfileInfoResultDTO>> GetProfileInfo()
         {
-            return await _userService.GetProfileInfo(HttpContext.User.GetClaims());
+            var profileInfo = await _userService.GetProfileInfo(HttpContext.User.GetClaims());
+            return _mapper.Map<ProfileInfoResultDTO>(profileInfo);
         }
 
 

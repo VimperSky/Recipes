@@ -41,22 +41,12 @@ namespace Recipes.Application
 
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
-            services.AddSingleton(CreateMapper());
             services.AddScoped<JwtHandler>();
             services.AddScoped<IImageFileSaver, ImageFileSaver>();
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipesService, RecipesService>();
             services.AddScoped<IActivityService, ActivityService>();
-        }
-
-        public static IMapper CreateMapper()
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<MainMappingProfile>();
-            });
-            return configuration.CreateMapper();
         }
     }
 }

@@ -49,7 +49,6 @@ export class RecipeDetailComponent implements OnInit {
         }
         this.activityService.getUserActivity(dto).subscribe((activity: UserActivityDto) => {
           if (!this.recipeDetail) return;
-          console.log(activity);
 
           if (activity.likedRecipes.includes(this.recipeDetail.id)) {
             this.recipeDetail.isLiked = true;

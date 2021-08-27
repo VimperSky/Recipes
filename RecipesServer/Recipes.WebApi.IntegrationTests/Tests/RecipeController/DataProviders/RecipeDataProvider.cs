@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.Application.Models.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
 {
@@ -9,7 +10,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
         public const string TestImagePath = "test_image.jpg";
         private const string TestImageContentType = "image/jpeg";
 
-        public static RecipeCreateDto TestRecipeCreateDto => new()
+        public static RecipeCreateRequestDTO TestRecipeCreateRequestDTO => new()
         {
             Name = "Какое-то название",
             Description = "Описание рецепта",
@@ -36,7 +37,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
             Portions = 5
         };
 
-        public static RecipeEditDto TestRecipeEditDto => new()
+        public static RecipeEditRequestDTO TestRecipeEditRequestDTO => new()
         {
             Name = "Какое-то название",
             Description = "Описание рецепта",

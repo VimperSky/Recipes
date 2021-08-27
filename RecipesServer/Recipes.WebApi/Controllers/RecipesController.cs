@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Application.DTOs.Recipe;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.Recipes;
 using Recipes.Domain.Models;
+using Recipes.WebApi.DTOs.Recipe;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
@@ -18,10 +19,12 @@ namespace Recipes.WebApi.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IRecipesService _recipesService;
+        private readonly IMapper _mapper;
 
-        public RecipesController(IRecipesService recipesService)
+        public RecipesController(IRecipesService recipesService, IMapper mapper)
         {
             _recipesService = recipesService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -33,50 +36,54 @@ namespace Recipes.WebApi.Controllers
         /// <response code="404">Page with this id doesn't exist</response>
         [HttpGet("list")]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RecipesPageResultDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<RecipesPageDto>> GetRecipes(
+        public async Task<ActionResult<RecipesPageResultDTO>> GetRecipes(
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize,
             [FromQuery] [Range(1, int.MaxValue)] int page = 1, [FromQuery] string searchString = null)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, 
-                RecipesType.All, HttpContext.User.GetClaims(), searchString);
+            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, 
+                RecipesSelectionType.All, HttpContext.User.GetClaims(), searchString);
+            return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }
         
         
         [HttpGet("myList")]
-        [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RecipesPageResultDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<RecipesPageDto>> GetMyRecipes(
+        public async Task<ActionResult<RecipesPageResultDTO>> GetMyRecipes(
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Own, 
+            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesSelectionType.Own, 
                 HttpContext.User.GetClaims());
+            return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }
 
         [HttpGet("favoriteList")]
-        [ProducesResponseType(typeof(RecipesPageDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RecipesPageResultDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<RecipesPageDto>> GetFavoriteRecipes(
+        public async Task<ActionResult<RecipesPageResultDTO>> GetFavoriteRecipes(
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            return await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Starred, 
+            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesSelectionType.Starred, 
                 HttpContext.User.GetClaims());
+            return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }
         
-        [ProducesResponseType(typeof(RecipePreviewDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RecipePreviewResultDTO), StatusCodes.Status200OK)]
         [AllowAnonymous]
         [HttpGet("recipeOfDay")]
-        public async Task<ActionResult<RecipePreviewDto>> GetRecipeOfTheDay()
+        public async Task<ActionResult<RecipePreviewResultDTO>> GetRecipeOfTheDay()
         {
-            return await _recipesService.GetRecipeOfTheDay();
+            var recipePreview = await _recipesService.GetRecipeOfTheDay();
+            return _mapper.Map<RecipePreviewResultDTO>(recipePreview);
         }
     }
 }

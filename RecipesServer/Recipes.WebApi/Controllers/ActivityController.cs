@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Application.Permissions;
 using Recipes.Application.Services.Activity;
 using Recipes.Domain.Models;
-using Recipes.WebApi.DTO.Activity;
+using Recipes.WebApi.DTOs.Activity;
 using Recipes.WebApi.ExceptionHandling;
 
 namespace Recipes.WebApi.Controllers
@@ -18,10 +19,12 @@ namespace Recipes.WebApi.Controllers
     public class ActivityController : ControllerBase
     {
         private readonly IActivityService _activityService;
+        private readonly IMapper _mapper;
 
-        public ActivityController(IActivityService activityService)
+        public ActivityController(IActivityService activityService, IMapper mapper)
         {
             _activityService = activityService;
+            _mapper = mapper;
         }
         
         [HttpPut("like")]
@@ -61,11 +64,13 @@ namespace Recipes.WebApi.Controllers
         }
         
         [HttpPost("myRecipesActivity")]
-        [ProducesResponseType(typeof(UserRecipesActivity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserRecipesActivityResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserRecipesActivity>> GetUserRecipesActivity([FromBody]MyRecipesActivityDto myRecipesActivityDto)
+        public async Task<ActionResult<UserRecipesActivityResultDTO>> GetUserRecipesActivity(
+            [FromBody]UserRecipesActivityRequestDTO userRecipesActivityRequestDTO)
         {
-            return await _activityService.GetUserRecipesActivity(myRecipesActivityDto.RecipeIds, HttpContext.User.GetClaims());
+            var userRecipesActivity = await _activityService.GetUserRecipesActivity(userRecipesActivityRequestDTO.RecipeIds, HttpContext.User.GetClaims());
+            return _mapper.Map<UserRecipesActivityResultDTO>(userRecipesActivity);
         }
     }
 }

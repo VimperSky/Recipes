@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recipes.Application.DTOs.Tags;
 using Recipes.Application.Services.Tags;
+using Recipes.WebApi.DTOs.Tags;
 
 namespace Recipes.WebApi.Controllers
 {    
@@ -12,24 +13,28 @@ namespace Recipes.WebApi.Controllers
     public class TagsController
     {
         private readonly ITagsService _tagsService;
+        private readonly IMapper _mapper;
 
-        public TagsController(ITagsService tagsService)
+        public TagsController(ITagsService tagsService, IMapper mapper)
         {
             _tagsService = tagsService;
+            _mapper = mapper;
         }
 
         [HttpGet("suggested")]
-        [ProducesResponseType(typeof(SuggestedTagsDto), StatusCodes.Status200OK)]
-        public async Task<SuggestedTagsDto> GetSuggestedSearchTags()
+        [ProducesResponseType(typeof(SuggestedTagsResultDTO), StatusCodes.Status200OK)]
+        public async Task<SuggestedTagsResultDTO> GetSuggestedSearchTags()
         {
-            return await _tagsService.GetSuggestedSearchTags();
+            var suggestedTags = await _tagsService.GetSuggestedSearchTags();
+            return _mapper.Map<SuggestedTagsResultDTO>(suggestedTags);
         }
         
         [HttpGet("featured")]
-        [ProducesResponseType(typeof(FeaturedTagsDto), StatusCodes.Status200OK)]
-        public async Task<FeaturedTagsDto> GetFeaturedTags()
+        [ProducesResponseType(typeof(FeaturedTagsResultDTO), StatusCodes.Status200OK)]
+        public async Task<FeaturedTagsResultDTO> GetFeaturedTags()
         {
-            return await _tagsService.GetFeaturedTags();
+            var featuredTags = await _tagsService.GetFeaturedTags();
+            return _mapper.Map<FeaturedTagsResultDTO>(featuredTags);
         }
         
     }

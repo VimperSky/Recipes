@@ -31,11 +31,11 @@ namespace Recipes.Infrastructure.Repositories
             return newActivity;
         }
         
-        public async Task<UserRecipesActivity> GetUserRecipesActivity(int userId, int[] recipeIds)
+        public async Task<UserRecipesActivityResult> GetUserRecipesActivity(int userId, int[] recipeIds)
         {
             var query = _recipesDbContext.Activities.Where(x => x.UserId == userId
                                                                 && recipeIds.Contains(x.RecipeId));
-            return new UserRecipesActivity
+            return new UserRecipesActivityResult
             {
                 StarredRecipes = await query.Where(x => x.IsStarred).Select(x => x.RecipeId).ToListAsync(),
                 LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),

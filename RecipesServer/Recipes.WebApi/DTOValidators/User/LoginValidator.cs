@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Recipes.WebApi.DTO.User;
+using Recipes.WebApi.DTOs.User;
 using static Recipes.WebApi.DTOValidators.User.RegisterValidator;
 
 namespace Recipes.WebApi.DTOValidators.User

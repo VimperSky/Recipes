@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Recipes.Application.DTOs.Recipe;
+using Recipes.WebApi.DTOs.Recipe;
 using Recipes.WebApi.IntegrationTests.TestDbProviders;
 using Xunit;
 
@@ -54,7 +54,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id={recipeId}");
             var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<RecipeDetailDto>(content);
+            var result = JsonConvert.DeserializeObject<RecipeDetailResultDTO>(content);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

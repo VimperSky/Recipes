@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Recipes.Application.DTOs.Tags;
+using Recipes.Application.Models.Tags;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 
@@ -41,23 +41,21 @@ namespace Recipes.Application.Services.Tags
             return dbTags;
         }
 
-        public async Task<SuggestedTagsDto> GetSuggestedSearchTags()
+        public async Task<SuggestedTagsResult> GetSuggestedSearchTags()
         {
-            var dto = new SuggestedTagsDto 
+            return new SuggestedTagsResult 
             {
                 TagValues = (await _tagsRepository.GetTagsByLevel(TagLevel.Suggested))
                     .Select(x => x.Value).ToArray()
-            };
-            return dto;
+            };;
         }
 
-        public async Task<FeaturedTagsDto> GetFeaturedTags()
+        public async Task<FeaturedTagsResult> GetFeaturedTags()
         {
-            var dto = new FeaturedTagsDto
+            return new FeaturedTagsResult
             {
-                Tags = _mapper.Map<TagDto[]>(await _tagsRepository.GetTagsByLevel(TagLevel.Featured))
-            };
-            return dto;
+                Tags = _mapper.Map<TagInfo[]>(await _tagsRepository.GetTagsByLevel(TagLevel.Featured))
+            };;
         }
     }
 }
