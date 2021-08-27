@@ -44,7 +44,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Range(1, int.MaxValue)] int page = 1, [FromQuery] string searchString = null)
         {
             var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, 
-                RecipesType.All, HttpContext.User.GetClaims(), searchString);
+                RecipesSelectionType.All, HttpContext.User.GetClaims(), searchString);
             return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }
         
@@ -58,7 +58,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Own, 
+            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesSelectionType.Own, 
                 HttpContext.User.GetClaims());
             return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }
@@ -72,7 +72,7 @@ namespace Recipes.WebApi.Controllers
             [FromQuery] [Required] [Range(1, int.MaxValue)] int pageSize, 
             [FromQuery] [Range(1, int.MaxValue)] int page = 1)
         {
-            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesType.Starred, 
+            var recipesPage = await _recipesService.GetRecipesPage(pageSize, page, RecipesSelectionType.Starred, 
                 HttpContext.User.GetClaims());
             return _mapper.Map<RecipesPageResultDTO>(recipesPage);
         }

@@ -78,7 +78,6 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         };
 
         public static RecipeCreateCommand RecipeCreateCommand => MapperInst.Map<RecipeCreateCommand>(MainRecipe);
-
         public static RecipeEditCommand MainRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(MainRecipe);
         public static RecipeEditCommand OtherRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(OtherRecipe);
 

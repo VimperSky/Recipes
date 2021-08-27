@@ -32,33 +32,9 @@ export abstract class RecipesManagerService {
     if (this.isPendingAction)
       return;
 
-
     this.getRecipes(environment.pageSize, 1, null).subscribe(result => {
       this.updateRecipeList(result, true);
-
-      this.authTokenManagerService.authChanged.subscribe((value: boolean) => {
-        if (value) {
-          const dto: MyRecipesActivityDto = {
-            recipeIds: this.recipeList.map(x => x.id)
-          }
-          this.activityService.getUserActivity(dto).subscribe((activity: UserActivityDto) => {
-            for (const recipe of this.recipeList) {
-              if (activity.likedRecipes.includes(recipe.id)) {
-                recipe.isLiked = true;
-              }
-              if (activity.starredRecipes.includes(recipe.id)) {
-                recipe.isStarred = true;
-              }
-            }
-          });
-        }
-        else {
-          for (const recipe of this.recipeList) {
-            recipe.isLiked = false;
-            recipe.isStarred = false;
-          }
-        }
-      })
+      this.subscribeToAuthenticationEvent();
     });
 
   };
@@ -84,5 +60,31 @@ export abstract class RecipesManagerService {
 
     this.pageCount = recipePage.pageCount;
     this.isPendingAction = false;
+  }
+
+  private subscribeToAuthenticationEvent() {
+    this.authTokenManagerService.authChanged.subscribe((value: boolean) => {
+      if (value) {
+        const dto: MyRecipesActivityDto = {
+          recipeIds: this.recipeList.map(x => x.id)
+        }
+        this.activityService.getUserActivity(dto).subscribe((activity: UserActivityDto) => {
+          for (const recipe of this.recipeList) {
+            if (activity.likedRecipes.includes(recipe.id)) {
+              recipe.isLiked = true;
+            }
+            if (activity.starredRecipes.includes(recipe.id)) {
+              recipe.isStarred = true;
+            }
+          }
+        });
+      }
+      else {
+        for (const recipe of this.recipeList) {
+          recipe.isLiked = false;
+          recipe.isStarred = false;
+        }
+      }
+    })
   }
 }

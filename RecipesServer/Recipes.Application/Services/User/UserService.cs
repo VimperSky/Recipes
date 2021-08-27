@@ -97,7 +97,7 @@ namespace Recipes.Application.Services.User
         
         public async Task ValidateUser(UserClaims userClaims)
         {
-            if (!userClaims.IsAuthorized)
+            if (!userClaims.IsAuthenticated)
                 throw new UserAuthenticationException(UserAuthenticationException.UserIsInvalid);
             
             var dbUser = await _userRepository.GetUserById(userClaims.UserId);

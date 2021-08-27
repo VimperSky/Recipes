@@ -14,13 +14,13 @@ namespace Recipes.Application.Services.Recipes
         /// </summary>
         /// <exception cref="ElementNotFoundException"></exception>
         Task<RecipesPageResult> GetRecipesPage(int pageSize, int page,
-            RecipesType recipesType, UserClaims userClaims, string searchString = null);
+            RecipesSelectionType recipesSelectionType, UserClaims userClaims, string searchString = null);
 
         /// <summary>
         ///     Get detail of recipe with the given id
         /// </summary>
         /// <returns></returns>
-        Task<RecipeDetailResult> GetRecipeDetail(int id, UserClaims authorClaims);
+        Task<RecipeDetailResult> GetRecipeDetail(int id, UserClaims userClaims);
 
         /// <summary>
         ///     Create a new recipe

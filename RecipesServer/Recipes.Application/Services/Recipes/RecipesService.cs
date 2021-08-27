@@ -34,12 +34,12 @@ namespace Recipes.Application.Services.Recipes
         }
 
         public async Task<RecipesPageResult> GetRecipesPage(int pageSize, int page,
-            RecipesType recipesType, UserClaims userClaims, string searchString = null)
+            RecipesSelectionType recipesSelectionType, UserClaims userClaims, string searchString = null)
         {
-            FilterSpecification<Recipe> filterSpecification = recipesType switch
+            FilterSpecification<Recipe> filterSpecification = recipesSelectionType switch
             {
-                RecipesType.Own => new OwnRecipesFilterSpecification(userClaims.UserId),
-                RecipesType.Starred => new StarredRecipesFilterSpecification(userClaims.UserId),
+                RecipesSelectionType.Own => new OwnRecipesFilterSpecification(userClaims.UserId),
+                RecipesSelectionType.Starred => new StarredRecipesFilterSpecification(userClaims.UserId),
                 _ => new AllRecipesFilterSpecification(searchString)
             };
             
@@ -53,7 +53,7 @@ namespace Recipes.Application.Services.Recipes
             var recipes = await _recipesRepository.GetList(filterSpecification, pagingSpecification);
 
             var dtoRecipes = _mapper.Map<RecipePreviewResult[]>(recipes);
-            if (userClaims.IsAuthorized)
+            if (userClaims.IsAuthenticated)
             {
                 for (var i = 0; i < dtoRecipes.Length; i++)
                 {
@@ -71,17 +71,17 @@ namespace Recipes.Application.Services.Recipes
             };
         }
         
-        public async Task<RecipeDetailResult> GetRecipeDetail(int id, UserClaims authorClaims)
+        public async Task<RecipeDetailResult> GetRecipeDetail(int id, UserClaims userClaims)
         {
             var recipe = await _recipesRepository.GetById(id);
             if (recipe == null)
                 return null;
 
             var dto = _mapper.Map<RecipeDetailResult>(recipe);
-            if (authorClaims.IsAuthorized)
+            if (userClaims.IsAuthenticated)
             {
-                dto.IsLiked = recipe.Activities.Any(x => x.IsLiked && x.UserId == authorClaims.UserId);
-                dto.IsStarred = recipe.Activities.Any(x => x.IsStarred && x.UserId == authorClaims.UserId);
+                dto.IsLiked = recipe.Activities.Any(x => x.IsLiked && x.UserId == userClaims.UserId);
+                dto.IsStarred = recipe.Activities.Any(x => x.IsStarred && x.UserId == userClaims.UserId);
             }
 
             return dto;

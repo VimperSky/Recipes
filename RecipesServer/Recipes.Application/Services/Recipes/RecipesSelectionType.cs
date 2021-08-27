@@ -1,6 +1,6 @@
 ﻿namespace Recipes.Application.Services.Recipes
 {
-    public enum RecipesType
+    public enum RecipesSelectionType
     {
         All,
         Own,
