@@ -64,7 +64,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var detail = await _client.GetFromJsonAsync<RecipeDetailResultResultDTO>($"{BaseAddress}/detail?id={recipeId}");
+            var detail = await _client.GetFromJsonAsync<RecipeDetailResultDTO>($"{BaseAddress}/detail?id={recipeId}");
 
             detail.Should().BeEquivalentTo(copyRecipe);
         }
@@ -87,7 +87,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             var editResponse = await _client.PatchAsJsonAsync($"{BaseAddress}/edit", copyRecipe);
             editResponse.StatusCode.Should().Be(HttpStatusCode.Forbidden);
 
-            var detail = await _client.GetFromJsonAsync<RecipeDetailResultResultDTO>($"{BaseAddress}/detail?id={recipeId}");
+            var detail = await _client.GetFromJsonAsync<RecipeDetailResultDTO>($"{BaseAddress}/detail?id={recipeId}");
 
             detail.Should().BeEquivalentTo(copyRecipe);
         }

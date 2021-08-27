@@ -54,7 +54,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/detail?id={recipeId}");
             var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<RecipeDetailResultResultDTO>(content);
+            var result = JsonConvert.DeserializeObject<RecipeDetailResultDTO>(content);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

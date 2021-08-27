@@ -20,7 +20,7 @@ namespace Recipes.WebApi.AutoMapper
             CreateMap<Ingredient, IngredientDto>();
 
             CreateMap<UserRecipesActivityResult, UserRecipesActivityResultDTO>();
-            CreateMap<RecipeDetailResult, RecipeDetailResultResultDTO>();
+            CreateMap<RecipeDetailResult, RecipeDetailResultDTO>();
             CreateMap<RecipePreviewResult, RecipePreviewResultDTO>();
             CreateMap<SuggestedTagsResult, SuggestedTagsResultDTO>();
             CreateMap<FeaturedTagsResult, FeaturedTagsResultDTO>();

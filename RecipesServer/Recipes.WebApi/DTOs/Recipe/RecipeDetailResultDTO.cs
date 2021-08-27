@@ -1,6 +1,6 @@
 ﻿namespace Recipes.WebApi.DTOs.Recipe
 {
-    public class RecipeDetailResultResultDTO : RecipePreviewResultDTO
+    public class RecipeDetailResultDTO : RecipePreviewResultDTO
     {
         public IngredientDto[] Ingredients { get; init; }
 

@@ -7,7 +7,7 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
 {
     public class TestRecipesDbProvider
     {
-        private readonly RecipeDetailResultResultDTO[] _detailedList;
+        private readonly RecipeDetailResultDTO[] _detailedList;
 
         public readonly RecipePreviewResultDTO[] List;
 
@@ -15,11 +15,11 @@ namespace Recipes.WebApi.IntegrationTests.TestDbProviders
         {
             var mapper = TestsMappingConfig.CreateTestMapper();
 
-            _detailedList = mapper.Map<RecipeDetailResultResultDTO[]>(StartDataDbInitializer.Recipes);
+            _detailedList = mapper.Map<RecipeDetailResultDTO[]>(StartDataDbInitializer.Recipes);
             List = mapper.Map<RecipePreviewResultDTO[]>(StartDataDbInitializer.Recipes);
         }
 
-        public RecipeDetailResultResultDTO Detail(int id)
+        public RecipeDetailResultDTO Detail(int id)
         {
             return _detailedList[id - 1];
         }

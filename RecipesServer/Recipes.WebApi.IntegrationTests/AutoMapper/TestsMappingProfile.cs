@@ -13,7 +13,7 @@ namespace Recipes.WebApi.IntegrationTests.AutoMapper
             CreateMap<User, AuthorDto>();
 
             CreateMap<Recipe, RecipePreviewResultDTO>();
-            CreateMap<Recipe, RecipeDetailResultResultDTO>();
+            CreateMap<Recipe, RecipeDetailResultDTO>();
         }
     }
 }

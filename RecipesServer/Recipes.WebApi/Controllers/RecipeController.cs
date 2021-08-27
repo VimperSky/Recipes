@@ -35,17 +35,17 @@ namespace Recipes.WebApi.Controllers
         /// <returns></returns>
         [HttpGet("detail")]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(RecipeDetailResultResultDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RecipeDetailResultDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RecipeDetailResultResultDTO>> GetRecipeDetail(
+        public async Task<ActionResult<RecipeDetailResultDTO>> GetRecipeDetail(
             [FromQuery] [Required] [Range(1, int.MaxValue)] int id)
         {
             var detail = await _recipesService.GetRecipeDetail(id, HttpContext.User.GetClaims());
             if (detail == null)
                 return NotFound();
 
-            return _mapper.Map<RecipeDetailResultResultDTO>(detail);
+            return _mapper.Map<RecipeDetailResultDTO>(detail);
         }
 
         /// <summary>
