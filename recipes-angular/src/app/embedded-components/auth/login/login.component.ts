@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
@@ -38,7 +38,7 @@ export class LoginComponent {
               private snackBar: MatSnackBar,
               private errorHandlingService: ErrorHandlingService,
               fb: FormBuilder) {
-    this.loginForm = fb.group( {
+    this.loginForm = fb.group({
       login: this.login,
       password: this.password
     })
@@ -60,7 +60,7 @@ export class LoginComponent {
   public logIn() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      let loginDto: Login = {login: this.login.value, password: this.password.value }
+      let loginDto: Login = {login: this.login.value, password: this.password.value}
       this.authService.login(loginDto).subscribe((token: string) => {
         this.tokenManagerService.setToken(token);
         this.dialogRef.close()
@@ -75,8 +75,7 @@ export class LoginComponent {
           ]);
 
           this.errorHandlingService.setValidationErrors(error, formControlsMap);
-        }
-        else if (error.status == 401) {
+        } else if (error.status == 401) {
           this.loginForm.setErrors({invalidLoginPassword: true})
         }
       }))
@@ -88,5 +87,5 @@ export class LoginComponent {
     this.dialog.open(RegisterComponent, {
       panelClass: 'register-dialog-container'
     });
-   }
+  }
 }

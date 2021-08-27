@@ -36,11 +36,15 @@ namespace Recipes.Application.UnitTests
                     recipe.Id = MainRecipeId;
                     return Task.FromResult(recipe);
                 });
+            
             _imageFileSaverMock = new Mock<IImageFileSaver>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _recipesService = new RecipesService(_recipesRepoMock.Object, _tagsServiceMock.Object, _unitOfWorkMock.Object,
-                MapperInst, _imageFileSaverMock.Object);
+            _recipesService = new RecipesService(_recipesRepoMock.Object,
+                _tagsServiceMock.Object, 
+                _unitOfWorkMock.Object,
+                MapperInst, 
+                _imageFileSaverMock.Object);
         }
         
         [Fact]

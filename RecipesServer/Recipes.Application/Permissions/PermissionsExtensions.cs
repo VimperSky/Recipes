@@ -8,7 +8,7 @@ namespace Recipes.Application.Permissions
     {
         public static UserClaims GetClaims(this ClaimsPrincipal claimsPrincipal)
         {
-            string name = null;
+            string name = default;
             int userId = default;
             foreach (var claim in claimsPrincipal.Claims)
             {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {FormArray, FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -21,25 +21,20 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 })
 export class RecipeAddEditComponent implements OnInit {
 
-  private file: File | undefined;
-
   public image: string | SafeResourceUrl | undefined;
   public readonly acceptImageTypes: string = "image/png, image/jpeg";
   public id: number | undefined;
   public readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public tags: string[] = [];
-
   public recipeName = this.fb.control('', [
     Validators.required,
     Validators.pattern('.*[a-zA-Zа-яА-Я].*') // хотя бы один символ из алфавита (рус англ)
   ]);
-
   public recipeDescription = this.fb.control('', [Validators.maxLength(150)])
   public cookingTime = this.fb.control('', [Validators.max(999)]);
   public portions = this.fb.control('', [Validators.max(999)]);
   public ingredients: FormArray = this.fb.array([]);
   public steps = this.fb.array([]);
-
   public recipeForm = this.fb.group({
     recipeName: this.recipeName,
     recipeDescription: this.recipeDescription,
@@ -48,6 +43,7 @@ export class RecipeAddEditComponent implements OnInit {
     ingredients: this.ingredients,
     steps: this.steps
   })
+  private file: File | undefined;
 
   constructor(private sanitizer: DomSanitizer,
               private fb: FormBuilder,
@@ -85,8 +81,7 @@ export class RecipeAddEditComponent implements OnInit {
 
         this.tags = result.tags;
       })
-    }
-    else {
+    } else {
       this.addIngredient()
       this.addStep()
     }
@@ -107,8 +102,7 @@ export class RecipeAddEditComponent implements OnInit {
   }
 
   public deleteImage() {
-    if (this.image)
-    {
+    if (this.image) {
       this.image = undefined;
     }
   }
@@ -141,7 +135,7 @@ export class RecipeAddEditComponent implements OnInit {
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value,
+        portions: this.portions.value == "" ? 0 : this.portions.value,
         tags: this.tags
       };
 
@@ -153,23 +147,21 @@ export class RecipeAddEditComponent implements OnInit {
           }, (error: HttpErrorResponse) => {
             this.errorHandlingService.openErrorDialog(error, "При загрузке изображения произошла неопознанная ошибка.");
           });
-        }
-        else {
+        } else {
           this.finalizeRecipeProcessing();
         }
 
       }, (error: HttpErrorResponse) => {
         this.errorHandlingService.openErrorDialog(error, "При редактировании рецепта произошла неопознанная ошибка.");
       })
-    }
-    else {
+    } else {
       const dto: RecipeCreate = {
         name: this.recipeName.value,
         description: this.recipeDescription.value,
         steps: steps,
         ingredients: ingredients,
         cookingTimeMin: this.cookingTime.value == "" ? 0 : this.cookingTime.value,
-        portions: this.portions.value == "" ? 0: this.portions.value,
+        portions: this.portions.value == "" ? 0 : this.portions.value,
         tags: this.tags
       };
 
@@ -236,7 +228,8 @@ export class RecipeAddEditComponent implements OnInit {
 
   private finalizeRecipeProcessing(recipeId: number | undefined = undefined) {
     this.snackBar.open(!recipeId ? 'Рецепт был успешно отредактирован!' : 'Рецепт был успешно создан!',
-      'ОК', {duration: 5000
+      'ОК', {
+        duration: 5000
       });
     if (!recipeId)
       recipeId = this.id;

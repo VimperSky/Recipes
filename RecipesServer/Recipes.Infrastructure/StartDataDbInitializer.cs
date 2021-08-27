@@ -259,15 +259,19 @@ namespace Recipes.Infrastructure
 
         public static void FillDbWithData(RecipesDbContext dbContext)
         {
-            if (dbContext.Recipes.Any()) return; // DB has been seeded
-
-            foreach (var tag in Tags)
-                dbContext.Tags.Add(tag);
+            if (dbContext.Recipes.Any()) return;
             
-            foreach (var recipe in Recipes)
-                dbContext.Recipes.Add(recipe);
-
+            // Транзакция и SaveChanges() на каждой итерации нужны, чтобы все рецепты были добавлены в строгом порядке
+            using var transaction = dbContext.Database.BeginTransaction();
+            dbContext.Tags.AddRange(Tags);
             dbContext.SaveChanges();
+
+            foreach (var recipe in Recipes)
+            {
+                dbContext.Recipes.Add(recipe);
+                dbContext.SaveChanges();
+            }
+            transaction.Commit();
         }
     }
 }

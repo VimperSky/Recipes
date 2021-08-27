@@ -8,7 +8,8 @@ import {Location} from '@angular/common';
 })
 export class BackNavComponent {
 
-  constructor(private location: Location){ }
+  constructor(private location: Location) {
+  }
 
   goBack() {
     this.location.back();

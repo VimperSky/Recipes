@@ -2,8 +2,11 @@
   <mat-toolbar id="navbar">
     <a id="logo" routerLink="/">Recipes</a>
     <div id="menu-list">
-      <a class="nav-btn" mat-button routerLink="/" routerLinkActive="nav-btn-active" [routerLinkActiveOptions]="{exact: true}">Главная</a>
+      <a [routerLinkActiveOptions]="{exact: true}" class="nav-btn" mat-button routerLink="/"
+         routerLinkActive="nav-btn-active">Главная</a>
       <a class="nav-btn" mat-button routerLink="/recipes" routerLinkActive="nav-btn-active">Рецепты</a>
+      <a *ngIf="authManager.isAuthorized"
+         class="nav-btn" mat-button routerLink="/favorite" routerLinkActive="nav-btn-active">Избранное</a>
     </div>
   </mat-toolbar>
   <app-auth-header></app-auth-header>

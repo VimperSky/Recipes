@@ -1,5 +1,11 @@
-<app-recipe-preview *ngFor="let recipe of recipesManager.recipeList" [recipe]="recipe"></app-recipe-preview>
+<ng-container *ngIf="recipesManager.recipeList.length > 0; else noRecipes">
+  <app-recipe-preview *ngFor="let recipe of recipesManager.recipeList" [recipe]="recipe"></app-recipe-preview>
+</ng-container>
 
-<div id="scroll-block" *ngIf="recipesManager.hasMore">
-  <button mat-stroked-button id="load-more-button" (click)="loadMore()">Загрузить еще</button>
+<ng-template #noRecipes>
+  <p id="empty-recipe-list-text">Ваш список пуст</p>
+</ng-template>
+
+<div *ngIf="recipesManager.hasMore" id="scroll-block">
+  <button (click)="loadMore()" id="load-more-button" mat-stroked-button>Загрузить еще</button>
 </div>

@@ -12,12 +12,12 @@ import {BaseSearchManagerService} from "../../core/services/managers/search/base
 })
 export class FeaturedTagsComponent implements OnInit {
 
-  constructor(private tagsService: TagsService, private searchService: BaseSearchManagerService) {}
-
   @Input()
   public isExtended: boolean = false;
-
   public tags: TagDto[] | undefined;
+
+  constructor(private tagsService: TagsService, private searchService: BaseSearchManagerService) {
+  }
 
   public getImagePath(tag: TagDto): string {
     return environment.backendUrl + "/" + tag.icon;

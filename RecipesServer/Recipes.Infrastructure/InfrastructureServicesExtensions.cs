@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Recipes.Domain;
+using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 using Recipes.Infrastructure.Repositories;
 
@@ -11,8 +12,9 @@ namespace Recipes.Infrastructure
         public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
             services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecipesRepository, RecipesRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();

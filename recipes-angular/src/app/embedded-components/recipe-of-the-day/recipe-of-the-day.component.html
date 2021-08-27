@@ -1,8 +1,8 @@
-<a mat-button *ngIf="recipe" id="wrapper" [routerLink]="['/recipe/detail', recipe.id]">
+<a *ngIf="recipe" [routerLink]="['/recipe/detail', recipe.id]" id="wrapper" mat-button>
   <div id="recipe-block">
     <div id="recipe-image-block">
-      <img src="{{getImagePath()}}" width="540" height="540" alt="{{getImagePath()}}" id="recipe-image">
-      <div id="recipe-author-block" >
+      <img alt="{{getImagePath()}}" height="540" id="recipe-image" src="{{getImagePath()}}" width="540">
+      <div id="recipe-author-block">
         <p>{{login}}</p>
       </div>
     </div>
@@ -10,15 +10,15 @@
       <div id="top-recipe-info">
         <div id="top-likes">
           <mat-icon>favorite_border</mat-icon>
-          <span>356</span>
+          <span>{{recipe.likesCount}}</span>
         </div>
         <div id="top-timer">
           <mat-icon>timer</mat-icon>
           <span>{{recipe.cookingTimeMin}} минут</span>
         </div>
       </div>
-      <img id="recipe-of-the-day-image" src="../../../assets/images/recipe_of_the_day.png"
-           height="95" width="101" alt="image-of-the-day"/>
+      <img alt="image-of-the-day" height="95"
+           id="recipe-of-the-day-image" src="../../../assets/images/recipe_of_the_day.png" width="101"/>
       <div id="text-block">
         <h3 id="recipe-header">{{recipe.name}}</h3>
         <p id="recipe-description">{{recipe.description}}</p>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,7 +14,6 @@ import {UserService} from "../../../core/services/communication/abstract/user.se
 import {Register} from "../../../core/dto/auth/register";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ValidationProblemDetails} from "../../../core/dto/base/validation-problem-details";
 import {ErrorHandlingService} from "../../../core/services/tools/error-handling.service";
 import {AuthTokenManagerService} from "../../../core/services/managers/auth-token-manager.service";
 
@@ -31,13 +30,13 @@ const passwordErrors: Record<string, string> = {
 };
 
 
-const samePasswordsValidator: ValidatorFn = (control: AbstractControl):  ValidationErrors | null => {
+const samePasswordsValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const pass = control.get('firstPassword')?.value;
   const confirmPass = control.get('secondPassword')?.value
-  return pass === confirmPass ? null : { mismatch: true };
+  return pass === confirmPass ? null : {mismatch: true};
 }
 
-const minLengthValidator: ValidatorFn = (control: AbstractControl):  ValidationErrors | null => {
+const minLengthValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const pass = control.get('firstPassword')!;
   return pass.hasError('minlength') ? {minLength: true} : null;
 }
@@ -78,7 +77,7 @@ export class RegisterComponent {
       secondPassword: this.confirmPassword
     }, {validators: [samePasswordsValidator, minLengthValidator]});
 
-    this.registerForm = fb.group( {
+    this.registerForm = fb.group({
       name: this.name,
       login: this.login,
       password: this.passwordForm
@@ -89,16 +88,16 @@ export class RegisterComponent {
     return this.passwordForm.errors != null;
   }
 
+  public get loginHasError(): boolean {
+    return this.login.errors?.takenLogin;
+  }
+
   public getPasswordErrorText(): string {
     for (const key of Object.keys(passwordErrors))
       if (this.passwordForm.hasError(key))
         return passwordErrors[key];
 
     return passwordErrors['default'];
-  }
-
-  public get loginHasError(): boolean {
-    return this.login.errors?.takenLogin;
   }
 
   public getLoginErrorText(): string {
@@ -119,7 +118,7 @@ export class RegisterComponent {
   public register() {
     this.registerForm.markAllAsTouched();
     if (this.registerForm.valid) {
-      let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value }
+      let registerDto: Register = {login: this.login.value, password: this.password.value, name: this.name.value}
       this.authService.register(registerDto).subscribe((token: string) => {
         this.tokenManagerService.setToken(token);
         this.dialogRef.close()
@@ -136,8 +135,7 @@ export class RegisterComponent {
           ]);
 
           this.errorHandlingService.setValidationErrors(error, formControlsMap);
-        }
-        else if (error.status == 409) {
+        } else if (error.status == 409) {
           this.login.setErrors({takenLogin: true})
         }
       }))

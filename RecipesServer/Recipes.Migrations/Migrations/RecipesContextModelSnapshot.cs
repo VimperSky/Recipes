@@ -38,6 +38,33 @@ namespace Recipes.Infrastructure.Migrations
                     b.ToTable("recipe_tag");
                 });
 
+            modelBuilder.Entity("Recipes.Domain.Models.Activity", b =>
+                {
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("recipe_id");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.Property<bool>("IsLiked")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_liked");
+
+                    b.Property<bool>("IsStarred")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_starred");
+
+                    b.HasKey("RecipeId", "UserId")
+                        .HasName("pk_activities");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_activities_user_id");
+
+                    b.ToTable("activities");
+                });
+
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -171,6 +198,23 @@ namespace Recipes.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Recipes.Domain.Models.Activity", b =>
+                {
+                    b.HasOne("Recipes.Domain.Models.Recipe", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("RecipeId")
+                        .HasConstraintName("fk_activities_recipes_recipe_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Recipes.Domain.Models.User", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_activities_users_user_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
                 {
                     b.HasOne("Recipes.Domain.Models.User", "Author")
@@ -211,6 +255,16 @@ namespace Recipes.Infrastructure.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.Recipe", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
+            modelBuilder.Entity("Recipes.Domain.Models.User", b =>
+                {
+                    b.Navigation("Activities");
                 });
 #pragma warning restore 612, 618
         }

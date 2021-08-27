@@ -1,15 +1,15 @@
 <div *ngIf="name; then authorized else nonAuthorized"></div>
 
 <ng-template #authorized>
-  <div id="authorized-block" class="auth-block">
-    <a mat-button class="hello-btn profile-btn" [routerLink]="['/profile']">
-      <button mat-fab class="account-icon-wrapper">
+  <div class="auth-block" id="authorized-block">
+    <a [routerLink]="['/profile']" class="hello-btn profile-btn" mat-button>
+      <button class="account-icon-wrapper" mat-fab>
         <mat-icon class="account-icon">person_outline</mat-icon>
       </button>
       <span class="hello-text">Привет, {{name}}</span>
     </a>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
-    <button mat-icon-button id="exit-btn" (click)="logOut()">
+    <button (click)="logOut()" id="exit-btn" mat-icon-button>
       <mat-icon id="logout-icon">logout</mat-icon>
     </button>
   </div>
@@ -17,9 +17,9 @@
 
 
 <ng-template #nonAuthorized>
-  <div id="non-authorized-block" class="auth-block">
-    <button mat-button class="hello-btn" (click)="logIn()">
-      <button mat-fab class="account-icon-wrapper">
+  <div class="auth-block" id="non-authorized-block">
+    <button (click)="logIn()" class="hello-btn" mat-button>
+      <button class="account-icon-wrapper" mat-fab>
         <mat-icon class="account-icon">person_outline</mat-icon>
       </button>
       <span class="hello-text">Войти</span>

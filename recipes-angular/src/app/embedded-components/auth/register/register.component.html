@@ -1,4 +1,4 @@
-<button mat-icon-button class="close-icon" mat-dialog-close>
+<button class="close-icon" mat-dialog-close mat-icon-button>
   <mat-icon>close</mat-icon>
 </button>
 
@@ -6,31 +6,31 @@
   <h1 mat-dialog-title>Регистрация</h1>
   <div class="content">
     <div mat-dialog-content>
-      <form [formGroup]="registerForm" >
+      <form [formGroup]="registerForm">
         <div>
           <mat-form-field class="wide-mat-form-field">
             <mat-label>Имя</mat-label>
-            <input required type="text" matInput [formControl]="name">
+            <input [formControl]="name" matInput required type="text">
           </mat-form-field>
         </div>
 
         <div class="block-with-margin">
           <mat-form-field class="wide-mat-form-field">
             <mat-label>Логин</mat-label>
-            <input required type="text" matInput [formControl]="login">
+            <input [formControl]="login" matInput required type="text">
             <mat-error *ngIf="loginHasError">{{getLoginErrorText()}}</mat-error>
           </mat-form-field>
         </div>
 
         <div class="block-with-margin" id="password-group">
-          <mat-form-field id="password-first" class="wide-mat-form-field">
+          <mat-form-field class="wide-mat-form-field" id="password-first">
             <mat-label>Пароль</mat-label>
-            <input required type="password" matInput [formControl]="password" >
+            <input [formControl]="password" matInput required type="password">
           </mat-form-field>
 
-          <mat-form-field id="password-second" class="wide-mat-form-field">
+          <mat-form-field class="wide-mat-form-field" id="password-second">
             <mat-label>Повторите пароль</mat-label>
-            <input required type="password" matInput [formControl]="confirmPassword">
+            <input [formControl]="confirmPassword" matInput required type="password">
           </mat-form-field>
         </div>
 
@@ -43,11 +43,13 @@
 
     <div mat-dialog-actions>
       <div class="main-buttons-block">
-        <button mat-stroked-button type="submit" class="action-button submit-button" (click)="register()">Зарегистрироваться</button>
-        <button mat-stroked-button class="action-button cancel-button" mat-dialog-close>Отмена</button>
+        <button (click)="register()" class="action-button submit-button" mat-stroked-button type="submit">
+          Зарегистрироваться
+        </button>
+        <button class="action-button cancel-button" mat-dialog-close mat-stroked-button>Отмена</button>
       </div>
 
-      <button class="extra-button" mat-button mat-dialog-close (click)="logIn()">У меня уже есть аккаунт</button>
+      <button (click)="logIn()" class="extra-button" mat-button mat-dialog-close>У меня уже есть аккаунт</button>
     </div>
   </div>
 </div>

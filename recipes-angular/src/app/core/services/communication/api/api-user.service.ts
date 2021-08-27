@@ -7,13 +7,13 @@ import {Register} from "../../../dto/auth/register";
 import {Login} from "../../../dto/auth/login";
 import {UserProfileInfoDto} from "../../../dto/user/user-profile-info-dto";
 import {SetUserProfileInfoDto} from "../../../dto/user/set-user-profile-info-dto";
-import {HttpParamsBuilderService} from "../../tools/http-params-builder.service";
+import {UserStats} from "../../../dto/user/user-stats";
 
 const basePath: string = "/api/user"
 
 @Injectable()
 export class ApiUserService extends UserService {
-  constructor(private http: HttpClient, private paramsBuilder: HttpParamsBuilderService) {
+  constructor(private http: HttpClient) {
     super();
   }
 
@@ -26,10 +26,18 @@ export class ApiUserService extends UserService {
   }
 
   getProfileInfo(): Observable<UserProfileInfoDto> {
-    return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile", this.paramsBuilder.authOptions);
+    return this.http.get<UserProfileInfoDto>(environment.backendUrl + basePath + "/profile");
   }
 
   setProfileInfo(dto: SetUserProfileInfoDto): Observable<string> {
-    return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto, this.paramsBuilder.authOptions);
+    return this.http.patch<string>(environment.backendUrl + basePath + "/profile", dto);
+  }
+
+  getUserStats(): Observable<UserStats> {
+    return this.http.get<UserStats>(environment.backendUrl + basePath + "/stats");
+  }
+
+  validateCredentials(): Observable<void> {
+    return this.http.get<void>(environment.backendUrl + basePath + "/validateCredentials");
   }
 }

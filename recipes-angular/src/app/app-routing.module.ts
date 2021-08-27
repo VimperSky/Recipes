@@ -6,6 +6,7 @@ import {RecipeAddEditComponent} from "./pages/recipe-add-edit/recipe-add-edit.co
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {AuthGuard} from "./core/guards/auth.guard";
 import {MainComponent} from "./pages/main/main.component";
+import {FavoriteRecipesComponent} from "./pages/favorite-recipes/favorite-recipes.component";
 
 const routes: Routes = [
   {
@@ -32,12 +33,16 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'favorite',
+    component: FavoriteRecipesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     component: MainComponent,
     pathMatch: 'full'
   },
 ];
-
 
 
 @NgModule({
@@ -48,4 +53,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

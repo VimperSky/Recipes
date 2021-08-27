@@ -6,5 +6,6 @@ import {FeaturedTagsDto} from "../../../dto/tag/featured-tags-dto";
 @Injectable()
 export abstract class TagsService {
   abstract getSuggestedSearchTags(): Observable<SuggestedTagsDto>;
+
   abstract getFeaturedTags(): Observable<FeaturedTagsDto>;
 }
