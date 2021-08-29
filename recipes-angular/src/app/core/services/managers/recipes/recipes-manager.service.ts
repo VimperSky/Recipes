@@ -11,7 +11,7 @@ import {MyRecipesActivityDto} from "../../../dto/activity/my-recipes-activity-dt
 
 @Injectable()
 export abstract class RecipesManagerService {
-  private pageCount: number = 0;
+  private pageCount: number = 1;
   private currentPage: number = 1;
 
   protected isPendingAction: boolean = false;

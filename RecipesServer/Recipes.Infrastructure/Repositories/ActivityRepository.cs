@@ -51,7 +51,7 @@ namespace Recipes.Infrastructure.Repositories
                 {
                     StarsCount = g.Count(x => x.IsStarred),
                     LikesCount = g.Count(x => x.IsLiked)
-                }).SingleAsync();
+                }).SingleOrDefaultAsync();
         }
     }
 }

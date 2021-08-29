@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Recipes.Application.MappingProfiles;
 using Recipes.Application.Services.Activity;
 using Recipes.Application.Services.Recipes;
 using Recipes.Application.Services.Tags;

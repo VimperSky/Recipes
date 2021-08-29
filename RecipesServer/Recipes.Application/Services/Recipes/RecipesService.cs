@@ -44,9 +44,9 @@ namespace Recipes.Application.Services.Recipes
             };
             
             var count = await _recipesRepository.GetRecipesCount(filterSpecification);
-            var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
+            var pageCount = Math.Max((int)Math.Ceiling(count * 1d / pageSize), 1);
 
-            if (page > 1 && page > pageCount)
+            if (page > pageCount)
                 throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
             var pagingSpecification = new PagingSpecification<Recipe>((page - 1) * pageSize, pageSize);
             

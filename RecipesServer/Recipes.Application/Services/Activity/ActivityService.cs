@@ -34,7 +34,8 @@ namespace Recipes.Application.Services.Activity
         
         public async Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims)
         {
-            return await _activityRepository.GetUserActivitySummary(userClaims.UserId);
+            return await _activityRepository.GetUserActivitySummary(userClaims.UserId) 
+                   ?? new UserActivitySummary { StarsCount = 0, LikesCount = 0 };
         }
 
         private async Task ProcessActivity(int recipeId, int userId, ActivityType activityType, bool action)

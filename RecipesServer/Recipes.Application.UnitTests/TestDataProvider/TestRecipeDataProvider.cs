@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Http;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Recipes.Application.MappingProfiles;
 using Recipes.Application.Models.Recipe;
 using Recipes.Domain.Models;
@@ -19,11 +20,11 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         public const int MainRecipeId = 3;
         public const int OtherRecipeId = 5;
         
-        public static readonly IMapper MapperInst;
+        public static readonly IMapper Mapper;
         
         static TestRecipeDataProvider()
         {
-            MapperInst = ApplicationMappingConfig.CreateApplicationMapper();
+            Mapper = ApplicationMappingConfig.CreateApplicationMapper();
         }
         
         public static Recipe MainRecipe => new()
@@ -52,7 +53,8 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             Portions = 5,
             Id = MainRecipeId,
             AuthorId = MainUserId,
-            Tags = new List<Tag>()
+            Tags = new List<Tag>(),
+            Activities = new List<Activity>()
         };
         
         public static Recipe OtherRecipe => new()
@@ -74,22 +76,26 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             Portions = 7,
             Id = OtherRecipeId,
             AuthorId = OtherUserId,
-            Tags = new List<Tag>()
+            Tags = new List<Tag>(),
+            Activities = new List<Activity>()
         };
 
-        public static RecipeCreateCommand RecipeCreateCommand => MapperInst.Map<RecipeCreateCommand>(MainRecipe);
-        public static RecipeEditCommand MainRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(MainRecipe);
-        public static RecipeEditCommand OtherRecipeEditCommand => MapperInst.Map<RecipeEditCommand>(OtherRecipe);
+        public static RecipeCreateCommand RecipeCreateCommand => Mapper.Map<RecipeCreateCommand>(MainRecipe);
+        public static RecipeEditCommand MainRecipeEditCommand => Mapper.Map<RecipeEditCommand>(MainRecipe);
+        public static RecipeEditCommand OtherRecipeEditCommand => Mapper.Map<RecipeEditCommand>(OtherRecipe);
 
 
-        public static StreamContent ImageStream
+        public static IFormFile ImageFormFile
         {
             get
             {
-                var file = File.OpenRead(ImagePath);
-                var fileContent = new StreamContent(file);
-                fileContent.Headers.Add("Content-Type", ImageContentType);
-                return fileContent;
+                using var stream = File.OpenRead(ImagePath);
+                var file = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType =ImageContentType
+                };
+                return file;
             }
         }
     }

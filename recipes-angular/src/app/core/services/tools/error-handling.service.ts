@@ -9,8 +9,7 @@ import {DialogDisplayService} from "./dialog-display.service";
   providedIn: 'root'
 })
 export class ErrorHandlingService {
-  constructor(private dialogDisplayService: DialogDisplayService) {
-  }
+  constructor(private dialogDisplayService: DialogDisplayService) {}
 
   public setValidationErrors(error: HttpErrorResponse, formControlsMap: Map<string, AbstractControl>) {
     let problemDetails: ValidationProblemDetails = JSON.parse(JSON.stringify(error.error));
@@ -28,7 +27,7 @@ export class ErrorHandlingService {
       this.dialogDisplayService.openAuthDialog();
       return;
     }
-    
+
     if (error.error) {
       let problemDetails: ProblemDetails = JSON.parse(JSON.stringify(error.error));
       if (problemDetails.detail) {
