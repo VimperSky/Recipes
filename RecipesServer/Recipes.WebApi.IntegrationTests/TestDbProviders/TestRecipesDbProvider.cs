@@ -1,5 +1,4 @@
 ﻿using Recipes.Infrastructure;
-using Recipes.WebApi.AutoMapper;
 using Recipes.WebApi.DTOs.Recipe;
 using Recipes.WebApi.IntegrationTests.AutoMapper;
 

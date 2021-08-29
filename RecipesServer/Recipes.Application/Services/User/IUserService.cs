@@ -39,7 +39,7 @@ namespace Recipes.Application.Services.User
         /// <exception cref="PermissionException"></exception>
         /// <exception cref="UserModificationException"></exception>
         Task<string> SetProfileInfo(string login, string password, string name, string bio, UserClaims userClaims);
-        
+
         /// <summary>
         ///     Check if UserClaims are valid
         /// </summary>

@@ -7,7 +7,7 @@ using Recipes.Domain.Repositories;
 
 namespace Recipes.Infrastructure.Repositories
 {
-    public class TagRepository: ITagRepository
+    public class TagRepository : ITagRepository
     {
         private readonly RecipesDbContext _recipesDbContext;
 
@@ -15,7 +15,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-        
+
         public async Task<List<Tag>> GetTagsByLevel(TagLevel tagLevel)
         {
             return await _recipesDbContext.Tags.Where(x => x.TagLevel == tagLevel).ToListAsync();
@@ -23,7 +23,7 @@ namespace Recipes.Infrastructure.Repositories
 
         public async Task<List<Tag>> GetTags(string[] tags)
         {
-             return await _recipesDbContext.Tags.Where(x => tags.Contains(x.Value)).ToListAsync();
+            return await _recipesDbContext.Tags.Where(x => tags.Contains(x.Value)).ToListAsync();
         }
 
         public async Task<Tag> CreateTag(string tag)

@@ -28,7 +28,7 @@ namespace Recipes.Application.Services.User
                 signingCredentials: GetSigningCredentials());
             return tokenOptions;
         }
-        
+
         private SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Value.SecurityKey);

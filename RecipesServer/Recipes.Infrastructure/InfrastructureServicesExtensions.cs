@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Recipes.Domain;
-using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 using Recipes.Infrastructure.Repositories;
 

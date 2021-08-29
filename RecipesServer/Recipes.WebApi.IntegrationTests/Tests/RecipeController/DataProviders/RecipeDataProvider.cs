@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Net.Http;
-using Recipes.Application.Models.Recipe;
 using Recipes.WebApi.DTOs.Recipe;
 
 namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
@@ -32,7 +31,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
                 "Еще что-то делаем",
                 "Готово!"
             },
-            Tags = new[] {"Ягоды", "Клубника", "Лето"},
+            Tags = new[] { "Ягоды", "Клубника", "Лето" },
             CookingTimeMin = 60,
             Portions = 5
         };
@@ -59,7 +58,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController.DataProviders
                 "Еще что-то делаем",
                 "Готово!"
             },
-            Tags = new[] {"Ягоды", "Клубника", "Лето"},
+            Tags = new[] { "Ягоды", "Клубника", "Лето" },
             CookingTimeMin = 60,
             Portions = 5
         };

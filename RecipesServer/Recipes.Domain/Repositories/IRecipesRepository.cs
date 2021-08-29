@@ -9,7 +9,7 @@ namespace Recipes.Domain.Repositories
     {
         Task<List<Recipe>> GetList(FilterSpecification<Recipe> filterSpecification,
             PagingSpecification<Recipe> pagingSpecification);
-        
+
         Task<int> GetRecipesCount(FilterSpecification<Recipe> filterSpecification);
 
         Task<Recipe> AddRecipe(Recipe recipe);

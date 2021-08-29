@@ -16,7 +16,7 @@ namespace Recipes.Application.Services.Activity
             _activityRepository = activityRepository;
             _unitOfWork = unitOfWork;
         }
-        
+
         public async Task AddActivity(int recipeId, UserClaims userClaims, ActivityType activityType)
         {
             await ProcessActivity(recipeId, userClaims.UserId, activityType, true);
@@ -31,10 +31,10 @@ namespace Recipes.Application.Services.Activity
         {
             return await _activityRepository.GetUserRecipesActivity(userClaims.UserId, recipesIds);
         }
-        
+
         public async Task<UserActivitySummary> GetUserActivitySummary(UserClaims userClaims)
         {
-            return await _activityRepository.GetUserActivitySummary(userClaims.UserId) 
+            return await _activityRepository.GetUserActivitySummary(userClaims.UserId)
                    ?? new UserActivitySummary { StarsCount = 0, LikesCount = 0 };
         }
 
@@ -50,9 +50,8 @@ namespace Recipes.Application.Services.Activity
                     userActivity.IsStarred = action;
                     break;
             }
-            
+
             _unitOfWork.Commit();
         }
-
     }
 }

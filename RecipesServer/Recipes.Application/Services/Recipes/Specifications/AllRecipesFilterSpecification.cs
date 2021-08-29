@@ -6,7 +6,7 @@ using Recipes.Domain.Specifications;
 
 namespace Recipes.Application.Services.Recipes.Specifications
 {
-    public class AllRecipesFilterSpecification: FilterSpecification<Recipe>
+    public class AllRecipesFilterSpecification : FilterSpecification<Recipe>
     {
         private readonly string _searchString;
 
@@ -14,8 +14,8 @@ namespace Recipes.Application.Services.Recipes.Specifications
         {
             _searchString = searchString;
         }
-        
-        public override Expression<Func<Recipe, bool>> SpecificationExpression => recipe => 
+
+        public override Expression<Func<Recipe, bool>> SpecificationExpression => recipe =>
             _searchString == null ||
             recipe.Name.ToLower().Contains(_searchString.ToLower()) ||
             recipe.Tags.Select(tag => tag.Value).Contains(_searchString);

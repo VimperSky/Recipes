@@ -61,9 +61,9 @@ namespace Recipes.Application.Services.Recipes
         /// <exception cref="ElementNotFoundException"></exception>
         Task DeleteRecipe(int recipeId, UserClaims userClaims);
 
-        
+
         /// <summary>
-        ///     Returns current recipe of the day 
+        ///     Returns current recipe of the day
         /// </summary>
         /// <returns></returns>
         Task<RecipePreviewResult> GetRecipeOfTheDay();

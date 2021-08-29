@@ -26,7 +26,7 @@ namespace Recipes.WebApi.AutoMapper
             CreateMap<FeaturedTagsResult, FeaturedTagsResultDTO>();
             CreateMap<ProfileInfoResult, ProfileInfoResultDTO>();
             CreateMap<RecipesPageResult, RecipesPageResultDTO>();
-            
+
             // RequestDTO -> Command
             CreateMap<IngredientDto, Ingredient>();
 

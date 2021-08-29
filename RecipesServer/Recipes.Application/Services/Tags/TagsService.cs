@@ -8,22 +8,22 @@ using Recipes.Domain.Repositories;
 
 namespace Recipes.Application.Services.Tags
 {
-    public class TagsService: ITagsService
+    public class TagsService : ITagsService
     {
-        private readonly ITagRepository _tagsRepository;
         private readonly IMapper _mapper;
+        private readonly ITagRepository _tagsRepository;
 
         public TagsService(ITagRepository tagsRepository, IMapper mapper)
         {
             _tagsRepository = tagsRepository;
             _mapper = mapper;
         }
-        
+
         public async Task<List<Tag>> GetOrCreateTags(string[] tags)
         {
             if (tags.Length == 0)
                 return new List<Tag>();
-            
+
             var dbTags = await _tagsRepository.GetTags(tags);
 
             if (dbTags.Count < tags.Length)
@@ -34,20 +34,21 @@ namespace Recipes.Application.Services.Tags
                 {
                     newlyAddedTags.Add(await _tagsRepository.CreateTag(tagToAdd));
                 }
-                
+
                 dbTags.AddRange(newlyAddedTags);
             }
-            
+
             return dbTags;
         }
 
         public async Task<SuggestedTagsResult> GetSuggestedSearchTags()
         {
-            return new SuggestedTagsResult 
+            return new SuggestedTagsResult
             {
                 TagValues = (await _tagsRepository.GetTagsByLevel(TagLevel.Suggested))
                     .Select(x => x.Value).ToArray()
-            };;
+            };
+            ;
         }
 
         public async Task<FeaturedTagsResult> GetFeaturedTags()
@@ -55,7 +56,7 @@ namespace Recipes.Application.Services.Tags
             return new FeaturedTagsResult
             {
                 Tags = _mapper.Map<TagInfo[]>(await _tagsRepository.GetTagsByLevel(TagLevel.Featured))
-            };;
+            };
         }
     }
 }

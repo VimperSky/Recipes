@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -78,7 +77,7 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
             var recipeId = JsonConvert.DeserializeObject<int>(await createdRecipe.Content.ReadAsStringAsync());
 
-            
+
             _client.SetAuthToken(true);
             var copyRecipe = TestRecipeEditRequestDTO;
             copyRecipe.Id = recipeId;

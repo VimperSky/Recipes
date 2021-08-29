@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Recipes.Domain;
 using Recipes.Domain.Models;
 using Recipes.Domain.Repositories;
 using Recipes.Domain.Specifications;
@@ -17,7 +16,7 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-        
+
         public async Task<Recipe> GetById(int id)
         {
             return await _recipesDbContext.Recipes
@@ -35,7 +34,7 @@ namespace Recipes.Infrastructure.Repositories
                 .OrderByDescending(x => x.Activities.Count(a => a.IsLiked))
                 .FirstOrDefaultAsync();
         }
-        
+
 
         public async Task<List<Recipe>> GetList(FilterSpecification<Recipe> filterSpecification,
             PagingSpecification<Recipe> pagingSpecification)
@@ -59,13 +58,13 @@ namespace Recipes.Infrastructure.Repositories
                 .Where(filterSpecification.SpecificationExpression)
                 .CountAsync();
         }
-        
+
 
         public async Task<Recipe> AddRecipe(Recipe recipe)
         {
             if (recipe.Id != default)
                 recipe.Id = default;
-            
+
             var addedRecipe = await _recipesDbContext.Recipes.AddAsync(recipe);
             return addedRecipe.Entity;
         }

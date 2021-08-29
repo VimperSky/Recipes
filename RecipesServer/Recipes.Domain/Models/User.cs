@@ -10,7 +10,7 @@ namespace Recipes.Domain.Models
         public string PasswordSalt { get; set; }
         public string Name { get; set; }
         public string Bio { get; set; }
-        
+
         public ICollection<Recipe> Recipes { get; set; }
 
         public ICollection<Activity> Activities { get; set; }

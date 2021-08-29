@@ -6,14 +6,14 @@ using Recipes.Application.Services.Tags;
 using Recipes.WebApi.DTOs.Tags;
 
 namespace Recipes.WebApi.Controllers
-{    
+{
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class TagsController
     {
-        private readonly ITagsService _tagsService;
         private readonly IMapper _mapper;
+        private readonly ITagsService _tagsService;
 
         public TagsController(ITagsService tagsService, IMapper mapper)
         {
@@ -28,7 +28,7 @@ namespace Recipes.WebApi.Controllers
             var suggestedTags = await _tagsService.GetSuggestedSearchTags();
             return _mapper.Map<SuggestedTagsResultDTO>(suggestedTags);
         }
-        
+
         [HttpGet("featured")]
         [ProducesResponseType(typeof(FeaturedTagsResultDTO), StatusCodes.Status200OK)]
         public async Task<FeaturedTagsResultDTO> GetFeaturedTags()
@@ -36,6 +36,5 @@ namespace Recipes.WebApi.Controllers
             var featuredTags = await _tagsService.GetFeaturedTags();
             return _mapper.Map<FeaturedTagsResultDTO>(featuredTags);
         }
-        
     }
 }

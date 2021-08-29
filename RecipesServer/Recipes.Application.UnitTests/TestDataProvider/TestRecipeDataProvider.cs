@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Recipes.Application.MappingProfiles;
@@ -19,14 +18,14 @@ namespace Recipes.Application.UnitTests.TestDataProvider
         public const int OtherUserId = 8;
         public const int MainRecipeId = 3;
         public const int OtherRecipeId = 5;
-        
+
         public static readonly IMapper Mapper;
-        
+
         static TestRecipeDataProvider()
         {
             Mapper = ApplicationMappingConfig.CreateApplicationMapper();
         }
-        
+
         public static Recipe MainRecipe => new()
         {
             Name = "Какое-то название",
@@ -56,7 +55,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
             Tags = new List<Tag>(),
             Activities = new List<Activity>()
         };
-        
+
         public static Recipe OtherRecipe => new()
         {
             Name = "Какое-то название2",
@@ -66,11 +65,11 @@ namespace Recipes.Application.UnitTests.TestDataProvider
                 new RecipeIngredientsBlock
                 {
                     Header = "что-то тут есть такое", Value = "Да"
-                },
+                }
             },
             Steps = new[]
             {
-                "Тут какой-то шаг но на самом деле не важно",
+                "Тут какой-то шаг но на самом деле не важно"
             },
             CookingTimeMin = 33,
             Portions = 7,
@@ -93,7 +92,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
                 var file = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
                 {
                     Headers = new HeaderDictionary(),
-                    ContentType =ImageContentType
+                    ContentType = ImageContentType
                 };
                 return file;
             }

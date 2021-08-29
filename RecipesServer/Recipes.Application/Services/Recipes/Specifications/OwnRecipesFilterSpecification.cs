@@ -5,7 +5,7 @@ using Recipes.Domain.Specifications;
 
 namespace Recipes.Application.Services.Recipes.Specifications
 {
-    public class OwnRecipesFilterSpecification: FilterSpecification<Recipe>
+    public class OwnRecipesFilterSpecification : FilterSpecification<Recipe>
     {
         private readonly int _authorId;
 

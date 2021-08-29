@@ -18,8 +18,8 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class RecipeController : ControllerBase
     {
-        private readonly IRecipesService _recipesService;
         private readonly IMapper _mapper;
+        private readonly IRecipesService _recipesService;
 
         public RecipeController(IRecipesService recipesService, IMapper mapper)
         {
@@ -59,7 +59,7 @@ namespace Recipes.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> CreateRecipe([FromBody] RecipeCreateRequestDTO recipeCreateRequestDTO)
         {
-            var recipeId = await _recipesService.CreateRecipe(_mapper.Map<RecipeCreateCommand>(recipeCreateRequestDTO), 
+            var recipeId = await _recipesService.CreateRecipe(_mapper.Map<RecipeCreateCommand>(recipeCreateRequestDTO),
                 HttpContext.User.GetClaims());
             return CreatedAtAction(nameof(GetRecipeDetail), new { id = recipeId }, recipeId);
         }

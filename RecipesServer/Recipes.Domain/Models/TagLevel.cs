@@ -4,6 +4,6 @@
     {
         Regular,
         Suggested,
-        Featured,
+        Featured
     }
 }
