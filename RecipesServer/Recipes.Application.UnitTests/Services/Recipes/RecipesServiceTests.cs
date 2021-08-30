@@ -18,7 +18,7 @@ using Recipes.Domain.Specifications;
 using Xunit;
 using static Recipes.Application.UnitTests.TestDataProvider.TestRecipeDataProvider;
 
-namespace Recipes.Application.UnitTests
+namespace Recipes.Application.UnitTests.Services.Recipes
 {
     public class RecipesServiceTests
     {

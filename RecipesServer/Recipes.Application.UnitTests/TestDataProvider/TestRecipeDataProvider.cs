@@ -10,7 +10,7 @@ namespace Recipes.Application.UnitTests.TestDataProvider
 {
     public static class TestRecipeDataProvider
     {
-        public const string ImagePath = "test_image.jpg";
+        private const string ImagePath = "TestDataProvider/test_image.jpg";
         private const string ImageContentType = "image/jpeg";
 
         public const string Name = "testName";
