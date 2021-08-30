@@ -153,5 +153,4 @@ import {ApiInterceptor} from "./core/interceptors/api.interceptor";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}
