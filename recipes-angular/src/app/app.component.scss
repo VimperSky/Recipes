@@ -1,9 +1,7 @@
 #app-wrapper {
-  background-image: url("../assets/images/wave1.svg"),
-  url("../assets/images/wave2.svg");
-
-  background-position: top, bottom;
-  background-repeat: no-repeat, no-repeat;
+  background-image: url("../assets/images/wave.svg");
+  background-position: top;
+  background-repeat: repeat-y;
 
   #app-content-wrapper {
     width: 1200px;
@@ -11,5 +9,3 @@
     position: relative;
   }
 }
-
-

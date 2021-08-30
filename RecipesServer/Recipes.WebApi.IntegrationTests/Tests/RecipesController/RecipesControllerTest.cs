@@ -79,7 +79,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
+            var result =
+                JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
 
             // Assert
@@ -98,7 +99,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
+            var result =
+                JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -116,7 +118,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
+            var result =
+                JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -135,7 +138,8 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipesController
 
             // Act
             var response = await _client.GetAsync($"{BaseAddress}/list?{query}");
-            var result = JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
+            var result =
+                JsonConvert.DeserializeObject<RecipesPageResultDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

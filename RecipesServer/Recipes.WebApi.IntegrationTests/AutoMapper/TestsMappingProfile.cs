@@ -5,7 +5,7 @@ using Recipes.WebApi.DTOs.User;
 
 namespace Recipes.WebApi.IntegrationTests.AutoMapper
 {
-    public class TestsMappingProfile: Profile
+    public class TestsMappingProfile : Profile
     {
         public TestsMappingProfile()
         {

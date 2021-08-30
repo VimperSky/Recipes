@@ -13,15 +13,15 @@ namespace Recipes.Application.MappingProfiles
         {
             // Tags
             CreateMap<Tag, string>().ConvertUsing(x => x.Value);
-            CreateMap<string, Tag>().ConvertUsing(x => new Tag {Value = x});
-            
+            CreateMap<string, Tag>().ConvertUsing(x => new Tag { Value = x });
+
             CreateMap<Tag, TagInfo>();
-            
+
             // User
             CreateMap<User, ProfileInfoResult>();
             CreateMap<User, AuthorInfo>();
-            
-            
+
+
             // Recipe
             CreateMap<Ingredient, RecipeIngredientsBlock>();
             CreateMap<Recipe, RecipePreviewResult>()
@@ -37,7 +37,7 @@ namespace Recipes.Application.MappingProfiles
                     opt => opt.MapFrom(x => x.Activities.Count(a => a.IsStarred)));
             CreateMap<Recipe, RecipeCreateCommand>();
             CreateMap<Recipe, RecipeEditCommand>();
-            
+
             CreateMap<RecipeIngredientsBlock, Ingredient>();
             CreateMap<RecipeCreateCommand, Recipe>();
             CreateMap<RecipeEditCommand, Recipe>();

@@ -6,7 +6,7 @@ using Recipes.Domain.Specifications;
 
 namespace Recipes.Application.Services.Recipes.Specifications
 {
-    public class StarredRecipesFilterSpecification: FilterSpecification<Recipe>
+    public class StarredRecipesFilterSpecification : FilterSpecification<Recipe>
     {
         private readonly int _authorId;
 
@@ -15,7 +15,7 @@ namespace Recipes.Application.Services.Recipes.Specifications
             _authorId = authorId;
         }
 
-        public override Expression<Func<Recipe, bool>> SpecificationExpression => r 
+        public override Expression<Func<Recipe, bool>> SpecificationExpression => r
             => r.Activities.Any(a => a.IsStarred && a.UserId == _authorId);
     }
 }

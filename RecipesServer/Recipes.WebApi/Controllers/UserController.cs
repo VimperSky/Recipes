@@ -18,12 +18,12 @@ namespace Recipes.WebApi.Controllers
     [Produces("application/json")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
         private readonly IActivityService _activityService;
-        private readonly IRecipesService _recipesService;
         private readonly IMapper _mapper;
+        private readonly IRecipesService _recipesService;
+        private readonly IUserService _userService;
 
-        public UserController(IUserService userService, 
+        public UserController(IUserService userService,
             IActivityService activityService,
             IRecipesService recipesService,
             IMapper mapper)
@@ -69,7 +69,7 @@ namespace Recipes.WebApi.Controllers
         {
             return await _userService.Login(loginDto.Login, loginDto.Password);
         }
-        
+
         [HttpGet("validateCredentials")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
@@ -105,7 +105,7 @@ namespace Recipes.WebApi.Controllers
             return await _userService.SetProfileInfo(dto.Login, dto.Password, dto.Name, dto.Bio,
                 HttpContext.User.GetClaims());
         }
-        
+
         /// <summary>
         ///     Get user stats
         /// </summary>
@@ -124,6 +124,5 @@ namespace Recipes.WebApi.Controllers
                 RecipesCount = recipesCount
             };
         }
-
     }
 }

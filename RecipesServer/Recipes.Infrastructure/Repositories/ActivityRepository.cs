@@ -14,13 +14,13 @@ namespace Recipes.Infrastructure.Repositories
         {
             _recipesDbContext = recipesDbContext;
         }
-        
+
         public async Task<Activity> GetOrCreateActivity(int recipeId, int userId)
         {
             var activity = await _recipesDbContext.Activities.FindAsync(recipeId, userId);
             if (activity != null)
                 return activity;
-            
+
             var newActivity = new Activity
             {
                 RecipeId = recipeId,
@@ -30,7 +30,7 @@ namespace Recipes.Infrastructure.Repositories
             await _recipesDbContext.Activities.AddAsync(newActivity);
             return newActivity;
         }
-        
+
         public async Task<UserRecipesActivityResult> GetUserRecipesActivity(int userId, int[] recipeIds)
         {
             var query = _recipesDbContext.Activities.Where(x => x.UserId == userId
@@ -38,7 +38,7 @@ namespace Recipes.Infrastructure.Repositories
             return new UserRecipesActivityResult
             {
                 StarredRecipes = await query.Where(x => x.IsStarred).Select(x => x.RecipeId).ToListAsync(),
-                LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync(),
+                LikedRecipes = await query.Where(x => x.IsLiked).Select(x => x.RecipeId).ToListAsync()
             };
         }
 
@@ -51,7 +51,7 @@ namespace Recipes.Infrastructure.Repositories
                 {
                     StarsCount = g.Count(x => x.IsStarred),
                     LikesCount = g.Count(x => x.IsLiked)
-                }).SingleAsync();
+                }).SingleOrDefaultAsync();
         }
     }
 }

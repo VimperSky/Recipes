@@ -59,9 +59,9 @@ namespace Recipes.WebApi.IntegrationTests.Tests.RecipeController
             createdRecipe.StatusCode.Should().Be(HttpStatusCode.Created);
 
             var detail = await _client.GetFromJsonAsync<RecipeDetailResultDTO>($"{BaseAddress}/detail?id=" +
-                                                                         JsonConvert.DeserializeObject<int>(
-                                                                             await createdRecipe.Content
-                                                                                 .ReadAsStringAsync()));
+                                                                               JsonConvert.DeserializeObject<int>(
+                                                                                   await createdRecipe.Content
+                                                                                       .ReadAsStringAsync()));
 
             detail.Should().BeEquivalentTo(TestRecipeCreateRequestDTO);
         }

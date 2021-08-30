@@ -26,11 +26,11 @@ namespace Recipes.WebApi.Controllers
             _activityService = activityService;
             _mapper = mapper;
         }
-        
+
         [HttpPut("like")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> SetLike([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
+        public async Task<IActionResult> SetLike([FromQuery, Required, Range(1, int.MaxValue)] int recipeId)
         {
             await _activityService.AddActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
             return Ok();
@@ -39,16 +39,16 @@ namespace Recipes.WebApi.Controllers
         [HttpDelete("like")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult> DeleteLike([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
+        public async Task<ActionResult> DeleteLike([FromQuery, Required, Range(1, int.MaxValue)] int recipeId)
         {
             await _activityService.RemoveActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Like);
             return Ok();
         }
-        
+
         [HttpPut("star")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> SetStar([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
+        public async Task<IActionResult> SetStar([FromQuery, Required, Range(1, int.MaxValue)] int recipeId)
         {
             await _activityService.AddActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
             return Ok();
@@ -57,19 +57,21 @@ namespace Recipes.WebApi.Controllers
         [HttpDelete("star")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> DeleteStar([FromQuery, Required, Range(1, int.MaxValue)]int recipeId)
+        public async Task<IActionResult> DeleteStar([FromQuery, Required, Range(1, int.MaxValue)] int recipeId)
         {
             await _activityService.RemoveActivity(recipeId, HttpContext.User.GetClaims(), ActivityType.Star);
             return Ok();
         }
-        
+
         [HttpPost("myRecipesActivity")]
         [ProducesResponseType(typeof(UserRecipesActivityResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<UserRecipesActivityResultDTO>> GetUserRecipesActivity(
-            [FromBody]UserRecipesActivityRequestDTO userRecipesActivityRequestDTO)
+            [FromBody] UserRecipesActivityRequestDTO userRecipesActivityRequestDTO)
         {
-            var userRecipesActivity = await _activityService.GetUserRecipesActivity(userRecipesActivityRequestDTO.RecipeIds, HttpContext.User.GetClaims());
+            var userRecipesActivity =
+                await _activityService.GetUserRecipesActivity(userRecipesActivityRequestDTO.RecipeIds,
+                    HttpContext.User.GetClaims());
             return _mapper.Map<UserRecipesActivityResultDTO>(userRecipesActivity);
         }
     }

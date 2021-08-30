@@ -8,7 +8,7 @@ namespace Recipes.Application.Services.Tags
     public interface ITagsService
     {
         /// <summary>
-        /// Ensures that all tags in this list are added to database
+        ///     Ensures that all tags in this list are added to database
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
@@ -17,6 +17,5 @@ namespace Recipes.Application.Services.Tags
         public Task<SuggestedTagsResult> GetSuggestedSearchTags();
 
         public Task<FeaturedTagsResult> GetFeaturedTags();
-
     }
 }

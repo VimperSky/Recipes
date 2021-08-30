@@ -15,7 +15,7 @@ namespace Recipes.Infrastructure
         public DbSet<Tag> Tags { get; init; }
 
         public DbSet<Activity> Activities { get; init; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TagConfiguration());

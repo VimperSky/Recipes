@@ -4,7 +4,7 @@ using Recipes.Domain.Models;
 
 namespace Recipes.Infrastructure.Configurations
 {
-    public class TagConfiguration: IEntityTypeConfiguration<Tag>
+    public class TagConfiguration : IEntityTypeConfiguration<Tag>
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {

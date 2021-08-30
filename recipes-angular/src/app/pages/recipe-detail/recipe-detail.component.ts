@@ -57,8 +57,7 @@ export class RecipeDetailComponent implements OnInit {
             this.recipeDetail.isStarred = true;
           }
         });
-      }
-      else {
+      } else {
         this.recipeDetail.isLiked = false;
         this.recipeDetail.isStarred = false;
       }

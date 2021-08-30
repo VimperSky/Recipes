@@ -22,7 +22,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Recipes.Application\Recipes.Application.csproj" />
+        <ProjectReference Include="..\Recipes.Application\Recipes.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="test_image.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="TestDataProvider\test_image.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

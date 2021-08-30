@@ -94,12 +94,12 @@ namespace Recipes.Application.Services.User
 
             return new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(user));
         }
-        
+
         public async Task ValidateUser(UserClaims userClaims)
         {
             if (!userClaims.IsAuthenticated)
                 throw new UserAuthenticationException(UserAuthenticationException.UserIsInvalid);
-            
+
             var dbUser = await _userRepository.GetUserById(userClaims.UserId);
             if (dbUser == null || dbUser.Name != userClaims.Name)
                 throw new UserAuthenticationException(UserAuthenticationException.UserIsInvalid);

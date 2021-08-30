@@ -10,23 +10,10 @@ namespace Recipes.Infrastructure
 {
     public class StartDataDbInitializer
     {
-        public static void CreateDbIfNotExists(IHost host)
-        {
-            using var scope = host.Services.CreateScope();
-            var services = scope.ServiceProvider;
-            try
-            {
-                var context = services.GetRequiredService<RecipesDbContext>();
-                FillDbWithData(context);
-            }
-            catch (Exception ex)
-            {
-                var logger = services.GetRequiredService<ILogger<StartDataDbInitializer>>();
-                logger.LogError(ex, "An error occurred creating the DB.");
-            }
-        }
+        private const string BaseTagIconsPath = "default_images/tags/";
+        private const string BaseImagesPath = "default_images/";
 
-        private static readonly Tag[] Tags = 
+        private static readonly Tag[] Tags =
         {
             Tag.Create("клубника"),
             Tag.Create("десерты"),
@@ -45,30 +32,22 @@ namespace Recipes.Infrastructure
             Tag.Create("рыба", TagLevel.Suggested),
             Tag.Create("пост", TagLevel.Suggested),
             Tag.Create("пасха2021", TagLevel.Suggested),
-            Tag.Create("Простые блюда", TagLevel.Featured, BaseTagIconsPath + "simple.svg", 
+            Tag.Create("Простые блюда", TagLevel.Featured, BaseTagIconsPath + "simple.svg",
                 "Время приготвления таких блюд не более 1 часа"),
-            
-            Tag.Create("Детское", TagLevel.Featured,  BaseTagIconsPath + "child.svg", 
+
+            Tag.Create("Детское", TagLevel.Featured, BaseTagIconsPath + "child.svg",
                 "Самые полезные блюда которые можно детям любого возраста"),
-            
-            Tag.Create("От шеф-поваров", TagLevel.Featured, BaseTagIconsPath + "chef.svg", 
+
+            Tag.Create("От шеф-поваров", TagLevel.Featured, BaseTagIconsPath + "chef.svg",
                 "Требуют умения, времени и терпения, зато как в ресторане"),
-            
-            Tag.Create("На праздник", TagLevel.Featured, BaseTagIconsPath + "holiday.svg", 
-                "Чем удивить гостей, чтобы все были сыты за праздничным столом"),
+
+            Tag.Create("На праздник", TagLevel.Featured, BaseTagIconsPath + "holiday.svg",
+                "Чем удивить гостей, чтобы все были сыты за праздничным столом")
         };
-        
+
         private static readonly Dictionary<string, Tag> TagsDict = Tags.ToDictionary(x => x.Value, x => x);
 
-        private const string BaseTagIconsPath = "default_images/tags/";
-        private const string BaseImagesPath = "default_images/";
-        
-        private static Tag GetTag(string value)
-        {
-            return TagsDict[value];
-        }
-        
-        public static readonly Recipe[] Recipes =  
+        public static readonly Recipe[] Recipes =
         {
             new()
             {
@@ -100,7 +79,7 @@ namespace Recipes.Infrastructure
                     "Сверху на застывшие сливки добавим охлажденное клубничное желе. Поставим в холодильник " +
                     "до полного застывания клубничного желе. Готовую панна коту подаем с фруктами."
                 },
-                Tags = new []{ GetTag("клубника"), GetTag("десерты"), GetTag("сливки")}.ToList(),
+                Tags = new[] { GetTag("клубника"), GetTag("десерты"), GetTag("сливки") }.ToList(),
                 Ingredients = new List<RecipeIngredientsBlock>
                 {
                     new()
@@ -121,7 +100,7 @@ namespace Recipes.Infrastructure
                                 "Сахар - 3ст.л.\n" +
                                 "Ванильный сахар - 2 ч.л."
                     }
-                },
+                }
             },
             new()
             {
@@ -144,7 +123,7 @@ namespace Recipes.Infrastructure
                     "через 5 минут фрикадельки вынуть на решето, дать им обсохнуть, потом опустить в суп," +
                     " прокипятить и подавать к столу."
                 },
-                Tags = new []{ GetTag("вторые блюда"), GetTag("мясо"), GetTag("соевый соус")}.ToList(),
+                Tags = new[] { GetTag("вторые блюда"), GetTag("мясо"), GetTag("соевый соус") }.ToList(),
                 Ingredients = new List<RecipeIngredientsBlock>
                 {
                     new()
@@ -176,7 +155,7 @@ namespace Recipes.Infrastructure
 
                     "Наливаем растительное масло (25 г (~2 ст. ложки) и снова хорошенько перемешиваем."
                 },
-                Tags = new []{ GetTag("завтрак"), GetTag("десерты"), GetTag("блины")}.ToList(),
+                Tags = new[] { GetTag("завтрак"), GetTag("десерты"), GetTag("блины") }.ToList(),
                 Ingredients = new List<RecipeIngredientsBlock>
                 {
                     new()
@@ -207,7 +186,7 @@ namespace Recipes.Infrastructure
 
                     "Готовое мороженое выкладываем в чашку, миску..."
                 },
-                Tags = new []{ GetTag("десерты"), GetTag("вишня"), GetTag("мороженое")}.ToList(),
+                Tags = new[] { GetTag("десерты"), GetTag("вишня"), GetTag("мороженое") }.ToList(),
                 Ingredients = new List<RecipeIngredientsBlock>
                 {
                     new()
@@ -245,7 +224,7 @@ namespace Recipes.Infrastructure
                     "И взбиваем их до твёрдых пиков. Готовность белков проверяем очень просто - " +
                     "наклоняем миску с белками в сторону и, если белковая масса не стремится убежать, значит всё готово.."
                 },
-                Tags = new []{ GetTag("бисквит"), GetTag("сладости")}.ToList(),
+                Tags = new[] { GetTag("бисквит"), GetTag("сладости") }.ToList(),
                 Ingredients = new List<RecipeIngredientsBlock>
                 {
                     new()
@@ -257,10 +236,31 @@ namespace Recipes.Infrastructure
             }
         };
 
+        public static void CreateDbIfNotExists(IHost host)
+        {
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<RecipesDbContext>();
+                FillDbWithData(context);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<StartDataDbInitializer>>();
+                logger.LogError(ex, "An error occurred creating the DB.");
+            }
+        }
+
+        private static Tag GetTag(string value)
+        {
+            return TagsDict[value];
+        }
+
         public static void FillDbWithData(RecipesDbContext dbContext)
         {
             if (dbContext.Recipes.Any()) return;
-            
+
             // Транзакция и SaveChanges() на каждой итерации нужны, чтобы все рецепты были добавлены в строгом порядке
             using var transaction = dbContext.Database.BeginTransaction();
             dbContext.Tags.AddRange(Tags);
@@ -271,6 +271,7 @@ namespace Recipes.Infrastructure
                 dbContext.Recipes.Add(recipe);
                 dbContext.SaveChanges();
             }
+
             transaction.Commit();
         }
     }

@@ -42,14 +42,14 @@ namespace Recipes.Application.Services.Recipes
                 RecipesSelectionType.Starred => new StarredRecipesFilterSpecification(userClaims.UserId),
                 _ => new AllRecipesFilterSpecification(searchString)
             };
-            
-            var count = await _recipesRepository.GetRecipesCount(filterSpecification);
-            var pageCount = (int)Math.Ceiling(count * 1d / pageSize);
 
-            if (page > 1 && page > pageCount)
+            var count = await _recipesRepository.GetRecipesCount(filterSpecification);
+            var pageCount = Math.Max((int)Math.Ceiling(count * 1d / pageSize), 1);
+
+            if (page > pageCount)
                 throw new ElementNotFoundException(ElementNotFoundException.RecipesPageNotFound);
             var pagingSpecification = new PagingSpecification<Recipe>((page - 1) * pageSize, pageSize);
-            
+
             var recipes = await _recipesRepository.GetList(filterSpecification, pagingSpecification);
 
             var dtoRecipes = _mapper.Map<RecipePreviewResult[]>(recipes);
@@ -63,14 +63,14 @@ namespace Recipes.Application.Services.Recipes
                         recipes[i].Activities.Any(x => x.IsStarred && x.UserId == userClaims.UserId);
                 }
             }
-            
+
             return new RecipesPageResult
             {
                 Recipes = dtoRecipes,
                 PageCount = pageCount
             };
         }
-        
+
         public async Task<RecipeDetailResult> GetRecipeDetail(int id, UserClaims userClaims)
         {
             var recipe = await _recipesRepository.GetById(id);
@@ -94,7 +94,7 @@ namespace Recipes.Application.Services.Recipes
             var recipeModel = _mapper.Map<Recipe>(recipeCreateCommandDto);
             recipeModel.AuthorId = userClaims.UserId;
             recipeModel.Tags = tags;
-            
+
             var addedRecipe = await _recipesRepository.AddRecipe(recipeModel);
 
             _unitOfWork.Commit();
@@ -109,12 +109,12 @@ namespace Recipes.Application.Services.Recipes
 
             if (recipeDb.AuthorId != userClaims.UserId)
                 throw new PermissionException(PermissionException.NotEnoughPermissionsToModifyResource);
-            
+
             var tags = await _tagsService.GetOrCreateTags(recipeEditCommandDto.Tags);
-            
+
             var recipeModel = _mapper.Map<Recipe>(recipeEditCommandDto);
             recipeModel.Tags = tags;
-            
+
             foreach (var toProp in typeof(Recipe).GetProperties())
             {
                 var value = toProp.GetValue(recipeModel, null);

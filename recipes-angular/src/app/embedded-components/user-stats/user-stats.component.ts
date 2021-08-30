@@ -13,7 +13,8 @@ export class UserStatsComponent implements OnInit {
   public likedRecipes: number = 0;
   public starredRecipes: number = 0;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.userService.getUserStats().subscribe((stats: UserStats) => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserService} from "../communication/abstract/user.service";
 import {AuthTokenManagerService} from "../managers/auth-token-manager.service";
 
@@ -8,12 +8,13 @@ import {AuthTokenManagerService} from "../managers/auth-token-manager.service";
 export class CredentialsValidatorService {
 
   constructor(private authTokenManager: AuthTokenManagerService,
-              private userService: UserService) { }
+              private userService: UserService) {
+  }
 
   public validate() {
     if (!this.authTokenManager.isAuthorized)
       return;
-    
+
     this.userService.validateCredentials().subscribe(() => {
     }, () => {
       this.authTokenManager.removeToken()

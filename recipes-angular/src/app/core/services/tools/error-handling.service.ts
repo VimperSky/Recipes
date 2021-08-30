@@ -23,13 +23,20 @@ export class ErrorHandlingService {
   }
 
   public openErrorDialog(error: HttpErrorResponse, elseErrorText: string) {
+    // Unauthorized
     if (error.status == 401) {
       this.dialogDisplayService.openAuthDialog();
-    } else if (error.error) {
-      let problemDetails: ProblemDetails = JSON.parse(JSON.stringify(error.error));
-      this.dialogDisplayService.openErrorDialog(problemDetails.detail);
-    } else {
-      this.dialogDisplayService.openErrorDialog(elseErrorText)
+      return;
     }
+
+    if (error.error) {
+      let problemDetails: ProblemDetails = JSON.parse(JSON.stringify(error.error));
+      if (problemDetails.detail) {
+        this.dialogDisplayService.openErrorDialog(problemDetails.detail);
+        return;
+      }
+    }
+
+    this.dialogDisplayService.openErrorDialog(elseErrorText)
   }
 }
