@@ -52,7 +52,7 @@ import {AllRecipesManagerService} from "./core/services/managers/recipes/all-rec
 import {RecipeOfTheDayComponent} from './embedded-components/recipe-of-the-day/recipe-of-the-day.component';
 import {ActivityService} from "./core/services/communication/abstract/activity.service";
 import {ApiActivityService} from "./core/services/communication/api/api-activity.service";
-import { FavoriteRecipesComponent } from './pages/favorite-recipes/favorite-recipes.component';
+import {FavoriteRecipesComponent} from './pages/favorite-recipes/favorite-recipes.component';
 import {ApiInterceptor} from "./core/interceptors/api.interceptor";
 
 
@@ -153,4 +153,5 @@ import {ApiInterceptor} from "./core/interceptors/api.interceptor";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

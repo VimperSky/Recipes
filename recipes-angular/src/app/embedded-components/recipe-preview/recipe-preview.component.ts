@@ -22,13 +22,14 @@ export class RecipePreviewComponent {
 
   constructor(private activityService: ActivityService,
               private authManager: AuthTokenManagerService,
-              private dialogDisplay: DialogDisplayService) {}
+              private dialogDisplay: DialogDisplayService) {
+  }
 
   public get likeIcon(): string {
     return this.recipe.isLiked ? 'favorite' : 'favorite_border';
   }
 
-  public get starIcon() : string {
+  public get starIcon(): string {
     return this.recipe.isStarred ? 'star' : 'star_border';
   }
 
@@ -59,8 +60,7 @@ export class RecipePreviewComponent {
         this.recipe.isStarred = false;
         this.recipe.starsCount -= 1;
       });
-    }
-    else {
+    } else {
       this.activityService.setStar(this.recipe.id).subscribe(() => {
         this.recipe.isStarred = true;
         this.recipe.starsCount += 1;
@@ -81,8 +81,7 @@ export class RecipePreviewComponent {
         this.recipe.isLiked = false;
         this.recipe.likesCount -= 1;
       });
-    }
-    else {
+    } else {
       this.activityService.setLike(this.recipe.id).subscribe(() => {
         this.recipe.isLiked = true;
         this.recipe.likesCount += 1;

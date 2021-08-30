@@ -7,5 +7,6 @@ import {AuthTokenManagerService} from "../../core/services/managers/auth-token-m
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  constructor(public authManager: AuthTokenManagerService) {}
+  constructor(public authManager: AuthTokenManagerService) {
+  }
 }

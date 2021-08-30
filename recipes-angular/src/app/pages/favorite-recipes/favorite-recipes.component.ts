@@ -14,5 +14,6 @@ import {FavoriteRecipesManagerService} from "../../core/services/managers/recipe
   ]
 })
 export class FavoriteRecipesComponent {
-  constructor() { }
+  constructor() {
+  }
 }

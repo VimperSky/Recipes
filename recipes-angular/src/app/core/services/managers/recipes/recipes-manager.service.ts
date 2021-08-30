@@ -11,16 +11,15 @@ import {MyRecipesActivityDto} from "../../../dto/activity/my-recipes-activity-dt
 
 @Injectable()
 export abstract class RecipesManagerService {
+  public recipeList: RecipePreview[] = [];
+  protected isPendingAction: boolean = false;
   private pageCount: number = 1;
   private currentPage: number = 1;
 
-  protected isPendingAction: boolean = false;
-
-  public recipeList: RecipePreview[] = [];
-
   public constructor(protected recipesService: RecipesService,
                      private activityService: ActivityService,
-                     private authTokenManagerService: AuthTokenManagerService) {}
+                     private authTokenManagerService: AuthTokenManagerService) {
+  }
 
   public get hasMore(): boolean {
     return this.pageCount > this.currentPage;
@@ -78,8 +77,7 @@ export abstract class RecipesManagerService {
             }
           }
         });
-      }
-      else {
+      } else {
         for (const recipe of this.recipeList) {
           recipe.isLiked = false;
           recipe.isStarred = false;

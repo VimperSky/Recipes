@@ -6,7 +6,8 @@
       <button (click)="delete()" *ngIf="isAvailableToModify" id="delete-recipe-button" mat-icon-button>
         <mat-icon>delete_outline</mat-icon>
       </button>
-      <button *ngIf="isAvailableToModify" [routerLink]="['/recipe/edit', recipeDetail.id]" color="accent" id="publish-recipe-button"
+      <button *ngIf="isAvailableToModify" [routerLink]="['/recipe/edit', recipeDetail.id]" color="accent"
+              id="publish-recipe-button"
               mat-flat-button
               type="button">
         <mat-icon>edit</mat-icon>

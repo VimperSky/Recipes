@@ -43,9 +43,9 @@ export class ProfileComponent implements OnInit {
 
 
   public constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private errorHandlingService: ErrorHandlingService,
-              private tokenManagerService: AuthTokenManagerService) {
+                     private userService: UserService,
+                     private errorHandlingService: ErrorHandlingService,
+                     private tokenManagerService: AuthTokenManagerService) {
     this.profileForm.disable();
   }
 

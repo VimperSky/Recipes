@@ -13,7 +13,8 @@ export class DialogDisplayService {
 
   private snackErrorDialogRef: MatSnackBarRef<any> | undefined;
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {
+  }
 
   public openErrorDialog(text: string) {
     this.errorDialogRef = this.dialog.open(ErrorComponent, {
@@ -28,7 +29,7 @@ export class DialogDisplayService {
     if (this.snackErrorDialogRef)
       return;
 
-    this.snackErrorDialogRef = this.snackBar.open(text,  undefined, {
+    this.snackErrorDialogRef = this.snackBar.open(text, undefined, {
       duration: 5000
     });
     this.snackErrorDialogRef.afterDismissed().subscribe(() => {

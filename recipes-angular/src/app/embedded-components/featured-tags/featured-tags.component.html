@@ -4,7 +4,8 @@
 </div>
 
 <div *ngIf="tags" id="featured-tags-content-block">
-  <a (click)="searchForTag(tag)" *ngFor="let tag of tags; first as isFirst" [class.featured-tag-margined]="!isFirst" class="featured-tag"
+  <a (click)="searchForTag(tag)" *ngFor="let tag of tags; first as isFirst" [class.featured-tag-margined]="!isFirst"
+     class="featured-tag"
      mat-button>
     <div class="tag-icon-block">
       <img alt="{{getImagePath(tag)}}" class="tag-icon" height="24" src="{{getImagePath(tag)}}" width="24">

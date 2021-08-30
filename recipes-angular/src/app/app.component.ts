@@ -7,7 +7,8 @@ import {CredentialsValidatorService} from "./core/services/tools/credentials-val
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private credentialsValidator: CredentialsValidatorService) {}
+  constructor(private credentialsValidator: CredentialsValidatorService) {
+  }
 
   ngOnInit() {
     this.credentialsValidator.validate();
