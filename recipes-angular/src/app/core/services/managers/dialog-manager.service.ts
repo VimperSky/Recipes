@@ -8,13 +8,12 @@ import {MatSnackBar, MatSnackBarRef} from "@angular/material/snack-bar";
 @Injectable({
   providedIn: 'root'
 })
-export class DialogDisplayService {
+export class DialogManagerService {
   private errorDialogRef: MatDialogRef<ErrorComponent> | undefined;
 
   private snackErrorDialogRef: MatSnackBarRef<any> | undefined;
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {
-  }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   public openErrorDialog(text: string) {
     this.errorDialogRef = this.dialog.open(ErrorComponent, {

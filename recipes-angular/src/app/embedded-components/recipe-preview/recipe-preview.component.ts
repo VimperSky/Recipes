@@ -3,7 +3,7 @@ import {RecipePreview} from "../../core/dto/recipe/recipe-preview";
 import {environment} from "../../../environments/environment";
 import {ActivityService} from "../../core/services/communication/abstract/activity.service";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 
 const defaultImagePath: string = "../../../assets/images/default_recipe.jpg"
 
@@ -22,7 +22,7 @@ export class RecipePreviewComponent {
 
   constructor(private activityService: ActivityService,
               private authManager: AuthTokenManagerService,
-              private dialogDisplay: DialogDisplayService) {
+              private dialogManagerService: DialogManagerService) {
   }
 
   public get likeIcon(): string {
@@ -51,7 +51,7 @@ export class RecipePreviewComponent {
     event.preventDefault();
     event.stopPropagation();
     if (!this.authManager.isAuthorized) {
-      this.dialogDisplay.openAuthDialog("Ставить звезды могут только авторизованные пользователи.")
+      this.dialogManagerService.openAuthDialog("Ставить звезды могут только авторизованные пользователи.")
       return;
     }
 
@@ -72,7 +72,7 @@ export class RecipePreviewComponent {
     event.preventDefault();
     event.stopPropagation();
     if (!this.authManager.isAuthorized) {
-      this.dialogDisplay.openAuthDialog("Ставить лайки могут только авторизованные пользователи.")
+      this.dialogManagerService.openAuthDialog("Ставить лайки могут только авторизованные пользователи.")
       return;
     }
 

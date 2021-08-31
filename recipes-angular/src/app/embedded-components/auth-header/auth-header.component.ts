@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 
 @Component({
   selector: 'app-auth-header',
@@ -11,7 +11,7 @@ export class AuthHeaderComponent {
   @Input()
   public name: string | null = null;
 
-  constructor(private dialogDisplay: DialogDisplayService, private authManager: AuthTokenManagerService) {
+  constructor(private dialogManagerService: DialogManagerService, private authManager: AuthTokenManagerService) {
     this.name = authManager.name;
 
     authManager.authChanged.subscribe(_ => {
@@ -20,7 +20,7 @@ export class AuthHeaderComponent {
   }
 
   public logIn() {
-    this.dialogDisplay.openLoginDialog();
+    this.dialogManagerService.openLoginDialog();
   }
 
   public logOut() {

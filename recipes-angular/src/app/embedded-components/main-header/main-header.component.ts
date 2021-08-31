@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {Router} from "@angular/router";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 
 @Component({
   selector: 'app-main-header',
@@ -12,18 +12,18 @@ export class MainHeaderComponent {
 
   constructor(public authTokenManager: AuthTokenManagerService,
               private router: Router,
-              private dialogDisplayService: DialogDisplayService) {
+              private dialogManagerService: DialogManagerService) {
   }
 
   addRecipe() {
     if (this.authTokenManager.isAuthorized) {
       this.router.navigate(["/recipe/new"]);
     } else {
-      this.dialogDisplayService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
+      this.dialogManagerService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
     }
   }
 
   logIn() {
-    this.dialogDisplayService.openLoginDialog();
+    this.dialogManagerService.openLoginDialog();
   }
 }

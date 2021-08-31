@@ -3,14 +3,14 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable, throwError} from 'rxjs';
 import {AuthTokenManagerService} from "../services/managers/auth-token-manager.service";
 import {catchError} from "rxjs/operators";
-import {DialogDisplayService} from "../services/tools/dialog-display.service";
+import {DialogManagerService} from "../services/managers/dialog-manager.service";
 
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
   constructor(private authTokenManagerService: AuthTokenManagerService,
-              private dialogDisplay: DialogDisplayService) {
+              private dialogManagerService: DialogManagerService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,7 +24,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
       if (error.status == 0) { // no server connection
-        this.dialogDisplay.openSnackErrorDialog("Нет соединения с сервером!");
+        this.dialogManagerService.openSnackErrorDialog("Нет соединения с сервером!");
       }
       return throwError(error);
     }));

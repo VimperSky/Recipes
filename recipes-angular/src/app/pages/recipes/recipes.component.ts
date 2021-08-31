@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
 
 @Component({
@@ -14,7 +14,7 @@ export class RecipesComponent implements OnInit {
   constructor(private router: Router,
               private tokenManager: AuthTokenManagerService,
               private activatedRoute: ActivatedRoute,
-              private dialogDisplayService: DialogDisplayService,
+              private dialogManagerService: DialogManagerService,
               private searchManagerService: BaseSearchManagerService) {
   }
 
@@ -30,7 +30,7 @@ export class RecipesComponent implements OnInit {
     if (this.tokenManager.isAuthorized) {
       this.router.navigate(["/recipe/new"]);
     } else {
-      this.dialogDisplayService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
+      this.dialogManagerService.openAuthDialog("Добавлять рецепты могут только зарегистрированные пользователи.");
     }
   }
 }

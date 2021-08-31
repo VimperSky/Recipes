@@ -5,7 +5,7 @@ import {RecipeService} from "../../core/services/communication/abstract/recipe.s
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 import {ErrorHandlingService} from "../../core/services/tools/error-handling.service";
 import {UserActivityDto} from "../../core/dto/activity/user-activity-dto";
 import {ActivityService} from "../../core/services/communication/abstract/activity.service";
@@ -23,7 +23,7 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private recipeService: RecipeService,
               private snackBar: MatSnackBar,
-              private dialogDisplayService: DialogDisplayService,
+              private dialogManagerService: DialogManagerService,
               private router: Router,
               private tokenService: AuthTokenManagerService,
               private activityService: ActivityService,

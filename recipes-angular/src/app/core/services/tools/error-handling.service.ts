@@ -3,13 +3,13 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {AbstractControl} from "@angular/forms";
 import {ValidationProblemDetails} from "../../dto/base/validation-problem-details";
 import {ProblemDetails} from "../../dto/base/problem-details";
-import {DialogDisplayService} from "./dialog-display.service";
+import {DialogManagerService} from "../managers/dialog-manager.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlingService {
-  constructor(private dialogDisplayService: DialogDisplayService) {
+  constructor(private dialogManagerService: DialogManagerService) {
   }
 
   public setValidationErrors(error: HttpErrorResponse, formControlsMap: Map<string, AbstractControl>) {
@@ -25,18 +25,18 @@ export class ErrorHandlingService {
   public openErrorDialog(error: HttpErrorResponse, elseErrorText: string) {
     // Unauthorized
     if (error.status == 401) {
-      this.dialogDisplayService.openAuthDialog();
+      this.dialogManagerService.openAuthDialog();
       return;
     }
 
     if (error.error) {
       let problemDetails: ProblemDetails = JSON.parse(JSON.stringify(error.error));
       if (problemDetails.detail) {
-        this.dialogDisplayService.openErrorDialog(problemDetails.detail);
+        this.dialogManagerService.openErrorDialog(problemDetails.detail);
         return;
       }
     }
 
-    this.dialogDisplayService.openErrorDialog(elseErrorText)
+    this.dialogManagerService.openErrorDialog(elseErrorText)
   }
 }

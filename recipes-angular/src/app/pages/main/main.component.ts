@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {DialogDisplayService} from "../../core/services/tools/dialog-display.service";
+import {DialogManagerService} from "../../core/services/managers/dialog-manager.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthTokenManagerService} from "../../core/services/managers/auth-token-manager.service";
 import {BaseSearchManagerService} from "../../core/services/managers/search/base-search-manager.service";
@@ -17,7 +17,7 @@ import {RedirectSearchManagerService} from "../../core/services/managers/search/
   ]
 })
 export class MainComponent {
-  constructor(private dialogDisplay: DialogDisplayService,
+  constructor(private dialogManagerService: DialogManagerService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               authTokenManager: AuthTokenManagerService) {
@@ -29,7 +29,7 @@ export class MainComponent {
         return;
       }
 
-      this.dialogDisplay.openAuthDialog();
+      this.dialogManagerService.openAuthDialog();
       authTokenManager.authChanged.subscribe(() => {
         if (authTokenManager.isAuthorized) {
           router.navigate([returnUrl])
