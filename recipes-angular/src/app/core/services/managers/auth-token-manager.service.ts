@@ -11,8 +11,10 @@ export class AuthTokenManagerService {
   private authChangeSub = new Subject<boolean>()
   public authChanged = this.authChangeSub.asObservable();
   private token: Token | null = null;
+  private jwtHelper: JwtHelperService;
 
-  constructor(private jwtHelper: JwtHelperService) {
+  constructor() {
+    this.jwtHelper = new JwtHelperService();
     const token = localStorage.getItem(environment.jwtToken)
     if (token == null || this.jwtHelper.isTokenExpired(token))
       return;

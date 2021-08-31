@@ -99,11 +99,6 @@ import {ApiInterceptor} from "./core/interceptors/api.interceptor";
     MatSnackBarModule,
     AutosizeModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        throwNoTokenError: true,
-      },
-    }),
     MatChipsModule,
     MatRippleModule
   ],
